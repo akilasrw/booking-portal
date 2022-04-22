@@ -1,0 +1,120 @@
+<div class="main-card">
+    <div class="card-header px-0 pt-0">
+        <div class="d-flex justify-content-between align-items-center">
+            <div><h1>Booking</h1></div>
+            <div><button class="btn btn-primary" (click)="goToCreateBooking()">Add New Booking</button></div>
+        </div>
+
+    </div>
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+                <form [formGroup]='filterForm'  (ngSubmit)="getFilteredList()">
+                    <div class="filter-wrapper">
+                    <div class="filter-group">
+                        <label class="form-label">Booking ID</label>
+                        <input [formControl]='filterForm.controls["bookingId"]' type="text"  class="form-control">
+                    </div>
+                    <div class="filter-group">
+                        <label class="form-label">Destination</label>
+                        <input [formControl]='filterForm.controls["destination"]'  type="text"  class="form-control">
+                    </div>
+                    <div class="filter-group">
+                        <label class="form-label">Booking Date</label>
+                        <input type="text" [formControl]='filterForm.controls["bookingDate"]' class="form-control" bsDatepicker>
+                    </div>
+                    <div class="button"><button type="submit" class="btn sm btn-primary-outline">Add Filter</button></div>
+                    <div class="filter-clear" title="Filter Clear"><i class="ca ca-icn-close"></i></div>
+                </div>
+                </form>
+            <div class="mt-4">
+                <button class="btn sm btn-primary-outline">Advanced Filter</button>
+            </div>
+        </div>
+        <div class="table-content">
+            <table class="table table-responsive">
+                <thead>
+                    <th>Booking ID</th>
+                    <th>Booking Date</th>
+                    <th>Destination</th>
+                    <th>Flight Number</th>
+                    <th>Flight Date</th>
+                    <th>Status</th>
+                    <th>Number of Boxes</th>
+                    <th>Total Weight (Kg)</th>
+                    <th>Actions </th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let booking of this.cargoBookingList">
+                        <td>{{booking.bookingId}}</td>
+                        <td>{{booking.bookingDate | date}}</td>
+                        <td>{{booking.destinationAirportCode}}</td>
+                        <td>{{booking.flightNumber}}</td>
+                        <td>{{booking.flightDate | date}}</td>
+                        <td><span class="status-chip" [ngClass]="{
+                            'none':booking.bookingStatus == 0,
+                            'dispatch':booking.bookingStatus == 1,
+                            'invoiced':booking.bookingStatus == 2,
+                            'accepted':booking.bookingStatus == 3,
+                            'loading':booking.bookingStatus == 4,
+                            'exported':booking.bookingStatus == 5
+                        }">{{(GetBookingStatus(booking.bookingStatus))}}</span></td>
+                        <td>{{booking.numberOfBoxes}}</td>
+                        <td>{{booking.totalWeight}}</td>
+                        <td>
+                            <i class="ca ca-icn-view" (click)="show(booking.id)" title="View"></i>
+                            <i class="ca ca-icn-edit" title="Edit"></i>
+                            <i class="ca ca-icn-bin" title="Delete"></i>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>00123456</td>
+                        <td>2/5/2022</td>
+                        <td>CAN</td>
+                        <td>UL 730</td>
+                        <td>2/10/2022</td>
+                        <td><span class="status-chip dispatch">Dispatch</span></td>
+                        <td>10</td>
+                        <td>25</td>
+                        <td>
+                            <i class="ca ca-icn-view" (click)="show(44)" title="View"></i>
+                            <i class="ca ca-icn-edit" title="Edit"></i>
+                            <i class="ca ca-icn-bin" title="Delete"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>00123456</td>
+                        <td>2/5/2022</td>
+                        <td>CAN</td>
+                        <td>UL 730</td>
+                        <td>2/10/2022</td>
+                        <td><span class="status-chip exported">Exported</span></td>
+                        <td>10</td>
+                        <td>25</td>
+                        <td>
+                            <i class="ca ca-icn-view" (click)="show(55)" title="View"></i>
+                            <i class="ca ca-icn-edit" title="Edit"></i>
+                            <i class="ca ca-icn-bin" title="Delete"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade right" tabindex="-1" [ngClass]="{'in': modalVisibleAnimate}"
+    [ngStyle]="{'display': modalVisible ? 'block' : 'none', 'opacity': modalVisibleAnimate ? 1 : 0}">
+    <div class="modal-dialog modal-lg modal-dialog-m modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">View Booking</h2>
+                <button type="button" class="close btn" data-dismiss="modal" (click)="cancel()" aria-label="Close"><span class="ca ca-icn-close"></span></button>
+            </div>
+            <div class="modal-body">
+                <app-booking-view-detail [cargoBookingId]="cargoBookingId"  (closePopup)="closePopup($event)" *ngIf="modalVisible"></app-booking-view-detail>
+            </div>
+        </div>
+    </div>
+</div>

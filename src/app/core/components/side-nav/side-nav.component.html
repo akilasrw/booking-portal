@@ -1,0 +1,62 @@
+<div class="menu-container">
+    <div class="main-container">
+        <div class="logo-wrapper" (click)="menuClickEvent(0)">
+            <img src="/assets/images/logo-aero.svg" />
+        </div>
+        <div class="menu-scroller">
+            <ul class="main-menu">
+                <li>
+                    <div class="menu-item" (click)="menuClickEvent(1)" [ngClass]="{'selected': selectedMenu == 1}">
+                        <span class="menu-icn ca ca-icn-dashboard"></span>
+                        <span class="menu-title">Dashboard</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="menu-item" (click)="menuClickEvent(2)" [ngClass]="{'selected': selectedMenu == 2}">
+                        <span class="menu-icn ca ca-icn-booking"></span>
+                        <span class="menu-title">Booking Information</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="menu-item" (click)="menuClickEvent(3)" [ngClass]="{'selected': selectedMenu == 3}">
+                        <span class="menu-icn ca ca-icn-flight-schedule"></span>
+                        <span class="menu-title">Booking Lookup</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="menu-item" (click)="menuClickEvent(4)" [ngClass]="{'selected': selectedMenu == 4}">
+                        <span class="menu-icn ca ca-icn-dollar"></span>
+                        <span class="menu-title">Rate View</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="menu-item" (click)="menuClickEvent(5)" [ngClass]="{'selected': selectedMenu == 5}">
+                        <span class="menu-icn ca ca-icn-awb"></span>
+                        <span class="menu-title">Track AWB</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="menu-item" (click)="menuClickEvent(6)" [ngClass]="{'selected': selectedMenu == 6}">
+                        <span class="menu-icn ca ca-icn-bell"></span>
+                        <span class="menu-title">Notifications</span>
+                    </div>
+                </li>
+    
+            </ul>
+        </div>
+    </div>
+    <div>
+        <div class="profile-card">
+            <div class="pro-pic">
+                <div class="pro-img"><img src="/assets/images/profile-img.png"></div>
+            </div>
+            <label>{{currentUser?.fullName}}</label>
+            <label>{{currentUser?.email}}</label>
+            <div class="actions">
+                <span class="ca ca-icn-settings" title="Settings" (click)="settings()"></span>
+                <span class="ca ca-icn-edit" title="Edit" (click)="edit()"></span>
+                <span class="ca ca-icn-shutdown" title="Sign Out" (click)="signOut()"></span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,142 @@
+<div class="container-fluid p-0">
+    <div class="login-wrapper">
+      <div class="login-container">
+        <div class="login-left">
+          <div class="content-left">
+            <div class="logo">
+              <img src="/assets/images/logo.svg"/>
+            </div>
+            <div class="welcome">
+              <h1 class="font-600">Welcome Back!</h1>
+              <p>To keep contacted with us please login or create new account.</p>
+            </div>
+          </div>
+          <div class="footer">
+            <div>© 2022 Aero Club Solutions INC. All rights reserved.</div>
+          </div>
+        </div>
+        <div class="login-right-wrapper">
+          <div class="lan-translate">
+            <div>Translate</div>
+          </div>
+          <div class="login-info sign-up">
+            <div class="col-md-12">
+              <div class="greeting-text">
+                <h1 class="font-600">Hello,</h1>
+                <p>Enter your details and start journey with us</p>
+              </div>
+            </div>
+            <div class="login-form">
+              <form [formGroup]='registrationForm'  (ngSubmit)="register()">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="form-label">Agent Name</label>
+                      <app-text-input [formControl]='registrationForm.controls["agentName"]' type="text">
+                      </app-text-input>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="form-label">Username</label>
+                      <app-text-input [formControl]='registrationForm.controls["userName"]' type="text">
+                      </app-text-input>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="form-label">Email</label>
+                      <app-text-input [formControl]='registrationForm.controls["email"]' type="email">
+                      </app-text-input>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="form-label">Primary Telephone Number</label>
+                      <app-text-input [formControl]='registrationForm.controls["primaryTelephoneNumber"]' type="number">
+                      </app-text-input>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="form-label">Secondary Telephone Number</label>
+                      <app-text-input [formControl]='registrationForm.controls["secondaryTelephoneNumber"]' type="number">
+                      </app-text-input>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="form-label">Cargo Account Number</label>
+                      <app-text-input [formControl]='registrationForm.controls["cargoAccountNumber"]' type="text">
+                      </app-text-input>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="form-label">Address</label>
+                      <app-text-input [formControl]='registrationForm.controls["address"]' type="text">
+                      </app-text-input>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="form-label">Country</label>
+                      <app-auto-complete-dropdown
+                          [data] = "countryList" [keyword] ="keyword" (selectFileOutput)="selectedCountry($event)"
+                          ></app-auto-complete-dropdown>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="form-label">City</label>
+                      <app-text-input [formControl]='registrationForm.controls["city"]' type="text">
+                      </app-text-input>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="form-label">Agent IATA Code</label>
+                      <app-text-input [formControl]='registrationForm.controls["agentIATACode"]' type="text">
+                      </app-text-input>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="form-label">Password</label>
+                      <app-text-input [formControl]='registrationForm.controls["password"]' type="password">
+                      </app-text-input>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="form-label">Re-Enter Password</label>
+                      <app-text-input [formControl]='registrationForm.controls["confirmPassword"]' type="password">
+                      </app-text-input>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div>
+                      <a href="account">Back to Sign In</a>
+                    </div>
+                  </div>
+                  <div class="col-md-6 text-end">
+                    <button class="btn btn-secondary-outline me-3" type="submit">Cancel</button>
+                    <button class="btn btn-primary-outline" type="submit">Sign Up</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+

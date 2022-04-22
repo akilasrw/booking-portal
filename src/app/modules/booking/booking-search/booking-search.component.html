@@ -1,0 +1,95 @@
+<div class="main-card">
+    <div class="card-header px-0 pt-0">
+        <h1>Add New Booking</h1>
+    </div>
+    <div class="card-body">
+        <div>
+            <h3>Check Flight Availability</h3>
+        </div>
+        <div class="second-box flight-av">
+            <div class="filter-block">
+                <div class="row">
+                    <form [formGroup]="bookingForm" (ngSubmit)="submit()">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="form-label">Origin</label>
+                                    <app-auto-complete-dropdown [data]="originAirpots" [keyword]="keyword"
+                                        (selectFileOutput)="selectedOrigin($event)"></app-auto-complete-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="form-label">Destination</label>
+                                    <app-auto-complete-dropdown [data]="destinationAirpots" [keyword]="keyword"
+                                        (selectFileOutput)="selectedDestination($event)"></app-auto-complete-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="form-label">Flight Date</label>
+                                    <input type="text" formControlName="scheduledDepartureDateTime" placeholder="Date"
+                                        class="form-control" bsDatepicker>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group filter-btn">
+                                    <button class="btn btn-primary-outline" type="submit">Find</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="second-box">
+            <div class="legend">
+                <div><label class="value-label">Legend (L x W x H): </label></div>
+                <div><label class="value">Overhead - 56 x 36 x 23 (Container) </label></div>
+                <div><label class="value">On One Seat - 45 x 45 x 60 (Container) </label></div>
+                <div><label class="value">On Three Seats - 140 x 45 x 60 (Container) </label></div>
+                <div><label class="value">Under the Seat - 56 x 24 x 23 (Container) </label></div>
+            </div>
+        </div>
+        <div class="flight-availability">
+            <div class="second-card" *ngFor="let flightScheduleSector of this.flightScheduleSectors">
+                <div class="card-details">
+                    <div class="card-row">
+                        <div class="label">Flight Number</div>
+                        <div class="value">{{flightScheduleSector.flightNumber}}</div>
+                    </div>
+                    <div class="card-row">
+                        <div class="label">Origin and Destination</div>
+                        <div class="value chip"><span>{{flightScheduleSector.originAirportCode}}</span><i
+                                class="ca ca-icn-flight"></i><span>{{flightScheduleSector.destinationAirportCode}}</span>
+                        </div>
+                    </div>
+                    <div class="card-row">
+                        <div class="label">Acceptance Cutoff Time</div>
+                        <div class="value">{{flightScheduleSector.acceptanceCutoffTime| date:'shortTime'}}</div>
+                    </div>
+                    <div class="card-row">
+                        <div class="label">Booking Cutoff Time</div>
+                        <div class="value">{{flightScheduleSector.bookingCutoffTime| date:'shortTime'}}</div>
+                    </div>
+                    <div class="card-row">
+                        <div class="label">Date and Time</div>
+                        <div class="value">{{flightScheduleSector.scheduledDepartureDateTime | date:'dd/MM/yyyy hh:mm
+                            aa'}}</div>
+                    </div>
+                    <div class="card-subtitle">Available Cargo Space</div>
+                    <div class="card-row"
+                        *ngFor="let position of flightScheduleSector.flightScheduleSectorCargoPositions">
+                        <div class="label">{{getAvailableCargoSpace(+position.cargoPositionType)}}</div>
+                        <div class="value">{{position.availableSpaceCount}}</div>
+                    </div>
+                    <div class="card-button">
+                        <button class="btn btn-primary-outline"
+                            (click)="goToBookingCreate(flightScheduleSector)">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer"></div>
+</div>

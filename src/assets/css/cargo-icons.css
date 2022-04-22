@@ -1,0 +1,99 @@
+@font-face {
+  font-family: 'cargo-icons';
+  src:  url('fonts/cargo-icons.eot?i5x99l');
+  src:  url('fonts/cargo-icons.eot?i5x99l#iefix') format('embedded-opentype'),
+    url('fonts/cargo-icons.ttf?i5x99l') format('truetype'),
+    url('fonts/cargo-icons.woff?i5x99l') format('woff'),
+    url('fonts/cargo-icons.svg?i5x99l#cargo-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="ca-icn-"], [class*=" ca-icn-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'cargo-icons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ca-icn-add:before {
+  content: "\e900";
+}
+.ca-icn-awb:before {
+  content: "\e901";
+}
+.ca-icn-bell:before {
+  content: "\e902";
+}
+.ca-icn-bin:before {
+  content: "\e903";
+}
+.ca-icn-booking:before {
+  content: "\e904";
+}
+.ca-icn-close:before {
+  content: "\e905";
+}
+.ca-icn-dashboard:before {
+  content: "\e906";
+}
+.ca-icn-document:before {
+  content: "\e907";
+}
+.ca-icn-dollar:before {
+  content: "\e908";
+}
+.ca-icn-edit:before {
+  content: "\e909";
+}
+.ca-icn-flight:before {
+  content: "\e90a";
+}
+.ca-icn-flight-schedule:before {
+  content: "\e90b";
+}
+.ca-icn-left-arrow:before {
+  content: "\e90c";
+}
+.ca-icn-left-arrow-dash:before {
+  content: "\e90d";
+}
+.ca-icn-logout:before {
+  content: "\e90e";
+}
+.ca-icn-profile:before {
+  content: "\e90f";
+}
+.ca-icn-right-arrow:before {
+  content: "\e910";
+}
+.ca-icn-scan:before {
+  content: "\e911";
+}
+.ca-icn-settings:before {
+  content: "\e912";
+}
+.ca-icn-shutdown:before {
+  content: "\e913";
+}
+.ca-icn-translate:before {
+  content: "\e914";
+}
+.ca-icn-verify:before {
+  content: "\e915";
+}
+.ca-icn-view:before {
+  content: "\e917";
+}
+.ca-icn-view-eye:before {
+  content: "\e918";
+}

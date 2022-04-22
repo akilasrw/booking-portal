@@ -1,0 +1,54 @@
+<div class="main-card">
+    <div class="card-header px-0 pt-0">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1>Rate View</h1>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form [formGroup]='searchForm' (ngSubmit)="getRateList()">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="form-label">Origin</label>
+                        <app-auto-complete-dropdown [data]="originAirpots" [keyword]="keyword"
+                            (selectFileOutput)="selectedOrigin($event)"></app-auto-complete-dropdown>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="form-label">Destination</label>
+                        <app-auto-complete-dropdown [data]="destinationAirpots" [keyword]="keyword"
+                            (selectFileOutput)="selectedDestination($event)"></app-auto-complete-dropdown>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group mb-0">
+                        <button type="submit" class="btn btn-primary-outline">Find</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="table-content">
+            <table class="table table-responsive">
+                <thead>
+                    <th>Box Type</th>
+                    <th>Dimentions (LxWxH) Inch</th>
+                    <th>Max Weight(Kg)</th>
+                    <th>Pricr($)</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of this.cargoRateList">
+                        <td>{{GetPackageBoxType(item.packageBoxType)}}</td>
+                        <td *ngIf="item.packageBoxType == 2">Custom Dimetions</td>
+                        <td *ngIf="item.packageBoxType != 2">{{GetPackageContainerType(item.packageContainerType)+" -
+                            "+GetPackageDimentions(item)}}</td>
+                        <td>{{item.maxWaight +" Kg"}}</td>
+                        <td>{{"$ "+ item.rate}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

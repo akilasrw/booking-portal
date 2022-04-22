@@ -1,0 +1,93 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="details">
+            <details open>
+                <summary>Booking Information</summary>
+                <div class="card-details">
+                    <div class="details-group">
+                        <div class="lable">Booking ID</div>
+                        <div>{{cargoBookingDetail?.bookingNumber}}</div>
+                    </div>
+                    <div class="details-group">
+                        <div class="lable">Booking Date</div>
+                        <div>{{cargoBookingDetail?.bookingDate | date}}</div>
+                    </div>
+                    <div class="details-group">
+                        <div class="lable">Status</div>
+                        <div><span class="status-chip" [ngClass]="{
+                            'none':cargoBookingDetail?.bookingStatus == 0,
+                            'dispatch':cargoBookingDetail?.bookingStatus == 1,
+                            'invoiced':cargoBookingDetail?.bookingStatus == 2,
+                            'accepted':cargoBookingDetail?.bookingStatus == 3,
+                            'loading':cargoBookingDetail?.bookingStatus == 4,
+                            'exported':cargoBookingDetail?.bookingStatus == 5
+                        }">{{(bookingStatus(cargoBookingDetail?.bookingStatus))}}</span></div>
+                    </div>
+                </div>
+            </details>
+        </div>
+        <div class="details">
+            <details>
+                <summary>Flight Details</summary>
+                <div class="card-details">
+                    <div class="details-group">
+                        <div class="lable">Flight Number</div>
+                        <div>{{cargoBookingDetail?.flightScheduleSector.flightNumber}}</div>
+                    </div>
+                    <div class="details-group">
+                        <div class="lable">Origin and Destination</div>
+                        <div><span class="status-chip accepted">{{cargoBookingDetail?.flightScheduleSector.originAirportCode +" "+ cargoBookingDetail?.flightScheduleSector.destinationAirportCode}}</span></div>
+                    </div>
+                    <div class="details-group">
+                        <div class="lable">Cargo Acceptance Cutoff Time</div>
+                        <div>{{cargoBookingDetail?.flightScheduleSector.scheduledDepartureDateTime | date : 'h:mm a'}}</div>
+                    </div>
+                    <div class="details-group">
+                        <div class="lable">Cargo Booking Cutoff Time</div>
+                        <div>{{cargoBookingDetail?.flightScheduleSector.scheduledDepartureDateTime | date : 'h:mm a'}}</div>
+                    </div>
+                    <div class="details-group">
+                        <div class="lable">Flight Date</div>
+                        <div>{{cargoBookingDetail?.flightScheduleSector.scheduledDepartureDateTime | date : 'M/d/yyyy'}}</div>
+                    </div>
+                    <div class="details-group">
+                        <div class="lable">Flight Time</div>
+                        <div>{{cargoBookingDetail?.flightScheduleSector.scheduledDepartureDateTime | date : 'h:mm a'}}</div>
+                    </div>
+
+                </div>
+            </details>
+        </div>
+        <div class="details">
+            <details>
+                <summary>Package Details</summary>
+                <div class="card-details" *ngFor="let package in packageItems">
+                    <div class="details-group">
+                        <div class="lable">AWB Tracking Number</div>
+                        <div>{{package.awbTrackingNumber}}</div>
+                    </div>
+                    <div class="details-group">
+                        <div class="lable">Width</div>
+                        <div>{{package.Width}}</div>
+                    </div>
+                    <div class="details-group">
+                        <div class="lable">Height</div>
+                        <div>{{package.height}}</div>
+                    </div>
+                    <div class="details-group">
+                        <div class="lable">Length</div>
+                        <div>{{package.length}}</div>
+                    </div>
+                    <div class="details-group">
+                        <div class="lable">Weight</div>
+                        <div>{{package.Weight}}</div>
+                    </div>
+                    <div class="details-group">
+                        <div class="lable">Description</div>
+                        <div>{{package.description}}</div>
+                    </div>
+                </div>
+            </details>
+        </div>
+    </div>
+</div>

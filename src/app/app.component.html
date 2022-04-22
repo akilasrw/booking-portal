@@ -1,0 +1,15 @@
+<div>
+    <app-side-nav *ngIf="(accountService.currentUser$ | async) != null"></app-side-nav>
+    <div [ngClass]="{'content-container': (accountService.currentUser$ | async) != null}">
+        <router-outlet></router-outlet>
+    </div>
+
+      <!-- <select name="language" ngModel="selected" (ngModelChange)="switchLang($event)">
+        <option [value]="'selected'" hidden disabled>{{'select_language'| translate}}</option>
+        <option [value]="'en'" >English</option>
+        <option [value]="'vi'">Vietnam</option>
+      </select> -->
+
+    <!-- <h1>{{'hello' | translate }}</h1> -->
+</div>
+

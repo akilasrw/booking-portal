@@ -1,0 +1,125 @@
+<div class="main-card">
+    <div class="card-header px-0 pt-0">
+        <div class="d-flex justify-content-between align-items-center">
+            <div><h1>Booking Lookup</h1></div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+                <form [formGroup]='searchForm'  (ngSubmit)="getBookingDetail()">
+                    <div class="d-flex align-items-center">
+                        <div class="form-group">
+                            <label class="form-label">Booking Reference ID</label>
+                            <input [formControl]='searchForm.controls["referenceNumber"]' type="text"  class="form-control">
+                        </div>
+                        <div><button type="submit" class="btn btn-primary-outline ms-5 mb-2">Find</button></div>
+                    </div>
+                </form>
+        </div>
+        <div>
+            <h3>Booking Information</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="second-box h-100">
+                        <div class="details-group">
+                            <div class="lable">Booking ID</div>
+                            <div>{{cargoBookingLookup?.bookingNumber}}</div>
+                        </div>
+                        <div class="details-group">
+                            <div class="lable">Booking Date</div>
+                            <div>{{cargoBookingLookup?.bookingDate | date : 'M/d/yyyy'}}</div>
+                        </div>
+                        <div class="details-group">
+                            <div class="lable">Status</div>
+                            <div><span class="status-chip" [ngClass]="{
+                                'none':cargoBookingLookup?.bookingStatus == 0,
+                                'dispatch':cargoBookingLookup?.bookingStatus == 1,
+                                'invoiced':cargoBookingLookup?.bookingStatus == 2,
+                                'accepted':cargoBookingLookup?.bookingStatus == 3,
+                                'loading':cargoBookingLookup?.bookingStatus == 4,
+                                'exported':cargoBookingLookup?.bookingStatus == 5
+                            }">{{(bookingStatus(cargoBookingLookup?.bookingStatus))}}</span></div>
+                        </div>
+                        <div class="details-group">
+                            <div class="lable">Flight Number</div>
+                            <div>{{cargoBookingLookup?.flightScheduleSector.flightNumber}}</div>
+                        </div>
+                        <div class="details-group">
+                            <div class="lable">Origin and Destination</div>
+                            <div><span class="status-chip accepted">{{cargoBookingLookup?.flightScheduleSector.originAirportCode +" "+ cargoBookingLookup?.flightScheduleSector.destinationAirportCode}}</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="second-box h-100">
+                        <div class="">
+                            <div class="details-group">
+                                <div class="lable">Flight Time</div>
+                                <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date : 'h:mm a'}}</div>
+                            </div>
+                            <div class="details-group">
+                                <div class="lable">Cargo Acceptance Cutoff Time</div>
+                                <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date : 'h:mm a'}}</div>
+                            </div>
+                            <div class="details-group">
+                                <div class="lable">Cargo Booking Cutoff Time</div>
+                                <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date : 'h:mm a'}}</div>
+                            </div>
+                            <div class="details-group">
+                                <div class="lable">Flight Date</div>
+                                <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date : 'M/d/yyyy'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lookup-info">
+                <div *ngFor="let package of this.cargoBookingLookup?.packageItems"    class="row">
+                    <div class="col-md-2">
+                        <div class="second-box text-center">
+                            <img src="/assets/images/box.svg">
+                        </div>
+                    </div>
+                    <div class="col-md-5 pe-5">
+                        <div class="details-group">
+                            <div class="lable">Package Number</div>
+                            <div>{{package.packageRefNumber}}</div>
+                        </div>
+                        <div class="details-group">
+                            <div class="lable">Weight (Kg)</div>
+                            <div>{{package.Weight +" Kg"}}</div>
+                        </div>
+                        <div class="details-group">
+                            <div class="lable">Dimensions (L x W x H) Inch</div>
+                            <div>{{package.length +" x "+ package.width +" x "+ package.height}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 ps-5">
+                        <div class="details-group">
+                            <div class="lable">AWB Number</div>
+                            <div>{{package.awbTrackingNumber}}</div>
+                        </div>
+                        <div class="details-group">
+                            <div class="lable">AWB Status</div>
+                            <div>
+                                <span class="status-chip accepted" [ngClass]="{
+                                'none':package?.packageItemStatus == 0    
+                                }">{{(packageStatus(package?.packageItemStatus))}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="details-group">
+                            <div class="lable">Actions</div>
+                            <div>
+                                <i class="ca ca-icn-print"></i>
+                                <i class="ca ca-icn-view"></i>
+                                <i class="ca ca-icn-edit"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

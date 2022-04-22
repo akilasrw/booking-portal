@@ -1,0 +1,163 @@
+<div class="main-card">
+    <div class="card-header px-0 pt-0">
+        <div class="d-flex justify-content-between align-items-center">
+            <div><h1>Add New Booking</h1></div>
+        </div>
+
+    </div>
+    <div class="card-body">
+        <div class="booking-second-info">
+            <div class="d-flex justify-content-between align-items-center">
+                <div><h3>Package Details</h3></div>
+                <div class="back-icn"><i class="ca ca-icn-left-arrow-dash" title="Back"></i></div>
+            </div>
+            <div class="second-box">
+              <form (ngSubmit)="add()" [formGroup]="bookingForm">
+                <div class="booking-info" formGroupName="packageItems">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label">Cargo Type</label>
+                                <select name="cargoType" formControlName="packageItemCategory" class="form-control">
+                                    <option></option>
+                                    <option [value]="1">{{getCargoType(1)}}</option>
+                                    <!-- <option value="2">Live Animal</option>
+                                    <option value="3">Art Work</option>
+                                    <option value="4">Dgr</option> -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label">Package Dimensions (L x W x H)</label>
+                                <select name="cargoType" formControlName="packageDimention" class="form-control">
+                                    <option></option>
+                                    <option *ngFor="let container of packageContainers" [ngValue]="container.id">{{getPackageDimentions(container)}} {{getContainerName(container)}}</option>
+                                    <option [ngValue]="1">Custom </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="white-box mt-0 form-group">
+                        <div class="row">
+                            <div class="col-md-6 pe-5">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group mb-0">
+                                            <label class="form-label">Length</label>
+                                            <input  class="text" formControlName="length" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group mb-0">
+                                            <label class="form-label">Width</label>
+                                            <input class="text" formControlName="width" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group mb-0">
+                                            <label class="form-label">Height</label>
+                                            <input class="text" formControlName="height" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group mb-0">
+                                            <label class="form-label">Unit</label>
+                                            <select name="unit" class="form-control" formControlName ="volumeUnitId">
+                                                <option></option>
+                                                <option [value]="'11C39205-4153-49F1-AB50-BBA8913C5BB9'">Inch</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 px-5">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-0">
+                                            <label class="form-label">Weight</label>
+                                            <input class="text" formControlName="weight" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-0">
+                                            <label class="form-label">Unit</label>
+                                            <select name="unit" class="form-control" formControlName="weightUnitId">
+                                                <option></option>
+                                                <option [ngValue]="'BC1E3D49-5C26-4DE5-9CD4-576BBF6E9D0C'">Kg</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 ps-5">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-0">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 text-end">
+                                        <div class="form-group mb-0">
+                                            <label class="form-label">Add AWB</label>
+                                            <div><span class="add-awb"><i class="ca ca-icn-add" (click)="show()" title="Add AWB"></i></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-detail text-end">
+                        <button class="btn btn-secondary-outline me-3">Reset</button>
+                        <button class="btn btn-primary-outline" type="submit">Add</button>
+                    </div>
+                </div>
+              </form>
+            </div>
+            <div class="table-content">
+                <table class="table table-responsive">
+                    <thead>
+                        <th>Cargo Type</th>
+                        <th>Dimensions (L x W x H) Inch</th>
+                        <th>Weight (Kg)</th>
+                        <th>AWB</th>
+                        <th class="text-center">Actions </th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let packageItem of this.cargoBookingRequest.packageItems">
+                            <td>{{getCargoType(+packageItem.packageItemCategory)}}</td>
+                            <td>{{getPackageDimentions(packageItem)}}</td>
+                            <td>{{packageItem.weight}}</td>
+                            <td><span class="status-chip added">{{packageItem.packageItemStatus==1? 'Pending': packageItem.packageItemStatus==2? "Added": ""}}</span></td>
+                            <td class="text-center">
+                                <i class="ca ca-icn-edit" (click)="editPackage(packageItem)" title="Edit"></i>
+                                <i class="ca ca-icn-bin" title="Delete"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="text-end">
+            <button class="btn btn-secondary me-3">Cancel</button>
+            <button class="btn btn-primary" (click)="submit()">Submit</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade right" tabindex="-1" [ngClass]="{'in': modalVisibleAnimate}"
+    [ngStyle]="{'display': modalVisible ? 'block' : 'none', 'opacity': modalVisibleAnimate ? 1 : 0}">
+    <div class="modal-dialog modal-lg modal-dialog-m modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Cargo Reference Information</h2>
+                <button type="button" class="close btn" data-dismiss="modal" (click)="cancel()" aria-label="Close"><span class="ca ca-icn-close"></span></button>
+            </div>
+            <div class="modal-body">
+                <app-awb-create  (closePopup)="closePopup($event)" *ngIf="modalVisible"></app-awb-create>
+            </div>
+        </div>
+    </div>
+</div>
