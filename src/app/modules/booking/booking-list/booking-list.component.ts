@@ -4,6 +4,9 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { CargoBookingFilterQuery } from 'src/app/_models/queries/cargo-booking/cargo-booking-filter-query.model';
 import { BookingService } from 'src/app/_services/booking.service';
 import { Router } from '@angular/router';
+import { BookingStatus } from 'src/app/core/enums/common-enums';
+import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
+
 
 @Component({
   selector: 'app-booking-list',
@@ -18,6 +21,7 @@ export class BookingListComponent implements OnInit {
   public filterForm!: FormGroup;
   cargoBookingList: CargoBooking[] = []
   cargoBookingId?:string;
+  bookingStatus = BookingStatus
 
   constructor(
     private bookingService: BookingService,
@@ -71,6 +75,14 @@ export class BookingListComponent implements OnInit {
 
   goToCreateBooking() {
     this.router.navigate(['booking/search']);
+  }
+
+  getBookingStatus(status:number):string{
+    return CoreExtensions.GetBookingStatus(status)
+  }
+
+  clearFilter(){
+    this.filterForm.reset();
   }
 
 }

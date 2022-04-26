@@ -23,7 +23,7 @@
                         <input type="text" [formControl]='filterForm.controls["bookingDate"]' class="form-control" bsDatepicker>
                     </div>
                     <div class="button"><button type="submit" class="btn sm btn-primary-outline">Add Filter</button></div>
-                    <div class="filter-clear" title="Filter Clear"><i class="ca ca-icn-close"></i></div>
+                    <div class="filter-clear" title="Filter Clear"><i class="ca ca-icn-close" (click)="clearFilter()"></i></div>
                 </div>
                 </form>
             <div class="mt-4">
@@ -45,19 +45,19 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let booking of this.cargoBookingList">
-                        <td>{{booking.bookingId}}</td>
+                        <td>{{booking.bookingNumber}}</td>
                         <td>{{booking.bookingDate | date}}</td>
                         <td>{{booking.destinationAirportCode}}</td>
                         <td>{{booking.flightNumber}}</td>
                         <td>{{booking.flightDate | date}}</td>
                         <td><span class="status-chip" [ngClass]="{
-                            'none':booking.bookingStatus == 0,
-                            'dispatch':booking.bookingStatus == 1,
-                            'invoiced':booking.bookingStatus == 2,
-                            'accepted':booking.bookingStatus == 3,
-                            'loading':booking.bookingStatus == 4,
-                            'exported':booking.bookingStatus == 5
-                        }">{{(GetBookingStatus(booking.bookingStatus))}}</span></td>
+                            'none':booking.bookingStatus == bookingStatus.None,
+                            'dispatch':booking.bookingStatus == bookingStatus.Dispatched,
+                            'invoiced':booking.bookingStatus == bookingStatus.Invoiced,
+                            'accepted':booking.bookingStatus == bookingStatus.Accepted,
+                            'loading':booking.bookingStatus == bookingStatus.Loading,
+                            'exported':booking.bookingStatus == bookingStatus.Exported
+                        }">{{(getBookingStatus(cargoBookingDetail?.bookingStatus))}}</span></td>
                         <td>{{booking.numberOfBoxes}}</td>
                         <td>{{booking.totalWeight}}</td>
                         <td>
@@ -65,38 +65,7 @@
                             <i class="ca ca-icn-edit" title="Edit"></i>
                             <i class="ca ca-icn-bin" title="Delete"></i>
                         </td>
-                    </tr>
-
-                    <tr>
-                        <td>00123456</td>
-                        <td>2/5/2022</td>
-                        <td>CAN</td>
-                        <td>UL 730</td>
-                        <td>2/10/2022</td>
-                        <td><span class="status-chip dispatch">Dispatch</span></td>
-                        <td>10</td>
-                        <td>25</td>
-                        <td>
-                            <i class="ca ca-icn-view" (click)="show(44)" title="View"></i>
-                            <i class="ca ca-icn-edit" title="Edit"></i>
-                            <i class="ca ca-icn-bin" title="Delete"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>00123456</td>
-                        <td>2/5/2022</td>
-                        <td>CAN</td>
-                        <td>UL 730</td>
-                        <td>2/10/2022</td>
-                        <td><span class="status-chip exported">Exported</span></td>
-                        <td>10</td>
-                        <td>25</td>
-                        <td>
-                            <i class="ca ca-icn-view" (click)="show(55)" title="View"></i>
-                            <i class="ca ca-icn-edit" title="Edit"></i>
-                            <i class="ca ca-icn-bin" title="Delete"></i>
-                        </td>
-                    </tr>
+                    </tr>                   
                 </tbody>
             </table>
         </div>

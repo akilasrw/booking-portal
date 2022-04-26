@@ -15,13 +15,13 @@
                     <div class="details-group">
                         <div class="lable">Status</div>
                         <div><span class="status-chip" [ngClass]="{
-                            'none':cargoBookingDetail?.bookingStatus == 0,
-                            'dispatch':cargoBookingDetail?.bookingStatus == 1,
-                            'invoiced':cargoBookingDetail?.bookingStatus == 2,
-                            'accepted':cargoBookingDetail?.bookingStatus == 3,
-                            'loading':cargoBookingDetail?.bookingStatus == 4,
-                            'exported':cargoBookingDetail?.bookingStatus == 5
-                        }">{{(bookingStatus(cargoBookingDetail?.bookingStatus))}}</span></div>
+                            'none':cargoBookingDetail?.bookingStatus == bookingStatus.None,
+                            'dispatch':cargoBookingDetail?.bookingStatus == bookingStatus.Dispatched,
+                            'invoiced':cargoBookingDetail?.bookingStatus == bookingStatus.Invoiced,
+                            'accepted':cargoBookingDetail?.bookingStatus == bookingStatus.Accepted,
+                            'loading':cargoBookingDetail?.bookingStatus == bookingStatus.Loading,
+                            'exported':cargoBookingDetail?.bookingStatus == bookingStatus.Exported
+                        }">{{(getBbookingStatus(cargoBookingDetail?.bookingStatus))}}</span></div>
                     </div>
                 </div>
             </details>
