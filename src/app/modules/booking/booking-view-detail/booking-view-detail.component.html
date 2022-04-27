@@ -36,7 +36,7 @@
                     </div>
                     <div class="details-group">
                         <div class="lable">Origin and Destination</div>
-                        <div><span class="status-chip accepted">{{cargoBookingDetail?.flightScheduleSector.originAirportCode +" -> "+ cargoBookingDetail?.flightScheduleSector.destinationAirportCode}}</span></div>
+                        <div><span class="status-chip accepted">{{cargoBookingDetail?.flightScheduleSector.originAirportCode +" - "+ cargoBookingDetail?.flightScheduleSector.destinationAirportCode}}</span></div>
                     </div>
                     <div class="details-group">
                         <div class="lable">Cargo Acceptance Cutoff Time</div>
@@ -63,7 +63,7 @@
                 <summary>Package Details</summary>
                 <div class="card-details" *ngFor="let package of this.cargoBookingDetail?.packageItems">
                     <div class="details-group">
-                        <div class="lable">Package ID</div>
+                        <div class="lable">Package Number</div>
                         <div>{{package.packageRefNumber}}</div>
                     </div>
                     <div class="details-group">
@@ -72,19 +72,19 @@
                     </div>
                     <div class="details-group">
                         <div class="lable">Width</div>
-                        <div>{{package.width}}</div>
+                        <div>{{package.width+" Inch"}}</div>
                     </div>
                     <div class="details-group">
                         <div class="lable">Height</div>
-                        <div>{{package.height}}</div>
+                        <div>{{package.height+" Inch"}}</div>
                     </div>
                     <div class="details-group">
                         <div class="lable">Length</div>
-                        <div>{{package.length}}</div>
+                        <div>{{package.length+" Inch"}}</div>
                     </div>
                     <div class="details-group">
                         <div class="lable">Weight</div>
-                        <div>{{package.weight}}</div>
+                        <div>{{package.weight+" Kg"}}</div>
                     </div>
                     <div class="details-group">
                         <div class="lable">Description</div>

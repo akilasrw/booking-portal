@@ -50,6 +50,12 @@ export class CoreExtensions {
       case PackageItemStatus.None:
         statusString = "None";
         break;
+      case PackageItemStatus.Pending:
+        statusString = "Pending";
+        break;
+      case PackageItemStatus.AddedAWB:
+        statusString = "Added AWB";
+        break;
       default:
         break;
     }

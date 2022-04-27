@@ -5,6 +5,7 @@ import { CargoBookingLookupQuery } from 'src/app/_models/queries/cargo-booking-l
 import { BookingLookupService } from 'src/app/_services/booking-lookup.service';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 import { ToastrService } from 'ngx-toastr';
+import { BookingStatus, PackageItemStatus } from 'src/app/core/enums/common-enums';
 
 
 @Component({
@@ -17,6 +18,9 @@ export class BookingLookupSearchComponent implements OnInit {
   public searchForm!:FormGroup;
 
   cargoBookingLookup?: CargoBookingLookup
+
+  bookingStatus = BookingStatus;
+  packageItemStatus = PackageItemStatus;
 
 
   constructor(private fb:FormBuilder,
@@ -54,11 +58,11 @@ export class BookingLookupSearchComponent implements OnInit {
     
   }
 
-  bookingStatus(status:number):string{
+  getBookingStatus(status:number):string{
     return CoreExtensions.GetBookingStatus(status)
   }
 
-  packageStatus(status:number):string{
+  getPackageStatus(status:number):string{
     return CoreExtensions.GetPackageStatus(status)
   }
 
