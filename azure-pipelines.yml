@@ -21,7 +21,7 @@ steps:
     npm install -g @angular/cli
     npm install
   displayName: 'npm install'
-  workingDirectory: '$(Build.SourcesDirectory)/aeroclub-scs-booking-portal'
+  workingDirectory: '$(Build.SourcesDirectory)'
 
 - task: AzureStaticWebApp@0
   inputs:
