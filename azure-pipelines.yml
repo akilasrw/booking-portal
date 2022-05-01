@@ -25,9 +25,9 @@ steps:
 
 - task: AzureStaticWebApp@0
   inputs:
-      app_location: "/aeroclub-scs-booking-portal" 
+      app_location: "/" 
       api_location: "api"
       app_build_command: $(build_command)
-      output_location: "dist/aeroclub-scs-booking-portal"
+      output_location: "dist"
   env:
       azure_static_web_apps_api_token: $(deployment_token)
