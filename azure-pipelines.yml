@@ -20,8 +20,7 @@ steps:
 - script: |
     npm install -g @angular/cli
     npm install
-    ng build --prod
-  displayName: 'npm install and build'
+  displayName: 'npm install'
   workingDirectory: '$(Build.SourcesDirectory)/aeroclub-scs-booking-portal'
 
 - task: AzureStaticWebApp@0
