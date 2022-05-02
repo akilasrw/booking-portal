@@ -21,11 +21,11 @@ steps:
     npm install -g @angular/cli
     npm install
   displayName: 'npm install'
-  workingDirectory: '$(Build.SourcesDirectory)/aeroclub-cargo-client'
+  workingDirectory: '$(Build.SourcesDirectory)'
 
 - task: AzureStaticWebApp@0
   inputs:
-      app_location: "/" 
+      app_location: "src/" 
       api_location: "api"
       app_build_command: $(build_command)
       output_location: "dist/aeroclub-cargo-client"
