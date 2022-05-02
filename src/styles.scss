@@ -3,10 +3,10 @@
 
 @import 'https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap';
 
-@import "assets/SCSS/theme";
-@import "assets/SCSS/mixins";
-@import "assets/SCSS/variables";
-@import "assets/css/style.css";
+@import "./assets/SCSS/theme";
+@import "./assets/SCSS/mixins";
+@import "./assets/SCSS/variables";
+@import "./assets/css/style.css";
 
 /* Importing Datepicker SCSS file. */
 @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
@@ -316,7 +316,7 @@ a {
     }
 }
 
-// Table 
+// Table
 .table-content {
     .table {
         margin-top: 1.25rem;
@@ -552,7 +552,7 @@ a {
     }
 }
 
-// Details 
+// Details
 .details {
     padding-bottom: 1.25rem;
     details {
@@ -604,7 +604,7 @@ a {
             }
         }
     }
-    
+
 }
 
 // Add New Booking
