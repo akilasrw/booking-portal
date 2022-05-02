@@ -45,10 +45,18 @@ export enum MenuType {
     None = 0,
     Urgent = 1
   }
+
   export enum PackageBoxType
   {
     None = 0,
     Container = 1,
     CustomBox = 2
+  }
+
+  export enum UnitType
+  {
+    None = 0,
+    Length  = 1,
+    Mass = 2
   }
 
