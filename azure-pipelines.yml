@@ -18,8 +18,10 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    cd aeroclub-scs-booking-portal/
     npm install -g @angular/cli
     npm install
+    ng build --dev
   displayName: 'npm install'
   workingDirectory: '$(Build.SourcesDirectory)'
 
