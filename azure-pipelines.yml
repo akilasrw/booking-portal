@@ -25,7 +25,7 @@ steps:
 
 - task: AzureStaticWebApp@0
   inputs:
-      app_location: "/" 
+      app_location: "src" 
       api_location: "api"
       app_build_command: $(build_command)
       output_location: "dist"
