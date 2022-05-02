@@ -9,7 +9,7 @@ import { CargoBookingLookup } from '../_models/view-models/cargo-booking-lookup/
 })
 export class BookingLookupService extends BaseService {
 
-  private readonly endpointEntityName = 'CargoBookingLookup';
+  private readonly endpointEntityName = 'cargoBookingLookup';
 
   constructor(http:HttpClient) { 
     super(http)

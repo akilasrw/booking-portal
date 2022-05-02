@@ -16,7 +16,7 @@
                     </div>
                 </form>
         </div>
-        <div>
+        <div *ngIf="cargoBookingLookup != null">
             <h3>Booking Information</h3>
             <div class="row">
                 <div class="col-md-6">
@@ -32,13 +32,13 @@
                         <div class="details-group">
                             <div class="lable">Status</div>
                             <div><span class="status-chip" [ngClass]="{
-                                'none':cargoBookingLookup?.bookingStatus == 0,
-                                'dispatch':cargoBookingLookup?.bookingStatus == 1,
-                                'invoiced':cargoBookingLookup?.bookingStatus == 2,
-                                'accepted':cargoBookingLookup?.bookingStatus == 3,
-                                'loading':cargoBookingLookup?.bookingStatus == 4,
-                                'exported':cargoBookingLookup?.bookingStatus == 5
-                            }">{{(bookingStatus(cargoBookingLookup?.bookingStatus))}}</span></div>
+                                'none':cargoBookingLookup?.bookingStatus == bookingStatus.None,
+                                'dispatch':cargoBookingLookup?.bookingStatus == bookingStatus.Dispatched,
+                                'invoiced':cargoBookingLookup?.bookingStatus == bookingStatus.Invoiced,
+                                'accepted':cargoBookingLookup?.bookingStatus == bookingStatus.Accepted,
+                                'loading':cargoBookingLookup?.bookingStatus == bookingStatus.Loading,
+                                'exported':cargoBookingLookup?.bookingStatus == bookingStatus.Exported
+                            }">{{(getBookingStatus(cargoBookingLookup?.bookingStatus))}}</span></div>
                         </div>
                         <div class="details-group">
                             <div class="lable">Flight Number</div>
@@ -46,7 +46,7 @@
                         </div>
                         <div class="details-group">
                             <div class="lable">Origin and Destination</div>
-                            <div><span class="status-chip accepted">{{cargoBookingLookup?.flightScheduleSector.originAirportCode +" "+ cargoBookingLookup?.flightScheduleSector.destinationAirportCode}}</span></div>
+                            <div><span class="status-chip accepted">{{cargoBookingLookup?.flightScheduleSector.originAirportCode +" - "+ cargoBookingLookup?.flightScheduleSector.destinationAirportCode}}</span></div>
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                         </div>
                         <div class="details-group">
                             <div class="lable">Weight (Kg)</div>
-                            <div>{{package.Weight +" Kg"}}</div>
+                            <div>{{package.weight +" Kg"}}</div>
                         </div>
                         <div class="details-group">
                             <div class="lable">Dimensions (L x W x H) Inch</div>
@@ -102,9 +102,11 @@
                         <div class="details-group">
                             <div class="lable">AWB Status</div>
                             <div>
-                                <span class="status-chip accepted" [ngClass]="{
-                                'none':package?.packageItemStatus == 0    
-                                }">{{(packageStatus(package?.packageItemStatus))}}
+                                <span class="awb-status-chip" [ngClass]="{
+                                'none':package?.packageItemStatus == packageItemStatus.None,
+                                'added':package?.packageItemStatus == packageItemStatus.AddedAWB,  
+                                'pending':package?.packageItemStatus == packageItemStatus.Pending  
+                                }">{{(getPackageStatus(package?.packageItemStatus))}}
                                 </span>
                             </div>
                         </div>

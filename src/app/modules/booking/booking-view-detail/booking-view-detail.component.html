@@ -15,13 +15,13 @@
                     <div class="details-group">
                         <div class="lable">Status</div>
                         <div><span class="status-chip" [ngClass]="{
-                            'none':cargoBookingDetail?.bookingStatus == 0,
-                            'dispatch':cargoBookingDetail?.bookingStatus == 1,
-                            'invoiced':cargoBookingDetail?.bookingStatus == 2,
-                            'accepted':cargoBookingDetail?.bookingStatus == 3,
-                            'loading':cargoBookingDetail?.bookingStatus == 4,
-                            'exported':cargoBookingDetail?.bookingStatus == 5
-                        }">{{(bookingStatus(cargoBookingDetail?.bookingStatus))}}</span></div>
+                            'none':cargoBookingDetail?.bookingStatus == bookingStatus.None,
+                            'dispatch':cargoBookingDetail?.bookingStatus == bookingStatus.Dispatched,
+                            'invoiced':cargoBookingDetail?.bookingStatus == bookingStatus.Invoiced,
+                            'accepted':cargoBookingDetail?.bookingStatus == bookingStatus.Accepted,
+                            'loading':cargoBookingDetail?.bookingStatus == bookingStatus.Loading,
+                            'exported':cargoBookingDetail?.bookingStatus == bookingStatus.Exported
+                        }">{{(getBbookingStatus(cargoBookingDetail?.bookingStatus))}}</span></div>
                     </div>
                 </div>
             </details>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="details-group">
                         <div class="lable">Origin and Destination</div>
-                        <div><span class="status-chip accepted">{{cargoBookingDetail?.flightScheduleSector.originAirportCode +" "+ cargoBookingDetail?.flightScheduleSector.destinationAirportCode}}</span></div>
+                        <div><span class="status-chip accepted">{{cargoBookingDetail?.flightScheduleSector.originAirportCode +" - "+ cargoBookingDetail?.flightScheduleSector.destinationAirportCode}}</span></div>
                     </div>
                     <div class="details-group">
                         <div class="lable">Cargo Acceptance Cutoff Time</div>
@@ -61,26 +61,30 @@
         <div class="details">
             <details>
                 <summary>Package Details</summary>
-                <div class="card-details" *ngFor="let package in packageItems">
+                <div class="card-details" *ngFor="let package of this.cargoBookingDetail?.packageItems">
+                    <div class="details-group">
+                        <div class="lable">Package Number</div>
+                        <div>{{package.packageRefNumber}}</div>
+                    </div>
                     <div class="details-group">
                         <div class="lable">AWB Tracking Number</div>
                         <div>{{package.awbTrackingNumber}}</div>
                     </div>
                     <div class="details-group">
                         <div class="lable">Width</div>
-                        <div>{{package.Width}}</div>
+                        <div>{{package.width+" Inch"}}</div>
                     </div>
                     <div class="details-group">
                         <div class="lable">Height</div>
-                        <div>{{package.height}}</div>
+                        <div>{{package.height+" Inch"}}</div>
                     </div>
                     <div class="details-group">
                         <div class="lable">Length</div>
-                        <div>{{package.length}}</div>
+                        <div>{{package.length+" Inch"}}</div>
                     </div>
                     <div class="details-group">
                         <div class="lable">Weight</div>
-                        <div>{{package.Weight}}</div>
+                        <div>{{package.weight+" Kg"}}</div>
                     </div>
                     <div class="details-group">
                         <div class="lable">Description</div>

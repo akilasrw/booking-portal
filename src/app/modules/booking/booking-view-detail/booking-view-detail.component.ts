@@ -3,6 +3,7 @@ import { CargoBookingDetailQuery } from './../../../_models/queries/cargo-bookin
 import { Component, Input, OnInit } from '@angular/core';
 import { BookingService } from 'src/app/_services/booking.service';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
+import { BookingStatus } from 'src/app/core/enums/common-enums';
 
 @Component({
   selector: 'app-booking-view-detail',
@@ -13,6 +14,7 @@ export class BookingViewDetailComponent implements OnInit {
 
   @Input() cargoBookingId?:string;
   cargoBookingDetail?: CargoBookingDetail
+  bookingStatus = BookingStatus;
 
   constructor(private bookingSerice: BookingService) {}
 
@@ -38,7 +40,7 @@ export class BookingViewDetailComponent implements OnInit {
     }
   }
 
-  bookingStatus(status:number):string{
+  getBbookingStatus(status:number):string{
     return CoreExtensions.GetBookingStatus(status)
   }
 

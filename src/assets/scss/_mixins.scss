@@ -77,6 +77,22 @@
   }
 }
 
+@mixin awb-lable-color {
+  @include status-lable;
+  &.added { 
+    border-color: $green;
+    color: $green;
+  }
+  &.pending  {
+    border-color: $brand-primary;
+    color: $brand-primary;
+  }
+  &.none  {
+    border-color: $gray;
+    color: $gray;
+  }
+}
+
 
 
 

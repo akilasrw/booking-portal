@@ -19,7 +19,7 @@ export class BookingService extends BaseService {
 
   private readonly endpointEntityName = 'cargoBooking';
 
-  private readonly getFilteredListEndpoint = 'cargoBooking/getFilteredList';
+  private readonly getFilteredListEndpoint = `${this.endpointEntityName}/getFilteredList`;
 
 
   constructor(http: HttpClient) {
