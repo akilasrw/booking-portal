@@ -28,6 +28,6 @@ steps:
       app_location: "src" 
       api_location: "api"
       app_build_command: $(build_command)
-      output_location: "dist"
+      output_location: "dist/aeroclub-cargo-client"
   env:
       azure_static_web_apps_api_token: $(deployment_token)
