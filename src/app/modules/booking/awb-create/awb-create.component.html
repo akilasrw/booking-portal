@@ -1,241 +1,263 @@
+<form [formGroup]='awbForm' (ngSubmit)="saveAWBDetails()">
+    <div class="modal-body">
+        <div class="row">
+            <div>
+                <h3>Shipper Information </h3>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Shipper Name</label>
+                    <app-text-input [formControl]='awbForm.controls["shipperName"]' type="text">
+                    </app-text-input>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Shipper's Account Number</label>
+                    <app-text-input [formControl]='awbForm.controls["shipperAccountNumber"]' type="text">
+                    </app-text-input>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="form-label">Shipper Address</label>
+                    <app-text-input [formControl]='awbForm.controls["shipperAddress"]' type="text">
+                    </app-text-input>
+                </div>
+            </div>
+        </div>
 
-<div class="modal-body">
-    <div class="row">
-        <div>
-            <h3>Shipper Information </h3>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="form-label">Shipper Name</label>
-                <input type="text" class="form-control" >
+        <div class="row">
+            <div>
+                <h3>Consignee Information</h3>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="form-label">Shipper's Account Number</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <label class="form-label">Shipper Address</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div>
-            <h3>Consignee Information</h3>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="form-label">Consignee Name</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="form-label">Consignee's Account Number</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <label class="form-label">Consignee Address</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div>
-            <h3>Issuing Carrier's Agent</h3>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="form-label">Carrier's Agent Name</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="form-label">Carrier's Agent City</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="form-label">Agent's AITA Code</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="form-label">Account Number</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <label class="form-label">Accounting Information</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div>
-            <h3>Flight Information</h3>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="form-label">Requested Routing</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="form-label">Requested Flight Date</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="form-label">Routing and Destination To</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="form-label">Routing and Destination By</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="form-label">Airport Destination</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div>
-            <h3>Optional Shipping Information</h3>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="form-label">Reference Number</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="form-label">Currency</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="form-label">Declared Value for Carriage</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="form-label">Declared Value for Customer</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="form-label">Amount of Insurance</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div>
-            <h3>Add Items Lists</h3>
-        </div>
-        <div class="second-box">
-            <form [formGroup]='productForm'  (ngSubmit)="addProduct()">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="form-label">Product ID</label>
-                        <app-text-input [formControl]='productForm.controls["productRefNumber"]' type="text">
-                        </app-text-input>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="form-group">
-                        <label class="form-label">Product Name</label>
-                        <app-text-input [formControl]='productForm.controls["productName"]' type="text">
-                        </app-text-input>
-                    </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Consignee Name</label>
+                    <app-text-input [formControl]='awbForm.controls["consigneeName"]' type="text">
+                    </app-text-input>
                 </div>
             </div>
-            <div class="row align-items-center">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="form-label">Product Type</label>
-                        <select name="productType" formControlName="productType" class="form-control">
-                            <option></option>
-                            <option [value]="1">{{getAWBProductType(1)}}</option>
-                            <option [value]="2">{{getAWBProductType(2)}}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="form-label">Quantity</label>
-                        <app-text-input [formControl]='productForm.controls["quantity"]' type="number">
-                        </app-text-input>
-                    </div>
-                </div>
-                <div class="col-md-6 text-end">
-                    <button class="btn btn-secondary-outline mb-2 me-3" type="submit" (click)="resetProduct()">Reset</button>  
-                    <button class="btn btn-primary-outline mb-2" type="submit">{{isUpdate?"Update":"Add"}}</button>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Consignee's Account Number</label>
+                    <app-text-input [formControl]='awbForm.controls["consigneeAccountNumber"]' type="text">
+                    </app-text-input>
                 </div>
             </div>
-            </form>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div *ngFor="let product of this.productList"  class="second-box">
-            <div class="details-group">
-                <div class="lable">Product ID</div>
-                <div>{{product.productRefNumber}}</div>
-            </div>
-            <div class="details-group">
-                <div class="lable">Product Name</div>
-                <div>{{product.productName}}</div>
-            </div>
-            <div class="details-group">
-                <div class="lable">Product Type</div>
-                <div>{{getAWBProductType(product.productType)}}</div>
-            </div>
-            <div class="details-group">
-                <div class="lable">Quantity</div>
-                <div>{{product.quantity}}</div>
-            </div>
-            <div class="details-group">
-                <div class="lable">Actions</div>
-                <div>
-                    <i class="ca ca-icn-edit" title="Edit"(click)="editProduct(product)"></i>
-                    <i class="ca ca-icn-bin pe-0" title="Delete" (click)="removeProduct(product)"></i>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="form-label">Consignee Address</label>
+                    <app-text-input [formControl]='awbForm.controls["consigneeAddress"]' type="text">
+                    </app-text-input>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="modal-footer">
-    <button class="btn btn-secondary me-3">Cancel</button>
-    <button class="btn btn-primary">Add</button>
-</div>
+        <div class="row">
+            <div>
+                <h3>Issuing Carrier's Agent</h3>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Carrier's Agent Name</label>
+                    <app-text-input [formControl]='awbForm.controls["agentName"]' type="text">
+                    </app-text-input>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Carrier's Agent City</label>
+                    <app-text-input [formControl]='awbForm.controls["agentCity"]' type="text">
+                    </app-text-input>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Agent's AITA Code</label>
+                    <app-text-input [formControl]='awbForm.controls["agentAITACode"]' type="text">
+                    </app-text-input>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Account Number</label>
+                    <app-text-input [formControl]='awbForm.controls["agentAccountNumber"]' type="text">
+                    </app-text-input>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="form-label">Accounting Information</label>
+                    <app-text-input [formControl]='awbForm.controls["agentAccountInformation"]' type="text">
+                    </app-text-input>
+                </div>
+            </div>
+        </div>
 
+        <div class="row">
+            <div>
+                <h3>Flight Information</h3>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Requested Routing</label>
+                    <app-text-input [formControl]='awbForm.controls["requestedRouting"]' type="text">
+                    </app-text-input>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Requested Flight Date</label>
+                    <input type="text" [formControl]='awbForm.controls["requestedFlightDate"]' class="form-control" bsDatepicker>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="form-label">Routing and Destination To</label>
+                    <app-text-input [formControl]='awbForm.controls["routingAndDestinationTo"]' type="text">
+                    </app-text-input>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="form-label">Routing and Destination By</label>
+                    <app-text-input [formControl]='awbForm.controls["routingAndDestinationBy"]' type="text">
+                    </app-text-input>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="form-label">Airport Destination</label>
+                    <app-auto-complete-dropdown [data]="destinationAirpots" [keyword]="keyword"
+                            (selectFileOutput)="selectedDestination($event)"></app-auto-complete-dropdown>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div>
+                <h3>Optional Shipping Information</h3>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="form-label">Reference Number</label>
+                    <app-text-input [formControl]='awbForm.controls["shippingReferenceNumber"]' type="text">
+                    </app-text-input>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="form-label">Currency</label>
+                    <app-text-input [formControl]='awbForm.controls["currency"]' type="text">
+                    </app-text-input>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="form-label">Declared Value for Carriage</label>
+                    <app-text-input [formControl]='awbForm.controls["declaredValueForCarriage"]' type="number">
+                    </app-text-input>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Declared Value for Customer</label>
+                    <app-text-input [formControl]='awbForm.controls["declaredValueForCustomer"]' type="number">
+                    </app-text-input>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Amount of Insurance</label>
+                    <app-text-input [formControl]='awbForm.controls["amountOfInsurance"]' type="number">
+                    </app-text-input>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div>
+                <h3>Add Items Lists</h3>
+            </div>
+            <div class="second-box">
+                <form [formGroup]='productForm' (ngSubmit)="addProduct()">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label">Product ID</label>
+                                <app-text-input [formControl]='productForm.controls["productRefNumber"]' type="text">
+                                </app-text-input>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label class="form-label">Product Name</label>
+                                <app-text-input [formControl]='productForm.controls["productName"]' type="text">
+                                </app-text-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label">Product Type</label>
+                                <select name="productType" formControlName="productType" class="form-control">
+                                    <option></option>
+                                    <option [value]="1">{{getAWBProductType(1)}}</option>
+                                    <option [value]="2">{{getAWBProductType(2)}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="form-label">Quantity</label>
+                                <app-text-input [formControl]='productForm.controls["quantity"]' type="number">
+                                </app-text-input>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <button class="btn btn-secondary-outline mb-2 me-3" type="submit"
+                                (click)="resetProduct()">Reset</button>
+                            <button class="btn btn-primary-outline mb-2"
+                                type="submit">{{isUpdate?"Update":"Add"}}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div *ngFor="let product of this.productList" class="second-box">
+                <div class="details-group">
+                    <div class="lable">Product ID</div>
+                    <div>{{product.productRefNumber}}</div>
+                </div>
+                <div class="details-group">
+                    <div class="lable">Product Name</div>
+                    <div>{{product.productName}}</div>
+                </div>
+                <div class="details-group">
+                    <div class="lable">Product Type</div>
+                    <div>{{getAWBProductType(product.productType)}}</div>
+                </div>
+                <div class="details-group">
+                    <div class="lable">Quantity</div>
+                    <div>{{product.quantity}}</div>
+                </div>
+                <div class="details-group">
+                    <div class="lable">Actions</div>
+                    <div>
+                        <i class="ca ca-icn-edit" title="Edit" (click)="editProduct(product)"></i>
+                        <i class="ca ca-icn-bin pe-0" title="Delete" (click)="removeProduct(product)"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-secondary me-3">Cancel</button>
+        <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+</form>
