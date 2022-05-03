@@ -141,6 +141,19 @@ export class CoreExtensions {
     return statusString;
   }
 
+  public static GetAWBProductType(type: number) {
+    let productType="";
+    switch(type){
+      case 1:
+        productType = "Electronic";
+        break;
+      case 2:
+        productType = "Stationery";
+        break;
+    }
+    return productType;
+  }
+
 
 
 }

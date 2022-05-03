@@ -60,3 +60,10 @@ export enum MenuType {
     Mass = 2
   }
 
+  export enum PackageProductType
+  {
+      None = 0,
+      Electronic = 1,
+      Stationery = 2,
+  }
+
