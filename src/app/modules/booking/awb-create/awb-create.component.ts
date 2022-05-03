@@ -1,8 +1,13 @@
+import { AirportService } from './../../../_services/airport.service';
 import { AWBProductRM } from './../../../_models/request-models/awb/awb-product-rm.model';
 import { AWBService } from './../../../_services/awb.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
+import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.model';
+import { ToastrService } from 'ngx-toastr';
+import { SelectList } from 'src/app/shared/models/select-list.model';
+
 
 @Component({
   selector: 'app-awb-create',
@@ -16,15 +21,20 @@ export class AwbCreateComponent implements OnInit {
   public productList: AWBProductRM[] = []
   public isUpdate:boolean= false;
   public updateIndex :number=0;
+  public keyword = 'value';
+  public destinationAirpots: SelectList[] = [];
 
 
 
 
-  constructor(public awbService:AWBService) { }
+
+
+  constructor(private awbService:AWBService,private toastr: ToastrService,private airportService: AirportService) { }
 
   ngOnInit(): void {
     this.initializeAWBForm();
     this.initializeProductForm();
+    this.loadAirports();
   }
 
   initializeAWBForm() {
@@ -98,6 +108,43 @@ export class AwbCreateComponent implements OnInit {
     this.productForm.get('quantity')?.patchValue(product.quantity);
     this.productForm.get('productType')?.patchValue(product.productType);
 
+  }
+
+  loadAirports(){
+    this.airportService.getSelectList()
+      .subscribe(res => {
+        if(res.length > 0) {
+          this.destinationAirpots = res;
+        }
+      });
+  }
+
+  selectedDestination(value: any){
+    this.awbForm.get('destinationAirportId')?.patchValue(value.id);
+    this.awbForm.get('destinationAirportCode')?.patchValue(value.value);
+  }
+
+  saveAWBDetails(){
+    if(this.awbForm.valid){
+      var awb: AWBCreateRM = this.awbForm.value;
+      if(this.productList.length == 0){
+        this.toastr.success('Please add product items.');
+        return;
+      }
+      awb.packageProducts = this.productList;
+
+      this.awbService.createAWB(awb).subscribe(
+        res => {
+          this.toastr.success('Successfully saved.');
+        },
+        err => {
+
+        })  
+
+    }else{
+      this.awbForm.markAllAsTouched();
+    }
+ 
   }
 
 }
