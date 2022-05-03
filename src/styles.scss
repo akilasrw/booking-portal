@@ -3,9 +3,9 @@
 
 @import 'https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap';
 
-@import "assets/scss/theme";
-@import "assets/scss/mixins";
-@import "assets/scss/variables";
+@import "assets/SCSS/theme";
+@import "assets/SCSS/mixins";
+@import "assets/SCSS/variables";
 @import "assets/css/style.css";
 
 /* Importing Datepicker SCSS file. */
@@ -316,7 +316,7 @@ a {
     }
 }
 
-// Table
+// Table 
 .table-content {
     .table {
         margin-top: 1.25rem;
@@ -353,13 +353,6 @@ a {
 .status-chip {
     @include lable-color;
 }
-
-// AWB lable
-.awb-status-chip {
-    @include awb-lable-color;
-}
-
-
 
 // Font Icons
 .ca {
@@ -502,6 +495,12 @@ a {
 // Details Group
 .details-group {
  @include detailsgroup;
+ i {
+    color: $brand-primary;
+    font-size: 1rem;
+    padding: 0 0.938rem;
+    cursor: pointer;
+ }
 }
 
 // Whiti Box With Border
@@ -534,6 +533,8 @@ a {
         .modal-content {
             height: 100%;
             overflow-y: auto;
+            border-radius: 0;
+            border: 0;
         }
         &.fade {
             .modal-dialog {
@@ -552,7 +553,7 @@ a {
     }
 }
 
-// Details
+// Details 
 .details {
     padding-bottom: 1.25rem;
     details {
@@ -604,7 +605,7 @@ a {
             }
         }
     }
-
+    
 }
 
 // Add New Booking
