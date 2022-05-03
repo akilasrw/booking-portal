@@ -3,10 +3,10 @@
 
 @import 'https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap';
 
-@import "/src/assets/scss/theme";
-@import "/src/assets/scss/mixins";
-@import "/src/assets/scss/variables";
-@import "/src/assets/css/style.css";
+@import "assets/scss/theme";
+@import "assets/scss/mixins";
+@import "assets/scss/variables";
+@import "assets/css/style.css";
 
 /* Importing Datepicker SCSS file. */
 @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
