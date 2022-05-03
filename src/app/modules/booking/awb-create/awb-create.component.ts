@@ -1,7 +1,7 @@
 import { AirportService } from './../../../_services/airport.service';
 import { AWBProductRM } from './../../../_models/request-models/awb/awb-product-rm.model';
 import { AWBService } from './../../../_services/awb.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.model';
@@ -23,10 +23,7 @@ export class AwbCreateComponent implements OnInit {
   public updateIndex :number=0;
   public keyword = 'value';
   public destinationAirpots: SelectList[] = [];
-
-
-
-
+  @Output() closePopup = new EventEmitter<any>();
 
 
   constructor(private awbService:AWBService,private toastr: ToastrService,private airportService: AirportService) { }
@@ -145,6 +142,10 @@ export class AwbCreateComponent implements OnInit {
       this.awbForm.markAllAsTouched();
     }
  
+  }
+
+  closeModal(item: any) {
+    this.closePopup.emit(item);
   }
 
 }
