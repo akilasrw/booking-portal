@@ -125,7 +125,7 @@ export class AwbCreateComponent implements OnInit {
     if(this.awbForm.valid){
       var awb: AWBCreateRM = this.awbForm.value;
       if(this.productList.length == 0){
-        this.toastr.success('Please add product items.');
+        this.toastr.error('Please add product items.');
         return;
       }
       awb.packageProducts = this.productList;
@@ -133,6 +133,7 @@ export class AwbCreateComponent implements OnInit {
       this.awbService.createAWB(awb).subscribe(
         res => {
           this.toastr.success('Successfully saved.');
+          this.closeModal(true);
         },
         err => {
 
