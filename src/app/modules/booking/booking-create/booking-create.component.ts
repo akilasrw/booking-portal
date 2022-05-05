@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { PackageContainerService } from './../../../_services/package-container.service';
 import { FlightScheduleSectorService } from 'src/app/_services/flight-schedule-sector.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FlightScheduleSectorQuery } from '../../../_models/queries/flight-schedule-sector/flight-schedule-sector-query.model';
 import { PackageContainer } from 'src/app/_models/view-models/package-container/package-container.model';
 import { PackageContainerListQuery } from 'src/app/_models/queries/package-container/package-container-list-query.model';
@@ -39,7 +39,8 @@ export class BookingCreateComponent implements OnInit {
     private bookingService: BookingService,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private unitService: UnitService) {
+    private unitService: UnitService,
+    private router: Router) {
     this.getId();
     this.cargoBookingRequest = new CargoBookingRequest();
   }
@@ -146,7 +147,12 @@ export class BookingCreateComponent implements OnInit {
   }
 
   resetForm() {
-    this.bookingForm.get('packageItems')?.reset();
+    // this.bookingForm.get('packageItems')?.reset();
+    this.bookingForm.get('packageItems')?.get('width')?.patchValue(0);
+    this.bookingForm.get('packageItems')?.get('length')?.patchValue(0);
+    this.bookingForm.get('packageItems')?.get('weight')?.patchValue(0);
+    this.bookingForm.get('packageItems')?.get('height')?.patchValue(0);
+    this.bookingForm.get('packageItems')?.get('packageDimention')?.patchValue('');
   }
 
   mapPackageItems(packageItem: any) {
@@ -167,7 +173,8 @@ export class BookingCreateComponent implements OnInit {
 
   isAvailableSpace(packageDimension: any) : boolean {debugger
     let containerType = this.getPackageContainerType(packageDimension);
-    var result = this.flightScheduleSector?.flightScheduleSectorCargoPositions.filter(x=> x.cargoPositionType == containerType && x.availableSpaceCount > 1);
+    console.log(this.flightScheduleSector);
+    var result = this.flightScheduleSector?.flightScheduleSectorCargoPositions.filter(x=> x.cargoPositionType == Number(containerType) && x.availableSpaceCount > 0);
     if(result == null || result.length == 0) {
       this.toastr.warning('Space is not available.');
       return false;
@@ -207,6 +214,7 @@ export class BookingCreateComponent implements OnInit {
     if(this.isValid()) {
         this.bookingService.create(this.cargoBookingRequest).subscribe(res => {
         this.toastr.success('Saved Successfully.');
+        this.router.navigate(['booking']);
       })
     }
   }
@@ -241,6 +249,11 @@ export class BookingCreateComponent implements OnInit {
     if (isSuccess) {
     }
     this.hide();
+  }
+
+  backToSeach(){
+    // TODO: save in session Storage.
+    this.router.navigate(['booking/search']);
   }
 
 }

@@ -9,7 +9,7 @@
         <div class="booking-second-info">
             <div class="d-flex justify-content-between align-items-center">
                 <div><h3>Package Details</h3></div>
-                <div class="back-icn"><i class="ca ca-icn-left-arrow-dash" title="Back"></i></div>
+                <div class="back-icn"><i class="ca ca-icn-left-arrow-dash" title="Back" (click)="backToSeach()"></i></div>
             </div>
             <div class="second-box">
               <form (ngSubmit)="add()" [formGroup]="bookingForm">

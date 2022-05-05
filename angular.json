@@ -39,6 +39,9 @@
             ],
             "scripts": [
               "./node_modules/crypto-js/crypto-js.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "crypto-js"
             ]
           },
           "configurations": {
