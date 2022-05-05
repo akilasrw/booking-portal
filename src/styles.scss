@@ -19,6 +19,7 @@ body {
     background-color: $light-blue;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 h1{
@@ -473,9 +474,12 @@ a {
     .card-body {
         background-color: $default-white;
         border-radius: 0.313rem 0.313rem 0 0;
-        height: calc(100vh - 80px); //height: calc(100vh - 130px);
+        height: calc(100vh - 130px); //height: calc(100vh - 130px);
         overflow-x: auto;
         @include customScrollbar(10px);
+        &.without-footer {
+            height: calc(100vh - 80px);
+        }
     }
     .card-footer {
         background-color: $default-white;
@@ -535,6 +539,11 @@ a {
             overflow-y: auto;
             border-radius: 0;
             border: 0;
+        }
+        .modal-body {
+            height: calc(100vh - 136px);
+            overflow: auto;
+            @include customScrollbar(10px)
         }
         &.fade {
             .modal-dialog {
