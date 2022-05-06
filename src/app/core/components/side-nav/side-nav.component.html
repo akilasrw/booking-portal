@@ -1,4 +1,4 @@
-<div class="menu-container">
+<div class="menu-container" [ngClass]="{ 'collapseActive':showCollapseMenu,'collapseDeactive':!showCollapseMenu}">
     <div class="main-container">
         <div class="logo-wrapper" (click)="menuClickEvent(0)">
             <img src="/assets/images/logo-aero.svg" />
