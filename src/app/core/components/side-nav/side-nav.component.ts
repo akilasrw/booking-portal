@@ -18,6 +18,7 @@ export class SideNavComponent implements OnInit,OnDestroy {
   selectedMenu = MenuType.None
   currentUser?:User | null
   subscription?:Subscription;
+  public showCollapseMenu:boolean=false;
 
 
   constructor(
@@ -56,6 +57,7 @@ export class SideNavComponent implements OnInit,OnDestroy {
     this.selectedMenu = menu;
     switch(menu){
       case MenuType.None:
+        this.showCollapseMenu=!this.showCollapseMenu;
         this.router.navigate([RouteConstants.DashboardRoute])
       break;
       case MenuType.DashBoard:
