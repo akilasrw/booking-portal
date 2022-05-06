@@ -73,7 +73,7 @@ export class BookingSearchComponent implements OnInit {
     }
   }
 
-  goToBookingCreate(flightScheduleSector: FlightScheduleSector) {debugger
+  goToBookingCreate(flightScheduleSector: FlightScheduleSector) {
     let id = flightScheduleSector.id;
     this.router.navigate(['booking/create', id]);
   }

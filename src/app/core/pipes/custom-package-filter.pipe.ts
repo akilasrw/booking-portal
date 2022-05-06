@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CustomPackageFilterPipe implements PipeTransform {
 
-  transform(items: any[], filter: any): any {debugger
+  transform(items: any[], filter: any): any {
     if (!items || !filter) {
         return items;
     }

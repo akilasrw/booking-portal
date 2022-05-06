@@ -53,7 +53,7 @@ export class BookingCreateComponent implements OnInit {
       this.getPackageContainers(query);
    });
 
-    this.bookingForm?.get('packageItems')?.get("packageDimention")?.valueChanges.subscribe(res => { debugger
+    this.bookingForm?.get('packageItems')?.get("packageDimention")?.valueChanges.subscribe(res => {
     console.log(this.bookingForm.value);
       if(res != 1) {
         var value = this.packageContainers?.filter(x=> x.id== res)[0];
