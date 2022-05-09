@@ -387,6 +387,9 @@ a {
             padding: 0 0 2.813rem 0;
             cursor: pointer;
         }
+        .logo-wrapper-s {
+            display: none;
+        }
         .menu-scroller {
             .main-menu {
                 margin: 0;
@@ -425,6 +428,27 @@ a {
                     }
                 }
 
+            }
+        }
+    }
+    &.collapseActive {
+        width: 3.75rem;
+        .logo-wrapper {
+            display: none;
+        }
+        .logo-wrapper-s {
+            display: block;
+            padding: 0 0 2.813rem 0;
+            cursor: pointer;
+        }
+        .main-menu {
+            .menu-icn {
+                &:hover .menu-title {
+                    display: block;
+                }
+            }
+            .menu-title {
+                display: none;
             }
         }
     }
