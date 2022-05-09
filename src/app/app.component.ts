@@ -13,6 +13,8 @@ import { Constants } from './core/constants/constants';
 export class AppComponent implements OnInit {
   title = 'aeroclub cargo client';
   isLoaded = false;
+  public showCollapseMenu:boolean=false;
+
 
   constructor(
     public translate: TranslateService,
@@ -48,6 +50,10 @@ export class AppComponent implements OnInit {
       this.accountService.removeCurrentUser();
     }
     this.isLoaded = true;
+  }
+
+  hideMenu(valu:boolean){
+    this.showCollapseMenu=valu;
   }
 
 }
