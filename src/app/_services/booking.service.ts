@@ -17,8 +17,8 @@ import { CargoBookingRequest } from '../_models/view-models/cargo-booking/cargo-
 })
 export class BookingService extends BaseService {
 
-  private readonly endpointEntityName = 'cargoBooking';
 
+  private readonly endpointEntityName = 'cargoBooking';
   private readonly getFilteredListEndpoint = `${this.endpointEntityName}/getFilteredList`;
 
 

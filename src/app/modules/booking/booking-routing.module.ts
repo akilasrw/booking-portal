@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: '', component: BookingListComponent},
   { path: 'create/:id', component: BookingCreateComponent},
   { path: 'search', component: BookingSearchComponent},
+  { path: 'search/:id', component: BookingSearchComponent},
 ];
 
 @NgModule({

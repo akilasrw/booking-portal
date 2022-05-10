@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 import { BookingService } from 'src/app/_services/booking.service';
 import { CargoBookingRequest } from 'src/app/_models/view-models/cargo-booking/cargo-booking-request.model';
-import { BookingStatus, PackageContainerType, PackageItemCategory, PackageItemStatus, PackagePriorityType, UnitType } from 'src/app/core/enums/common-enums';
+import { PackageContainerType, PackageItemStatus, PackagePriorityType, UnitType } from 'src/app/core/enums/common-enums';
 import { UnitService } from 'src/app/_services/unit.service';
 import { FlightScheduleSector } from 'src/app/_models/view-models/flight-schedule-sectors/flight-schedule-sector.model';
 
@@ -93,7 +93,8 @@ export class BookingCreateComponent implements OnInit {
         volumeUnitId: ['11c39205-4153-49f1-ab50-bba8913c5bb9',[Validators.required]],
         packageDimention:['',[Validators.required]],
         packageItemStatus:[PackageItemStatus.Pending],
-        description:['']
+        description:[''],
+        isEdit: [false]
       }),
     })
   }
@@ -146,6 +147,21 @@ export class BookingCreateComponent implements OnInit {
     }
   }
 
+  editPackage(packageItem: PackageItem) {
+    this.bookingForm.get('packageItems')?.get('width')?.patchValue(packageItem.width);
+    this.bookingForm.get('packageItems')?.get('length')?.patchValue(packageItem.length);
+    this.bookingForm.get('packageItems')?.get('weight')?.patchValue(packageItem.weight);
+    this.bookingForm.get('packageItems')?.get('height')?.patchValue(packageItem.height);
+    this.bookingForm.get('packageItems')?.get('weightUnitId')?.patchValue(packageItem.weightUnitId);
+    this.bookingForm.get('packageItems')?.get('volumeUnitId')?.patchValue(packageItem.volumeUnitId);
+    this.bookingForm.get('packageItems')?.get('isEdit')?.patchValue(true);
+    console.log(this.bookingForm.value);
+  }
+
+  reset() {
+    this.bookingForm.get('packageItems')?.reset();
+  }
+
   resetForm() {
     // this.bookingForm.get('packageItems')?.reset();
     this.bookingForm.get('packageItems')?.get('width')?.patchValue(0);
@@ -167,7 +183,8 @@ export class BookingCreateComponent implements OnInit {
       volumeUnitId: packageItem.volumeUnitId,
       packageItemStatus: Number(packageItem.packageItemStatus),
       description: packageItem.description,
-      packageContainerType: this.getPackageContainerType(packageItem.packageDimention)
+      packageContainerType: this.getPackageContainerType(packageItem.packageDimention),
+      isEdit: packageItem.isEdit
     };
   }
 
@@ -206,14 +223,18 @@ export class BookingCreateComponent implements OnInit {
     return CoreExtensions.GetContainerName(packageContainer.packageContainerType);
   }
 
-  editPackage(packageItem: PackageItem){
-
+  delete(packageItem: PackageItem) {
+    const index = this.cargoBookingRequest?.packageItems?.indexOf(packageItem);
+    if (index !== -1) {
+        this.cargoBookingRequest?.packageItems?.splice(Number(index), 1);
+    }
   }
 
   submit() {
     if(this.isValid()) {
         this.bookingService.create(this.cargoBookingRequest).subscribe(res => {
         this.toastr.success('Saved Successfully.');
+        this.flightScheduleSectorService.removeCurrentFlightScheduleSector();
         this.router.navigate(['booking']);
       })
     }
@@ -251,9 +272,8 @@ export class BookingCreateComponent implements OnInit {
     this.hide();
   }
 
-  backToSeach(){
-    // TODO: save in session Storage.
-    this.router.navigate(['booking/search']);
+  backToSeach() {
+    this.router.navigate(['booking/search', this.flightScheduleSectorId]);
   }
 
 }

@@ -7,6 +7,9 @@ export interface PackageItem{
     length:number;
     height:number;
     weight:number;
-    description:string;  
+    description:string;
     packageItemStatus: PackageItemStatus;
+    weightUnitId?: string;
+    volumeUnitId?: string;
+    isEdit: boolean;
   }
