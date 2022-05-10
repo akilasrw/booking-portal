@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
@@ -19,6 +19,7 @@ export class SideNavComponent implements OnInit,OnDestroy {
   currentUser?:User | null
   subscription?:Subscription;
   public showCollapseMenu:boolean=false;
+  @Output() hideMenu = new EventEmitter<any>();
 
 
   constructor(
@@ -58,6 +59,7 @@ export class SideNavComponent implements OnInit,OnDestroy {
     switch(menu){
       case MenuType.None:
         this.showCollapseMenu=!this.showCollapseMenu;
+        this.hideMenu.emit(this.showCollapseMenu);
         this.router.navigate([RouteConstants.DashboardRoute])
       break;
       case MenuType.DashBoard:
