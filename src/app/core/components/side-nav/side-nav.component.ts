@@ -60,7 +60,7 @@ export class SideNavComponent implements OnInit,OnDestroy {
       case MenuType.None:
         this.showCollapseMenu=!this.showCollapseMenu;
         this.hideMenu.emit(this.showCollapseMenu);
-        this.router.navigate([RouteConstants.DashboardRoute])
+        // this.router.navigate([RouteConstants.DashboardRoute])
       break;
       case MenuType.DashBoard:
         this.router.navigate([RouteConstants.DashboardRoute])
