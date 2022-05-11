@@ -81,6 +81,9 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
+  cancelSignUp(){
+    this.router.navigate([this.returnUrl]);
+  }
  
 
 }
