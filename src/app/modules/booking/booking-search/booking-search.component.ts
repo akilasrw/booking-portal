@@ -1,9 +1,8 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { SelectList } from './../../../shared/models/select-list.model';
 import { AirportService } from './../../../_services/airport.service';
-import { BookingService } from './../../../_services/booking.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BookingListQuery } from 'src/app/_models/queries/booking-list-query.model';
 import { BookingFilterListQuery } from 'src/app/_models/queries/booking-filter-list-query.model';
 import { FlightScheduleSectorService } from 'src/app/_services/flight-schedule-sector.service';
 import { FlightScheduleSector } from 'src/app/_models/view-models/flight-schedule-sectors/flight-schedule-sector.model';
@@ -22,16 +21,37 @@ export class BookingSearchComponent implements OnInit {
   destinationAirpots: SelectList[] = [];
   bookingFilterQuery: BookingFilterListQuery = new BookingFilterListQuery();
   flightScheduleSectors: FlightScheduleSector[] = []
+  flightScheduleSectorId: string = '';
 
   constructor(
       private flightScheduleSectorService: FlightScheduleSectorService,
       private airportService: AirportService,
       private fb: FormBuilder,
-      private router: Router,) { }
+      private router: Router,
+      private toastrService: ToastrService,
+      private activatedRoute: ActivatedRoute) {
+        this.getId();
+      }
 
   ngOnInit(): void {
     this.initializeForm();
     this.loadAirports();
+  }
+
+  getId() { debugger
+    this.activatedRoute.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.bookingFilterQuery = this.flightScheduleSectorService.getCurrentFlightScheduleSector();
+        this.flightScheduleSectorId = id;
+        if(this.bookingFilterQuery) {
+          if(this.bookingFilterQuery.scheduledDepartureDateTime)
+            this.bookingFilterQuery.scheduledDepartureDateTime = new Date(this.bookingFilterQuery.scheduledDepartureDateTime);
+          this.getFilteredList();
+        }
+      } else
+        this.flightScheduleSectorService.removeCurrentFlightScheduleSector();
+    });
   }
 
   initializeForm(){
@@ -66,16 +86,37 @@ export class BookingSearchComponent implements OnInit {
       this.bookingFilterQuery.destinationAirportId =  this.bookingForm.value.destinationAirportId;
       this.bookingFilterQuery.scheduledDepartureDateTime =  this.bookingForm.value.scheduledDepartureDateTime;
       //this.bookingFilterQuery.pageSize =  3;
-      this.flightScheduleSectorService.getFilteredList(this.bookingFilterQuery).subscribe(res => {
-        console.log(res);
-        this.flightScheduleSectors = res.data;
-      });
+      this.getFilteredList();
+      this.flightScheduleSectorId = '';
     }
+  }
+
+  getFilteredList(){
+    this.flightScheduleSectorService.getFilteredList(this.bookingFilterQuery).subscribe(res => {
+      if(res.count < 1){
+        this.toastrService.warning('No record found.');
+      } else {
+          this.flightScheduleSectors = res.data;
+      }
+    });
   }
 
   goToBookingCreate(flightScheduleSector: FlightScheduleSector) {
     let id = flightScheduleSector.id;
-    this.router.navigate(['booking/create', id]);
+    var recordCount = flightScheduleSector.flightScheduleSectorCargoPositions.filter(x=> x.availableSpaceCount > 0).length;
+    if(recordCount > 0) {
+      this.flightScheduleSectorService.setCurrentFlightScheduleSector(this.bookingFilterQuery);
+      this.router.navigate(['booking/create', id]);
+    }
+    else
+      this.toastrService.warning('No available space.');
+  }
+
+  validateSpace(flightScheduleSector: FlightScheduleSector): boolean{
+    if(flightScheduleSector.flightScheduleSectorCargoPositions.filter(x=> x.availableSpaceCount > 0).length>0)
+      return true;
+
+    return false;
   }
 
   getAvailableCargoSpace(value: number) {

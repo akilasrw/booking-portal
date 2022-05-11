@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
     this.isLoaded = true;
   }
 
-  hideMenu(valu:boolean){
+  hideMenu(valu:any){
     this.showCollapseMenu=valu;
   }
 

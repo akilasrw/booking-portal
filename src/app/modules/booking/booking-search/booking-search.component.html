@@ -1,3 +1,8 @@
+<style>
+  .selected {
+    background-color:  antiquewhite;
+  }
+</style>
 <div class="main-card">
     <div class="card-header px-0 pt-0">
         <h1>Add New Booking</h1>
@@ -53,7 +58,7 @@
         </div>
         <div class="flight-availability">
             <div class="second-card" *ngFor="let flightScheduleSector of this.flightScheduleSectors">
-                <div class="card-details">
+                <div class="card-details" [ngClass]="{'selected': flightScheduleSector.id == flightScheduleSectorId}">
                     <div class="card-row">
                         <div class="label">Flight Number</div>
                         <div class="value">{{flightScheduleSector.flightNumber}}</div>
@@ -84,7 +89,7 @@
                         <div class="value">{{position.availableSpaceCount}}</div>
                     </div>
                     <div class="card-button">
-                        <button class="btn btn-primary-outline"
+                        <button class="btn btn-primary-outline" [disabled]="!validateSpace(flightScheduleSector)"
                             (click)="goToBookingCreate(flightScheduleSector)">Next</button>
                     </div>
                 </div>

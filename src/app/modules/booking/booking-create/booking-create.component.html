@@ -109,8 +109,8 @@
                         </div>
                     </div>
                     <div class="add-detail text-end">
-                        <button class="btn btn-secondary-outline me-3">Reset</button>
-                        <button class="btn btn-primary-outline" type="submit">Add</button>
+                        <button class="btn btn-secondary-outline me-3" (click)="reset()">Reset</button>
+                        <button class="btn btn-primary-outline" type="submit">{{ bookingForm.get('packageItems')?.value.isEdit?'Update': 'Add'}}</button>
                     </div>
                 </div>
               </form>
@@ -125,14 +125,14 @@
                         <th class="text-center">Actions </th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let packageItem of this.cargoBookingRequest.packageItems">
+                        <tr *ngFor="let packageItem of this.cargoBookingRequest.packageItems; let i = index">
                             <td>{{getCargoType(+packageItem.packageItemCategory)}}</td>
                             <td>{{getPackageDimentions(packageItem)}}</td>
                             <td>{{packageItem.weight}}</td>
                             <td><span class="status-chip added">{{packageItem.packageItemStatus==1? 'Pending': packageItem.packageItemStatus==2? "Added": ""}}</span></td>
                             <td class="text-center">
-                                <i class="ca ca-icn-edit" (click)="editPackage(packageItem)" title="Edit"></i>
-                                <i class="ca ca-icn-bin" title="Delete"></i>
+                                <!-- <i class="ca ca-icn-edit" (click)="editPackage(packageItem)" title="Edit"></i> -->
+                                <i class="ca ca-icn-bin" title="Delete" (click)="delete(packageItem)" ></i>
                             </td>
                         </tr>
                     </tbody>
