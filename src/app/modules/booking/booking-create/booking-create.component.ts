@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 import { BookingService } from 'src/app/_services/booking.service';
 import { CargoBookingRequest } from 'src/app/_models/view-models/cargo-booking/cargo-booking-request.model';
-import { PackageContainerType, PackageItemStatus, PackagePriorityType, UnitType } from 'src/app/core/enums/common-enums';
+import { BookingStatus, PackageContainerType, PackageItemStatus, PackagePriorityType, UnitType } from 'src/app/core/enums/common-enums';
 import { UnitService } from 'src/app/_services/unit.service';
 import { FlightScheduleSector } from 'src/app/_models/view-models/flight-schedule-sectors/flight-schedule-sector.model';
 
@@ -32,6 +32,7 @@ export class BookingCreateComponent implements OnInit {
   cargoBookingRequest!: CargoBookingRequest;
   volumeUnits: Unit[] = [];
   weightUnits: Unit[] = [];
+  disableInput: boolean = false;
 
   constructor(private activatedRoute: ActivatedRoute,
     private flightScheduleSectorService: FlightScheduleSectorService,
@@ -59,6 +60,9 @@ export class BookingCreateComponent implements OnInit {
         var value = this.packageContainers?.filter(x=> x.id== res)[0];
         if(value)
           this.patchPackageDimentions(value);
+          this.disableInput = true;
+      } else {
+        this.disableInput = false;
       }
    });
    this.getUnits();
@@ -144,6 +148,8 @@ export class BookingCreateComponent implements OnInit {
         console.log(this.cargoBookingRequest);
         this.resetForm();
       }
+    } else {
+      this.bookingForm.markAllAsTouched();
     }
   }
 
@@ -163,12 +169,12 @@ export class BookingCreateComponent implements OnInit {
   }
 
   resetForm() {
-    // this.bookingForm.get('packageItems')?.reset();
-    this.bookingForm.get('packageItems')?.get('width')?.patchValue(0);
-    this.bookingForm.get('packageItems')?.get('length')?.patchValue(0);
-    this.bookingForm.get('packageItems')?.get('weight')?.patchValue(0);
-    this.bookingForm.get('packageItems')?.get('height')?.patchValue(0);
-    this.bookingForm.get('packageItems')?.get('packageDimention')?.patchValue('');
+    this.bookingForm.get('packageItems')?.reset();
+    // this.bookingForm.get('packageItems')?.get('width')?.patchValue(0);
+    // this.bookingForm.get('packageItems')?.get('length')?.patchValue(0);
+    // this.bookingForm.get('packageItems')?.get('weight')?.patchValue(0);
+    // this.bookingForm.get('packageItems')?.get('height')?.patchValue(0);
+    // this.bookingForm.get('packageItems')?.get('packageDimention')?.patchValue('');
   }
 
   mapPackageItems(packageItem: any) {
@@ -232,6 +238,7 @@ export class BookingCreateComponent implements OnInit {
 
   submit() {
     if(this.isValid()) {
+        this.cargoBookingRequest.bookingStatus = BookingStatus.Pending;
         this.bookingService.create(this.cargoBookingRequest).subscribe(res => {
         this.toastr.success('Saved Successfully.');
         this.flightScheduleSectorService.removeCurrentFlightScheduleSector();

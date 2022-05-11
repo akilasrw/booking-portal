@@ -17,11 +17,14 @@ export class CoreExtensions {
     return params;
   }
 
-  public static GetBookingStatus(bookingStatus: BookingStatus): string {
+  public static GetBookingStatus(bookingStatus: BookingStatus): string { debugger
     let statusString = "None";
     switch (bookingStatus) {
       case BookingStatus.None:
         statusString = "None";
+        break;
+      case BookingStatus.Pending:
+        statusString = "Pending";
         break;
       case BookingStatus.Accepted:
         statusString = "Accepted";
