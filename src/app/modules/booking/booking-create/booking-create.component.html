@@ -45,27 +45,25 @@
                                     <div class="col-md-3">
                                         <div class="form-group mb-0">
                                             <label class="form-label">Length</label>
-                                            <input  type="number" class="text" formControlName="length" class="form-control">
-                                            <!-- <app-text-input [formControl]='bookingForm.controls["length"]' type="number" [label]='"length"'></app-text-input> -->
+                                              <app-text-input [formControl]='bookingForm.controls["packageItems"].get("length")' type="number" [label]='"length"' [textBoxDisabled]="disableInput"></app-text-input>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group mb-0">
                                             <label class="form-label">Width</label>
-                                            <input  type="number" class="text" formControlName="width" class="form-control">
+                                            <app-text-input [formControl]='bookingForm.controls["packageItems"].get("width")' type="number" [label]='"width"' [textBoxDisabled]="disableInput"></app-text-input>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group mb-0">
                                             <label class="form-label">Height</label>
-                                            <input  type="number" class="text" formControlName="height" class="form-control">
+                                            <app-text-input [formControl]='bookingForm.controls["packageItems"].get("height")' type="number" [label]='"height"' [textBoxDisabled]="disableInput"></app-text-input>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group mb-0">
                                             <label class="form-label">Unit</label>
                                             <select name="unit" class="form-control" formControlName ="volumeUnitId">
-                                                <option></option>
                                                 <option *ngFor="let unit of volumeUnits" [ngValue]="unit.id">{{unit.name}}</option>
                                             </select>
                                         </div>
@@ -77,14 +75,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group mb-0">
                                             <label class="form-label">Weight</label>
-                                            <input  type="number" class="text" formControlName="weight" class="form-control">
+                                            <app-text-input [formControl]='bookingForm.controls["packageItems"].get("weight")' type="number" [label]='"weight"'></app-text-input>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-0">
                                             <label class="form-label">Unit</label>
                                             <select name="unit" class="form-control" formControlName="weightUnitId">
-                                                <option></option>
                                                 <option *ngFor="let unit of weightUnits" [ngValue]="unit.id">{{unit.name}}</option>
                                             </select>
                                         </div>

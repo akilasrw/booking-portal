@@ -10,11 +10,12 @@ export enum MenuType {
 
   export enum BookingStatus{
     None = 0,
-    Dispatched  = 1,
-    Invoiced = 2,
-    Accepted = 3,
-    Loading = 4,
-    Exported = 5
+    Pending = 10,
+    Accepted = 20,
+    Loading = 30,
+    Invoiced = 40,
+    Dispatched = 50,
+    Exported = 60
   }
 
   export enum PackageItemStatus{

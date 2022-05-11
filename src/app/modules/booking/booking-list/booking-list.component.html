@@ -52,12 +52,13 @@
                         <td>{{booking.flightDate | date}}</td>
                         <td><span class="status-chip" [ngClass]="{
                             'none':booking.bookingStatus == bookingStatus.None,
+                            'pending': booking.bookingStatus == bookingStatus.Pending,
                             'dispatch':booking.bookingStatus == bookingStatus.Dispatched,
                             'invoiced':booking.bookingStatus == bookingStatus.Invoiced,
                             'accepted':booking.bookingStatus == bookingStatus.Accepted,
                             'loading':booking.bookingStatus == bookingStatus.Loading,
                             'exported':booking.bookingStatus == bookingStatus.Exported
-                        }">{{(getBookingStatus(cargoBookingDetail?.bookingStatus))}}</span></td>
+                        }">{{(getBookingStatus(booking?.bookingStatus))}}</span></td>
                         <td>{{booking.numberOfBoxes}}</td>
                         <td>{{booking.totalWeight}}</td>
                         <td>
@@ -65,7 +66,7 @@
                             <i class="ca ca-icn-edit" title="Edit"></i>
                             <i class="ca ca-icn-bin" title="Delete"></i>
                         </td>
-                    </tr>                   
+                    </tr>
                 </tbody>
             </table>
         </div>

@@ -1,6 +1,7 @@
 <div class="form-group">
   <input [class.is-invalid]="ngControl.touched && ngControl.invalid" [tabindex]="tabindex" type={{type}} class="form-control"
-    [formControl]="ngControl.control" placeholder="{{showPlaceHolder ? label: ''}}" [disabled]="textBoxDisabled">
+    [formControl]="ngControl.control" placeholder="{{showPlaceHolder ? label: ''}}" [attr.disabled]="textBoxDisabled? true: null">
 
   <div *ngIf="ngControl.touched" [ngClass]="validationErrorMessageClass">{{(getErrorText())}}</div>
 </div>
+ 

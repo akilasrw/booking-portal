@@ -86,6 +86,7 @@ export class BookingSearchComponent implements OnInit {
       this.bookingFilterQuery.destinationAirportId =  this.bookingForm.value.destinationAirportId;
       this.bookingFilterQuery.scheduledDepartureDateTime =  this.bookingForm.value.scheduledDepartureDateTime;
       //this.bookingFilterQuery.pageSize =  3;
+      this.flightScheduleSectors = [];
       this.getFilteredList();
       this.flightScheduleSectorId = '';
     }
