@@ -23,7 +23,7 @@
                         <input type="text" [formControl]='filterForm.controls["bookingDate"]' class="form-control" bsDatepicker>
                     </div>
                     <div class="button"><button type="submit" class="btn sm btn-primary-outline">Add Filter</button></div>
-                    <div class="filter-clear" title="Filter Clear"><i class="ca ca-icn-close" (click)="clearFilter()"></i></div>
+                    <div class="filter-clear" title="Filter Clear" [hidden]="!filterFormHasValue"><i class="ca ca-icn-close" (click)="clearFilter()"></i></div>
                 </div>
                 </form>
             <div class="mt-4">
