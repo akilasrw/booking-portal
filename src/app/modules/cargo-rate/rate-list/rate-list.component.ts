@@ -35,8 +35,8 @@ export class RateListComponent implements OnInit {
 
   initializeForm(){
     this.searchForm = this.fb.group({
-      originAirportId: ['', [Validators.required]],
-      destinationAirportId: ['', [Validators.required]]
+      originAirportId: [null, [Validators.required]],
+      destinationAirportId: [null, [Validators.required]]
     });
   }
 
