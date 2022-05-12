@@ -10,6 +10,7 @@ export class AutoCompleteDropdownComponent implements OnInit {
   @Input() keyword: string = '';
   //@Input() placeholder: string = 'Select Airport';
   @Input() data: any = [];
+  @Input() tabindex : number = 1;
   @Output() selectFileOutput = new EventEmitter<any>();
 
   constructor() { }
