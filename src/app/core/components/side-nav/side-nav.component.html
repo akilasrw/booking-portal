@@ -49,10 +49,10 @@
         </div>
     </div>
     <div>
-        <div class="profile-pic">
+        <div class="profile-pic" (click)="profileClick()">
             <div class="pro-img"><img src="/assets/images/profile-img.png"></div>
         </div>
-        <div class="profile-card">
+        <div class="profile-card" *ngIf="showProfileCard">
             <div class="pro-pic">
                 <div class="pro-img"><img src="/assets/images/profile-img.png"></div>
             </div>
