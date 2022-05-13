@@ -6,6 +6,7 @@ import { CargoRateListService } from 'src/app/_services/cargo-rate-list.service'
 import { CargoRate } from 'src/app/_models/view-models/cargo-rate-list/cargo-rate.model';
 import { CargoRateFilterQuery } from 'src/app/_models/queries/cargo-rate/cargo-rate-filter-query.model';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class RateListComponent implements OnInit {
   
   constructor(private fb:FormBuilder,
     private airportService:AirportService,
+    private toastr: ToastrService,
     private cargoRateListService:CargoRateListService) { }
 
   ngOnInit(): void {
@@ -51,6 +53,10 @@ export class RateListComponent implements OnInit {
   }
 
   getRateList(){
+    if((this.searchForm.get('originAirportId')?.value === null || this.searchForm.get('originAirportId')?.value === "") ||
+    (this.searchForm.get('destinationAirportId')?.value === null || this.searchForm.get('destinationAirportId')?.value === "")){
+      this.toastr.error('Please select origin and destination.');
+   }
     if(this.searchForm.valid){
       var qury: CargoRateFilterQuery = this.searchForm.value;
       this.cargoRateListService.getFilteredRateList(qury).subscribe(
