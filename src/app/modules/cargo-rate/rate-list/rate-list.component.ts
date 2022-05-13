@@ -73,7 +73,7 @@ export class RateListComponent implements OnInit {
       return false;
    }else{
      if(this.searchForm.get('originAirportId')?.value === this.searchForm.get('destinationAirportId')?.value){
-      this.toastr.error('Please select different origin and destination.');
+      this.toastr.error('Origin and destination is same.');
       return false;
      }else{
       return true;
