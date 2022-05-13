@@ -1,4 +1,4 @@
-import { ToastrService } from 'ngx-toastr';
+import { Toast, ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { SelectList } from './../../../shared/models/select-list.model';
 import { AirportService } from './../../../_services/airport.service';
@@ -24,28 +24,30 @@ export class BookingSearchComponent implements OnInit {
   flightScheduleSectorId: string = '';
 
   constructor(
-      private flightScheduleSectorService: FlightScheduleSectorService,
-      private airportService: AirportService,
-      private fb: FormBuilder,
-      private router: Router,
-      private toastrService: ToastrService,
-      private activatedRoute: ActivatedRoute) {
-        this.getId();
-      }
+    private flightScheduleSectorService: FlightScheduleSectorService,
+    private airportService: AirportService,
+    private fb: FormBuilder,
+    private router: Router,
+    private toastrService: ToastrService,
+    private toastr:ToastrService,
+    private activatedRoute: ActivatedRoute) {
+    this.getId();
+  }
 
   ngOnInit(): void {
     this.initializeForm();
     this.loadAirports();
   }
 
-  getId() { debugger
+  getId() {
+    debugger
     this.activatedRoute.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
         this.bookingFilterQuery = this.flightScheduleSectorService.getCurrentFlightScheduleSector();
         this.flightScheduleSectorId = id;
-        if(this.bookingFilterQuery) {
-          if(this.bookingFilterQuery.scheduledDepartureDateTime)
+        if (this.bookingFilterQuery) {
+          if (this.bookingFilterQuery.scheduledDepartureDateTime)
             this.bookingFilterQuery.scheduledDepartureDateTime = new Date(this.bookingFilterQuery.scheduledDepartureDateTime);
           this.getFilteredList();
         }
@@ -54,7 +56,7 @@ export class BookingSearchComponent implements OnInit {
     });
   }
 
-  initializeForm(){
+  initializeForm() {
     this.bookingForm = this.fb.group({
       originAirportId: ['', [Validators.required]],
       destinationAirportId: ['', [Validators.required]],
@@ -62,29 +64,29 @@ export class BookingSearchComponent implements OnInit {
     });
   }
 
-  loadAirports(){
+  loadAirports() {
     this.airportService.getSelectList()
       .subscribe(res => {
-        if(res.length > 0) {
+        if (res.length > 0) {
           this.originAirpots = res;
           Object.assign(this.destinationAirpots, res);
         }
       });
   }
 
-  selectedOrigin(value: any){
+  selectedOrigin(value: any) {
     this.bookingForm.get('originAirportId')?.patchValue(value.id);
   }
 
-  selectedDestination(value: any){
+  selectedDestination(value: any) {
     this.bookingForm.get('destinationAirportId')?.patchValue(value.id);
   }
 
   submit() {
-    if(this.bookingForm.valid){
-      this.bookingFilterQuery.originAirportId =  this.bookingForm.value.originAirportId;
-      this.bookingFilterQuery.destinationAirportId =  this.bookingForm.value.destinationAirportId;
-      this.bookingFilterQuery.scheduledDepartureDateTime =  this.bookingForm.value.scheduledDepartureDateTime;
+    if (this.isFormValied() && this.bookingForm.valid) {
+      this.bookingFilterQuery.originAirportId = this.bookingForm.value.originAirportId;
+      this.bookingFilterQuery.destinationAirportId = this.bookingForm.value.destinationAirportId;
+      this.bookingFilterQuery.scheduledDepartureDateTime = this.bookingForm.value.scheduledDepartureDateTime;
       //this.bookingFilterQuery.pageSize =  3;
       this.flightScheduleSectors = [];
       this.getFilteredList();
@@ -92,20 +94,39 @@ export class BookingSearchComponent implements OnInit {
     }
   }
 
-  getFilteredList(){
+  isFormValied(): boolean {
+    if ((this.bookingForm.get('originAirportId')?.value === null || this.bookingForm.get('originAirportId')?.value === "") ||
+      (this.bookingForm.get('destinationAirportId')?.value === null || this.bookingForm.get('destinationAirportId')?.value === "")) {
+      this.toastr.error('Please select origin and destination.');
+      return false;
+    }
+
+    if (this.bookingForm.get('originAirportId')?.value === this.bookingForm.get('destinationAirportId')?.value) {
+      this.toastr.error('Origin and destination is same.');
+      return false;
+    }
+    
+    if (this.bookingForm.get('scheduledDepartureDateTime')?.value === undefined || this.bookingForm.get('scheduledDepartureDateTime')?.value === "") {
+      this.toastr.error('Please select flight date.');
+      return false;
+    }
+    return true;
+  }
+
+  getFilteredList() {
     this.flightScheduleSectorService.getFilteredList(this.bookingFilterQuery).subscribe(res => {
-      if(res.count < 1){
+      if (res.count < 1) {
         this.toastrService.warning('No record found.');
       } else {
-          this.flightScheduleSectors = res.data;
+        this.flightScheduleSectors = res.data;
       }
     });
   }
 
   goToBookingCreate(flightScheduleSector: FlightScheduleSector) {
     let id = flightScheduleSector.id;
-    var recordCount = flightScheduleSector.flightScheduleSectorCargoPositions.filter(x=> x.availableSpaceCount > 0).length;
-    if(recordCount > 0) {
+    var recordCount = flightScheduleSector.flightScheduleSectorCargoPositions.filter(x => x.availableSpaceCount > 0).length;
+    if (recordCount > 0) {
       this.flightScheduleSectorService.setCurrentFlightScheduleSector(this.bookingFilterQuery);
       this.router.navigate(['booking/create', id]);
     }
@@ -113,28 +134,28 @@ export class BookingSearchComponent implements OnInit {
       this.toastrService.warning('No available space.');
   }
 
-  validateSpace(flightScheduleSector: FlightScheduleSector): boolean{
-    if(flightScheduleSector.flightScheduleSectorCargoPositions.filter(x=> x.availableSpaceCount > 0).length>0)
+  validateSpace(flightScheduleSector: FlightScheduleSector): boolean {
+    if (flightScheduleSector.flightScheduleSectorCargoPositions.filter(x => x.availableSpaceCount > 0).length > 0)
       return true;
 
     return false;
   }
 
   getAvailableCargoSpace(value: number) {
-    let position: string ='';
-    switch(value){
+    let position: string = '';
+    switch (value) {
       case 1:
-        position= "On Floor";
-      break;
+        position = "On Floor";
+        break;
       case 2:
-        position= "On Seat";
-      break;
+        position = "On Seat";
+        break;
       case 3:
-        position= "Under Seat";
-      break;
+        position = "Under Seat";
+        break;
       case 4:
-        position= "Over head";
-      break;
+        position = "Over head";
+        break;
 
     }
     return position;
