@@ -2,7 +2,7 @@ import { CargoAgentRM } from './../../_models/request-models/register/cargo-agen
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from '../account.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SelectList } from 'src/app/shared/models/select-list.model';
 import { ToastrService } from 'ngx-toastr';
 import { CountryService } from 'src/app/_services/country.service';
@@ -50,13 +50,13 @@ export class RegistrationComponent implements OnInit {
       address: new FormControl(null, [Validators.required]),
       primaryTelephoneNumber: new FormControl(null,[Validators.required]),
       secondaryTelephoneNumber: new FormControl(null),
-      email: new FormControl(null,[Validators.required]),
+      email: new FormControl(null,[Validators.required,Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
       cargoAccountNumber: new FormControl(null),
       countryId: new FormControl(null,[Validators.required]), 
       city: new FormControl(null,[Validators.required]),
       agentIATACode: new FormControl(null),
-      password: new FormControl(null,[Validators.required]),
-      confirmPassword: new FormControl(null,[Validators.required]),
+      password: new FormControl(null,[Validators.required,Validators.minLength(8)]),
+      confirmPassword: new FormControl(null,[Validators.required,Validators.minLength(8)]),
     });
   }
 
@@ -66,7 +66,12 @@ export class RegistrationComponent implements OnInit {
 
 
   register(){
-    if(this.registrationForm.valid){
+
+    if(this.registrationForm.get('countryId')?.value === null || this.registrationForm.get('countryId')?.value === ""){
+       this.toastr.error('Please select country.');
+    }
+
+    if(this.registrationForm.valid){  
       var agent: CargoAgentRM = this.registrationForm.value;
       this.accountService.register(agent).subscribe(
         res => {

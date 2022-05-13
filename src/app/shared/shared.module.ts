@@ -8,13 +8,15 @@ import { ToastrModule } from 'ngx-toastr';
 import { CryptoService } from './services/crypto.service';
 import { AutoCompleteDropdownComponent } from './components/auto-complete-dropdown/auto-complete-dropdown.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { WhiteSpaceInputComponent } from './components/forms/white-space-input/white-space-input.component';
 
 
 
 @NgModule({
   declarations: [
     TextInputComponent,
-    AutoCompleteDropdownComponent
+    AutoCompleteDropdownComponent,
+    WhiteSpaceInputComponent,
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,8 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     FormsModule,
     ReactiveFormsModule,
     TextInputComponent,
-    AutoCompleteDropdownComponent
+    AutoCompleteDropdownComponent,
+    WhiteSpaceInputComponent
   ],providers:[CryptoService]
 })
 export class SharedModule { }
