@@ -53,11 +53,7 @@ export class RateListComponent implements OnInit {
   }
 
   getRateList(){
-    if((this.searchForm.get('originAirportId')?.value === null || this.searchForm.get('originAirportId')?.value === "") ||
-    (this.searchForm.get('destinationAirportId')?.value === null || this.searchForm.get('destinationAirportId')?.value === "")){
-      this.toastr.error('Please select origin and destination.');
-   }
-    if(this.searchForm.valid){
+    if(this.isformValid() && this.searchForm.valid){
       var qury: CargoRateFilterQuery = this.searchForm.value;
       this.cargoRateListService.getFilteredRateList(qury).subscribe(
         {
@@ -68,6 +64,21 @@ export class RateListComponent implements OnInit {
         }
       )    
     }
+  }
+
+  isformValid(): boolean{
+    if((this.searchForm.get('originAirportId')?.value === null || this.searchForm.get('originAirportId')?.value === "") ||
+    (this.searchForm.get('destinationAirportId')?.value === null || this.searchForm.get('destinationAirportId')?.value === "")){
+      this.toastr.error('Please select origin and destination.');
+      return false;
+   }else{
+     if(this.searchForm.get('originAirportId')?.value === this.searchForm.get('destinationAirportId')?.value){
+      this.toastr.error('Please select different origin and destination.');
+      return false;
+     }else{
+      return true;
+    } 
+   }
   }
 
   selectedOrigin(value: any){
