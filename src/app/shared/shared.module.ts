@@ -9,6 +9,7 @@ import { CryptoService } from './services/crypto.service';
 import { AutoCompleteDropdownComponent } from './components/auto-complete-dropdown/auto-complete-dropdown.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { WhiteSpaceInputComponent } from './components/forms/white-space-input/white-space-input.component';
+import { LoaderFlightComponent } from './components/loader-flight/loader-flight.component';
 
 
 
@@ -17,6 +18,7 @@ import { WhiteSpaceInputComponent } from './components/forms/white-space-input/w
     TextInputComponent,
     AutoCompleteDropdownComponent,
     WhiteSpaceInputComponent,
+    LoaderFlightComponent,
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { WhiteSpaceInputComponent } from './components/forms/white-space-input/w
     ReactiveFormsModule,
     TextInputComponent,
     AutoCompleteDropdownComponent,
-    WhiteSpaceInputComponent
+    WhiteSpaceInputComponent,
+    LoaderFlightComponent
   ],providers:[CryptoService]
 })
 export class SharedModule { }

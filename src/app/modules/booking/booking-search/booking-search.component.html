@@ -90,9 +90,12 @@
                 </div>
             </div>
         </div>
-        <div class="not-available" *ngIf="totalCount == 0">
+        <div class="not-available" *ngIf="totalCount == 0 && !showLoader">
             <img src="./assets/images/no-data.png" alt="No Content Data">
             <div>Flight not available.</div>
+        </div> 
+        <div class="modal-body" *ngIf="showLoader">
+            <app-loader-flight [loaderImageSize] = "3"></app-loader-flight>
         </div>
     </div>
 </div>

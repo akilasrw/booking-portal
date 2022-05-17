@@ -104,6 +104,30 @@ a {
 	}
 }
 
+// Loader style
+
+.loader {
+	text-align: center;
+	.loader-icon {
+		animation: spin 2s linear infinite;
+		width: 100%;
+		height: auto;
+		&.loader-l {
+			max-width: 35px;
+		}
+		&.loader-m {
+			width: 20px;
+		}
+		&.loader-s {
+			max-width: 14px;
+		}
+	}
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% {  transform: rotate(359deg); }
+	}
+}
+
 .login-wrapper {
     width: 100%;
   .login-container {

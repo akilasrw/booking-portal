@@ -23,6 +23,8 @@ export class BookingSearchComponent implements OnInit {
   flightScheduleSectors: FlightScheduleSector[] = []
   flightScheduleSectorId: string = '';
   totalCount : number = 0;
+  public showLoader = true;
+
 
   constructor(
     private flightScheduleSectorService: FlightScheduleSectorService,
@@ -66,13 +68,19 @@ export class BookingSearchComponent implements OnInit {
   }
 
   loadAirports() {
+    this.showLoader=true
     this.airportService.getSelectList()
       .subscribe(res => {
         if (res.length > 0) {
           this.originAirpots = res;
           Object.assign(this.destinationAirpots, res);
         }
-      });
+        this.showLoader=false
+      },
+      err => {
+        this.showLoader=false
+      }
+     );
   }
 
   selectedOrigin(value: any) {
@@ -114,7 +122,9 @@ export class BookingSearchComponent implements OnInit {
     return true;
   }
 
+ 
   getFilteredList() {
+    this.showLoader=true
     this.flightScheduleSectorService.getFilteredList(this.bookingFilterQuery).subscribe(res => {
       if (res.count < 1) {
         this.toastrService.warning('No record found.');
@@ -123,6 +133,10 @@ export class BookingSearchComponent implements OnInit {
         this.flightScheduleSectors = res.data;
         this.totalCount = res.count;
       }
+      this.showLoader=false
+    },
+    err=>{
+      this.showLoader=false
     });
   }
 

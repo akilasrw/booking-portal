@@ -1,0 +1,7 @@
+<div class="loader">
+    <!-- <img class="loader-icon loader-m" src="./assets/images/loader-icon.svg"> -->
+    <img class="loader-icon" [ngClass]="{'loader-s': loaderImageSize === 1,
+                    'loader-m': loaderImageSize === 2,
+                    'loader-l': loaderImageSize === 3}" 
+    src="./assets/images/loader-icon.svg">
+</div>

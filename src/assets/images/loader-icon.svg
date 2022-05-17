@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="8.771" height="10.96" viewBox="0 0 8.771 10.96">
+  <defs>
+    <linearGradient id="linear-gradient" x1="-0.072" y1="1.106" x2="0.595" y2="0.983" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#1d76bb"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_4782" data-name="Group 4782" transform="translate(5512.619 -7167.126)">
+    <g id="Group_4781" data-name="Group 4781" transform="translate(96.381 154.161)">
+      <path id="Path_3420" data-name="Path 3420" d="M949.386,262A4.386,4.386,0,0,0,945,266.386v0a.943.943,0,0,1,.163-.016l.034,0a4.193,4.193,0,1,1,1.082,2.82,1.079,1.079,0,0,1-.185.087A4.385,4.385,0,1,0,949.386,262Z" transform="translate(-6554 6750.965)" fill="url(#linear-gradient)"/>
+      <g id="aeroplane" transform="translate(-5608.08 7019.376)">
+        <g id="Group_79" data-name="Group 79" transform="translate(0 0)">
+          <path id="Path_67" data-name="Path 67" d="M962.967,359.987l-2.4,1.014-.757-.307a.9.9,0,0,0-.384-.064l-.089.009a.3.3,0,0,0-.207.5l.065.076a.9.9,0,0,0,.317.218l.757.307,1.014,2.4a.493.493,0,0,0,.271.267l.216.088a.1.1,0,0,0,.135-.11l-.408-2.185c.285.1.527.167.822.253l.3.088.164.817a.1.1,0,0,0,.06.073l.184.075a.1.1,0,0,0,.13-.055.1.1,0,0,0,.006-.021l.148-.881.508-.735a.1.1,0,0,0,.013-.085.1.1,0,0,0-.058-.064l-.184-.075a.1.1,0,0,0-.094.01l-.687.472-.279-.147c-.271-.143-.494-.26-.765-.391l1.815-1.283a.1.1,0,0,0-.02-.173l-.216-.087A.492.492,0,0,0,962.967,359.987Z" transform="translate(-959.056 -359.947)" fill="#1d76bb"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
