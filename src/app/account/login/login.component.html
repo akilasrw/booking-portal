@@ -41,7 +41,7 @@
                 <div class="form-group forgot-password">
                   <div class="cu-check">
                     <label class="cu-checkbox">Remember me
-                      <input type="checkbox">
+                      <input [formControl]='loginForm.controls["rememberMe"]' type="checkbox">
                       <span class="checkmark"></span>
                     </label>
                   </div>

@@ -9,6 +9,7 @@ import { User } from '../_models/user.model';
 import { CryptoService } from '../shared/services/crypto.service';
 import { Router } from '@angular/router';
 import { CargoAgentRM } from '../_models/request-models/register/cargo-agent-rm.model';
+import { AuthenticateRM } from '../_models/request-models/login/authenticate-rm.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,12 +33,13 @@ export class AccountService extends BaseService {
     return this.post<any>('cargoagent', cargoAgent);
   }
 
-  login(model: any) {
+  login(model: AuthenticateRM) {
     return this.http.post(this.baseUrl + 'user/authenticate', model, { withCredentials: true }).pipe(
       map((response: any) => {
         const user = response;
         if (user) {
           this.setCurrentUser(user);
+          this.saveUserCredential(model);
           return user;
         }
       })
@@ -90,5 +92,14 @@ export class AccountService extends BaseService {
       const expires = new Date(jwtToken.exp * 1000);
       const timeout = expires.getTime() - Date.now() - (60 * 1000);
       this.refreshTokenTimeout = setTimeout(() => this.refreshToken().subscribe(), timeout);
+  }
+
+  saveUserCredential(model: AuthenticateRM){
+    if(model.rememberMe){
+      var enriptedCredentil = this.cryptoService.encrypt(JSON.stringify(model));
+      localStorage.setItem('UserCredential', enriptedCredentil);
+    }else{
+      localStorage.removeItem('UserCredential');
+    }
   }
 }
