@@ -90,5 +90,9 @@
                 </div>
             </div>
         </div>
+        <div class="not-available" *ngIf="totalCount == 0">
+            <img src="./assets/images/no-data.png" alt="No Content Data">
+            <div>Flight not available.</div>
+        </div>
     </div>
 </div>

@@ -22,6 +22,7 @@ export class RateListComponent implements OnInit {
   destinationAirpots: SelectList[] = [];
   cargoRateList: CargoRate[] = []
   keyword = 'value';
+  totalCount: number =0;
 
 
   
@@ -59,8 +60,12 @@ export class RateListComponent implements OnInit {
         {
           next: (res) => {
             this.cargoRateList = res.data
+            this.totalCount = res.count
           },
-          error: (error) => this.cargoRateList=[]
+          error: (error) => {
+            this.totalCount =0;
+            this.cargoRateList=[]
+          }
         }
       )    
     }

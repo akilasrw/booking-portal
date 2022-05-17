@@ -22,6 +22,7 @@ export class BookingSearchComponent implements OnInit {
   bookingFilterQuery: BookingFilterListQuery = new BookingFilterListQuery();
   flightScheduleSectors: FlightScheduleSector[] = []
   flightScheduleSectorId: string = '';
+  totalCount : number = 0;
 
   constructor(
     private flightScheduleSectorService: FlightScheduleSectorService,
@@ -117,8 +118,10 @@ export class BookingSearchComponent implements OnInit {
     this.flightScheduleSectorService.getFilteredList(this.bookingFilterQuery).subscribe(res => {
       if (res.count < 1) {
         this.toastrService.warning('No record found.');
+        this.totalCount = res.count;
       } else {
         this.flightScheduleSectors = res.data;
+        this.totalCount = res.count;
       }
     });
   }

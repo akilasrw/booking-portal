@@ -18,6 +18,7 @@ export class BookingListComponent implements OnInit {
   modalVisible = false;
   modalVisibleAnimate = false;
   filterFormHasValue = false
+  totalCount: number =0;
 
   public filterForm!: FormGroup;
   cargoBookingList: CargoBooking[] = []
@@ -48,8 +49,15 @@ export class BookingListComponent implements OnInit {
     if(this.filterForm.valid){
       var qury: CargoBookingFilterQuery = this.filterForm.value;
       this.bookingService.getFilteredBookingList(qury).subscribe(
-        res =>{
-          this.cargoBookingList = res.data;
+        {
+          next:(res)=>{
+            this.cargoBookingList = res.data;
+            this.totalCount = res.count;
+          },
+          error:()=>{
+            this.cargoBookingList =[]
+            this.totalCount=0
+          }         
         }
       )
     }
