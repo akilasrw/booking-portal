@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
         res => {
           this.router.navigate([this.returnUrl]);
           console.log('Successfully logged.');
+          this.isSubmitting = false;
         },
         err => {
           this.isSubmitting = false;
