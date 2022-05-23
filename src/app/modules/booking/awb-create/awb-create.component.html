@@ -156,22 +156,19 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="form-label">Declared Value for Carriage</label>
-                    <app-text-input [formControl]='awbForm.controls["declaredValueForCarriage"]' type="number">
-                    </app-text-input>
+                    <input type="textbox" class="form-control" [formControl]='awbForm.controls["declaredValueForCarriage"]' appTwoDigitDecimaNumber/>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="form-label">Declared Value for Customer</label>
-                    <app-text-input [formControl]='awbForm.controls["declaredValueForCustomer"]' type="number">
-                    </app-text-input>
+                    <input type="textbox" class="form-control" [formControl]='awbForm.controls["declaredValueForCustomer"]' appTwoDigitDecimaNumber/>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="form-label">Amount of Insurance</label>
-                    <app-text-input [formControl]='awbForm.controls["amountOfInsurance"]' type="number">
-                    </app-text-input>
+                    <input type="textbox" class="form-control" [formControl]='awbForm.controls["amountOfInsurance"]' appTwoDigitDecimaNumber/>
                 </div>
             </div>
         </div>
@@ -212,8 +209,7 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label class="form-label">Quantity</label>
-                                <app-text-input [formControl]='productForm.controls["quantity"]' type="number">
-                                </app-text-input>
+                                <input type="number" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" class="form-control" [formControl]='productForm.controls["quantity"]'>
                             </div>
                         </div>
                         <div class="col-md-6 text-end">

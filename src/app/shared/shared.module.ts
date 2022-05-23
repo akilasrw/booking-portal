@@ -10,6 +10,7 @@ import { AutoCompleteDropdownComponent } from './components/auto-complete-dropdo
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { WhiteSpaceInputComponent } from './components/forms/white-space-input/white-space-input.component';
 import { LoaderFlightComponent } from './components/loader-flight/loader-flight.component';
+import { TwoDecimalpointsDirective } from '../directives/twodecimalpoints.directive';
 
 
 
@@ -19,6 +20,7 @@ import { LoaderFlightComponent } from './components/loader-flight/loader-flight.
     AutoCompleteDropdownComponent,
     WhiteSpaceInputComponent,
     LoaderFlightComponent,
+    TwoDecimalpointsDirective,
   ],
   imports: [
     CommonModule,
@@ -36,7 +38,8 @@ import { LoaderFlightComponent } from './components/loader-flight/loader-flight.
     TextInputComponent,
     AutoCompleteDropdownComponent,
     WhiteSpaceInputComponent,
-    LoaderFlightComponent
+    LoaderFlightComponent,
+    TwoDecimalpointsDirective,
   ],providers:[CryptoService]
 })
 export class SharedModule { }
