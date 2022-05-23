@@ -171,7 +171,7 @@ export class BookingSearchComponent implements OnInit {
         position = "Under Seat";
         break;
       case 4:
-        position = "Over head";
+        position = "Overhead";
         break;
 
     }
