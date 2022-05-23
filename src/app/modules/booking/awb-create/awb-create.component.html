@@ -6,8 +6,8 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="form-label">Shipper Name</label>
-                    <app-text-input [formControl]='awbForm.controls["shipperName"]' type="text">
+                    <label class="form-label">Shipper Name<span class="compulsory">*</span></label>
+                    <app-text-input [formControl]='awbForm.controls["shipperName"]' type="text" [label]='"shipper name"'>
                     </app-text-input>
                 </div>
             </div>
@@ -33,8 +33,8 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="form-label">Consignee Name</label>
-                    <app-text-input [formControl]='awbForm.controls["consigneeName"]' type="text">
+                    <label class="form-label">Consignee Name<span class="compulsory">*</span></label>
+                    <app-text-input [formControl]='awbForm.controls["consigneeName"]' type="text" [label]='"consignee name"'>
                     </app-text-input>
                 </div>
             </div>
@@ -60,8 +60,8 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="form-label">Carrier's Agent Name</label>
-                    <app-text-input [formControl]='awbForm.controls["agentName"]' type="text">
+                    <label class="form-label">Carrier's Agent Name<span class="compulsory">*</span></label>
+                    <app-text-input [formControl]='awbForm.controls["agentName"]' type="text" [label]='"carrier agent name"'>
                     </app-text-input>
                 </div>
             </div>
