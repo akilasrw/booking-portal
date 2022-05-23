@@ -48,10 +48,15 @@ export class BookingLookupSearchComponent implements OnInit {
       query.isIncludePackageDetail=true;
 
       this.bookingLookupService.getBookingLookupDetail(query).subscribe(
-        res =>{
-          this.cargoBookingLookup = res;
-        }
-      ); 
+        {
+          next: (res) => {
+            this.cargoBookingLookup = res;
+          },
+          error: (error) => {
+            this.cargoBookingLookup = undefined;
+          }
+        });
+
     }else{
       this.toastr.error('Please enter booking number or package number.');
     }

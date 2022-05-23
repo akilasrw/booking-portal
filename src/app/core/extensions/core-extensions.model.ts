@@ -17,7 +17,7 @@ export class CoreExtensions {
     return params;
   }
 
-  public static GetBookingStatus(bookingStatus: BookingStatus): string { debugger
+  public static GetBookingStatus(bookingStatus: BookingStatus): string {
     let statusString = "None";
     switch (bookingStatus) {
       case BookingStatus.None:

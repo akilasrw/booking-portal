@@ -28,7 +28,7 @@ export class ErrorInterceptor implements HttpInterceptor { // ,OnDestroy
       retryWhen(errors => {
         return errors
           .pipe(
-            mergeMap(error => error.status === 404 ? timer(5000) : throwError(error)),
+            mergeMap(error => error.status === 404 ? timer(5000) : throwError(() =>error)),
             take(3)
           );
       }),
