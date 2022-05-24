@@ -67,6 +67,7 @@ export class LoginComponent implements OnInit {
           }, 1000);
         },
         error:(err)=>{
+          this.spinner.hide();
           this.isSubmitting = false;
         }
       });
