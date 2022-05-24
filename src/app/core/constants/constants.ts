@@ -11,6 +11,6 @@ export class RouteConstants{
   public static BookingLookupRoute : string = "booking-lookup";
   public static StatusOfFlightAvilabilityRoute : string = "";
   public static RateViewRoute : string = "cargo-rate";
-  public static TrackAWBRoute : string = "";
-  public static NotificationsRoute : string = "";
+  public static TrackAWBRoute : string = "track-awb";
+  public static NotificationsRoute : string = "notification";
 }
