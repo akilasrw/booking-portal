@@ -2,6 +2,7 @@
     <app-side-nav (hideMenu)="hideMenu($event)" *ngIf="((accountService.currentUser$ | async) != null)"></app-side-nav>
     <div [ngClass]="{'content-container': (accountService.currentUser$ | async) != null}">
         <router-outlet></router-outlet>
+        <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
     </div>
 
       <!-- <select name="language" ngModel="selected" (ngModelChange)="switchLang($event)">

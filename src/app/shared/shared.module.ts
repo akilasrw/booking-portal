@@ -11,6 +11,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { WhiteSpaceInputComponent } from './components/forms/white-space-input/white-space-input.component';
 import { LoaderFlightComponent } from './components/loader-flight/loader-flight.component';
 import { TwoDecimalpointsDirective } from '../directives/twodecimalpoints.directive';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -29,7 +30,8 @@ import { TwoDecimalpointsDirective } from '../directives/twodecimalpoints.direct
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
     }),
-    AutocompleteLibModule
+    AutocompleteLibModule,
+    NgxSpinnerModule
   ],
   exports: [
     ToastrModule,
@@ -40,6 +42,7 @@ import { TwoDecimalpointsDirective } from '../directives/twodecimalpoints.direct
     WhiteSpaceInputComponent,
     LoaderFlightComponent,
     TwoDecimalpointsDirective,
+    NgxSpinnerModule
   ],providers:[CryptoService]
 })
 export class SharedModule { }
