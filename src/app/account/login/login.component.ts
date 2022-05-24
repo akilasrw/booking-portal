@@ -54,14 +54,13 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.loginForm.valid) {
-      this.spinner.show();
       this.isSubmitting = true;
       this.accountService.login(this.loginForm.value).subscribe({
         next:(res)=>{
           this.router.navigate([this.returnUrl]);
           console.log('Successfully logged.');
           this.isSubmitting = false;
-
+          this.spinner.show();
           setTimeout(() => {
             this.spinner.hide();
           }, 1000);
