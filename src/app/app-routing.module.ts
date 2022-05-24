@@ -8,7 +8,7 @@ import { RouteConstants } from './core/constants/constants';
 import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
-  { path: RouteConstants.DefaultRoute, redirectTo: 'home', pathMatch: 'full' },
+  { path: RouteConstants.DefaultRoute, redirectTo: RouteConstants.DashboardRoute, pathMatch: 'full' },
   { path: RouteConstants.AccountRoute, loadChildren: () => import('./account/account.module').then(mod => mod.AccountModule) },
   { path: RouteConstants.BookingInformationRoute, loadChildren: () => import('./modules/booking/booking.module').then(mod => mod.BookingModule), canActivate: [AuthGuard] },
   { path: RouteConstants.DashboardRoute, loadChildren: () => import('./modules/home/home.module').then(mod => mod.HomeModule), canActivate: [AuthGuard] },

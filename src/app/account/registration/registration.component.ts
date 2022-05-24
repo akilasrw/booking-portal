@@ -73,14 +73,15 @@ export class RegistrationComponent implements OnInit {
 
     if(this.registrationForm.valid){  
       var agent: CargoAgentRM = this.registrationForm.value;
-      this.accountService.register(agent).subscribe(
-        res => {
+      this.accountService.register(agent).subscribe({
+        next:(res)=>{
           this.toastr.success('Successfully registered.');
           this.router.navigate([this.returnUrl]);
         },
-        err => {
+        error:(err)=>{
 
-        })
+        }
+      })
     }else{
       this.registrationForm.markAllAsTouched();
     }
