@@ -855,6 +855,119 @@ a {
       color: $required;
       margin-bottom: 15px;
     }
-  }
+}
+
+// Notifications
+.notifi-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .notifi-section {
+        display: flex;
+        align-items: center;
+        .notifications-filters {
+            display: flex;
+            align-items: center;
+            background-color: $white-blue;
+            width: fit-content;
+            border-radius: 0.313rem;
+            padding: 0.625rem 1rem;
+            .cu-check {
+                margin-right: 1.875rem;
+                .cu-checkbox {
+                    margin-bottom: 0;
+                }
+            }
+        }
+        .notifi-action {
+            background-color: $white-blue;
+            width: fit-content;
+            border-radius: 0.313rem;
+            padding: 0.625rem;
+            margin-left: 1.875rem;
+            i {
+                color: $brand-primary;
+                cursor: pointer;
+                font-size: 1rem;
+            }
+        }
+    }
+    .link {
+        button {
+            color: $brand-primary;
+        }
+    }
+}
+.notifi-info {
+    margin-top: 2.5rem;
+    .notification-content {
+        background-color: $default-white;
+        border: 0.063rem solid $white-blue;
+        border-radius: 0.313rem;
+        padding: 1.563rem;
+        &.Unread {
+            .notifi-content {
+                p:first-child {
+                    color: $default-black;
+                    font-weight: 500;
+                    margin-bottom: 0;
+                }
+                .content {
+                    color: $form-label;
+                }
+            }
+        }
+        &.read {
+            .notifi-content {
+                p:first-child {
+                    color: $gray;
+                    font-weight: 500;
+                    margin-bottom: 0;
+                }
+                .content {
+                    color: $gray;
+                }
+            }
+        }
+        .content-block {
+            display: flex;
+            .notifi-icon {
+                margin-top: 1.25rem;
+                .notifiicon {
+                    @include notifi-color;
+                }
+            }
+            .notifi-content {
+                margin-left: 1.25rem;
+                .content {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1; /* number of lines to show */
+                    -webkit-box-orient: vertical;
+                    margin-bottom: 0;
+                }
+                .date-time-block {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    .date-time {
+                        color: $gray;
+                        font-size: 0.75rem;
+                        span:nth-child(2) {
+                            margin-left: 1.25rem;
+                        }
+                    }
+                    .btn {
+                        color: $brand-primary;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
 
 

@@ -93,8 +93,26 @@
   }
 }
 
-
-
+@mixin notification-icon {
+  border-radius: 100%;
+  padding: 1rem;
+  font-size: 1.563rem;
+}
+@mixin notifi-color {
+  @include notification-icon;
+  &.success {
+    color: $brand-primary;
+    background-color: $light-primary;
+  }
+  &.complete {
+    color: $green;
+    background-color: $light-green;
+  }
+  &.warning {
+    color: $orange;
+    background-color: $light-orange;
+  }
+} 
 
 
 @mixin respond-to($media) {
