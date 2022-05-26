@@ -967,7 +967,66 @@ a {
     }
 }
 
-
+// Track AWB
+.location-point, .traking-info {
+    background-color: $white-blue;
+    border-radius: 0.313rem;
+    padding: 1rem;
+    overflow-y: auto;
+    height: calc(100vh - 235px);
+    @include customScrollbar(10px);
+    ul {
+        list-style: none;
+        padding-left: 1rem;
+        li {
+            &.sub-point, &.end-point {
+                border-left: 0.125rem solid $off-white;
+                padding: 2.5rem 0 0;
+                &.active {
+                    border-left: 0.125rem solid $brand-primary;
+                }
+            }
+            &.sub-point {
+                &.active {
+                    &::before {
+                        background-image: url(../src/assets/images/active-icon.svg);
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    }
+                }
+            }
+            &:first-child {
+                &::before {
+                    background-image: url(../src/assets/images/start-icon.svg);
+                    background-repeat: no-repeat;
+                    padding: 0.188rem 0.75rem;
+                    background-position: center;
+                    margin-left: -0.688rem;
+                }
+            }
+            &::before {
+                content: '';
+                margin: 0 1.25rem 0 -0.813rem;
+                background-image: url(../src/assets/images/inactive-icon.svg);
+                background-repeat: no-repeat;
+                padding: 0.188rem 0.75rem;
+                background-position: center;
+            }
+            &:last-child {
+                &::before {
+                    background-image: url(../src/assets/images/end-icon.svg);
+                    background-repeat: no-repeat;
+                    padding: 0.313rem 0.813rem;
+                    background-position: center;
+                }
+            }
+        }
+    }
+}
+.pdf-link {
+    color: $brand-primary;
+    cursor: pointer;
+}
 
 
 
