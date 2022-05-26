@@ -12,6 +12,11 @@ import { WhiteSpaceInputComponent } from './components/forms/white-space-input/w
 import { LoaderFlightComponent } from './components/loader-flight/loader-flight.component';
 import { TwoDecimalpointsDirective } from '../directives/twodecimalpoints.directive';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { PagerComponent } from './components/pager/pager.component';
+import { PagingHeaderComponent } from './components/paging-header/paging-header.component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+
 
 
 
@@ -22,6 +27,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     WhiteSpaceInputComponent,
     LoaderFlightComponent,
     TwoDecimalpointsDirective,
+    PagerComponent,
+    PagingHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -31,7 +38,10 @@ import { NgxSpinnerModule } from 'ngx-spinner';
       positionClass: 'toast-bottom-right'
     }),
     AutocompleteLibModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgxPaginationModule,
+    PaginationModule
+
   ],
   exports: [
     ToastrModule,
@@ -42,7 +52,11 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     WhiteSpaceInputComponent,
     LoaderFlightComponent,
     TwoDecimalpointsDirective,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgxPaginationModule,
+    PagerComponent,
+    PagingHeaderComponent,
+    PaginationModule
   ],providers:[CryptoService]
 })
 export class SharedModule { }

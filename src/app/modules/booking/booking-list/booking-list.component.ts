@@ -19,6 +19,8 @@ export class BookingListComponent implements OnInit {
   modalVisibleAnimate = false;
   filterFormHasValue = false
   totalCount: number =0;
+  filterQuery: CargoBookingFilterQuery = new CargoBookingFilterQuery();
+
 
   public filterForm!: FormGroup;
   cargoBookingList: CargoBooking[] = []
@@ -29,12 +31,13 @@ export class BookingListComponent implements OnInit {
   constructor(
     private bookingService: BookingService,
     private formBuilder: FormBuilder,
-    private router: Router) { }
+    private router: Router) {}
 
   ngOnInit(): void {
     this.initialiseForm();
     this.getFilteredList();
     this.onChangeFilterFrm();
+    
   }
 
   initialiseForm(){
@@ -47,8 +50,9 @@ export class BookingListComponent implements OnInit {
 
   getFilteredList(){
     if(this.filterForm.valid){
-      var qury: CargoBookingFilterQuery = this.filterForm.value;
-      this.bookingService.getFilteredBookingList(qury).subscribe(
+      this.filterQuery = this.filterForm.value;
+
+      this.bookingService.getFilteredBookingList(this.filterQuery).subscribe(
         {
           next:(res)=>{
             this.cargoBookingList = res.data;
@@ -109,5 +113,10 @@ export class BookingListComponent implements OnInit {
     this.filterForm.reset();
     this.filterFormHasValue = false;
   }
-
+  public onPageChanged(event:any) {
+    if (this.filterQuery.pageIndex !== event) {
+      this.filterQuery.pageIndex = event;
+      this.getFilteredList();
+    }
+  }
 }
