@@ -1,0 +1,25 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BaseService } from '../core/services/base.service';
+import { Validate } from '../shared/models/validate.model';
+import { ValidateCargoPositionRequest } from '../_models/request-models/cargo-booking/validate-cargo-position-request.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CargoPositionService extends BaseService{
+
+  private readonly endpointEntityName = 'CargoPosition';
+  private readonly validateEndpoint = `${this.endpointEntityName}/Validate`;
+
+
+
+  constructor(http: HttpClient) {
+    super(http);
+  }
+
+  validateWeight(validateRequest : ValidateCargoPositionRequest){
+    return  this.post<Validate>(this.validateEndpoint, validateRequest);
+  }
+}
+
