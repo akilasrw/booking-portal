@@ -1,3 +1,6 @@
+import { Validate } from './../../../shared/models/validate.model';
+import { ValidateCargoPositionRequest } from './../../../_models/request-models/cargo-booking/validate-cargo-position-request.model';
+import { CargoPositionService } from './../../../_services/cargo-position.service';
 import { Unit } from './../../../_models/view-models/unit/unit.model';
 import { PackageItem } from './../../../_models/view-models/package-item.model';
 import { ToastrService } from 'ngx-toastr';
@@ -38,6 +41,7 @@ export class BookingCreateComponent implements OnInit {
     private flightScheduleSectorService: FlightScheduleSectorService,
     private packageContainerService: PackageContainerService,
     private bookingService: BookingService,
+    private cargoPositionService: CargoPositionService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private unitService: UnitService,
@@ -131,22 +135,24 @@ export class BookingCreateComponent implements OnInit {
     });
   }
 
-  add() {
+  async add() {
     if(this.bookingForm.valid) {
       var booking = this.bookingForm.value;
       if(this.isAvailableSpace(booking.packageItems.packageDimention)){
-        if(this.cargoBookingRequest.packageItems == undefined) {
-          this.cargoBookingRequest = {
-            flightScheduleSectorId: this.flightScheduleSectorId,
-            packageItems:[this.mapPackageItems(booking.packageItems)]
-          };
-        } else if (this.cargoBookingRequest.packageItems?.findIndex(x=>x.height == booking.height && x.length == booking.length && x.width == booking.width) == -1) {
-          this.cargoBookingRequest.packageItems?.push(this.mapPackageItems(booking.packageItems));
-        } else {
-          this.toastr.warning('Package is already exists.');
+        if(await this.isWeightNotExceed(booking.packageItems) == true){
+          if(this.cargoBookingRequest.packageItems == undefined) {
+            this.cargoBookingRequest = {
+              flightScheduleSectorId: this.flightScheduleSectorId,
+              packageItems:[this.mapPackageItems(booking.packageItems)]
+            };
+          } else if (this.cargoBookingRequest.packageItems?.findIndex(x=>x.height == booking.height && x.length == booking.length && x.width == booking.width) == -1) {
+            this.cargoBookingRequest.packageItems?.push(this.mapPackageItems(booking.packageItems));
+          } else {
+            this.toastr.warning('Package is already exists.');
+          }
+          console.log(this.cargoBookingRequest);
+          this.resetForm();
         }
-        console.log(this.cargoBookingRequest);
-        this.resetForm();
       }
     } else {
       this.bookingForm.markAllAsTouched();
@@ -194,7 +200,7 @@ export class BookingCreateComponent implements OnInit {
     };
   }
 
-  isAvailableSpace(packageDimension: any) : boolean {debugger
+  isAvailableSpace(packageDimension: any) : boolean {
     let containerType = this.getPackageContainerType(packageDimension);
     console.log(this.flightScheduleSector);
     var result = this.flightScheduleSector?.flightScheduleSectorCargoPositions.filter(x=> x.cargoPositionType == Number(containerType) && x.availableSpaceCount > 0);
@@ -209,6 +215,21 @@ export class BookingCreateComponent implements OnInit {
     return true;
   }
 
+  async isWeightNotExceed(cargoPackage : PackageItem){
+    var request : ValidateCargoPositionRequest = {
+      packageItem : this.mapPackageItems(cargoPackage),
+      flightScheduleSectorId: this.flightScheduleSectorId
+    };
+    var response = await this.cargoPositionService.validateWeight(request).toPromise();
+    if(response !== undefined){
+      if(!response.isValid){
+        this.toastr.error(response.validationMessage);
+      }
+      return response.isValid;
+    }else{
+      return false;
+    }
+  }
 
   getPackageContainerType(id: string) {
     var result = this.packageContainers?.filter(x=> x.id == id);
