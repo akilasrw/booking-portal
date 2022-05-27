@@ -7,29 +7,27 @@
         </div>
     </div>
     <div class="card-body without-footer">
-        <form [formGroup]='searchForm' (ngSubmit)="getRateList()">
-            <div class="row align-items-center">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="form-label">Origin</label>
-                        <app-auto-complete-dropdown [data]="originAirpots" [keyword]="keyword"
-                            (selectFileOutput)="selectedOrigin($event)"></app-auto-complete-dropdown>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="form-label">Destination</label>
-                        <app-auto-complete-dropdown [data]="destinationAirpots" [keyword]="keyword"
-                            (selectFileOutput)="selectedDestination($event)"></app-auto-complete-dropdown>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group mb-0">
-                        <button type="submit" class="btn btn-primary-outline">Find</button>
-                    </div>
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="form-label">Origin</label>
+                    <app-auto-complete-dropdown [data]="originAirpots" [keyword]="keyword"
+                        (selectFileOutput)="selectedOrigin($event)"></app-auto-complete-dropdown>
                 </div>
             </div>
-        </form>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="form-label">Destination</label>
+                    <app-auto-complete-dropdown [data]="destinationAirpots" [keyword]="keyword"
+                        (selectFileOutput)="selectedDestination($event)"></app-auto-complete-dropdown>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group mb-0">
+                    <button (click)="getRateList()" class="btn btn-primary-outline">Find</button>
+                </div>
+            </div>
+        </div>
         <div class="table-content">
             <table class="table table-responsive">
                 <thead>
@@ -37,7 +35,7 @@
                     <th>Dimensions(LxWxH) Inch</th>
                     <th>Max Weight(Kg)</th>
                     <th>Price($)</th>
-                </thead>  
+                </thead>
                 <tbody>
                     <tr *ngFor="let item of this.cargoRateList">
                         <td>{{GetPackageBoxType(item.packageBoxType)}}</td>
@@ -52,6 +50,12 @@
             <div class="not-available" *ngIf="totalCount == 0">
                 <img src="./assets/images/no-data.png" alt="No Content Data">
                 <div>Rates not available.</div>
+            </div>
+            <div class="d-flex align-items-center justify-content-center" *ngIf="totalCount > 0">
+                <app-pager [pageSize]="cargoRateFilterQuery?.pageSize" [pageNumber]="cargoRateFilterQuery?.pageIndex"
+                    [totalCount]="totalCount" (pageChanged)="onPageChanged($event)"></app-pager>
+                <app-paging-header [totalCount]="totalCount" [pageSize]="cargoRateFilterQuery?.pageSize"
+                    [pageNumber]="cargoRateFilterQuery?.pageIndex"></app-paging-header>
             </div>
         </div>
     </div>

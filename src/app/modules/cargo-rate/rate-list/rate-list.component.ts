@@ -8,7 +8,6 @@ import { CargoRateFilterQuery } from 'src/app/_models/queries/cargo-rate/cargo-r
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 import { ToastrService } from 'ngx-toastr';
 
-
 @Component({
   selector: 'app-rate-list',
   templateUrl: './rate-list.component.html',
@@ -16,94 +15,88 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RateListComponent implements OnInit {
 
-  public searchForm!:FormGroup;
-
+  searchForm!: FormGroup;
+  cargoRateFilterQuery: CargoRateFilterQuery = new CargoRateFilterQuery();
+  originAirportId?: string;
+  destinationAirportId?: string;
   originAirpots: SelectList[] = [];
   destinationAirpots: SelectList[] = [];
   cargoRateList: CargoRate[] = []
   keyword = 'value';
-  totalCount: number =0;
+  totalCount: number = 0;
 
-
-  
-  constructor(private fb:FormBuilder,
-    private airportService:AirportService,
+  constructor(private fb: FormBuilder,
+    private airportService: AirportService,
     private toastr: ToastrService,
-    private cargoRateListService:CargoRateListService) { }
+    private cargoRateListService: CargoRateListService) { }
 
   ngOnInit(): void {
-    this.initializeForm();
-    this. loadAirports();
+    this.loadAirports();
   }
 
-  initializeForm(){
-    this.searchForm = this.fb.group({
-      originAirportId: [null, [Validators.required]],
-      destinationAirportId: [null, [Validators.required]]
-    });
-  }
-
-  loadAirports(){
+  loadAirports() {
     this.airportService.getSelectList()
       .subscribe(res => {
-        if(res.length > 0) {
+        if (res.length > 0) {
           this.originAirpots = res;
           Object.assign(this.destinationAirpots, res);
         }
       });
   }
 
-  getRateList(){
-    if(this.isformValid() && this.searchForm.valid){
-      var qury: CargoRateFilterQuery = this.searchForm.value;
-      this.cargoRateListService.getFilteredRateList(qury).subscribe(
+  getRateList() {
+    if (this.isformValid()) {
+      this.cargoRateFilterQuery.originAirportId = this.originAirportId;
+      this.cargoRateFilterQuery.destinationAirportId = this.destinationAirportId;
+      this.cargoRateListService.getFilteredRateList(this.cargoRateFilterQuery).subscribe(
         {
           next: (res) => {
             this.cargoRateList = res.data
             this.totalCount = res.count
           },
           error: (error) => {
-            this.totalCount =0;
-            this.cargoRateList=[]
+            this.totalCount = 0;
+            this.cargoRateList = []
           }
         }
-      )    
+      )
     }
   }
 
-  isformValid(): boolean{
-    if((this.searchForm.get('originAirportId')?.value === null || this.searchForm.get('originAirportId')?.value === "") ||
-    (this.searchForm.get('destinationAirportId')?.value === null || this.searchForm.get('destinationAirportId')?.value === "")){
+  isformValid(): boolean {
+    debugger
+    if ((this.originAirportId === undefined || this.originAirportId === "") ||
+      (this.destinationAirportId === undefined || this.destinationAirportId === "")) {
       this.toastr.error('Please select origin and destination.');
       return false;
-   }else{
-     if(this.searchForm.get('originAirportId')?.value === this.searchForm.get('destinationAirportId')?.value){
-      this.toastr.error('Origin and destination is same.');
-      return false;
-     }else{
-      return true;
-    } 
-   }
+    } else {
+      if (this.originAirportId === this.destinationAirportId) {
+        this.toastr.error('Origin and destination is same.');
+        return false;
+      } else {
+        return true;
+      }
+    }
   }
 
-  selectedOrigin(value: any){
-    this.searchForm.get('originAirportId')?.patchValue(value.id);
+  selectedOrigin(value: any) {
+    this.originAirportId = value.id;
   }
 
-  selectedDestination(value: any){
-    this.searchForm.get('destinationAirportId')?.patchValue(value.id);
+  selectedDestination(value: any) {
+    this.destinationAirportId = value.id;
   }
 
-  GetPackageDimentions(item :CargoRate):string{
-   return CoreExtensions.GetPackageDimentions(item.length,item.width,item.height )
+  GetPackageDimentions(item: CargoRate): string {
+    return CoreExtensions.GetPackageDimentions(item.length, item.width, item.height)
   }
 
-  GetPackageContainerType(value:number):string{
+  GetPackageContainerType(value: number): string {
     return CoreExtensions.GetPackageContainerType(value)
 
   }
 
-  GetPackageBoxType(value:number):string{
+  GetPackageBoxType(value: number): string {
     return CoreExtensions.GetPackageBoxType(value)
   }
 
