@@ -1,6 +1,5 @@
 import { CargoBooking } from './../../../_models/view-models/cargo-booking/cargo-booking.model';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { CargoBookingFilterQuery } from 'src/app/_models/queries/cargo-booking/cargo-booking-filter-query.model';
 import { BookingService } from 'src/app/_services/booking.service';
 import { Router } from '@angular/router';
@@ -18,70 +17,55 @@ export class BookingListComponent implements OnInit {
   modalVisible = false;
   modalVisibleAnimate = false;
   filterFormHasValue = false
-  totalCount: number =0;
-  filterQuery: CargoBookingFilterQuery = new CargoBookingFilterQuery();
-
-
-  public filterForm!: FormGroup;
+  totalCount: number = 0;
+  bookingListfilterQuery: CargoBookingFilterQuery = new CargoBookingFilterQuery();
+  bookingId?: string;
+  destination?: string;
+  bookingDate?: Date;
   cargoBookingList: CargoBooking[] = []
-  cargoBookingId?:string;
+  cargoBookingId?: string;
   bookingStatus = BookingStatus
-  valuedd = "";
 
   constructor(
     private bookingService: BookingService,
-    private formBuilder: FormBuilder,
-    private router: Router) {}
+    private router: Router) { }
 
   ngOnInit(): void {
-    this.initialiseForm();
     this.getFilteredList();
-    this.onChangeFilterFrm();
-    
   }
 
-  initialiseForm(){
-    this.filterForm = this.formBuilder.group({
-      bookingId: new FormControl(null),
-      destination: new FormControl(null),
-      bookingDate: new FormControl(null),
-    });
-  }
+  getFilteredList() {
+    this.bookingListfilterQuery.bookingId = this.bookingId;
+    this.bookingListfilterQuery.destination = this.destination;
+    this.bookingListfilterQuery.bookingDate = this.bookingDate;
 
-  getFilteredList(){
-    if(this.filterForm.valid){
-      this.filterQuery = this.filterForm.value;
-
-      this.bookingService.getFilteredBookingList(this.filterQuery).subscribe(
-        {
-          next:(res)=>{
-            this.cargoBookingList = res.data;
-            this.totalCount = res.count;
-          },
-          error:()=>{
-            this.cargoBookingList =[]
-            this.totalCount=0
-          }         
+    this.bookingService.getFilteredBookingList(this.bookingListfilterQuery).subscribe(
+      {
+        next: (res) => {
+          this.cargoBookingList = res.data;
+          this.totalCount = res.count;
+        },
+        error: () => {
+          this.cargoBookingList = []
+          this.totalCount = 0
         }
-      )
-    }
+      }
+    )
   }
 
-  onChangeFilterFrm(): void {
-    this.filterForm.valueChanges.subscribe(item => {
-      debugger
-      if((item.bookingId !== null && item.bookingId.trim() !== "" ) || 
-      (item.destination !== null && item.destination.trim() !== "" ) || 
-      (item.bookingDate !== null)){
+  onChangeFilterFrm(event:any) {
+      if ((this.bookingId !== undefined && this.bookingId !== "") ||
+        (this.destination !== undefined && this.destination !== "") ||
+        (this.bookingDate !== null)) {
         this.filterFormHasValue = true;
-      }else{
+      } else {
         this.filterFormHasValue = false;
-      }      
-    });
+      }
+
   }
 
-  show(id:any) {
-    this.cargoBookingId =id;
+  show(id: any) {
+    this.cargoBookingId = id;
     this.modalVisible = true;
     setTimeout(() => (this.modalVisibleAnimate = true));
   }
@@ -105,17 +89,19 @@ export class BookingListComponent implements OnInit {
     this.router.navigate(['booking/search']);
   }
 
-  getBookingStatus(status:number):string{
+  getBookingStatus(status: number): string {
     return CoreExtensions.GetBookingStatus(status)
   }
 
-  clearFilter(){
-    this.filterForm.reset();
+  clearFilter() {
+    this.bookingId=undefined;
+    this.destination=undefined;
+    this.bookingDate=undefined;
     this.filterFormHasValue = false;
   }
-  public onPageChanged(event:any) {
-    if (this.filterQuery.pageIndex !== event) {
-      this.filterQuery.pageIndex = event;
+  public onPageChanged(event: any) {
+    if (this.bookingListfilterQuery?.pageIndex !== event) {
+      this.bookingListfilterQuery.pageIndex = event;
       this.getFilteredList();
     }
   }
