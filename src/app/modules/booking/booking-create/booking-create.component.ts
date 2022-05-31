@@ -170,17 +170,15 @@ export class BookingCreateComponent implements OnInit {
     console.log(this.bookingForm.value);
   }
 
-  reset() {
-    this.bookingForm.get('packageItems')?.reset();
-  }
-
   resetForm() {
-    this.bookingForm.get('packageItems')?.reset();
-    // this.bookingForm.get('packageItems')?.get('width')?.patchValue(0);
-    // this.bookingForm.get('packageItems')?.get('length')?.patchValue(0);
-    // this.bookingForm.get('packageItems')?.get('weight')?.patchValue(0);
-    // this.bookingForm.get('packageItems')?.get('height')?.patchValue(0);
-    // this.bookingForm.get('packageItems')?.get('packageDimention')?.patchValue('');
+    this.bookingForm.get('packageItems')?.get('width')?.patchValue(0);
+    this.bookingForm.get('packageItems')?.get('length')?.patchValue(0);
+    this.bookingForm.get('packageItems')?.get('weight')?.patchValue(0);
+    this.bookingForm.get('packageItems')?.get('height')?.patchValue(0);
+    this.bookingForm.get('packageItems')?.get('packageDimention')?.patchValue('');
+    this.bookingForm.get('packageItems')?.get('packageItemStatus')?.patchValue(PackageItemStatus.Pending);
+    this.bookingForm.get('packageItems')?.get('description')?.patchValue('');
+    this.bookingForm.get('packageItems')?.get('isEdit')?.patchValue(false);      
   }
 
   mapPackageItems(packageItem: any) {
