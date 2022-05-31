@@ -63,7 +63,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group mb-0">
                                             <label class="form-label">Unit</label>
-                                            <select name="unit" class="form-control" formControlName ="volumeUnitId">
+                                            <select name="unit" class="form-control" formControlName ="volumeUnitId"  [attr.disabled]="disableInput ? 'disabled' : null">
                                                 <option *ngFor="let unit of volumeUnits" [ngValue]="unit.id">{{unit.name}}</option>
                                             </select>
                                         </div>

@@ -98,7 +98,7 @@ export class BookingCreateComponent implements OnInit {
         height: [0,[Validators.required, Validators.min(1)]],
         packageItemCategory: [],
         weightUnitId: ['bc1e3d49-5c26-4de5-9cd4-576bbf6e9d0c',[Validators.required]],
-        volumeUnitId: ['11c39205-4153-49f1-ab50-bba8913c5bb9',[Validators.required]],
+        volumeUnitId: ['9f0928df-5d33-4e5d-affc-f7e2e2b72680',[Validators.required]],
         packageDimention:['',[Validators.required]],
         packageItemStatus:[PackageItemStatus.Pending],
         description:[''],
@@ -178,7 +178,9 @@ export class BookingCreateComponent implements OnInit {
     this.bookingForm.get('packageItems')?.get('packageDimention')?.patchValue('');
     this.bookingForm.get('packageItems')?.get('packageItemStatus')?.patchValue(PackageItemStatus.Pending);
     this.bookingForm.get('packageItems')?.get('description')?.patchValue('');
-    this.bookingForm.get('packageItems')?.get('isEdit')?.patchValue(false);      
+    this.bookingForm.get('packageItems')?.get('isEdit')?.patchValue(false);  
+    this.bookingForm.get('packageItems')?.get('weightUnitId')?.patchValue('bc1e3d49-5c26-4de5-9cd4-576bbf6e9d0c');
+    this.bookingForm.get('packageItems')?.get('volumeUnitId')?.patchValue('9f0928df-5d33-4e5d-affc-f7e2e2b72680'); 
   }
 
   mapPackageItems(packageItem: any) {
