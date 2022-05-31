@@ -199,14 +199,19 @@ export class BookingCreateComponent implements OnInit {
   }
 
   isAvailableSpace(packageDimension: any) : boolean {
+    debugger
     let containerType = this.getPackageContainerType(packageDimension);
     console.log(this.flightScheduleSector);
+    var availableSpaceCount =0;
     var result = this.flightScheduleSector?.flightScheduleSectorCargoPositions.filter(x=> x.cargoPositionType == Number(containerType) && x.availableSpaceCount > 0);
-    if(result == null || result.length == 0) {
+    if(result !== undefined && result.length > 0){
+      availableSpaceCount = result[0].availableSpaceCount
+    }
+    if(availableSpaceCount == 0) {
       this.toastr.warning('Space is not available.');
       return false;
     } else if(this.cargoBookingRequest.packageItems &&
-      result.length <= this.cargoBookingRequest.packageItems?.filter(x=> x.packageContainerType == containerType).length) {
+      availableSpaceCount <= this.cargoBookingRequest.packageItems?.filter(x=> x.packageContainerType == containerType).length) {
       this.toastr.warning('Maximum limit is exceed.');
       return false;
     }
