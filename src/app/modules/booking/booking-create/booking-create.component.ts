@@ -75,7 +75,7 @@ export class BookingCreateComponent implements OnInit {
 
   getUnits(){
     this.unitService.getList()
-    .subscribe(res =>{
+    .subscribe(res => {
       console.log("units: ", res);
       this.weightUnits = res.filter(x=> x.unitType == UnitType.Mass);
       this.volumeUnits = res.filter(x=> x.unitType == UnitType.Length);
@@ -137,7 +137,7 @@ export class BookingCreateComponent implements OnInit {
     });
   }
 
-  async add() {
+  async add() { debugger;
     if(this.bookingForm.valid) {
       var booking = this.bookingForm.value;
       if(await this.isAvailableSpace(booking.packageItems.packageDimention) == true){
@@ -237,6 +237,7 @@ export class BookingCreateComponent implements OnInit {
       this.toastr.warning('Maximum limit is exceed.');
       return false;
     }
+    
     return true;
   }
 
