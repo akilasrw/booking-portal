@@ -1,3 +1,4 @@
+import { SeatAvailability } from './../../../_models/view-models/seat-configuration/seat-availability.model';
 import { Validate } from './../../../shared/models/validate.model';
 import { ValidateCargoPositionRequest } from './../../../_models/request-models/cargo-booking/validate-cargo-position-request.model';
 import { CargoPositionService } from './../../../_services/cargo-position.service';
@@ -120,7 +121,8 @@ export class BookingCreateComponent implements OnInit {
 
   getFlightScheduleSectorData() {
     var query:  FlightScheduleSectorQuery = {
-      id: this.flightScheduleSectorId
+      id: this.flightScheduleSectorId,
+      includeLoadPlan:false
     };
 
     this.flightScheduleSectorService.getFlightScheduleSector(query)
@@ -138,7 +140,7 @@ export class BookingCreateComponent implements OnInit {
   async add() {
     if(this.bookingForm.valid) {
       var booking = this.bookingForm.value;
-      if(this.isAvailableSpace(booking.packageItems.packageDimention)){
+      if(await this.isAvailableSpace(booking.packageItems.packageDimention) == true){
         if(await this.isWeightNotExceed(booking.packageItems) == true){
           if(this.cargoBookingRequest.packageItems == undefined) {
             this.cargoBookingRequest = {
@@ -200,18 +202,36 @@ export class BookingCreateComponent implements OnInit {
     };
   }
 
-  isAvailableSpace(packageDimension: any) : boolean {
-    debugger
-    let containerType = this.getPackageContainerType(packageDimension);
-    console.log(this.flightScheduleSector);
+  async isAvailableSpace(packageDimension: any){
     var availableSpaceCount =0;
-    var result = this.flightScheduleSector?.flightScheduleSectorCargoPositions.filter(x=> x.cargoPositionType == Number(containerType) && x.availableSpaceCount > 0);
-    if(result !== undefined && result.length > 0){
-      availableSpaceCount = result[0].availableSpaceCount
+
+    let containerType = this.getPackageContainerType(packageDimension);
+
+    if(containerType == PackageContainerType.OnThreeSeats){
+      var query:  FlightScheduleSectorQuery = {
+        id: this.flightScheduleSectorId,
+        includeLoadPlan : true
+      };
+      var response = await this.cargoPositionService.getAvailableThreeSeats(query).toPromise();
+      if(response !== undefined){
+        availableSpaceCount = response.SeatCount;
+      }
+    }else{
+      var sectorCargoPositions = this.flightScheduleSector?.flightScheduleSectorCargoPositions.filter(x=> x.cargoPositionType == Number(containerType) && x.availableSpaceCount > 0);
+      if(sectorCargoPositions !== undefined && sectorCargoPositions.length > 0){
+        availableSpaceCount = sectorCargoPositions[0].availableSpaceCount
+      }
     }
+
     if(availableSpaceCount == 0) {
-      this.toastr.warning('Space is not available.');
-      return false;
+      //TODO Need to Remoe bellow if 
+      // if(containerType === PackageContainerType.OnThreeSeats){
+      //   return true;
+      // }else{
+        this.toastr.warning('Space is not available.');
+        return false;
+     // }
+      
     } else if(this.cargoBookingRequest.packageItems &&
       availableSpaceCount <= this.cargoBookingRequest.packageItems?.filter(x=> x.packageContainerType == containerType).length) {
       this.toastr.warning('Maximum limit is exceed.');
