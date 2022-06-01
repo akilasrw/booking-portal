@@ -32,8 +32,8 @@
             <table class="table table-responsive">
                 <thead>
                     <th>Box Type</th>
-                    <th>Dimensions(LxWxH) Inch</th>
-                    <th>Max Weight(Kg)</th>
+                    <th>Dimensions(LxWxH) cm</th>
+                    <th>Max Weight(kg)</th>
                     <th>Price($)</th>
                 </thead>
                 <tbody>
@@ -42,7 +42,7 @@
                         <td *ngIf="item.packageBoxType == 2">Custom Dimetions</td>
                         <td *ngIf="item.packageBoxType != 2">{{GetPackageContainerType(item.packageContainerType)+" -
                             "+GetPackageDimentions(item)}}</td>
-                        <td>{{item.maxWaight +" Kg"}}</td>
+                        <td>{{item.maxWaight +" kg"}}</td>
                         <td>{{"$ "+ item.rate}}</td>
                     </tr>
                 </tbody>

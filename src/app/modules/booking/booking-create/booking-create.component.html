@@ -63,7 +63,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group mb-0">
                                             <label class="form-label">Unit</label>
-                                            <select name="unit" class="form-control" formControlName ="volumeUnitId">
+                                            <select name="unit" class="form-control" formControlName ="volumeUnitId"  [attr.disabled]="disableInput ? 'disabled' : null">
                                                 <option *ngFor="let unit of volumeUnits" [ngValue]="unit.id">{{unit.name}}</option>
                                             </select>
                                         </div>
@@ -106,7 +106,7 @@
                         </div>
                     </div>
                     <div class="add-detail text-end">
-                        <button class="btn btn-secondary-outline me-3" (click)="reset()">Reset</button>
+                        <button class="btn btn-secondary-outline me-3" (click)="resetForm()">Reset</button>
                         <button class="btn btn-primary-outline" type="submit">{{ bookingForm.get('packageItems')?.value.isEdit?'Update': 'Add'}}</button>
                     </div>
                 </div>
@@ -116,8 +116,8 @@
                 <table class="table table-responsive">
                     <thead>
                         <th>Cargo Type</th>
-                        <th>Dimensions (L x W x H) Inch</th>
-                        <th>Weight (Kg)</th>
+                        <th>Dimensions (L x W x H) cm</th>
+                        <th>Weight (kg)</th>
                         <th>AWB</th>
                         <th class="text-center">Actions </th>
                     </thead>

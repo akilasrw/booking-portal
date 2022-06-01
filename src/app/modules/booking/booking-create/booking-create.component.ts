@@ -98,7 +98,7 @@ export class BookingCreateComponent implements OnInit {
         height: [0,[Validators.required, Validators.min(1)]],
         packageItemCategory: [],
         weightUnitId: ['bc1e3d49-5c26-4de5-9cd4-576bbf6e9d0c',[Validators.required]],
-        volumeUnitId: ['11c39205-4153-49f1-ab50-bba8913c5bb9',[Validators.required]],
+        volumeUnitId: ['9f0928df-5d33-4e5d-affc-f7e2e2b72680',[Validators.required]],
         packageDimention:['',[Validators.required]],
         packageItemStatus:[PackageItemStatus.Pending],
         description:[''],
@@ -170,17 +170,17 @@ export class BookingCreateComponent implements OnInit {
     console.log(this.bookingForm.value);
   }
 
-  reset() {
-    this.bookingForm.get('packageItems')?.reset();
-  }
-
   resetForm() {
-    this.bookingForm.get('packageItems')?.reset();
-    // this.bookingForm.get('packageItems')?.get('width')?.patchValue(0);
-    // this.bookingForm.get('packageItems')?.get('length')?.patchValue(0);
-    // this.bookingForm.get('packageItems')?.get('weight')?.patchValue(0);
-    // this.bookingForm.get('packageItems')?.get('height')?.patchValue(0);
-    // this.bookingForm.get('packageItems')?.get('packageDimention')?.patchValue('');
+    this.bookingForm.get('packageItems')?.get('width')?.patchValue(0);
+    this.bookingForm.get('packageItems')?.get('length')?.patchValue(0);
+    this.bookingForm.get('packageItems')?.get('weight')?.patchValue(0);
+    this.bookingForm.get('packageItems')?.get('height')?.patchValue(0);
+    this.bookingForm.get('packageItems')?.get('packageDimention')?.patchValue('');
+    this.bookingForm.get('packageItems')?.get('packageItemStatus')?.patchValue(PackageItemStatus.Pending);
+    this.bookingForm.get('packageItems')?.get('description')?.patchValue('');
+    this.bookingForm.get('packageItems')?.get('isEdit')?.patchValue(false);  
+    this.bookingForm.get('packageItems')?.get('weightUnitId')?.patchValue('bc1e3d49-5c26-4de5-9cd4-576bbf6e9d0c');
+    this.bookingForm.get('packageItems')?.get('volumeUnitId')?.patchValue('9f0928df-5d33-4e5d-affc-f7e2e2b72680'); 
   }
 
   mapPackageItems(packageItem: any) {
@@ -201,20 +201,21 @@ export class BookingCreateComponent implements OnInit {
   }
 
   isAvailableSpace(packageDimension: any) : boolean {
+    debugger
     let containerType = this.getPackageContainerType(packageDimension);
     console.log(this.flightScheduleSector);
-    if(containerType != PackageContainerType.OnThreeSeats) {
-      var result = this.flightScheduleSector?.flightScheduleSectorCargoPositions.filter(x=> x.cargoPositionType == Number(containerType) && x.availableSpaceCount > 0);
-      if(result == null || result.length == 0) {
-        this.toastr.warning('Space is not available.');
-        return false;
-      } else if(this.cargoBookingRequest.packageItems &&
-        result.length <= this.cargoBookingRequest.packageItems?.filter(x=> x.packageContainerType == containerType).length) {
-        this.toastr.warning('Maximum limit is exceed.');
-        return false;
-      }
-    } else {
-      // TO DO: check with three sheet avaialblity- Yohan
+    var availableSpaceCount =0;
+    var result = this.flightScheduleSector?.flightScheduleSectorCargoPositions.filter(x=> x.cargoPositionType == Number(containerType) && x.availableSpaceCount > 0);
+    if(result !== undefined && result.length > 0){
+      availableSpaceCount = result[0].availableSpaceCount
+    }
+    if(availableSpaceCount == 0) {
+      this.toastr.warning('Space is not available.');
+      return false;
+    } else if(this.cargoBookingRequest.packageItems &&
+      availableSpaceCount <= this.cargoBookingRequest.packageItems?.filter(x=> x.packageContainerType == containerType).length) {
+      this.toastr.warning('Maximum limit is exceed.');
+      return false;
     }
     
     return true;
