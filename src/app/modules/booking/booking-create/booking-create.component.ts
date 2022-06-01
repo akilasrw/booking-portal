@@ -74,7 +74,7 @@ export class BookingCreateComponent implements OnInit {
 
   getUnits(){
     this.unitService.getList()
-    .subscribe(res =>{
+    .subscribe(res => {
       console.log("units: ", res);
       this.weightUnits = res.filter(x=> x.unitType == UnitType.Mass);
       this.volumeUnits = res.filter(x=> x.unitType == UnitType.Length);
@@ -135,7 +135,7 @@ export class BookingCreateComponent implements OnInit {
     });
   }
 
-  async add() {
+  async add() { debugger;
     if(this.bookingForm.valid) {
       var booking = this.bookingForm.value;
       if(this.isAvailableSpace(booking.packageItems.packageDimention)){
@@ -203,15 +203,20 @@ export class BookingCreateComponent implements OnInit {
   isAvailableSpace(packageDimension: any) : boolean {
     let containerType = this.getPackageContainerType(packageDimension);
     console.log(this.flightScheduleSector);
-    var result = this.flightScheduleSector?.flightScheduleSectorCargoPositions.filter(x=> x.cargoPositionType == Number(containerType) && x.availableSpaceCount > 0);
-    if(result == null || result.length == 0) {
-      this.toastr.warning('Space is not available.');
-      return false;
-    } else if(this.cargoBookingRequest.packageItems &&
-      result.length <= this.cargoBookingRequest.packageItems?.filter(x=> x.packageContainerType == containerType).length) {
-      this.toastr.warning('Maximum limit is exceed.');
-      return false;
+    if(containerType != PackageContainerType.OnThreeSeats) {
+      var result = this.flightScheduleSector?.flightScheduleSectorCargoPositions.filter(x=> x.cargoPositionType == Number(containerType) && x.availableSpaceCount > 0);
+      if(result == null || result.length == 0) {
+        this.toastr.warning('Space is not available.');
+        return false;
+      } else if(this.cargoBookingRequest.packageItems &&
+        result.length <= this.cargoBookingRequest.packageItems?.filter(x=> x.packageContainerType == containerType).length) {
+        this.toastr.warning('Maximum limit is exceed.');
+        return false;
+      }
+    } else {
+      // TO DO: check with three sheet avaialblity- Yohan
     }
+    
     return true;
   }
 
