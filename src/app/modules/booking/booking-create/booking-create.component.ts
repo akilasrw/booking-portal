@@ -224,14 +224,8 @@ export class BookingCreateComponent implements OnInit {
     }
 
     if(availableSpaceCount == 0) {
-      //TODO Need to Remoe bellow if 
-      // if(containerType === PackageContainerType.OnThreeSeats){
-      //   return true;
-      // }else{
-        this.toastr.warning('Space is not available.');
-        return false;
-     // }
-      
+      this.toastr.warning('Space is not available.');
+      return false;
     } else if(this.cargoBookingRequest.packageItems &&
       availableSpaceCount <= this.cargoBookingRequest.packageItems?.filter(x=> x.packageContainerType == containerType).length) {
       this.toastr.warning('Maximum limit is exceed.');
