@@ -1,5 +1,4 @@
 import { AirportService } from './../../../_services/airport.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { SelectList } from 'src/app/shared/models/select-list.model';
 import { CargoRateListService } from 'src/app/_services/cargo-rate-list.service';
@@ -15,7 +14,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RateListComponent implements OnInit {
 
-  searchForm!: FormGroup;
   cargoRateFilterQuery: CargoRateFilterQuery = new CargoRateFilterQuery();
   originAirportId?: string;
   destinationAirportId?: string;
@@ -25,7 +23,7 @@ export class RateListComponent implements OnInit {
   keyword = 'value';
   totalCount: number = 0;
 
-  constructor(private fb: FormBuilder,
+  constructor(
     private airportService: AirportService,
     private toastr: ToastrService,
     private cargoRateListService: CargoRateListService) { }
