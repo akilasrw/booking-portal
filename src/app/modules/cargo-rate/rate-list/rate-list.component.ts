@@ -98,4 +98,10 @@ export class RateListComponent implements OnInit {
     return CoreExtensions.GetPackageBoxType(value)
   }
 
+  public onPageChanged(event: any) {
+    if (this.cargoRateFilterQuery?.pageIndex !== event) {
+      this.cargoRateFilterQuery.pageIndex = event;
+      this.getRateList();
+    }
+  }
 }
