@@ -1,3 +1,4 @@
+import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.model';
 import { PackageContainerType, PackageItemCategory, PackageItemStatus, PackagePriorityType } from "src/app/core/enums/common-enums";
 
 
@@ -14,4 +15,5 @@ export interface PackageItemRM {
   description?: string;
   packageItemStatus?: PackageItemStatus;
   packageContainerType?: PackageContainerType;
+  aWBDetail?: AWBCreateRM;
 }

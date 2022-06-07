@@ -1,6 +1,5 @@
 import { AirportService } from './../../../_services/airport.service';
 import { AWBProductRM } from './../../../_models/request-models/awb/awb-product-rm.model';
-import { AWBService } from './../../../_services/awb.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
@@ -24,9 +23,10 @@ export class AwbCreateComponent implements OnInit {
   public keyword = 'value';
   public destinationAirpots: SelectList[] = [];
   @Output() closePopup = new EventEmitter<any>();
+  @Output() submitDetail = new EventEmitter<any>();
 
 
-  constructor(private awbService:AWBService,private toastr: ToastrService,private airportService: AirportService) { }
+  constructor(private toastr: ToastrService,private airportService: AirportService) { }
 
   ngOnInit(): void {
     this.initializeAWBForm();
@@ -130,15 +130,8 @@ export class AwbCreateComponent implements OnInit {
       }
       awb.packageProducts = this.productList;
 
-      this.awbService.createAWB(awb).subscribe(
-        res => {
-          this.toastr.success('Successfully saved.');
-          this.closeModal(true);
-        },
-        err => {
-
-        })  
-
+      this.submitDetail.emit(awb);
+      this.closeModal(true);
     }else{
       this.awbForm.markAllAsTouched();
     }

@@ -19,6 +19,10 @@ import { CargoBookingRequest } from 'src/app/_models/view-models/cargo-booking/c
 import { BookingStatus, PackageContainerType, PackageItemStatus, PackagePriorityType, UnitType } from 'src/app/core/enums/common-enums';
 import { UnitService } from 'src/app/_services/unit.service';
 import { FlightScheduleSector } from 'src/app/_models/view-models/flight-schedule-sectors/flight-schedule-sector.model';
+import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.model';
+import { User } from 'src/app/_models/user.model';
+import { Subscription } from 'rxjs';
+import { AccountService } from 'src/app/account/account.service';
 
 
 @Component({
@@ -37,11 +41,15 @@ export class BookingCreateComponent implements OnInit {
   volumeUnits: Unit[] = [];
   weightUnits: Unit[] = [];
   disableInput: boolean = false;
+  currentUser?:User | null
+  subscription?:Subscription;
+  awbDetail?:AWBCreateRM;
 
   constructor(private activatedRoute: ActivatedRoute,
     private flightScheduleSectorService: FlightScheduleSectorService,
     private packageContainerService: PackageContainerService,
     private bookingService: BookingService,
+    private accountService: AccountService,
     private cargoPositionService: CargoPositionService,
     private fb: FormBuilder,
     private toastr: ToastrService,
@@ -57,6 +65,7 @@ export class BookingCreateComponent implements OnInit {
       var query = new PackageContainerListQuery();
       query.packageItemType = x;
       this.getPackageContainers(query);
+      this.getCurrentUser();
    });
 
     this.bookingForm?.get('packageItems')?.get("packageDimention")?.valueChanges.subscribe(res => {
@@ -152,6 +161,7 @@ export class BookingCreateComponent implements OnInit {
           } else {
             this.toastr.warning('Package is already exists.');
           }
+
           console.log(this.cargoBookingRequest);
           this.resetForm();
         }
@@ -183,6 +193,7 @@ export class BookingCreateComponent implements OnInit {
     this.bookingForm.get('packageItems')?.get('isEdit')?.patchValue(false);  
     this.bookingForm.get('packageItems')?.get('weightUnitId')?.patchValue('bc1e3d49-5c26-4de5-9cd4-576bbf6e9d0c');
     this.bookingForm.get('packageItems')?.get('volumeUnitId')?.patchValue('9f0928df-5d33-4e5d-affc-f7e2e2b72680'); 
+    this.awbDetail = undefined;
   }
 
   mapPackageItems(packageItem: any) {
@@ -198,7 +209,8 @@ export class BookingCreateComponent implements OnInit {
       packageItemStatus: Number(packageItem.packageItemStatus),
       description: packageItem.description,
       packageContainerType: this.getPackageContainerType(packageItem.packageDimention),
-      isEdit: packageItem.isEdit
+      isEdit: packageItem.isEdit,
+      aWBDetail : this.awbDetail,
     };
   }
 
@@ -324,4 +336,14 @@ export class BookingCreateComponent implements OnInit {
     this.router.navigate(['booking/search', this.flightScheduleSectorId]);
   }
 
+  submitAWBDetail(awb :AWBCreateRM){
+    awb.userId = this.currentUser?.id != null?this.currentUser?.id : "";
+    this.awbDetail =awb;
+  }
+
+  getCurrentUser() {
+    this.subscription = this.accountService.currentUser$.subscribe(res => {
+      this.currentUser = res;
+    });
+  }
 }

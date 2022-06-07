@@ -154,7 +154,7 @@
                 <button type="button" class="close btn" data-dismiss="modal" (click)="cancel()" aria-label="Close"><span class="ca ca-icn-close"></span></button>
             </div>
             <div>
-                <app-awb-create  (closePopup)="closePopup($event)" *ngIf="modalVisible"></app-awb-create>
+                <app-awb-create (submitDetail)="submitAWBDetail($event)" (closePopup)="closePopup($event)" *ngIf="modalVisible"></app-awb-create>
             </div>
         </div>
     </div>
