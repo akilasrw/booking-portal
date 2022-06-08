@@ -146,7 +146,7 @@ export class BookingCreateComponent implements OnInit {
     });
   }
 
-  async add() { debugger;
+  async add() {
     if(this.bookingForm.valid) {
       var booking = this.bookingForm.value;
       if(await this.isAvailableSpace(booking.packageItems.packageDimention) == true){
@@ -206,7 +206,7 @@ export class BookingCreateComponent implements OnInit {
       packageItemCategory: Number(packageItem.packageItemCategory),
       weightUnitId: packageItem.weightUnitId,
       volumeUnitId: packageItem.volumeUnitId,
-      packageItemStatus: Number(packageItem.packageItemStatus),
+      packageItemStatus: Number(this.awbDetail == undefined? packageItem.packageItemStatus : PackageItemStatus.AddedAWB),
       description: packageItem.description,
       packageContainerType: this.getPackageContainerType(packageItem.packageDimention),
       isEdit: packageItem.isEdit,
