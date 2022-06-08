@@ -12,11 +12,10 @@ import { BookingStatus } from 'src/app/core/enums/common-enums';
 })
 export class BookingViewDetailComponent implements OnInit {
 
-  @Input() cargoBookingId?:string;
+  @Input() cargoBookingId?: string;
   cargoBookingDetail?: CargoBookingDetail
-  bookingStatus = BookingStatus;
 
-  constructor(private bookingSerice: BookingService) {}
+  constructor(private bookingSerice: BookingService) { }
 
   ngOnInit(): void {
     console.log(this.cargoBookingId);
@@ -24,28 +23,32 @@ export class BookingViewDetailComponent implements OnInit {
   }
 
 
-  getBookingDetail(){
-    if(this.cargoBookingId != null){
+  getBookingDetail() {
+    if (this.cargoBookingId != null) {
       var query = new CargoBookingDetailQuery;
 
-      query.id= this.cargoBookingId;
+      query.id = this.cargoBookingId;
       query.isIncludeFlightDetail = true;
       query.isIncludePackageDetail = true;
 
       this.bookingSerice.getBookingDetail(query).subscribe(
-        res =>{
+        res => {
           this.cargoBookingDetail = res;
         }
-      );  
+      );
     }
   }
 
-  getBbookingStatus(status:number):string{
+  getBookingStatus(status: number): string {
     return CoreExtensions.GetBookingStatus(status)
   }
 
   GetFormattedAWBNumber(value: number): string {
-    return value == 0? '-':CoreExtensions.PadLeadingZeros(value,8);
+    return value == 0 ? '-' : CoreExtensions.PadLeadingZeros(value, 8);
+  }
+
+  get bookingStatus(): typeof BookingStatus {
+    return BookingStatus;
   }
 
 }

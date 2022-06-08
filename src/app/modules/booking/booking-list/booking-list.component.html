@@ -62,7 +62,7 @@
                             'accepted':booking.bookingStatus == bookingStatus.Accepted,
                             'loading':booking.bookingStatus == bookingStatus.Loading,
                             'exported':booking.bookingStatus == bookingStatus.Exported
-                        }">{{(getBookingStatus(booking?.bookingStatus))}}</span></td>
+                        }">{{getBookingStatus(booking?.bookingStatus)}}</span></td>
                         <td>{{booking.numberOfBoxes}}</td>
                         <td>{{booking.totalWeight}}</td>
                         <td>

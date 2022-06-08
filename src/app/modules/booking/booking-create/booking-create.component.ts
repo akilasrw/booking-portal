@@ -35,15 +35,15 @@ export class BookingCreateComponent implements OnInit {
   modalVisibleAnimate = false;
   flightScheduleSectorId!: string;
   flightScheduleSector?: FlightScheduleSector;
-  packageContainers?: PackageContainer[]=[];
+  packageContainers?: PackageContainer[] = [];
   bookingForm!: FormGroup;
   cargoBookingRequest!: CargoBookingRequest;
   volumeUnits: Unit[] = [];
   weightUnits: Unit[] = [];
   disableInput: boolean = false;
-  currentUser?:User | null
-  subscription?:Subscription;
-  awbDetail?:AWBCreateRM;
+  currentUser?: User | null
+  subscription?: Subscription;
+  awbDetail?: AWBCreateRM;
 
   constructor(private activatedRoute: ActivatedRoute,
     private flightScheduleSectorService: FlightScheduleSectorService,
@@ -66,29 +66,29 @@ export class BookingCreateComponent implements OnInit {
       query.packageItemType = x;
       this.getPackageContainers(query);
       this.getCurrentUser();
-   });
+    });
 
     this.bookingForm?.get('packageItems')?.get("packageDimention")?.valueChanges.subscribe(res => {
-    console.log(this.bookingForm.value);
-      if(res != 1) {
-        var value = this.packageContainers?.filter(x=> x.id== res)[0];
-        if(value)
+      console.log(this.bookingForm.value);
+      if (res != 1) {
+        var value = this.packageContainers?.filter(x => x.id == res)[0];
+        if (value)
           this.patchPackageDimentions(value);
-          this.disableInput = true;
+        this.disableInput = true;
       } else {
         this.disableInput = false;
       }
-   });
-   this.getUnits();
+    });
+    this.getUnits();
   }
 
-  getUnits(){
+  getUnits() {
     this.unitService.getList()
-    .subscribe(res => {
-      console.log("units: ", res);
-      this.weightUnits = res.filter(x=> x.unitType == UnitType.Mass);
-      this.volumeUnits = res.filter(x=> x.unitType == UnitType.Length);
-    });
+      .subscribe(res => {
+        console.log("units: ", res);
+        this.weightUnits = res.filter(x => x.unitType == UnitType.Mass);
+        this.volumeUnits = res.filter(x => x.unitType == UnitType.Length);
+      });
   }
 
   patchPackageDimentions(container: PackageContainer) {
@@ -99,19 +99,19 @@ export class BookingCreateComponent implements OnInit {
 
   createForm() {
     this.bookingForm = this.fb.group({
-      flightScheduleSectorId:[''],
+      flightScheduleSectorId: [''],
       packageItems: this.fb.group({
         id: [''],
-        width: [0,[Validators.required, Validators.min(1)]],
-        length: [0,[Validators.required, Validators.min(1)]],
-        weight: [0,[Validators.required, Validators.min(1)]],
-        height: [0,[Validators.required, Validators.min(1)]],
+        width: [0, [Validators.required, Validators.min(1)]],
+        length: [0, [Validators.required, Validators.min(1)]],
+        weight: [0, [Validators.required, Validators.min(1)]],
+        height: [0, [Validators.required, Validators.min(1)]],
         packageItemCategory: [],
-        weightUnitId: ['bc1e3d49-5c26-4de5-9cd4-576bbf6e9d0c',[Validators.required]],
-        volumeUnitId: ['9f0928df-5d33-4e5d-affc-f7e2e2b72680',[Validators.required]],
-        packageDimention:['',[Validators.required]],
-        packageItemStatus:[PackageItemStatus.Pending],
-        description:[''],
+        weightUnitId: ['bc1e3d49-5c26-4de5-9cd4-576bbf6e9d0c', [Validators.required]],
+        volumeUnitId: ['9f0928df-5d33-4e5d-affc-f7e2e2b72680', [Validators.required]],
+        packageDimention: ['', [Validators.required]],
+        packageItemStatus: [PackageItemStatus.Pending],
+        description: [''],
         isEdit: [false]
       }),
     })
@@ -129,15 +129,15 @@ export class BookingCreateComponent implements OnInit {
   }
 
   getFlightScheduleSectorData() {
-    var query:  FlightScheduleSectorQuery = {
+    var query: FlightScheduleSectorQuery = {
       id: this.flightScheduleSectorId,
-      includeLoadPlan:false
+      includeLoadPlan: false
     };
 
     this.flightScheduleSectorService.getFlightScheduleSector(query)
-    .subscribe(res => {
-      this.flightScheduleSector = res;
-    });
+      .subscribe(res => {
+        this.flightScheduleSector = res;
+      });
   }
 
   getPackageContainers(query: PackageContainerListQuery) {
@@ -147,16 +147,16 @@ export class BookingCreateComponent implements OnInit {
   }
 
   async add() {
-    if(this.bookingForm.valid) {
+    if (this.bookingForm.valid) {
       var booking = this.bookingForm.value;
-      if(await this.isAvailableSpace(booking.packageItems.packageDimention) == true){
-        if(await this.isWeightNotExceed(booking.packageItems) == true){
-          if(this.cargoBookingRequest.packageItems == undefined) {
+      if (await this.isAvailableSpace(booking.packageItems.packageDimention) == true) {
+        if (await this.isWeightNotExceed(booking.packageItems) == true) {
+          if (this.cargoBookingRequest.packageItems == undefined) {
             this.cargoBookingRequest = {
               flightScheduleSectorId: this.flightScheduleSectorId,
-              packageItems:[this.mapPackageItems(booking.packageItems)]
+              packageItems: [this.mapPackageItems(booking.packageItems)]
             };
-          } else if (this.cargoBookingRequest.packageItems?.findIndex(x=>x.height == booking.height && x.length == booking.length && x.width == booking.width) == -1) {
+          } else if (this.cargoBookingRequest.packageItems?.findIndex(x => x.height == booking.height && x.length == booking.length && x.width == booking.width) == -1) {
             this.cargoBookingRequest.packageItems?.push(this.mapPackageItems(booking.packageItems));
           } else {
             this.toastr.warning('Package is already exists.');
@@ -190,9 +190,9 @@ export class BookingCreateComponent implements OnInit {
     this.bookingForm.get('packageItems')?.get('packageDimention')?.patchValue('');
     this.bookingForm.get('packageItems')?.get('packageItemStatus')?.patchValue(PackageItemStatus.Pending);
     this.bookingForm.get('packageItems')?.get('description')?.patchValue('');
-    this.bookingForm.get('packageItems')?.get('isEdit')?.patchValue(false);  
+    this.bookingForm.get('packageItems')?.get('isEdit')?.patchValue(false);
     this.bookingForm.get('packageItems')?.get('weightUnitId')?.patchValue('bc1e3d49-5c26-4de5-9cd4-576bbf6e9d0c');
-    this.bookingForm.get('packageItems')?.get('volumeUnitId')?.patchValue('9f0928df-5d33-4e5d-affc-f7e2e2b72680'); 
+    this.bookingForm.get('packageItems')?.get('volumeUnitId')?.patchValue('9f0928df-5d33-4e5d-affc-f7e2e2b72680');
     this.awbDetail = undefined;
   }
 
@@ -206,66 +206,66 @@ export class BookingCreateComponent implements OnInit {
       packageItemCategory: Number(packageItem.packageItemCategory),
       weightUnitId: packageItem.weightUnitId,
       volumeUnitId: packageItem.volumeUnitId,
-      packageItemStatus: Number(this.awbDetail == undefined? packageItem.packageItemStatus : PackageItemStatus.AddedAWB),
+      packageItemStatus: Number(this.awbDetail == undefined ? packageItem.packageItemStatus : PackageItemStatus.AddedAWB),
       description: packageItem.description,
       packageContainerType: this.getPackageContainerType(packageItem.packageDimention),
       isEdit: packageItem.isEdit,
-      aWBDetail : this.awbDetail,
+      aWBDetail: this.awbDetail,
     };
   }
 
-  async isAvailableSpace(packageDimension: any){
-    var availableSpaceCount =0;
+  async isAvailableSpace(packageDimension: any) {
+    var availableSpaceCount = 0;
 
     let containerType = this.getPackageContainerType(packageDimension);
 
-    if(containerType == PackageContainerType.OnThreeSeats){
-      var query:  FlightScheduleSectorQuery = {
+    if (containerType == PackageContainerType.OnThreeSeats) {
+      var query: FlightScheduleSectorQuery = {
         id: this.flightScheduleSectorId,
-        includeLoadPlan : true
+        includeLoadPlan: true
       };
       var response = await this.cargoPositionService.getAvailableThreeSeats(query).toPromise();
-      if(response !== undefined){
+      if (response !== undefined) {
         availableSpaceCount = response.SeatCount;
       }
-    }else{
-      var sectorCargoPositions = this.flightScheduleSector?.flightScheduleSectorCargoPositions.filter(x=> x.cargoPositionType == Number(containerType) && x.availableSpaceCount > 0);
-      if(sectorCargoPositions !== undefined && sectorCargoPositions.length > 0){
+    } else {
+      var sectorCargoPositions = this.flightScheduleSector?.flightScheduleSectorCargoPositions.filter(x => x.cargoPositionType == Number(containerType) && x.availableSpaceCount > 0);
+      if (sectorCargoPositions !== undefined && sectorCargoPositions.length > 0) {
         availableSpaceCount = sectorCargoPositions[0].availableSpaceCount
       }
     }
 
-    if(availableSpaceCount == 0) {
+    if (availableSpaceCount == 0) {
       this.toastr.warning('Space is not available.');
       return false;
-    } else if(this.cargoBookingRequest.packageItems &&
-      availableSpaceCount <= this.cargoBookingRequest.packageItems?.filter(x=> x.packageContainerType == containerType).length) {
+    } else if (this.cargoBookingRequest.packageItems &&
+      availableSpaceCount <= this.cargoBookingRequest.packageItems?.filter(x => x.packageContainerType == containerType).length) {
       this.toastr.warning('Maximum limit is exceed.');
       return false;
     }
-    
+
     return true;
   }
 
-  async isWeightNotExceed(cargoPackage : PackageItem){
-    var request : ValidateCargoPositionRequest = {
-      packageItem : this.mapPackageItems(cargoPackage),
+  async isWeightNotExceed(cargoPackage: PackageItem) {
+    var request: ValidateCargoPositionRequest = {
+      packageItem: this.mapPackageItems(cargoPackage),
       flightScheduleSectorId: this.flightScheduleSectorId
     };
     var response = await this.cargoPositionService.validateWeight(request).toPromise();
-    if(response !== undefined){
-      if(!response.isValid){
+    if (response !== undefined) {
+      if (!response.isValid) {
         this.toastr.error(response.validationMessage);
       }
       return response.isValid;
-    }else{
+    } else {
       return false;
     }
   }
 
   getPackageContainerType(id: string) {
-    var result = this.packageContainers?.filter(x=> x.id == id);
-    if(result != undefined && result?.length > 0 )
+    var result = this.packageContainers?.filter(x => x.id == id);
+    if (result != undefined && result?.length > 0)
       return result[0].packageContainerType;
     return PackageContainerType.None;
   }
@@ -285,14 +285,14 @@ export class BookingCreateComponent implements OnInit {
   delete(packageItem: PackageItem) {
     const index = this.cargoBookingRequest?.packageItems?.indexOf(packageItem);
     if (index !== -1) {
-        this.cargoBookingRequest?.packageItems?.splice(Number(index), 1);
+      this.cargoBookingRequest?.packageItems?.splice(Number(index), 1);
     }
   }
 
   submit() {
-    if(this.isValid()) {
-        this.cargoBookingRequest.bookingStatus = BookingStatus.Pending;
-        this.bookingService.create(this.cargoBookingRequest).subscribe(res => {
+    if (this.isValid()) {
+      this.cargoBookingRequest.bookingStatus = BookingStatus.Pending;
+      this.bookingService.create(this.cargoBookingRequest).subscribe(res => {
         this.toastr.success('Saved Successfully.');
         this.flightScheduleSectorService.removeCurrentFlightScheduleSector();
         this.router.navigate(['booking']);
@@ -302,10 +302,10 @@ export class BookingCreateComponent implements OnInit {
 
   isValid(): boolean {
     let valid = true;
-    if(this.cargoBookingRequest == undefined || this.cargoBookingRequest?.packageItems == undefined){
+    if (this.cargoBookingRequest == undefined || this.cargoBookingRequest?.packageItems == undefined) {
       valid = false;
       this.toastr.warning('Data is not valid.');
-    } else if(this.cargoBookingRequest != undefined && this.cargoBookingRequest?.packageItems != undefined && this.cargoBookingRequest?.packageItems?.length < 1) {
+    } else if (this.cargoBookingRequest != undefined && this.cargoBookingRequest?.packageItems != undefined && this.cargoBookingRequest?.packageItems?.length < 1) {
       valid = false;
       this.toastr.warning('Package item details are required.');
     }
@@ -336,14 +336,22 @@ export class BookingCreateComponent implements OnInit {
     this.router.navigate(['booking/search', this.flightScheduleSectorId]);
   }
 
-  submitAWBDetail(awb :AWBCreateRM){
-    awb.userId = this.currentUser?.id != null?this.currentUser?.id : "";
-    this.awbDetail =awb;
+  submitAWBDetail(awb: AWBCreateRM) {
+    awb.userId = this.currentUser?.id != null ? this.currentUser?.id : "";
+    this.awbDetail = awb;
   }
 
   getCurrentUser() {
     this.subscription = this.accountService.currentUser$.subscribe(res => {
       this.currentUser = res;
     });
+  }
+
+  getPackageStatus(status: number): string {
+    return CoreExtensions.GetPackageStatus(status)
+  }
+
+  get packageItemStatus(): typeof PackageItemStatus {
+    return PackageItemStatus;
   }
 }

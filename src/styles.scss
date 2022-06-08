@@ -397,6 +397,11 @@ a {
     @include lable-color;
 }
 
+//Status 
+.awb-status-chip{
+    @include awb-lable-color
+}
+
 // Font Icons
 .ca {
     font-family: 'cargo-icons' !important;
