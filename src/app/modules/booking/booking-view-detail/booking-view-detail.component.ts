@@ -44,4 +44,8 @@ export class BookingViewDetailComponent implements OnInit {
     return CoreExtensions.GetBookingStatus(status)
   }
 
+  GetFormattedAWBNumber(value: number): string {
+    return value == 0? '-':CoreExtensions.PadLeadingZeros(value,8);
+  }
+
 }

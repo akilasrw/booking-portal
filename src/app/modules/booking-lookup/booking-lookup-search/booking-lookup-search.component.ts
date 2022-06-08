@@ -71,4 +71,7 @@ export class BookingLookupSearchComponent implements OnInit {
     return CoreExtensions.GetPackageStatus(status)
   }
 
+  GetFormattedAWBNumber(value: number): string {
+    return value == 0? '-':CoreExtensions.PadLeadingZeros(value,8);
+  }
 }
