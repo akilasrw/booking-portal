@@ -25,5 +25,6 @@ export interface AWBCreateRM{
     declaredValueForCustomer:number;
     amountOfInsurance:number;   
     packageProducts:AWBProductRM[];
+    isPackageUpdate:boolean;
   }
   

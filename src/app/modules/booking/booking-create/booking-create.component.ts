@@ -23,6 +23,7 @@ import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.mo
 import { User } from 'src/app/_models/user.model';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
+import { PackageItemRM } from 'src/app/_models/view-models/cargo-booking/package-item-request.model';
 
 
 @Component({
@@ -44,6 +45,10 @@ export class BookingCreateComponent implements OnInit {
   currentUser?: User | null
   subscription?: Subscription;
   awbDetail?: AWBCreateRM;
+  selectedPackage?: PackageItemRM
+  selectedPackageIndex?: number;
+  isPackageUpdate: boolean = false;
+
 
   constructor(private activatedRoute: ActivatedRoute,
     private flightScheduleSectorService: FlightScheduleSectorService,
@@ -332,13 +337,26 @@ export class BookingCreateComponent implements OnInit {
     this.hide();
   }
 
-  backToSeach() {
+  backToSearch() {
     this.router.navigate(['booking/search', this.flightScheduleSectorId]);
   }
 
   submitAWBDetail(awb: AWBCreateRM) {
     awb.userId = this.currentUser?.id != null ? this.currentUser?.id : "";
     this.awbDetail = awb;
+    if (this.isPackageUpdate && this.selectedPackage != null && this.selectedPackageIndex != undefined) {
+      this.selectedPackage.aWBDetail = awb;
+      this.selectedPackage.packageItemStatus = PackageItemStatus.AddedAWB;
+      this.cargoBookingRequest.packageItems?.splice(this.selectedPackageIndex!, 1, this.selectedPackage)
+    }
+    this.isPackageUpdate = false;
+  }
+
+  updatePackageAWB(bookingPackage: PackageItemRM, index: number) {
+    this.isPackageUpdate = true;
+    this.selectedPackage = bookingPackage;
+    this.selectedPackageIndex = index;
+    this.show();
   }
 
   getCurrentUser() {

@@ -13,7 +13,7 @@
                 <div>
                     <h3>Package Details</h3>
                 </div>
-                <div class="back-icn"><i class="ca ca-icn-left-arrow-dash" title="Back" (click)="backToSeach()"></i>
+                <div class="back-icn"><i class="ca ca-icn-left-arrow-dash" title="Back" (click)="backToSearch()"></i>
                 </div>
             </div>
             <div class="second-box">
@@ -140,7 +140,8 @@
                         <th>Cargo Type</th>
                         <th>Dimensions (L x W x H) cm</th>
                         <th>Weight (kg)</th>
-                        <th>AWB</th>
+                        <th>AWB Status</th>
+                        <th>Add AWB</th>
                         <th class="text-center">Actions </th>
                     </thead>
                     <tbody>
@@ -155,6 +156,14 @@
                                     'pending':packageItem?.packageItemStatus == packageItemStatus.Pending  
                                 }">{{getPackageStatus(packageItem?.packageItemStatus)}}
                                 </span>
+                            </td>
+                            <td>
+                                <div
+                                    [ngClass]="{'disabled' : packageItem?.packageItemStatus != packageItemStatus.Pending}">
+                                    <i class="ca ca-icn-add"
+                                        (click)="packageItem?.packageItemStatus == packageItemStatus.Pending ?updatePackageAWB(packageItem,i):false"
+                                        title="Add AWB"></i>
+                                </div>
                             </td>
                             <td class="text-center">
                                 <!-- <i class="ca ca-icn-edit" (click)="editPackage(packageItem)" title="Edit"></i> -->
@@ -184,7 +193,7 @@
                         class="ca ca-icn-close"></span></button>
             </div>
             <div>
-                <app-awb-create (submitDetail)="submitAWBDetail($event)" (closePopup)="closePopup($event)"
+                <app-awb-create [isPackageUpdate]="isPackageUpdate" (submitDetail)="submitAWBDetail($event)" (closePopup)="closePopup($event)"
                     *ngIf="modalVisible"></app-awb-create>
             </div>
         </div>

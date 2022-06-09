@@ -1,6 +1,6 @@
 import { AirportService } from './../../../_services/airport.service';
 import { AWBProductRM } from './../../../_models/request-models/awb/awb-product-rm.model';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.model';
@@ -24,6 +24,7 @@ export class AwbCreateComponent implements OnInit {
   public destinationAirpots: SelectList[] = [];
   @Output() closePopup = new EventEmitter<any>();
   @Output() submitDetail = new EventEmitter<any>();
+  @Input() isPackageUpdate:boolean =false; 
 
 
   constructor(private toastr: ToastrService,private airportService: AirportService) { }
@@ -124,6 +125,7 @@ export class AwbCreateComponent implements OnInit {
   saveAWBDetails(){
     if(this.awbForm.valid){
       var awb: AWBCreateRM = this.awbForm.value;
+      awb.isPackageUpdate=this.isPackageUpdate;
       if(this.productList.length == 0){
         this.toastr.error('Please add product items.');
         return;
