@@ -118,7 +118,7 @@
                                         <div class="col-md-6 text-end">
                                             <div class="form-group mb-0">
                                                 <label class="form-label">Add AWB</label>
-                                                <div><span class="add-awb"><i class="ca ca-icn-add" (click)="show()"
+                                                <div><span class="add-awb"><i class="ca ca-icn-add" (click)="addAWBFromAddPackage()"
                                                             title="Add AWB"></i></span></div>
                                             </div>
                                         </div>
@@ -141,7 +141,7 @@
                         <th>Dimensions (L x W x H) cm</th>
                         <th>Weight (kg)</th>
                         <th>AWB Status</th>
-                        <th>Add AWB</th>
+                        <th>Add/Edit AWB</th>
                         <th class="text-center">Actions </th>
                     </thead>
                     <tbody>
@@ -158,12 +158,9 @@
                                 </span>
                             </td>
                             <td>
-                                <div
-                                    [ngClass]="{'disabled' : packageItem?.packageItemStatus != packageItemStatus.Pending}">
-                                    <i class="ca ca-icn-add"
-                                        (click)="packageItem?.packageItemStatus == packageItemStatus.Pending ?updatePackageAWB(packageItem,i):false"
-                                        title="Add AWB"></i>
-                                </div>
+                                <i [ngClass]="{'ca ca-icn-add' : packageItem?.packageItemStatus == packageItemStatus.Pending,'ca ca-icn-edit':packageItem?.packageItemStatus != packageItemStatus.Pending}"
+                                    (click)="addAWBFromPackageList(packageItem,i)"
+                                    title="Add AWB"></i>
                             </td>
                             <td class="text-center">
                                 <!-- <i class="ca ca-icn-edit" (click)="editPackage(packageItem)" title="Edit"></i> -->
@@ -189,12 +186,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">Cargo Reference Information</h2>
-                <button type="button" class="close btn" data-dismiss="modal" (click)="cancel()" aria-label="Close"><span
+                <button type="button" class="close btn" data-dismiss="modal" (click)="closeAWBForm()" aria-label="Close"><span
                         class="ca ca-icn-close"></span></button>
             </div>
             <div>
-                <app-awb-create [isPackageUpdate]="isPackageUpdate" (submitDetail)="submitAWBDetail($event)" (closePopup)="closePopup($event)"
-                    *ngIf="modalVisible"></app-awb-create>
+                <app-awb-create [awbModel]="awbModel" (submitDetail)="submitAWBDetail($event)"
+                    (closePopup)="closeAWBForm()" *ngIf="modalVisible"></app-awb-create>
             </div>
         </div>
     </div>
