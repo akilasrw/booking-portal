@@ -169,6 +169,7 @@ export class BookingCreateComponent implements OnInit {
 
           console.log(this.cargoBookingRequest);
           this.resetForm();
+          this.bookingForm.markAsUntouched();
         }
       }
     } else {
