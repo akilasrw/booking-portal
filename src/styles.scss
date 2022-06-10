@@ -685,9 +685,24 @@ a {
     }
 }
 
+.section-title {
+    font-size: 1.125rem;
+    padding-bottom: 0.625rem;
+}
+
 // Details
 .details {
     padding-bottom: 1.25rem;
+    &.sub-collapse {
+        details {
+            summary {
+                font-size: 0.875rem;
+                span {
+                    padding-left: 0.625rem;
+                }
+            }
+        }
+    }
     details {
         summary {
             background-color: $white-blue;
@@ -735,9 +750,27 @@ a {
                     color: $gray;
                 }
             }
+            .awb-details {
+                padding-top: 1.563rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                div {
+                    span {
+                        cursor: pointer;
+                    }
+                }
+            }
         }
     }
 
+}
+
+.active {
+    color: $brand-primary;
+}
+.disabled {
+    color: $gray;
 }
 
 // Add New Booking
