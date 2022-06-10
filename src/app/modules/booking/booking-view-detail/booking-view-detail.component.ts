@@ -3,7 +3,7 @@ import { CargoBookingDetailQuery } from './../../../_models/queries/cargo-bookin
 import { Component, Input, OnInit } from '@angular/core';
 import { BookingService } from 'src/app/_services/booking.service';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
-import { BookingStatus } from 'src/app/core/enums/common-enums';
+import { BookingStatus, PackageItemStatus } from 'src/app/core/enums/common-enums';
 
 @Component({
   selector: 'app-booking-view-detail',
@@ -49,6 +49,14 @@ export class BookingViewDetailComponent implements OnInit {
 
   get bookingStatus(): typeof BookingStatus {
     return BookingStatus;
+  }
+
+  getPackageStatus(status: number): string {
+    return CoreExtensions.GetPackageStatus(status)
+  }
+
+  get packageItemStatus(): typeof PackageItemStatus {
+    return PackageItemStatus;
   }
 
 }
