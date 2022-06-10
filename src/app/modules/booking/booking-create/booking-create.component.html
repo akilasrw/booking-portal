@@ -186,12 +186,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">Cargo Reference Information</h2>
-                <button type="button" class="close btn" data-dismiss="modal" (click)="closeAWBForm()" aria-label="Close"><span
+                <button type="button" class="close btn" data-dismiss="modal" (click)="closeAWBForm($event)" aria-label="Close"><span
                         class="ca ca-icn-close"></span></button>
             </div>
             <div>
                 <app-awb-create [awbModel]="awbModel" (submitDetail)="submitAWBDetail($event)"
-                    (closePopup)="closeAWBForm()" *ngIf="modalVisible"></app-awb-create>
+                    (closePopup)="closeAWBForm($event)" *ngIf="modalVisible"></app-awb-create>
             </div>
         </div>
     </div>

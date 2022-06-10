@@ -113,12 +113,12 @@
                                     <span [ngClass]="{'edit pe-4 disabled' : package?.packageItemStatus == packageItemStatus.Pending,
                                     'edit pe-4 active':package?.packageItemStatus != packageItemStatus.Pending}"><i
                                             class="ca ca-icn-edit pr-5" title="Edit"
-                                            (click)="(package?.packageItemStatus != packageItemStatus.Pending)?editAWB(packageItem,i):false"></i></span>
+                                            (click)="(package?.packageItemStatus != packageItemStatus.Pending)?editAWB(package.awbInformation):false"></i></span>
 
                                     <span [ngClass]="{'add active' : package?.packageItemStatus == packageItemStatus.Pending,
                                     'add disabled':package?.packageItemStatus != packageItemStatus.Pending}"><i
                                             class="ca ca-icn-add" title="Add"
-                                            (click)="(package?.packageItemStatus == packageItemStatus.Pending)?addAWB(packageItem,i):false"></i></span>
+                                            (click)="(package?.packageItemStatus == packageItemStatus.Pending)?addAWB():false"></i></span>
                                 </div>
                             </div>
                             <div *ngIf="package.awbInformation != null">
@@ -259,18 +259,19 @@
     </div>
 </div>
 
+
 <div class="modal fade right" tabindex="-1" [ngClass]="{'in': modalVisibleAnimate}"
     [ngStyle]="{'display': modalVisible ? 'block' : 'none', 'opacity': modalVisibleAnimate ? 1 : 0}">
     <div class="modal-dialog modal-lg modal-dialog-m modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">Cargo Reference Information</h2>
-                <button type="button" class="close btn" data-dismiss="modal" (click)="closeAWBForm()"
-                    aria-label="Close"><span class="ca ca-icn-close"></span></button>
+                <button type="button" class="close btn" data-dismiss="modal" (click)="closeAWBForm($event)" aria-label="Close"><span
+                        class="ca ca-icn-close"></span></button>
             </div>
             <div>
                 <app-awb-create [awbModel]="awbModel" (submitDetail)="submitAWBDetail($event)"
-                    (closePopup)="closeAWBForm()" *ngIf="modalVisible"></app-awb-create>
+                    (closePopup)="closeAWBForm($event)" *ngIf="modalVisible"></app-awb-create>
             </div>
         </div>
     </div>

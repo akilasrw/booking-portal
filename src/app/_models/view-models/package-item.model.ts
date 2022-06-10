@@ -1,4 +1,5 @@
 import { PackageItemStatus } from "src/app/core/enums/common-enums";
+import { AWBDetail } from "./awb/awb-detail.model";
 
 export interface PackageItem{
     packageRefNumber: string;
@@ -11,5 +12,6 @@ export interface PackageItem{
     packageItemStatus: PackageItemStatus;
     weightUnitId?: string;
     volumeUnitId?: string;
-    isEdit: boolean;
+    isEdit: boolean; 
+    awbInformation:AWBDetail;
   }

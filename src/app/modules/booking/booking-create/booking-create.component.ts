@@ -345,7 +345,6 @@ export class BookingCreateComponent implements OnInit {
   }
 
   addAWBFromPackageList(bookingPackage: PackageItemRM, index: number) {
-    debugger;
     this.selectedPackageIndex = index;
     this.selectedPackage = bookingPackage;
     if(this.selectedPackage.aWBDetail==null){
@@ -362,7 +361,9 @@ export class BookingCreateComponent implements OnInit {
   }
 
 
-  closeAWBForm() {
+  closeAWBForm(isSuccess:boolean) {
+    if (isSuccess) {
+    }
     this.modalVisibleAnimate = false;
     setTimeout(() => (this.modalVisible = false), 300);
   }

@@ -1,6 +1,6 @@
-import { AWBProductRM } from "./awb-product-rm.model";
+import { AWBProduct } from "./awb-product.model";
 
-export class AWBCreateRM{
+export class AWBDetail{
     userId?:string
     shipperName?:string;
     shipperAccountNumber?:string;
@@ -24,8 +24,5 @@ export class AWBCreateRM{
     declaredValueForCarriage?:number;
     declaredValueForCustomer?:number;
     amountOfInsurance?:number;   
-    packageProducts?:AWBProductRM[];
-    isPackageUpdate?:boolean;
-    isEditAWB?:boolean;
+    packageProducts?:AWBProduct[];
   }
-  
