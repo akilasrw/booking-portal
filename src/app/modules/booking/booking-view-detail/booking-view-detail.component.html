@@ -111,120 +111,144 @@
                                 </div>
                                 <div>
                                     <span [ngClass]="{'edit pe-4 disabled' : package?.packageItemStatus == packageItemStatus.Pending,
-                                    'edit pe-4 active':package?.packageItemStatus != packageItemStatus.Pending}"
-                                      ><i class="ca ca-icn-edit pr-5" title="Edit" (click)="(package?.packageItemStatus != packageItemStatus.Pending)?editAWB(packageItem,i):false"></i></span>
-                                      
-                                    <span  [ngClass]="{'add active' : package?.packageItemStatus == packageItemStatus.Pending,
-                                    'add disabled':package?.packageItemStatus != packageItemStatus.Pending}"
-                                     ><i class="ca ca-icn-add" title="Add" (click)="(package?.packageItemStatus == packageItemStatus.Pending)?addAWB(packageItem,i):false"></i></span>
+                                    'edit pe-4 active':package?.packageItemStatus != packageItemStatus.Pending}"><i
+                                            class="ca ca-icn-edit pr-5" title="Edit"
+                                            (click)="(package?.packageItemStatus != packageItemStatus.Pending)?editAWB(packageItem,i):false"></i></span>
+
+                                    <span [ngClass]="{'add active' : package?.packageItemStatus == packageItemStatus.Pending,
+                                    'add disabled':package?.packageItemStatus != packageItemStatus.Pending}"><i
+                                            class="ca ca-icn-add" title="Add"
+                                            (click)="(package?.packageItemStatus == packageItemStatus.Pending)?addAWB(packageItem,i):false"></i></span>
                                 </div>
                             </div>
-                            <div class="details-group">
-                                <div class="lable">Shipper Name</div>
-                                <div>{{(package.awbInformation.shipperName!= null)?package.awbInformation.shipperName:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Shipper's Account Number</div>
-                                <div>{{(package.awbInformation.shipperAccountNumber!= null)?package.awbInformation.shipperAccountNumber:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Shipper Address</div>
-                                <div>{{(package.awbInformation.shipperAddress!= null)?package.awbInformation.shipperAddress:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Consignee Name</div>
-                                <div>{{(package.awbInformation.consigneeName!= null)?package.awbInformation.consigneeName:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Consignee's Account Number</div>
-                                <div>{{(package.awbInformation.consigneeAccountNumber!= null)?package.awbInformation.consigneeAccountNumber:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Consignee Address</div>
-                                <div>{{(package.awbInformation.consigneeAddress!= null)?package.awbInformation.consigneeAddress:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Carrier's Agent Name</div>
-                                <div>{{(package.awbInformation.agentName!= null)?package.awbInformation.agentName:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Carrier's Agent City</div>
-                                <div>{{(package.awbInformation.agentCity!= null)?package.awbInformation.agentCity:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Agent's AITA Code</div>
-                                <div>{{(package.awbInformation.agentAITACode!= null)?package.awbInformation.agentAITACode:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Account Number</div>
-                                <div>{{(package.awbInformation.agentAccountNumber!= null)?package.awbInformation.agentAccountNumber:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Accounting Information</div>
-                                <div>{{(package.awbInformation.agentAccountInformation!= null)?package.awbInformation.agentAccountInformation:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Requested Routing</div>
-                                <div>{{(package.awbInformation.requestedRouting!= null)?package.awbInformation.requestedRouting:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Requested FlightDate</div>
-                                <div>{{package.awbInformation.requestedFlightDate | date : 'M/d/yyyy'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Routing and Destination To</div>
-                                <div>{{(package.awbInformation.routingAndDestinationTo!= null)?package.awbInformation.routingAndDestinationTo:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Routing and Destination By</div>
-                                <div>{{(package.awbInformation.routingAndDestinationBy!= null)?package.awbInformation.routingAndDestinationBy:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Airport Destination</div>
-                                <div>{{(package.awbInformation.destinationAirportCode!= null)?package.awbInformation.destinationAirportCode:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Reference Number</div>
-                                <div>{{(package.awbInformation.shippingReferenceNumber!= null)?package.awbInformation.shippingReferenceNumber:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Currency</div>
-                                <div>{{(package.awbInformation.currency!= null)?package.awbInformation.currency:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Declared Value for Carriage</div>
-                                <div>{{(package.awbInformation.declaredValueForCarriage != 0)?package.awbInformation.declaredValueForCarriage:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Declared Value for Customer</div>
-                                <div>{{(package.awbInformation.declaredValueForCustomer != 0)?package.awbInformation.declaredValueForCustomer:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Amount Of Insurance</div>
-                                <div>{{(package.awbInformation.amountOfInsurance != 0)?package.awbInformation.amountOfInsurance:'-'}}</div>
-                            </div>
-                            <div class="pt-3">
+                            <div *ngIf="package.awbInformation != null">
                                 <div class="details-group">
-                                    <div class="lable">Prodact Lists</div>
+                                    <div class="lable">Shipper Name</div>
+                                    <div>{{(package.awbInformation.shipperName!=
+                                        null)?package.awbInformation.shipperName:'-'}}</div>
                                 </div>
-                                <div class="table-content">
-                                    <table class="table table-responsive">
-                                        <thead>
-                                            <th>Product ID</th>
-                                            <th>Product Name</th>
-                                            <th>Product Type</th>
-                                            <th>Quantity</th>
-                                            <th></th>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let product of package.awbInformation.packageProducts">
-                                                <td>{{product.productRefNumber}}</td>
-                                                <td>{{product.productName}}</td>
-                                                <td>{{getAWBProductType(product.productType)}}</td>
-                                                <td>{{product.quantity}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="details-group">
+                                    <div class="lable">Shipper's Account Number</div>
+                                    <div>{{(package.awbInformation.shipperAccountNumber!=
+                                        null)?package.awbInformation.shipperAccountNumber:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Shipper Address</div>
+                                    <div>{{(package.awbInformation.shipperAddress!=
+                                        null)?package.awbInformation.shipperAddress:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Consignee Name</div>
+                                    <div>{{(package.awbInformation.consigneeName!=
+                                        null)?package.awbInformation.consigneeName:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Consignee's Account Number</div>
+                                    <div>{{(package.awbInformation.consigneeAccountNumber!=
+                                        null)?package.awbInformation.consigneeAccountNumber:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Consignee Address</div>
+                                    <div>{{(package.awbInformation.consigneeAddress!=
+                                        null)?package.awbInformation.consigneeAddress:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Carrier's Agent Name</div>
+                                    <div>{{(package.awbInformation.agentName!=
+                                        null)?package.awbInformation.agentName:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Carrier's Agent City</div>
+                                    <div>{{(package.awbInformation.agentCity!=
+                                        null)?package.awbInformation.agentCity:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Agent's AITA Code</div>
+                                    <div>{{(package.awbInformation.agentAITACode!=
+                                        null)?package.awbInformation.agentAITACode:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Account Number</div>
+                                    <div>{{(package.awbInformation.agentAccountNumber!=
+                                        null)?package.awbInformation.agentAccountNumber:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Accounting Information</div>
+                                    <div>{{(package.awbInformation.agentAccountInformation!=
+                                        null)?package.awbInformation.agentAccountInformation:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Requested Routing</div>
+                                    <div>{{(package.awbInformation.requestedRouting!=
+                                        null)?package.awbInformation.requestedRouting:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Requested FlightDate</div>
+                                    <div>{{package.awbInformation.requestedFlightDate | date : 'M/d/yyyy'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Routing and Destination To</div>
+                                    <div>{{(package.awbInformation.routingAndDestinationTo!=
+                                        null)?package.awbInformation.routingAndDestinationTo:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Routing and Destination By</div>
+                                    <div>{{(package.awbInformation.routingAndDestinationBy!=
+                                        null)?package.awbInformation.routingAndDestinationBy:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Airport Destination</div>
+                                    <div>{{(package.awbInformation.destinationAirportCode!=
+                                        null)?package.awbInformation.destinationAirportCode:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Reference Number</div>
+                                    <div>{{(package.awbInformation.shippingReferenceNumber!=
+                                        null)?package.awbInformation.shippingReferenceNumber:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Currency</div>
+                                    <div>{{(package.awbInformation.currency!=
+                                        null)?package.awbInformation.currency:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Declared Value for Carriage</div>
+                                    <div>{{(package.awbInformation.declaredValueForCarriage !=
+                                        0)?package.awbInformation.declaredValueForCarriage:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Declared Value for Customer</div>
+                                    <div>{{(package.awbInformation.declaredValueForCustomer !=
+                                        0)?package.awbInformation.declaredValueForCustomer:'-'}}</div>
+                                </div>
+                                <div class="details-group">
+                                    <div class="lable">Amount Of Insurance</div>
+                                    <div>{{(package.awbInformation.amountOfInsurance !=
+                                        0)?package.awbInformation.amountOfInsurance:'-'}}</div>
+                                </div>
+                                <div class="pt-3">
+                                    <div class="details-group">
+                                        <div class="lable">Prodact Lists</div>
+                                    </div>
+                                    <div class="table-content">
+                                        <table class="table table-responsive">
+                                            <thead>
+                                                <th>Product ID</th>
+                                                <th>Product Name</th>
+                                                <th>Product Type</th>
+                                                <th>Quantity</th>
+                                                <th></th>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let product of package.awbInformation.packageProducts">
+                                                    <td>{{product.productRefNumber}}</td>
+                                                    <td>{{product.productName}}</td>
+                                                    <td>{{getAWBProductType(product.productType)}}</td>
+                                                    <td>{{product.quantity}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -241,8 +265,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">Cargo Reference Information</h2>
-                <button type="button" class="close btn" data-dismiss="modal" (click)="closeAWBForm()" aria-label="Close"><span
-                        class="ca ca-icn-close"></span></button>
+                <button type="button" class="close btn" data-dismiss="modal" (click)="closeAWBForm()"
+                    aria-label="Close"><span class="ca ca-icn-close"></span></button>
             </div>
             <div>
                 <app-awb-create [awbModel]="awbModel" (submitDetail)="submitAWBDetail($event)"
