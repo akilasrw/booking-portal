@@ -52,9 +52,17 @@ export class BookingViewDetailComponent implements OnInit {
     return value == 0 ? '-' : CoreExtensions.PadLeadingZeros(value, 8);
   }
 
-  addAWBFromAddPackage(){
-    this.awbModel = new AWBCreateRM();
-    this.awbModel.isPackageUpdate = false;
+  addAWB(){
+    // this.awbModel = new AWBCreateRM();
+    // this.awbModel.isPackageUpdate = false;
+
+    this.modalVisible = true;
+    setTimeout(() => (this.modalVisibleAnimate = true));
+  }
+
+  editAWB(){
+    // this.awbModel = new AWBCreateRM();
+    // this.awbModel.isPackageUpdate = false;
 
     this.modalVisible = true;
     setTimeout(() => (this.modalVisibleAnimate = true));
@@ -85,6 +93,10 @@ export class BookingViewDetailComponent implements OnInit {
 
   get packageItemStatus(): typeof PackageItemStatus {
     return PackageItemStatus;
+  }
+
+  getAWBProductType(type: number) {
+    return CoreExtensions.GetAWBProductType(type);
   }
 
 }

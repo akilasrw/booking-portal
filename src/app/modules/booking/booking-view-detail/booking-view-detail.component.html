@@ -112,10 +112,11 @@
                                 <div>
                                     <span [ngClass]="{'edit pe-4 disabled' : package?.packageItemStatus == packageItemStatus.Pending,
                                     'edit pe-4 active':package?.packageItemStatus != packageItemStatus.Pending}"
-                                      ><i class="ca ca-icn-edit pr-5" title="Edit"></i></span>
+                                      ><i class="ca ca-icn-edit pr-5" title="Edit" (click)="(package?.packageItemStatus != packageItemStatus.Pending)?editAWB(packageItem,i):false"></i></span>
+                                      
                                     <span  [ngClass]="{'add active' : package?.packageItemStatus == packageItemStatus.Pending,
                                     'add disabled':package?.packageItemStatus != packageItemStatus.Pending}"
-                                     ><i class="ca ca-icn-add" title="Add"></i></span>
+                                     ><i class="ca ca-icn-add" title="Add" (click)="(package?.packageItemStatus == packageItemStatus.Pending)?addAWB(packageItem,i):false"></i></span>
                                 </div>
                             </div>
                             <div class="details-group">
@@ -216,23 +217,11 @@
                                             <th></th>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>012345678</td>
-                                                <td>Laptop</td>
-                                                <td>Electronic</td>
-                                                <td>2</td>
-                                            </tr>
-                                            <tr>
-                                                <td>012345678</td>
-                                                <td>Laptop</td>
-                                                <td>Electronic</td>
-                                                <td>2</td>
-                                            </tr>
-                                            <tr>
-                                                <td>012345678</td>
-                                                <td>Laptop</td>
-                                                <td>Electronic</td>
-                                                <td>2</td>
+                                            <tr *ngFor="let product of package.awbInformation.packageProducts">
+                                                <td>{{product.productRefNumber}}</td>
+                                                <td>{{product.productName}}</td>
+                                                <td>{{getAWBProductType(product.productType)}}</td>
+                                                <td>{{product.quantity}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
