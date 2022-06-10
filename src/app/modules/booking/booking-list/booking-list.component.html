@@ -99,8 +99,7 @@
                         class="ca ca-icn-close"></span></button>
             </div>
             <div class="modal-body">
-                <app-booking-view-detail [cargoBookingId]="cargoBookingId" (closePopup)="closePopup($event)"
-                    *ngIf="modalVisible"></app-booking-view-detail>
+                <app-booking-view-detail [cargoBookingId]="cargoBookingId" *ngIf="modalVisible"></app-booking-view-detail>
             </div>
         </div>
     </div>

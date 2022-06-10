@@ -79,12 +79,6 @@ export class BookingListComponent implements OnInit {
     this.hide();
   }
 
-  closePopup(isSuccess: Boolean) {
-    if (isSuccess) {
-    }
-    this.hide();
-  }
-
   goToCreateBooking() {
     this.router.navigate(['booking/search']);
   }

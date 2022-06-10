@@ -81,9 +81,7 @@ export class BookingViewDetailComponent implements OnInit {
     setTimeout(() => (this.modalVisibleAnimate = true));
   }
 
-  closeAWBForm(isSuccess: Boolean) {
-    if (isSuccess) {
-    }
+  closeAWBForm() {
     this.modalVisibleAnimate = false;
     setTimeout(() => (this.modalVisible = false), 300);
   }

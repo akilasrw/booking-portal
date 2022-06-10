@@ -153,7 +153,6 @@ export class AwbCreateComponent implements OnInit {
   }
 
   saveAWBDetails(){
-    debugger;
     if(this.awbForm.valid){
       var awb: AWBCreateRM = this.awbForm.value;
       awb.isPackageUpdate=this.awbModel.isPackageUpdate;
@@ -172,8 +171,7 @@ export class AwbCreateComponent implements OnInit {
   }
 
   closeModal() {
-    debugger;
-    this.closePopup.emit(true);
+    this.closePopup.emit();
   }
 
 }

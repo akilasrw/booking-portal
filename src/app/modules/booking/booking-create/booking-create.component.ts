@@ -361,9 +361,7 @@ export class BookingCreateComponent implements OnInit {
   }
 
 
-  closeAWBForm(isSuccess:boolean) {
-    if (isSuccess) {
-    }
+  closeAWBForm() {
     this.modalVisibleAnimate = false;
     setTimeout(() => (this.modalVisible = false), 300);
   }
