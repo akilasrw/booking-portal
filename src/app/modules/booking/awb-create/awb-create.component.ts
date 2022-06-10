@@ -1,9 +1,9 @@
+import { AWBCreateRM } from './../../../_models/request-models/awb/awb-create-rm.model';
 import { AirportService } from './../../../_services/airport.service';
 import { AWBProductRM } from './../../../_models/request-models/awb/awb-product-rm.model';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
-import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.model';
 import { ToastrService } from 'ngx-toastr';
 import { SelectList } from 'src/app/shared/models/select-list.model';
 
@@ -24,7 +24,7 @@ export class AwbCreateComponent implements OnInit {
   public destinationAirpots: SelectList[] = [];
   @Output() closePopup = new EventEmitter<any>();
   @Output() submitDetail = new EventEmitter<any>();
-  @Input() isPackageUpdate:boolean =false; 
+  @Input() awbModel:AWBCreateRM = new AWBCreateRM(); 
 
 
   constructor(private toastr: ToastrService,private airportService: AirportService) { }
@@ -33,6 +33,9 @@ export class AwbCreateComponent implements OnInit {
     this.initializeAWBForm();
     this.initializeProductForm();
     this.loadAirports();
+    if(this.awbModel != null && this.awbModel.isEditAWB){
+      this.editAWBForm(this.awbModel);
+    }
   }
 
   initializeAWBForm() {
@@ -69,6 +72,33 @@ export class AwbCreateComponent implements OnInit {
       productType: new FormControl(null),
       quantity: new FormControl(null),
     });
+  }
+
+  editAWBForm(awb: AWBCreateRM) {
+    this.awbForm.get('shipperName')?.patchValue(awb.shipperName);
+    this.awbForm.get('shipperAccountNumber')?.patchValue(awb.shipperAccountNumber);
+    this.awbForm.get('shipperAddress')?.patchValue(awb.shipperAddress);
+    this.awbForm.get('consigneeName')?.patchValue(awb.consigneeName);
+    this.awbForm.get('consigneeAccountNumber')?.patchValue(awb.consigneeAccountNumber);
+    this.awbForm.get('consigneeAddress')?.patchValue(awb.consigneeAddress);
+    this.awbForm.get('agentName')?.patchValue(awb.agentName);
+    this.awbForm.get('agentCity')?.patchValue(awb.agentCity);
+    this.awbForm.get('agentAITACode')?.patchValue(awb.agentAITACode);
+    this.awbForm.get('agentAccountNumber')?.patchValue(awb.agentAccountNumber);
+    this.awbForm.get('agentAccountInformation')?.patchValue(awb.agentAccountInformation);
+    this.awbForm.get('requestedRouting')?.patchValue(awb.requestedRouting);
+    this.awbForm.get('routingAndDestinationTo')?.patchValue(awb.routingAndDestinationTo);
+    this.awbForm.get('routingAndDestinationBy')?.patchValue(awb.routingAndDestinationBy);
+    this.awbForm.get('requestedFlightDate')?.patchValue(awb.requestedFlightDate);
+    this.awbForm.get('destinationAirportId')?.patchValue(awb.destinationAirportId);
+    this.awbForm.get('destinationAirportCode')?.patchValue(awb.destinationAirportCode);
+    this.awbForm.get('shippingReferenceNumber')?.patchValue(awb.shippingReferenceNumber);
+    this.awbForm.get('currency')?.patchValue(awb.currency);
+    this.awbForm.get('declaredValueForCarriage')?.patchValue(awb.declaredValueForCarriage);
+    this.awbForm.get('declaredValueForCustomer')?.patchValue(awb.declaredValueForCustomer);
+    this.awbForm.get('amountOfInsurance')?.patchValue(awb.amountOfInsurance);
+    if(awb.packageProducts != null)
+      this.productList = awb.packageProducts
   }
 
   getAWBProductType(type: number) {
@@ -125,7 +155,7 @@ export class AwbCreateComponent implements OnInit {
   saveAWBDetails(){
     if(this.awbForm.valid){
       var awb: AWBCreateRM = this.awbForm.value;
-      awb.isPackageUpdate=this.isPackageUpdate;
+      awb.isPackageUpdate=this.awbModel.isPackageUpdate;
       if(this.productList.length == 0){
         this.toastr.error('Please add product items.');
         return;
@@ -133,15 +163,15 @@ export class AwbCreateComponent implements OnInit {
       awb.packageProducts = this.productList;
 
       this.submitDetail.emit(awb);
-      this.closeModal(true);
+      this.closeModal();
     }else{
       this.awbForm.markAllAsTouched();
     }
  
   }
 
-  closeModal(item: any) {
-    this.closePopup.emit(item);
+  closeModal() {
+    this.closePopup.emit();
   }
 
 }

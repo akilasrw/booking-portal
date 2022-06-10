@@ -1,3 +1,4 @@
+import { AWBCreateRM } from './../../../_models/request-models/awb/awb-create-rm.model';
 import { SeatAvailability } from './../../../_models/view-models/seat-configuration/seat-availability.model';
 import { Validate } from './../../../shared/models/validate.model';
 import { ValidateCargoPositionRequest } from './../../../_models/request-models/cargo-booking/validate-cargo-position-request.model';
@@ -19,7 +20,6 @@ import { CargoBookingRequest } from 'src/app/_models/view-models/cargo-booking/c
 import { BookingStatus, PackageContainerType, PackageItemStatus, PackagePriorityType, UnitType } from 'src/app/core/enums/common-enums';
 import { UnitService } from 'src/app/_services/unit.service';
 import { FlightScheduleSector } from 'src/app/_models/view-models/flight-schedule-sectors/flight-schedule-sector.model';
-import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.model';
 import { User } from 'src/app/_models/user.model';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
@@ -47,7 +47,8 @@ export class BookingCreateComponent implements OnInit {
   awbDetail?: AWBCreateRM;
   selectedPackage?: PackageItemRM
   selectedPackageIndex?: number;
-  isPackageUpdate: boolean = false;
+  awbModel?:AWBCreateRM;
+
 
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -75,6 +76,7 @@ export class BookingCreateComponent implements OnInit {
 
     this.bookingForm?.get('packageItems')?.get("packageDimention")?.valueChanges.subscribe(res => {
       console.log(this.bookingForm.value);
+      this.awbDetail= undefined;
       if (res != 1) {
         var value = this.packageContainers?.filter(x => x.id == res)[0];
         if (value)
@@ -318,25 +320,7 @@ export class BookingCreateComponent implements OnInit {
     return valid;
   }
 
-  show() {
-    this.modalVisible = true;
-    setTimeout(() => (this.modalVisibleAnimate = true));
-  }
 
-  hide() {
-    this.modalVisibleAnimate = false;
-    setTimeout(() => (this.modalVisible = false), 300);
-  }
-
-  cancel() {
-    this.hide();
-  }
-
-  closePopup(isSuccess: Boolean) {
-    if (isSuccess) {
-    }
-    this.hide();
-  }
 
   backToSearch() {
     this.router.navigate(['booking/search', this.flightScheduleSectorId]);
@@ -345,19 +329,42 @@ export class BookingCreateComponent implements OnInit {
   submitAWBDetail(awb: AWBCreateRM) {
     awb.userId = this.currentUser?.id != null ? this.currentUser?.id : "";
     this.awbDetail = awb;
-    if (this.isPackageUpdate && this.selectedPackage != null && this.selectedPackageIndex != undefined) {
+    if (this.awbModel != null && this.awbModel?.isPackageUpdate && this.selectedPackage != null && this.selectedPackageIndex != undefined) {
       this.selectedPackage.aWBDetail = awb;
       this.selectedPackage.packageItemStatus = PackageItemStatus.AddedAWB;
       this.cargoBookingRequest.packageItems?.splice(this.selectedPackageIndex!, 1, this.selectedPackage)
     }
-    this.isPackageUpdate = false;
   }
 
-  updatePackageAWB(bookingPackage: PackageItemRM, index: number) {
-    this.isPackageUpdate = true;
-    this.selectedPackage = bookingPackage;
+  addAWBFromAddPackage(){
+    this.awbModel = new AWBCreateRM();
+    this.awbModel.isPackageUpdate = false;
+
+    this.modalVisible = true;
+    setTimeout(() => (this.modalVisibleAnimate = true));
+  }
+
+  addAWBFromPackageList(bookingPackage: PackageItemRM, index: number) {
+    debugger;
     this.selectedPackageIndex = index;
-    this.show();
+    this.selectedPackage = bookingPackage;
+    if(this.selectedPackage.aWBDetail==null){
+      this.awbModel = new AWBCreateRM();
+      this.awbModel.isPackageUpdate = true;
+    }else{
+      this.awbModel = this.selectedPackage.aWBDetail;
+      this.awbModel.isPackageUpdate = true;
+      this.awbModel.isEditAWB = true;
+    }
+    
+    this.modalVisible = true;
+    setTimeout(() => (this.modalVisibleAnimate = true));
+  }
+
+
+  closeAWBForm() {
+    this.modalVisibleAnimate = false;
+    setTimeout(() => (this.modalVisible = false), 300);
   }
 
   getCurrentUser() {

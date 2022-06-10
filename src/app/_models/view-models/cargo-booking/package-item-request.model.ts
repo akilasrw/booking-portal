@@ -12,8 +12,8 @@ export interface PackageItemRM {
   declaredValue?: number;
   packageItemCategory?: PackageItemCategory;
   packagePriorityType?: PackagePriorityType;
-  description?: string;
-  packageItemStatus?: PackageItemStatus;
   packageContainerType?: PackageContainerType;
+  packageItemStatus?: PackageItemStatus;
+  description?: string;
   aWBDetail?: AWBCreateRM;
 }
