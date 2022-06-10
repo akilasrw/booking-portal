@@ -210,3 +210,20 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade right" tabindex="-1" [ngClass]="{'in': modalVisibleAnimate}"
+    [ngStyle]="{'display': modalVisible ? 'block' : 'none', 'opacity': modalVisibleAnimate ? 1 : 0}">
+    <div class="modal-dialog modal-lg modal-dialog-m modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Cargo Reference Information</h2>
+                <button type="button" class="close btn" data-dismiss="modal" (click)="closeAWBForm()" aria-label="Close"><span
+                        class="ca ca-icn-close"></span></button>
+            </div>
+            <div>
+                <app-awb-create [awbModel]="awbModel" (submitDetail)="submitAWBDetail($event)"
+                    (closePopup)="closeAWBForm()" *ngIf="modalVisible"></app-awb-create>
+            </div>
+        </div>
+    </div>
+</div>
