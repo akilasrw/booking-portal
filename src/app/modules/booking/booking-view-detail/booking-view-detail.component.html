@@ -113,12 +113,12 @@
                                     <span [ngClass]="{'edit pe-4 disabled' : package?.packageItemStatus == packageItemStatus.Pending,
                                     'edit pe-4 active':package?.packageItemStatus != packageItemStatus.Pending}"><i
                                             class="ca ca-icn-edit pr-5" title="Edit"
-                                            (click)="(package?.packageItemStatus != packageItemStatus.Pending)?editAWB(package.awbInformation):false"></i></span>
+                                            (click)="(package?.packageItemStatus != packageItemStatus.Pending)?editAWB(package):false"></i></span>
 
                                     <span [ngClass]="{'add active' : package?.packageItemStatus == packageItemStatus.Pending,
                                     'add disabled':package?.packageItemStatus != packageItemStatus.Pending}"><i
                                             class="ca ca-icn-add" title="Add"
-                                            (click)="(package?.packageItemStatus == packageItemStatus.Pending)?addAWB():false"></i></span>
+                                            (click)="(package?.packageItemStatus == packageItemStatus.Pending)?addAWB(package):false"></i></span>
                                 </div>
                             </div>
                             <div *ngIf="package.awbInformation != null">

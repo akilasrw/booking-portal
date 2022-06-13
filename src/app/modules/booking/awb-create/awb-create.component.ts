@@ -156,6 +156,8 @@ export class AwbCreateComponent implements OnInit {
     if(this.awbForm.valid){
       var awb: AWBCreateRM = this.awbForm.value;
       awb.isPackageUpdate=this.awbModel.isPackageUpdate;
+      awb.packageItemId=this.awbModel.packageItemId;
+      awb.id=this.awbModel.id;
       if(this.productList.length == 0){
         this.toastr.error('Please add product items.');
         return;

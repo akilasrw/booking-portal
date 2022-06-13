@@ -11,6 +11,7 @@ import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.mo
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/_models/user.model';
 import { ToastrService } from 'ngx-toastr';
+import { PackageItem } from 'src/app/_models/view-models/package-item.model';
 
 @Component({
   selector: 'app-booking-view-detail',
@@ -65,16 +66,18 @@ export class BookingViewDetailComponent implements OnInit {
     return value == 0 ? '-' : CoreExtensions.PadLeadingZeros(value, 8);
   }
 
-  addAWB() {
+  addAWB(packageItem:PackageItem) {
     this.awbModel = new AWBCreateRM();
+    this.awbModel.packageItemId= packageItem.id
     this.awbModel.isPackageUpdate = false;
 
     this.modalVisible = true;
     setTimeout(() => (this.modalVisibleAnimate = true));
   }
 
-  editAWB(awb: AWBDetail) {
-    this.awbModel = awb;
+  editAWB(packageItem:PackageItem) {
+    this.awbModel = packageItem.awbInformation;
+    this.awbModel.packageItemId = packageItem.id;
     this.awbModel.isPackageUpdate = true;
     this.awbModel.isEditAWB = true;
     this.modalVisible = true;
@@ -87,12 +90,14 @@ export class BookingViewDetailComponent implements OnInit {
   }
 
   submitAWBDetail(awb: AWBCreateRM) {
+    debugger;
     awb.userId = this.currentUser?.id != null ? this.currentUser?.id : "";
     this.awbModel = awb;
     if (this.awbModel != null && this.awbModel?.isPackageUpdate) {
       this.awbService.update(this.awbModel).subscribe({
         next: (res) => {
           this.toastr.success('Successfully update AWB details.');
+          this.getBookingDetail();
         },
         error: (err) => {
           this.toastr.error('Unable to update AWB details.');
@@ -102,6 +107,7 @@ export class BookingViewDetailComponent implements OnInit {
       this.awbService.create(this.awbModel).subscribe({
         next: (res) => {
           this.toastr.success('Successfully add AWB details.');
+          this.getBookingDetail();
         },
         error: (err) => {
           this.toastr.error('Unable to add AWB details.');

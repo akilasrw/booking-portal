@@ -1,7 +1,8 @@
 import { PackageItemStatus } from "src/app/core/enums/common-enums";
+import { BaseModel } from "../base-model";
 import { AWBDetail } from "./awb/awb-detail.model";
 
-export interface PackageItem{
+export interface PackageItem extends BaseModel{
     packageRefNumber: string;
     awbTrackingNumber: string;
     width:number;
