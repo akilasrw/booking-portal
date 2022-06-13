@@ -71,6 +71,7 @@ export class AwbCreateComponent implements OnInit {
       productName: new FormControl(null, [Validators.required]),
       productType: new FormControl(null),
       quantity: new FormControl(null),
+      id: new FormControl(null)
     });
   }
 
@@ -135,6 +136,7 @@ export class AwbCreateComponent implements OnInit {
     this.productForm.get('productName')?.patchValue(product.productName);
     this.productForm.get('quantity')?.patchValue(product.quantity);
     this.productForm.get('productType')?.patchValue(product.productType);
+    this.productForm.get('id')?.patchValue(product.id);
 
   }
 

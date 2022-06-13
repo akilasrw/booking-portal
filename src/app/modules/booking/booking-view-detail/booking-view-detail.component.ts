@@ -90,7 +90,6 @@ export class BookingViewDetailComponent implements OnInit {
   }
 
   submitAWBDetail(awb: AWBCreateRM) {
-    debugger;
     awb.userId = this.currentUser?.id != null ? this.currentUser?.id : "";
     this.awbModel = awb;
     if (this.awbModel != null && this.awbModel?.isPackageUpdate) {
