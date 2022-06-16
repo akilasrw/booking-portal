@@ -148,7 +148,7 @@
                         <tr *ngFor="let packageItem of this.cargoBookingRequest.packageItems; let i = index">
                             <td>{{getCargoType(+packageItem.packageItemCategory)}}</td>
                             <td>{{getPackageDimentions(packageItem)}}</td>
-                            <td>{{packageItem.weight}}</td>
+                            <td>{{getPackageWeight(packageItem.weight,packageItem.weightUnitId)}}</td>
                             <td>
                                 <span class="awb-status-chip" [ngClass]="{
                                     'none':packageItem?.packageItemStatus == packageItemStatus.None,

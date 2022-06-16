@@ -24,6 +24,7 @@ import { User } from 'src/app/_models/user.model';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
 import { PackageItemRM } from 'src/app/_models/view-models/cargo-booking/package-item-request.model';
+import { Constants } from 'src/app/core/constants/constants';
 
 
 @Component({
@@ -280,6 +281,14 @@ export class BookingCreateComponent implements OnInit {
 
   getPackageDimentions(packageContainer: any) {
     return CoreExtensions.GetPackageDimentions(packageContainer.length, packageContainer.width, packageContainer.height);
+  }
+
+  getPackageWeight(weight:number,weightUnitId:string){
+    if(Constants.BASE_WEIGHT_UNIT_ID.toLowerCase()== weightUnitId){
+      return weight;
+    }else{
+      return CoreExtensions.GramToKilogramConversion(weight)
+    }
   }
 
   getCargoType(type: number) {

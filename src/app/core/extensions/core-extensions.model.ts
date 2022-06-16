@@ -69,6 +69,13 @@ export class CoreExtensions {
     return (length == null ? 0 : length)+" x "+(width == null ? 0 : width)+" x "+(height == null ? 0 : height)
   }
 
+  public static GramToKilogramConversion(weight:number,isReverse:boolean = false):number{
+            if (isReverse)
+                return weight * 1000;
+            else
+                return weight / 1000;
+  }
+
   public static GetPackageContainerType(type: PackageContainerType): string {
     let statusString = "None";
     switch (type) {

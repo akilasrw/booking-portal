@@ -1,6 +1,7 @@
 
 export class Constants {
   public static get LANGUAGE(): string { return "UserSelectedLanguage"; };
+  public static BASE_WEIGHT_UNIT_ID = "BC1E3D49-5C26-4DE5-9CD4-576BBF6E9D0C"
 }
 
 export class RouteConstants{
