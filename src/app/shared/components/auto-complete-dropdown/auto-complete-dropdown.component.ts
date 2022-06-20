@@ -13,6 +13,7 @@ export class AutoCompleteDropdownComponent implements OnInit {
   @Input() selectedIndex?: number;
   @Output() selectFileOutput = new EventEmitter<any>();
   @Output() clearSearch = new EventEmitter<any>();
+  @Output() changeSearch = new EventEmitter<any>();
   @ViewChild('autocompleteDropdown') autocompleteDropdown: any;
 
 
@@ -27,11 +28,10 @@ export class AutoCompleteDropdownComponent implements OnInit {
 
   selectEvent(item: any) {
     this.selectFileOutput.emit(item);
-
   }
 
   onChangeSearch(val: string) {
-    console.log('onChangeSearch');
+    this.changeSearch.emit();
   }
 
   onFocused(e: any) {

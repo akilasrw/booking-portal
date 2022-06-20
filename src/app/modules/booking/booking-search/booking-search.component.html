@@ -15,14 +15,14 @@
                                 <div class="form-group">
                                     <label class="form-label">Origin</label>
                                     <app-auto-complete-dropdown [data]="originAirpots" [keyword]="keyword"
-                                        (selectFileOutput)="selectedOrigin($event)" (clearSearch)="onClearOrigin()"></app-auto-complete-dropdown>
+                                        (selectFileOutput)="selectedOrigin($event)" (clearSearch)="onClearOrigin()" (changeSearch)="onChangeOrigin()"></app-auto-complete-dropdown>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="form-label">Destination</label>
                                     <app-auto-complete-dropdown [data]="destinationAirpots" [keyword]="keyword"
-                                        (selectFileOutput)="selectedDestination($event)" (clearSearch)="onClearDestination()"></app-auto-complete-dropdown>
+                                        (selectFileOutput)="selectedDestination($event)" (clearSearch)="onClearDestination()" (changeSearch)="onChangeDestination()"></app-auto-complete-dropdown>
                                 </div>
                             </div>
                             <div class="col-md-3">
