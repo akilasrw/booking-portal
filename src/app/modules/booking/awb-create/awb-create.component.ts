@@ -67,10 +67,10 @@ export class AwbCreateComponent implements OnInit {
 
   initializeProductForm() {
     this.productForm = new FormGroup({
-      productRefNumber: new FormControl(null),
+      productRefNumber: new FormControl(null, [Validators.required]),
       productName: new FormControl(null, [Validators.required]),
-      productType: new FormControl(null),
-      quantity: new FormControl(null),
+      productType: new FormControl(null, [Validators.required]),
+      quantity: new FormControl(null,[Validators.required, Validators.min(1)]),
       id: new FormControl(null)
     });
   }
@@ -107,7 +107,7 @@ export class AwbCreateComponent implements OnInit {
   }
 
   addProduct(){
-    if(this.productForm.valid){
+    if( this.isValiedProduct() && this.productForm.valid){
       var product: AWBProductRM = this.productForm.value;
       product.productType=Number(this.productForm.value.productType);
       if(this.isUpdate){
@@ -115,9 +115,19 @@ export class AwbCreateComponent implements OnInit {
       }else{
         this.productList.push(product);
       }
-      
+      this.resetProduct();
+    }else{
+      this.productForm.markAllAsTouched();
     }
-    this.resetProduct();
+  }
+
+  isValiedProduct():Boolean{
+    if (this.productForm?.get('productType')?.value === null || 
+    this.productForm?.get('productType')?.value === "") {
+      this.toastr.error('Please select product type.');
+      return false;
+    }
+    return true;
   }
 
   resetProduct(){

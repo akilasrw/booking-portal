@@ -183,14 +183,14 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="form-label">Product ID</label>
-                                <app-text-input [formControl]='productForm.controls["productRefNumber"]' type="text">
+                                <app-text-input [formControl]='productForm.controls["productRefNumber"]' type="text" [label]='"product ID"'>
                                 </app-text-input>
                             </div>
                         </div>
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label class="form-label">Product Name</label>
-                                <app-text-input [formControl]='productForm.controls["productName"]' type="text">
+                                <app-text-input [formControl]='productForm.controls["productName"]' type="text" [label]='"product name"'>
                                 </app-text-input>
                             </div>
                         </div>
@@ -200,7 +200,6 @@
                             <div class="form-group">
                                 <label class="form-label">Product Type</label>
                                 <select name="productType" formControlName="productType" class="form-control">
-                                    <option></option>
                                     <option [value]="1">{{getAWBProductType(1)}}</option>
                                     <option [value]="2">{{getAWBProductType(2)}}</option>
                                 </select>
@@ -209,11 +208,12 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label class="form-label">Quantity</label>
-                                <input type="number" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" class="form-control" [formControl]='productForm.controls["quantity"]'>
+                                <app-text-input [formControl]='productForm.controls["quantity"]' type="number" [label]='"quantity"'>
+                                </app-text-input>
                             </div>
                         </div>
                         <div class="col-md-6 text-end">
-                            <button class="btn btn-secondary-outline mb-2 me-3" type="submit"
+                            <button class="btn btn-secondary-outline mb-2 me-3" type="button"
                                 (click)="resetProduct()">Reset</button>
                             <button class="btn btn-primary-outline mb-2"
                                 type="submit">{{isUpdate?"Update":"Add"}}</button>
