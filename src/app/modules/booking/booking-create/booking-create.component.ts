@@ -42,7 +42,7 @@ export class BookingCreateComponent implements OnInit {
   cargoBookingRequest!: CargoBookingRequest;
   volumeUnits: Unit[] = [];
   weightUnits: Unit[] = [];
-  disableInput: boolean = false;
+  disableInput: boolean = true;
   currentUser?: User | null
   subscription?: Subscription;
   awbDetail?: AWBCreateRM;
