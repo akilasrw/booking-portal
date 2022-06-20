@@ -110,9 +110,9 @@
                                     </span>
                                 </div>
                                 <div>
-                                    <span [ngClass]="{'edit pe-4 disabled' : package?.packageItemStatus == packageItemStatus.Pending,
-                                    'edit pe-4 active':package?.packageItemStatus != packageItemStatus.Pending}"><i
-                                            class="ca ca-icn-edit pr-5" title="Edit"
+                                    <span class="pe-4" [ngClass]="{'edit disabled' : package?.packageItemStatus == packageItemStatus.Pending,
+                                    'edit active':package?.packageItemStatus != packageItemStatus.Pending}"><i
+                                            class="ca ca-icn-edit" title="Edit"
                                             (click)="(package?.packageItemStatus != packageItemStatus.Pending)?editAWB(package):false"></i></span>
 
                                     <span [ngClass]="{'add active' : package?.packageItemStatus == packageItemStatus.Pending,
