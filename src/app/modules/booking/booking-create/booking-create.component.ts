@@ -234,7 +234,7 @@ export class BookingCreateComponent implements OnInit {
     return {
       height: Number(packageItem.height),
       length: Number(packageItem.length),
-      weight: Number(packageItem.weight),
+      weight: CoreExtensions.RoundToTwoDecimalPlaces(Number(packageItem.weight)),
       width: Number(packageItem.width),
       packagePriorityType: PackagePriorityType.None,
       packageItemCategory: Number(packageItem.packageItemCategory),

@@ -66,7 +66,11 @@ export class CoreExtensions {
   }
 
   public static GetPackageDimentions(length:number,width:number,height:number):string{
-    return (length == null ? 0 : length)+" x "+(width == null ? 0 : width)+" x "+(height == null ? 0 : height)
+    return (length == null ? 0 : length)+" x "+(width == null ? 0 : width)+" x "+(height == null ? 0 : height);
+  }
+
+  public static RoundToTwoDecimalPlaces(numberValue:number):number{
+    return Math.round((numberValue + Number.EPSILON) * 100) / 100;
   }
 
   public static GramToKilogramConversion(weight:number,isReverse:boolean = false):number{
