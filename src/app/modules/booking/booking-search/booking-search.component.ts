@@ -87,8 +87,16 @@ export class BookingSearchComponent implements OnInit {
     this.bookingForm.get('originAirportId')?.patchValue(value.id);
   }
 
+  onClearOrigin(){
+    this.bookingForm.get('originAirportId')?.patchValue(null);
+  }
+
   selectedDestination(value: any) {
     this.bookingForm.get('destinationAirportId')?.patchValue(value.id);
+  }
+
+  onClearDestination(){
+    this.bookingForm.get('destinationAirportId')?.patchValue(null);
   }
 
   submit() {
@@ -100,6 +108,9 @@ export class BookingSearchComponent implements OnInit {
       this.flightScheduleSectors = [];
       this.getFilteredList();
       this.flightScheduleSectorId = '';
+    }else{
+      this.flightScheduleSectors = [];
+      this.totalCount =0;
     }
   }
 
@@ -129,6 +140,7 @@ export class BookingSearchComponent implements OnInit {
       if (res.count < 1) {
         this.toastrService.warning('No record found.');
         this.totalCount = res.count;
+        this.flightScheduleSectors = [];
       } else {
         this.flightScheduleSectors = res.data;
         this.totalCount = res.count;

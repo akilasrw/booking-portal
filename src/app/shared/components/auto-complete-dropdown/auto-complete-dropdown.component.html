@@ -1,7 +1,7 @@
 <div>
-  <ng-autocomplete class="select-input" [data]="data" [searchKeyword]="keyword" [tabindex]="tabindex" placeholder="Select"
+  <ng-autocomplete #autocompleteDropdown class="select-input" [data]="data" [searchKeyword]="keyword" placeholder="select"
     (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-    [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+    [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (inputCleared)="onClearSearch()">
   </ng-autocomplete>
 
   <ng-template #itemTemplate let-item>
