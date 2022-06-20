@@ -91,11 +91,19 @@ export class BookingSearchComponent implements OnInit {
     this.bookingForm.get('originAirportId')?.patchValue(null);
   }
 
+  onChangeOrigin(){
+    this.bookingForm.get('originAirportId')?.patchValue(null);
+  }
+
   selectedDestination(value: any) {
     this.bookingForm.get('destinationAirportId')?.patchValue(value.id);
   }
 
   onClearDestination(){
+    this.bookingForm.get('destinationAirportId')?.patchValue(null);
+  }
+
+  onChangeDestination(){
     this.bookingForm.get('destinationAirportId')?.patchValue(null);
   }
 
