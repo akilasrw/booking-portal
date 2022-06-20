@@ -77,7 +77,7 @@
                         <div class="value">{{flightScheduleSector.scheduledDepartureDateTime | date:'dd/MM/yyyy hh:mm
                             aa'}}</div>
                     </div>
-                    <div class="card-subtitle">Available Cargo Space</div>
+                    <div class="card-row card-subtitle">Available Cargo Space</div>
                     <div class="card-row"
                         *ngFor="let position of flightScheduleSector.flightScheduleSectorCargoPositions">
                         <div class="label">{{getAvailableCargoSpace(+position.cargoPositionType)}}</div>
