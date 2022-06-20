@@ -24,7 +24,6 @@
                                 <div class="form-group">
                                     <label class="form-label">Cargo Type</label>
                                     <select name="cargoType" formControlName="packageItemCategory" class="form-control">
-                                        <option></option>
                                         <option [value]="1">{{getCargoType(1)}}</option>
                                         <!-- <option value="2">Live Animal</option>
                                     <option value="3">Art Work</option>
@@ -36,7 +35,6 @@
                                 <div class="form-group">
                                     <label class="form-label">Package Dimensions (L x W x H)</label>
                                     <select name="cargoType" formControlName="packageDimention" class="form-control">
-                                        <option></option>
                                         <option *ngFor="let container of packageContainers" [ngValue]="container.id">
                                             {{getPackageDimentions(container)}} {{getContainerName(container)}}</option>
                                         <option [ngValue]="1">Custom </option>

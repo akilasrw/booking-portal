@@ -155,7 +155,7 @@ export class BookingCreateComponent implements OnInit {
   }
 
   async add() {
-    if (this.bookingForm.valid) {
+    if (this.isBookingFormValied()&& this.bookingForm.valid) {
       var booking = this.bookingForm.value;
       if (await this.isAvailableSpace(booking.packageItems.packageDimention) == true) {
         if (await this.isWeightNotExceed(booking.packageItems) == true) {
@@ -178,6 +178,31 @@ export class BookingCreateComponent implements OnInit {
     } else {
       this.bookingForm.markAllAsTouched();
     }
+  }
+
+  isBookingFormValied():boolean{
+
+    if ((this.bookingForm?.get('packageItems')?.get("packageItemCategory")?.value === null || 
+    this.bookingForm?.get('packageItems')?.get("packageItemCategory")?.value === "") &&
+    (this.bookingForm?.get('packageItems')?.get("packageDimention")?.value === null || 
+    this.bookingForm?.get('packageItems')?.get("packageDimention")?.value === "")) {
+      this.toastr.error('Please select cargo type and package dimentions.');
+      return false;
+    }
+    
+    if (this.bookingForm?.get('packageItems')?.get("packageItemCategory")?.value === null || 
+    this.bookingForm?.get('packageItems')?.get("packageItemCategory")?.value === "") {
+      this.toastr.error('Please select cargo type.');
+      return false;
+    }
+
+    if (this.bookingForm?.get('packageItems')?.get("packageDimention")?.value === null || 
+    this.bookingForm?.get('packageItems')?.get("packageDimention")?.value === "") {
+      this.toastr.error('Please select package dimentions.');
+      return false;
+    }
+
+    return true;
   }
 
   editPackage(packageItem: PackageItem) {
