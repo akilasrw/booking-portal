@@ -1,3 +1,4 @@
+import { AccountService } from 'src/app/account/account.service';
 import { CargoBooking } from './../../../_models/view-models/cargo-booking/cargo-booking.model';
 import { Component, OnInit } from '@angular/core';
 import { CargoBookingFilterQuery } from 'src/app/_models/queries/cargo-booking/cargo-booking-filter-query.model';
@@ -5,6 +6,8 @@ import { BookingService } from 'src/app/_services/booking.service';
 import { Router } from '@angular/router';
 import { BookingStatus } from 'src/app/core/enums/common-enums';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
+import { User } from 'src/app/_models/user.model';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 
 @Component({
@@ -24,13 +27,17 @@ export class BookingListComponent implements OnInit {
   bookingDate?: Date;
   cargoBookingList: CargoBooking[] = []
   cargoBookingId?: string;
-  bookingStatus = BookingStatus
+  bookingStatus = BookingStatus;
+  currentUser?: User | null;
+  subscription?: Subscription;
 
   constructor(
     private bookingService: BookingService,
+    private accountService: AccountService,
     private router: Router) { }
 
   ngOnInit(): void {
+    this.getCurrentUser();
     this.getFilteredList();
   }
 
@@ -38,6 +45,7 @@ export class BookingListComponent implements OnInit {
     this.bookingListfilterQuery.bookingId = this.bookingId;
     this.bookingListfilterQuery.destination = this.destination;
     this.bookingListfilterQuery.bookingDate = this.bookingDate;
+    this.bookingListfilterQuery.userId = this.currentUser?.id != null ? this.currentUser?.id : "";
 
     this.bookingService.getFilteredBookingList(this.bookingListfilterQuery).subscribe(
       {
@@ -98,5 +106,11 @@ export class BookingListComponent implements OnInit {
       this.bookingListfilterQuery.pageIndex = event;
       this.getFilteredList();
     }
+  }
+
+  getCurrentUser() {
+    this.subscription = this.accountService.currentUser$.subscribe(res => {
+      this.currentUser = res;
+    });
   }
 }

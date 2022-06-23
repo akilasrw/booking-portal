@@ -21,6 +21,10 @@ export class BookingLookupService extends BaseService {
       params = params.append("referenceNumber", query.referenceNumber);
     }
 
+    if (query.userId) {
+      params = params.append("userId", query.userId);
+    }
+
     if (query.isIncludeFlightDetail) {
       params = params.append("isIncludeFlightDetail", query.isIncludeFlightDetail);
     }

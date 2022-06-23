@@ -1,3 +1,4 @@
+import { AccountService } from 'src/app/account/account.service';
 import { CargoBookingLookup } from './../../../_models/view-models/cargo-booking-lookup/cargo-booking-lookup.model';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -6,6 +7,8 @@ import { BookingLookupService } from 'src/app/_services/booking-lookup.service';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 import { ToastrService } from 'ngx-toastr';
 import { BookingStatus, PackageItemStatus } from 'src/app/core/enums/common-enums';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { User } from 'src/app/_models/user.model';
 
 
 @Component({
@@ -16,18 +19,20 @@ import { BookingStatus, PackageItemStatus } from 'src/app/core/enums/common-enum
 export class BookingLookupSearchComponent implements OnInit {
 
   public searchForm!:FormGroup;
-
   cargoBookingLookup?: CargoBookingLookup
-
   bookingStatus = BookingStatus;
   packageItemStatus = PackageItemStatus;
+  subscription?: Subscription;
+  currentUser?: User | null
 
 
   constructor(private fb:FormBuilder,
     private bookingLookupService: BookingLookupService,
+    private accountService: AccountService,
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.getCurrentUser();
     this.initializeForm();
   }
 
@@ -46,6 +51,7 @@ export class BookingLookupSearchComponent implements OnInit {
       query.referenceNumber = this.searchForm.value.referenceNumber;
       query.isIncludeFlightDetail=true;
       query.isIncludePackageDetail=true;
+      query.userId = this.currentUser?.id
 
       this.bookingLookupService.getBookingLookupDetail(query).subscribe(
         {
@@ -74,4 +80,11 @@ export class BookingLookupSearchComponent implements OnInit {
   GetFormattedAWBNumber(value: number): string {
     return value == 0? '-':CoreExtensions.PadLeadingZeros(value,8);
   }
+
+  getCurrentUser() {
+    this.subscription = this.accountService.currentUser$.subscribe(res => {
+      this.currentUser = res;
+    });
+  }
+
 }

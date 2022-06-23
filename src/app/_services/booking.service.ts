@@ -32,6 +32,10 @@ export class BookingService extends BaseService {
       params = params.append("bookingId", query.bookingId);
     }
 
+    if (query.userId) {
+      params = params.append("userId", query.userId);
+    }
+
     if (query.destination) {
       params = params.append("destination", query.destination);
     }
@@ -53,6 +57,10 @@ export class BookingService extends BaseService {
     var params = new HttpParams();
     if (query.id) {
       params = params.append("id", query.id);
+    }
+
+    if (query.userId) {
+      params = params.append("userId", query.userId);
     }
 
     if (query.isIncludeFlightDetail) {

@@ -4,4 +4,5 @@ export class CargoBookingFilterQuery extends BasePaginationQuery {
   bookingId?: string;
   destination?: string;
   bookingDate?: Date;
+  userId?:string;
 }

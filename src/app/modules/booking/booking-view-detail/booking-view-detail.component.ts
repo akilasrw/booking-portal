@@ -36,9 +36,8 @@ export class BookingViewDetailComponent implements OnInit {
     private awbService: AwbService) { }
 
   ngOnInit(): void {
-    console.log(this.cargoBookingId);
-    this.getBookingDetail();
     this.getCurrentUser();
+    this.getBookingDetail();
   }
 
 
@@ -49,6 +48,7 @@ export class BookingViewDetailComponent implements OnInit {
       query.id = this.cargoBookingId;
       query.isIncludeFlightDetail = true;
       query.isIncludePackageDetail = true;
+      query.userId = this.currentUser?.id;
 
       this.bookingSerice.getBookingDetail(query).subscribe(
         res => {
