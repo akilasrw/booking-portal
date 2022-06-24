@@ -16,8 +16,6 @@ import { AuthenticateRM } from '../_models/request-models/login/authenticate-rm.
 })
 export class AccountService extends BaseService {
   baseUrl = environment.baseEndpoint;
-
-
   private currentUserSource: BehaviorSubject<User|null>;
   currentUser$: Observable<User| null>;
 
