@@ -58,7 +58,6 @@ export class LoginComponent implements OnInit {
       this.accountService.login(this.loginForm.value).subscribe({
         next:(res)=>{
           this.router.navigate([this.returnUrl]);
-          console.log('Successfully logged.');
           this.isSubmitting = false;
           this.spinner.show();
           setTimeout(() => {
