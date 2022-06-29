@@ -1091,3 +1091,89 @@ a {
         }
     }
 }
+
+// Drawer chip
+.drawer-chip {
+    display: flex;
+    
+    .chip:last-child {
+        margin-right: 0;
+    }
+    .chip {
+        display: flex;
+        padding: 5px 16px;
+        background-color: $off-white;
+        border-radius: 50px;
+        color: $form-label;
+        width: fit-content;
+        margin-right: 16px;
+        div:first-child {
+            margin-right: 25px;
+        }
+        i {
+            color: $brand-primary;
+            cursor: pointer;
+        }
+        &.active {
+            background-color: $brand-primary;
+            color: $default-white;
+            i {
+                color: $default-white;
+            }
+            i:first-child {
+                margin-right: 16px;
+            }
+        }
+    }
+}
+
+// Switch
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 2.75rem;
+    height: 1.375rem;
+    input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        &:checked + .slider {
+            background-color: $brand-primary;
+        }
+        &:focus + .slider {
+            box-shadow: 0 0 1px $brand-primary;
+        }
+        &:checked + .slider:before {
+            transform: translateX(1.375rem);
+        }
+    }
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+
+        &:before {
+            position: absolute;
+            content: "";
+            height: 0.875rem;
+            width: 0.875rem;
+            left: 0.25rem;
+            bottom: 0.25rem;
+            background-color: $default-white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+        &.round {
+            border-radius: 2.188rem;
+        }
+        &.round:before {
+            border-radius: 50%;
+        }
+    }
+}
