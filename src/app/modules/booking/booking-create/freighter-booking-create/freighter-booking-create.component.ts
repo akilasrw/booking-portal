@@ -66,24 +66,25 @@ export class FreighterBookingCreateComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
     this.bookingForm?.get('packageItems')?.get("packageItemCategory")?.valueChanges.subscribe(x => {
+      this.disableInput = false;
       var query = new PackageContainerListQuery();
       query.packageItemType = x;
       this.getPackageContainers(query);
       this.getCurrentUser();
     });
 
-    this.bookingForm?.get('packageItems')?.get("packageDimention")?.valueChanges.subscribe(res => {
-      console.log(this.bookingForm.value);
-      this.awbDetail= undefined;
-      if (res != 1) {
-        var value = this.packageContainers?.filter(x => x.id == res)[0];
-        if (value)
-          this.patchPackageDimentions(value);
-        this.disableInput = true;
-      } else {
-        this.disableInput = false;
-      }
-    });
+    // this.bookingForm?.get('packageItems')?.get("packageDimention")?.valueChanges.subscribe(res => {
+    //   console.log(this.bookingForm.value);
+    //   this.awbDetail= undefined;
+    //   if (res != 1) {
+    //     var value = this.packageContainers?.filter(x => x.id == res)[0];
+    //     if (value)
+    //       this.patchPackageDimentions(value);
+    //     this.disableInput = true;
+    //   } else {
+    //     this.disableInput = false;
+    //   }
+    // });
     this.getUnits();
   }
 
@@ -114,7 +115,6 @@ export class FreighterBookingCreateComponent implements OnInit {
         packageItemCategory: [],
         weightUnitId: ['bc1e3d49-5c26-4de5-9cd4-576bbf6e9d0c', [Validators.required]],
         volumeUnitId: ['9f0928df-5d33-4e5d-affc-f7e2e2b72680', [Validators.required]],
-        packageDimention: ['', [Validators.required]],
         packageItemStatus: [PackageItemStatus.Pending],
         description: [''],
         isEdit: [false]
@@ -178,24 +178,10 @@ export class FreighterBookingCreateComponent implements OnInit {
   }
 
   isBookingFormValied():boolean{
-
-    if ((this.bookingForm?.get('packageItems')?.get("packageItemCategory")?.value === null || 
-    this.bookingForm?.get('packageItems')?.get("packageItemCategory")?.value === "") &&
-    (this.bookingForm?.get('packageItems')?.get("packageDimention")?.value === null || 
-    this.bookingForm?.get('packageItems')?.get("packageDimention")?.value === "")) {
-      this.toastr.error('Please select cargo type and package dimentions.');
-      return false;
-    }
     
     if (this.bookingForm?.get('packageItems')?.get("packageItemCategory")?.value === null || 
     this.bookingForm?.get('packageItems')?.get("packageItemCategory")?.value === "") {
       this.toastr.error('Please select cargo type.');
-      return false;
-    }
-
-    if (this.bookingForm?.get('packageItems')?.get("packageDimention")?.value === null || 
-    this.bookingForm?.get('packageItems')?.get("packageDimention")?.value === "") {
-      this.toastr.error('Please select package dimentions.');
       return false;
     }
 
@@ -218,7 +204,6 @@ export class FreighterBookingCreateComponent implements OnInit {
     this.bookingForm.get('packageItems')?.get('length')?.patchValue(0);
     this.bookingForm.get('packageItems')?.get('weight')?.patchValue(0);
     this.bookingForm.get('packageItems')?.get('height')?.patchValue(0);
-    this.bookingForm.get('packageItems')?.get('packageDimention')?.patchValue('');
     this.bookingForm.get('packageItems')?.get('packageItemStatus')?.patchValue(PackageItemStatus.Pending);
     this.bookingForm.get('packageItems')?.get('description')?.patchValue('');
     this.bookingForm.get('packageItems')?.get('isEdit')?.patchValue(false);
@@ -301,9 +286,7 @@ export class FreighterBookingCreateComponent implements OnInit {
     return PackageContainerType.None;
   }
 
-  getPackageDimentions(packageContainer: any) {
-    return CoreExtensions.GetPackageDimentions(packageContainer.length, packageContainer.width, packageContainer.height);
-  }
+ 
 
   getPackageWeight(weight:number,weightUnitId:string){
     if(Constants.BASE_WEIGHT_UNIT_ID.toLowerCase()== weightUnitId){

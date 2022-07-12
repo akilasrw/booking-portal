@@ -25,19 +25,6 @@
                                     <label class="form-label">Cargo Type</label>
                                     <select name="cargoType" formControlName="packageItemCategory" class="form-control">
                                         <option [value]="1">{{getCargoType(1)}}</option>
-                                        <!-- <option value="2">Live Animal</option>
-                                    <option value="3">Art Work</option>
-                                    <option value="4">Dgr</option> -->
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="form-label">Package Dimensions (L x W x H)</label>
-                                    <select name="cargoType" formControlName="packageDimention" class="form-control">
-                                        <option *ngFor="let container of packageContainers" [ngValue]="container.id">
-                                            {{getPackageDimentions(container)}} {{getContainerName(container)}}</option>
-                                        <option [ngValue]="1">Custom </option>
                                     </select>
                                 </div>
                             </div>
@@ -161,7 +148,6 @@
                                     title="Add AWB"></i>
                             </td>
                             <td class="text-center">
-                                <!-- <i class="ca ca-icn-edit" (click)="editPackage(packageItem)" title="Edit"></i> -->
                                 <i class="ca ca-icn-bin" title="Delete" (click)="delete(packageItem)"></i>
                             </td>
                         </tr>
