@@ -160,42 +160,12 @@ export class BookingSearchComponent implements OnInit {
     });
   }
 
-  goToBookingCreate(flightScheduleSector: FlightScheduleSector) {
-    let id = flightScheduleSector.id;
-    var recordCount = flightScheduleSector.flightScheduleSectorCargoPositions.filter(x => x.availableSpaceCount > 0).length;
-    if (recordCount > 0) {
-      this.flightScheduleSectorService.setCurrentFlightScheduleSector(this.bookingFilterQuery);
-      this.router.navigate(['booking/create', id]);
-    }
-    else
-      this.toastrService.warning('No available space.');
+  setCurrentScheduleSector(){
+    this.flightScheduleSectorService.setCurrentFlightScheduleSector(this.bookingFilterQuery);
   }
 
-  validateSpace(flightScheduleSector: FlightScheduleSector): boolean {
-    if (flightScheduleSector.flightScheduleSectorCargoPositions.filter(x => x.availableSpaceCount > 0).length > 0)
-      return true;
+ 
 
-    return false;
-  }
 
-  getAvailableCargoSpace(value: number) {
-    let position: string = '';
-    switch (value) {
-      case 1:
-        position = "On Floor";
-        break;
-      case 2:
-        position = "On Seat";
-        break;
-      case 3:
-        position = "Under Seat";
-        break;
-      case 4:
-        position = "Over Head";
-        break;
-
-    }
-    return position;
-  }
 
 }

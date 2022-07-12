@@ -1,16 +1,7 @@
-import { AWBCreateRM } from './../../../_models/request-models/awb/awb-create-rm.model';
-import { SeatAvailability } from './../../../_models/view-models/seat-configuration/seat-availability.model';
-import { Validate } from './../../../shared/models/validate.model';
-import { ValidateCargoPositionRequest } from './../../../_models/request-models/cargo-booking/validate-cargo-position-request.model';
-import { CargoPositionService } from './../../../_services/cargo-position.service';
-import { Unit } from './../../../_models/view-models/unit/unit.model';
-import { PackageItem } from './../../../_models/view-models/package-item.model';
 import { ToastrService } from 'ngx-toastr';
-import { PackageContainerService } from './../../../_services/package-container.service';
 import { FlightScheduleSectorService } from 'src/app/_services/flight-schedule-sector.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FlightScheduleSectorQuery } from '../../../_models/queries/flight-schedule-sector/flight-schedule-sector-query.model';
 import { PackageContainer } from 'src/app/_models/view-models/package-container/package-container.model';
 import { PackageContainerListQuery } from 'src/app/_models/queries/package-container/package-container-list-query.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -25,14 +16,20 @@ import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
 import { PackageItemRM } from 'src/app/_models/view-models/cargo-booking/package-item-request.model';
 import { Constants } from 'src/app/core/constants/constants';
-
+import { FlightScheduleSectorQuery } from 'src/app/_models/queries/flight-schedule-sector/flight-schedule-sector-query.model';
+import { PackageContainerService } from 'src/app/_services/package-container.service';
+import { CargoPositionService } from 'src/app/_services/cargo-position.service';
+import { PackageItem } from 'src/app/_models/view-models/package-item.model';
+import { Unit } from 'src/app/_models/view-models/unit/unit.model';
+import { ValidateCargoPositionRequest } from 'src/app/_models/request-models/cargo-booking/validate-cargo-position-request.model';
+import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.model';
 
 @Component({
-  selector: 'app-booking-create',
-  templateUrl: './booking-create.component.html',
-  styleUrls: ['./booking-create.component.scss']
+  selector: 'app-p2c-booking-create',
+  templateUrl: './p2c-booking-create.component.html',
+  styleUrls: ['./p2c-booking-create.component.scss']
 })
-export class BookingCreateComponent implements OnInit {
+export class P2cBookingCreateComponent implements OnInit {
   modalVisible = false;
   modalVisibleAnimate = false;
   flightScheduleSectorId!: string;
@@ -413,4 +410,5 @@ export class BookingCreateComponent implements OnInit {
   get packageItemStatus(): typeof PackageItemStatus {
     return PackageItemStatus;
   }
+
 }

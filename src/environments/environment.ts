@@ -2,10 +2,13 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { AircraftLayoutType } from "src/app/core/enums/common-enums";
+
 export const environment = {
   production: false,
   baseEndpoint: 'https://localhost:7130/api/v1/',
-  encriptionKey:"123456$#@$^@1ERF"
+  encriptionKey:"123456$#@$^@1ERF",
+  aircraftLayoutType : AircraftLayoutType.Freighter
 };
 
 /*
