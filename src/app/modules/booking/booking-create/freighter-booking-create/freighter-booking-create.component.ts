@@ -73,18 +73,6 @@ export class FreighterBookingCreateComponent implements OnInit {
       this.getCurrentUser();
     });
 
-    // this.bookingForm?.get('packageItems')?.get("packageDimention")?.valueChanges.subscribe(res => {
-    //   console.log(this.bookingForm.value);
-    //   this.awbDetail= undefined;
-    //   if (res != 1) {
-    //     var value = this.packageContainers?.filter(x => x.id == res)[0];
-    //     if (value)
-    //       this.patchPackageDimentions(value);
-    //     this.disableInput = true;
-    //   } else {
-    //     this.disableInput = false;
-    //   }
-    // });
     this.getUnits();
   }
 
@@ -154,7 +142,7 @@ export class FreighterBookingCreateComponent implements OnInit {
   async add() {
     if (this.isBookingFormValied()&& this.bookingForm.valid) {
       var booking = this.bookingForm.value;
-      if (await this.isAvailableSpace(booking.packageItems.packageDimention) == true) {
+      if (this.isVolumeNotExceed() == true) {
         if (await this.isWeightNotExceed(booking.packageItems) == true) {
           if (this.cargoBookingRequest.packageItems == undefined) {
             this.cargoBookingRequest = {
@@ -230,36 +218,51 @@ export class FreighterBookingCreateComponent implements OnInit {
     };
   }
 
-  async isAvailableSpace(packageDimension: any) {
-    var availableSpaceCount = 0;
-
-    let containerType = this.getPackageContainerType(packageDimension);
-
-    if (containerType == PackageContainerType.OnThreeSeats) {
-      var query: FlightScheduleSectorQuery = {
-        id: this.flightScheduleSectorId,
-        includeLoadPlan: true
-      };
-      var response = await this.cargoPositionService.getAvailableThreeSeats(query).toPromise();
-      if (response !== undefined) {
-        availableSpaceCount = response.SeatCount;
+  isVolumeNotExceed(){
+    var selectedVolumeUnitId = this.bookingForm.get('packageItems')?.get('volumeUnitId')?.value;
+    var selectedLength = this.bookingForm.get('packageItems')?.get('length')?.value;
+    var selectedWidth = this.bookingForm.get('packageItems')?.get('width')?.value;
+    var selectedHeight = this.bookingForm.get('packageItems')?.get('height')?.value;
+    if(selectedVolumeUnitId === "9F0928DF-5D33-4E5D-AFFC-F7E2E2B72680".toLowerCase()){//cm
+      if(selectedLength> 318){
+        this.toastr.warning('Max length volume exceed.');
+        return false;
       }
-    } else {
-      var sectorCargoPositions = this.flightScheduleSector?.flightScheduleSectorCargoPositions.filter(x => x.cargoPositionType == Number(containerType) && x.availableSpaceCount > 0);
-      if (sectorCargoPositions !== undefined && sectorCargoPositions.length > 0) {
-        availableSpaceCount = sectorCargoPositions[0].availableSpaceCount
+      if(selectedWidth> 224){
+        this.toastr.warning('Max width volume exceed.');
+        return false;
+      }
+      if(selectedHeight> 163){
+        this.toastr.warning('Max height volume exceed.');
+        return false;
+      }
+    }else if(selectedVolumeUnitId === "FE919429-80EA-4A0E-A218-5DB6E16F690C".toLowerCase()){//m
+      if(selectedLength> 3.18){
+        this.toastr.warning('Max length volume exceed.');
+        return false;
+      }
+      if(selectedWidth> 2.24){
+        this.toastr.warning('Max width volume exceed.');
+        return false;
+      }
+      if(selectedHeight> 1.63){
+        this.toastr.warning('Max height volume exceed.');
+        return false;
+      }
+    }else if(selectedVolumeUnitId === "11C39205-4153-49F1-AB50-BBA8913C5BB9".toLowerCase()){//Inches
+      if(selectedLength> 125){
+        this.toastr.warning('Max length volume exceed.');
+        return false;
+      }
+      if(selectedWidth> 88){
+        this.toastr.warning('Max width volume exceed.');
+        return false;
+      }
+      if(selectedHeight> 64){
+        this.toastr.warning('Max height volume exceed.');
+        return false;
       }
     }
-
-    if (availableSpaceCount == 0) {
-      this.toastr.warning('Space is not available.');
-      return false;
-    } else if (this.cargoBookingRequest.packageItems &&
-      availableSpaceCount <= this.cargoBookingRequest.packageItems?.filter(x => x.packageContainerType == containerType).length) {
-      this.toastr.warning('Maximum limit is exceed.');
-      return false;
-    }
-
     return true;
   }
 
@@ -268,15 +271,15 @@ export class FreighterBookingCreateComponent implements OnInit {
       packageItem: this.mapPackageItems(cargoPackage),
       flightScheduleSectorId: this.flightScheduleSectorId
     };
-    var response = await this.cargoPositionService.validateWeight(request).toPromise();
-    if (response !== undefined) {
-      if (!response.isValid) {
-        this.toastr.error(response.validationMessage);
-      }
-      return response.isValid;
-    } else {
+    //var response = await this.cargoPositionService.validateWeight(request).toPromise();
+    // if (response !== undefined) {
+    //   if (!response.isValid) {
+    //     this.toastr.error(response.validationMessage);
+    //   }
+    //   return response.isValid;
+    // } else {
       return false;
-    }
+    //}
   }
 
   getPackageContainerType(id: string) {
@@ -286,7 +289,9 @@ export class FreighterBookingCreateComponent implements OnInit {
     return PackageContainerType.None;
   }
 
- 
+  getPackageDimentions(packageContainer: any) {
+    return CoreExtensions.GetPackageDimentions(packageContainer.length, packageContainer.width, packageContainer.height);
+  }
 
   getPackageWeight(weight:number,weightUnitId:string){
     if(Constants.BASE_WEIGHT_UNIT_ID.toLowerCase()== weightUnitId){
