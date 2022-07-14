@@ -25,84 +25,99 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.ca-icn-print:before {
-  content: "\e91a";
-}
-.ca-icn-arrow-dwon:before {
-  content: "\e916";
-}
-.ca-icn-arrow-up:before {
-  content: "\e919";
-}
 .ca-icn-add:before {
   content: "\e900";
 }
-.ca-icn-awb:before {
+.ca-icn-aircraft:before {
   content: "\e901";
 }
-.ca-icn-bell:before {
+.ca-icn-airport:before {
   content: "\e902";
 }
-.ca-icn-bin:before {
+.ca-icn-arrow-dwon:before {
   content: "\e903";
 }
-.ca-icn-booking:before {
+.ca-icn-arrow-up:before {
   content: "\e904";
 }
-.ca-icn-close:before {
+.ca-icn-awb:before {
   content: "\e905";
 }
-.ca-icn-dashboard:before {
+.ca-icn-bell:before {
   content: "\e906";
 }
-.ca-icn-document:before {
+.ca-icn-bin:before {
   content: "\e907";
 }
-.ca-icn-dollar:before {
+.ca-icn-booking:before {
   content: "\e908";
 }
-.ca-icn-edit:before {
+.ca-icn-close:before {
   content: "\e909";
 }
-.ca-icn-flight:before {
+.ca-icn-dashboard:before {
   content: "\e90a";
 }
-.ca-icn-flight-schedule:before {
+.ca-icn-document:before {
   content: "\e90b";
 }
-.ca-icn-left-arrow:before {
+.ca-icn-dollar:before {
   content: "\e90c";
 }
-.ca-icn-left-arrow-dash:before {
+.ca-icn-edit:before {
   content: "\e90d";
 }
-.ca-icn-logout:before {
+.ca-icn-flight:before {
   content: "\e90e";
 }
-.ca-icn-profile:before {
+.ca-icn-flight-schedule:before {
   content: "\e90f";
 }
-.ca-icn-right-arrow:before {
+.ca-icn-left-arrow:before {
   content: "\e910";
 }
-.ca-icn-scan:before {
+.ca-icn-left-arrow-dash:before {
   content: "\e911";
 }
-.ca-icn-settings:before {
+.ca-icn-logout:before {
   content: "\e912";
 }
-.ca-icn-shutdown:before {
+.ca-icn-print:before {
   content: "\e913";
 }
-.ca-icn-translate:before {
+.ca-icn-profile:before {
   content: "\e914";
 }
-.ca-icn-verify:before {
+.ca-icn-right-arrow:before {
   content: "\e915";
 }
-.ca-icn-view:before {
+.ca-icn-route:before {
+  content: "\e916";
+}
+.ca-icn-scan:before {
   content: "\e917";
 }
-.ca-icn-view-eye:before {
+.ca-icn-schedule:before {
   content: "\e918";
+}
+.ca-icn-sector:before {
+  content: "\e919";
+}
+.ca-icn-settings:before {
+  content: "\e91a";
+}
+.ca-icn-shutdown:before {
+  content: "\e91b";
+}
+.ca-icn-translate:before {
+  content: "\e91c";
+}
+.ca-icn-verify:before {
+  content: "\e91d";
+}
+.ca-icn-view:before {
+  content: "\e91f";
+}
+.ca-icn-view-eye:before {
+  content: "\e920";
 }
