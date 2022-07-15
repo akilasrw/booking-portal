@@ -26,6 +26,7 @@ export enum PackageItemStatus {
 
 export enum PackageContainerType {
   None = 0,
+  OnFloor = 1,
   OnOneSeat = 2,
   UnderSeat = 3,
   Overhead = 4,

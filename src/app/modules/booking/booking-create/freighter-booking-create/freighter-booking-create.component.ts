@@ -18,11 +18,11 @@ import { PackageItemRM } from 'src/app/_models/view-models/cargo-booking/package
 import { Constants } from 'src/app/core/constants/constants';
 import { FlightScheduleSectorQuery } from 'src/app/_models/queries/flight-schedule-sector/flight-schedule-sector-query.model';
 import { PackageContainerService } from 'src/app/_services/package-container.service';
-import { CargoPositionService } from 'src/app/_services/cargo-position.service';
 import { PackageItem } from 'src/app/_models/view-models/package-item.model';
 import { Unit } from 'src/app/_models/view-models/unit/unit.model';
 import { ValidateCargoPositionRequest } from 'src/app/_models/request-models/cargo-booking/validate-cargo-position-request.model';
 import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.model';
+import { UldCargoPositionService } from 'src/app/_services/uld-cargo-position.service';
 
 @Component({
   selector: 'app-freighter-booking-create',
@@ -54,7 +54,7 @@ export class FreighterBookingCreateComponent implements OnInit {
     private packageContainerService: PackageContainerService,
     private bookingService: BookingService,
     private accountService: AccountService,
-    private cargoPositionService: CargoPositionService,
+    private uldCargoPositionService: UldCargoPositionService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private unitService: UnitService,
@@ -212,7 +212,7 @@ export class FreighterBookingCreateComponent implements OnInit {
       volumeUnitId: packageItem.volumeUnitId,
       packageItemStatus: Number(this.awbDetail == undefined ? packageItem.packageItemStatus : PackageItemStatus.AddedAWB),
       description: packageItem.description,
-      packageContainerType: this.getPackageContainerType(packageItem.packageDimention),
+      packageContainerType: PackageContainerType.OnFloor,
       isEdit: packageItem.isEdit,
       aWBDetail: this.awbDetail,
     };
@@ -271,22 +271,15 @@ export class FreighterBookingCreateComponent implements OnInit {
       packageItem: this.mapPackageItems(cargoPackage),
       flightScheduleSectorId: this.flightScheduleSectorId
     };
-    //var response = await this.cargoPositionService.validateWeight(request).toPromise();
-    // if (response !== undefined) {
-    //   if (!response.isValid) {
-    //     this.toastr.error(response.validationMessage);
-    //   }
-    //   return response.isValid;
-    // } else {
+    var response = await this.uldCargoPositionService.validateWeight(request).toPromise();
+    if (response !== undefined) {
+      if (!response.isValid) {
+        this.toastr.error(response.validationMessage);
+      }
+      return response.isValid;
+    } else {
       return false;
-    //}
-  }
-
-  getPackageContainerType(id: string) {
-    var result = this.packageContainers?.filter(x => x.id == id);
-    if (result != undefined && result?.length > 0)
-      return result[0].packageContainerType;
-    return PackageContainerType.None;
+    }
   }
 
   getPackageDimentions(packageContainer: any) {
