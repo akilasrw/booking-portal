@@ -6,7 +6,6 @@ import { PackageContainer } from 'src/app/_models/view-models/package-container/
 import { PackageContainerListQuery } from 'src/app/_models/queries/package-container/package-container-list-query.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
-import { BookingService } from 'src/app/_services/booking.service';
 import { CargoBookingRequest } from 'src/app/_models/view-models/cargo-booking/cargo-booking-request.model';
 import { BookingStatus, PackageContainerType, PackageItemStatus, PackagePriorityType, UnitType } from 'src/app/core/enums/common-enums';
 import { UnitService } from 'src/app/_services/unit.service';
@@ -23,6 +22,7 @@ import { Unit } from 'src/app/_models/view-models/unit/unit.model';
 import { ValidateCargoPositionRequest } from 'src/app/_models/request-models/cargo-booking/validate-cargo-position-request.model';
 import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.model';
 import { UldCargoPositionService } from 'src/app/_services/uld-cargo-position.service';
+import { UldCargoBookingService } from 'src/app/_services/uld-cargo-booking.service';
 
 @Component({
   selector: 'app-freighter-booking-create',
@@ -52,7 +52,7 @@ export class FreighterBookingCreateComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
     private flightScheduleSectorService: FlightScheduleSectorService,
     private packageContainerService: PackageContainerService,
-    private bookingService: BookingService,
+    private uldCargoBookingService: UldCargoBookingService,
     private accountService: AccountService,
     private uldCargoPositionService: UldCargoPositionService,
     private fb: FormBuilder,
@@ -271,15 +271,16 @@ export class FreighterBookingCreateComponent implements OnInit {
       packageItem: this.mapPackageItems(cargoPackage),
       flightScheduleSectorId: this.flightScheduleSectorId
     };
-    var response = await this.uldCargoPositionService.validateWeight(request).toPromise();
-    if (response !== undefined) {
-      if (!response.isValid) {
-        this.toastr.error(response.validationMessage);
-      }
-      return response.isValid;
-    } else {
-      return false;
-    }
+   // var response = await this.uldCargoPositionService.validateWeight(request).toPromise();
+    return true;
+    // if (response !== undefined) {
+    //   if (!response.isValid) {
+    //     this.toastr.error(response.validationMessage);
+    //   }
+    //   return response.isValid;
+    // } else {
+    //   return false;
+    // }
   }
 
   getPackageDimentions(packageContainer: any) {
@@ -312,7 +313,7 @@ export class FreighterBookingCreateComponent implements OnInit {
   submit() {
     if (this.isValid()) {
       this.cargoBookingRequest.bookingStatus = BookingStatus.Pending;
-      this.bookingService.create(this.cargoBookingRequest).subscribe(res => {
+      this.uldCargoBookingService.create(this.cargoBookingRequest).subscribe(res => {
         this.toastr.success('Saved Successfully.');
         this.flightScheduleSectorService.removeCurrentFlightScheduleSector();
         this.router.navigate(['booking']);
