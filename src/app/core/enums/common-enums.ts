@@ -71,6 +71,7 @@ export enum LoaderImageSize {
 }
 
 export enum AircraftConfigType {
+  None = 0,
   P2C = 1,
   Freighter = 2,
 }

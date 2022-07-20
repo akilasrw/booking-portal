@@ -1,3 +1,4 @@
+import { AircraftConfigType } from 'src/app/core/enums/common-enums';
 import { Toast, ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { SelectList } from './../../../shared/models/select-list.model';
@@ -164,7 +165,9 @@ export class BookingSearchComponent implements OnInit {
     this.flightScheduleSectorService.setCurrentFlightScheduleSector(this.bookingFilterQuery);
   }
 
- 
+  get aircraftConfigType(): typeof AircraftConfigType {
+    return AircraftConfigType;
+  }
 
 
 
