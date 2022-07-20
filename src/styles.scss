@@ -198,9 +198,34 @@ a {
         font-size: 0.75rem;
         margin-bottom: 0.313rem;
         color: $form-label;
+        .loading {
+            display: block;
+            background: #E9EBEF;
+            height: 15px;
+            width: 50px;
+            border-radius: 5px;
+        }
     }
     .form-control {
         @include inputField(2.5rem);
+        &.loading {
+            background: linear-gradient(-45deg, #fff, #E9EBEF, #fff, #E9EBEF);
+            background-size: 400% 400%;
+            animation: gradient 1s ease infinite;
+            display: block;
+            padding: 20px 0;
+        }
+        @keyframes gradient {
+            0% {
+              background-position: 0% 50%;
+            }
+            50% {
+              background-position: 100% 50%;
+            }
+            100% {
+              background-position: 0% 50%;
+            }
+        }
     }
     .select-input {
         .autocomplete-container {
@@ -369,6 +394,26 @@ a {
                 font-size: 0.875rem;
                 font-weight: 500;
                 padding: 0.625rem;
+
+                .loading {
+                    background: linear-gradient(-45deg, #fff, #D0D3D8, #fff, #D0D3D8);
+                    background-size: 400% 400%;
+                    animation: gradient 1s ease infinite;
+                    height: 15px;
+                    display: block;
+                    margin: 5px;
+                }
+                @keyframes gradient {
+                    0% {
+                      background-position: 0% 50%;
+                    }
+                    50% {
+                      background-position: 100% 50%;
+                    }
+                    100% {
+                      background-position: 0% 50%;
+                    }
+                }
             }
         }
         tbody {
@@ -385,6 +430,15 @@ a {
                     }
                     i:last-child {
                         padding-right: 0rem;
+                    }
+
+                    .loading {
+                        background: linear-gradient(-45deg, #fff, #E9EBEF, #fff, #E9EBEF);
+                        background-size: 400% 400%;
+                        animation: gradient 1s ease infinite;
+                        height: 14px;
+                        display: block;
+                        margin: 7px;
                     }
                 }
             }
