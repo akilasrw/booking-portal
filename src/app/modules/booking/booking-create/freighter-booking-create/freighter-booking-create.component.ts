@@ -271,16 +271,16 @@ export class FreighterBookingCreateComponent implements OnInit {
       packageItem: this.mapPackageItems(cargoPackage),
       flightScheduleSectorId: this.flightScheduleSectorId
     };
-   // var response = await this.uldCargoPositionService.validateWeight(request).toPromise();
-    return true;
-    // if (response !== undefined) {
-    //   if (!response.isValid) {
-    //     this.toastr.error(response.validationMessage);
-    //   }
-    //   return response.isValid;
-    // } else {
-    //   return false;
-    // }
+    var response = await this.uldCargoPositionService.validateWeight(request).toPromise();
+   
+    if (response !== undefined) {
+      if (!response.isValid) {
+        this.toastr.error(response.validationMessage);
+      }
+      return response.isValid;
+    } else {
+      return false;
+    }
   }
 
   getPackageDimentions(packageContainer: any) {

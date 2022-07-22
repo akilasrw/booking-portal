@@ -14,6 +14,7 @@ export interface FlightScheduleSector{
   bookingCutoffTime: Date;
   actualDepartureDateTime: Date;
   flightScheduleStatus: number;
+  availableWeight:number;
   flightScheduleSectorCargoPositions: FlightScheduleSectorCargoPosition[];
 }
 
