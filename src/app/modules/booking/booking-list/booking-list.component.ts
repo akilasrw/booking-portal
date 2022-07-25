@@ -30,6 +30,7 @@ export class BookingListComponent implements OnInit {
   bookingStatus = BookingStatus;
   currentUser?: User | null;
   subscription?: Subscription;
+  isLoading :boolean= false;
 
   constructor(
     private bookingService: BookingService,
@@ -42,6 +43,7 @@ export class BookingListComponent implements OnInit {
   }
 
   getFilteredList() {
+    this.isLoading=true;
     this.bookingListfilterQuery.bookingId = this.bookingId;
     this.bookingListfilterQuery.destination = this.destination;
     this.bookingListfilterQuery.bookingDate = this.bookingDate;
@@ -52,10 +54,12 @@ export class BookingListComponent implements OnInit {
         next: (res) => {
           this.cargoBookingList = res.data;
           this.totalCount = res.count;
+          this.isLoading=false;
         },
         error: () => {
-          this.cargoBookingList = []
-          this.totalCount = 0
+          this.cargoBookingList = [];
+          this.totalCount = 0;
+          this.isLoading=false;
         }
       }
     )

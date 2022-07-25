@@ -34,7 +34,7 @@
                 <button class="btn sm btn-primary-outline">Advanced Filter</button>
             </div>
         </div>
-        <div class="table-content">
+        <div *ngIf="!isLoading"  class="table-content">
             <table class="table table-responsive">
                 <thead>
                     <th>Booking ID</th>
@@ -85,6 +85,8 @@
                     [pageNumber]="bookingListfilterQuery?.pageIndex"></app-paging-header>
             </div>
         </div>
+        <app-table-loader [columnCount]="9" [rowCount]="bookingListfilterQuery.pageSize" *ngIf="isLoading">
+        </app-table-loader>
     </div>
 </div>
 

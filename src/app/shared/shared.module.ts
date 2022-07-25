@@ -16,6 +16,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PagerComponent } from './components/pager/pager.component';
 import { PagingHeaderComponent } from './components/paging-header/paging-header.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { TableLoaderComponent } from './components/table-loader/table-loader.component';
 
 
 
@@ -29,6 +30,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     TwoDecimalpointsDirective,
     PagerComponent,
     PagingHeaderComponent,
+    TableLoaderComponent,
   ],
   imports: [
     CommonModule,
@@ -56,7 +58,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     NgxPaginationModule,
     PagerComponent,
     PagingHeaderComponent,
-    PaginationModule
+    PaginationModule,
+    TableLoaderComponent
   ],providers:[CryptoService]
 })
 export class SharedModule { }

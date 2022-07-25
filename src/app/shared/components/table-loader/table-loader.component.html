@@ -1,0 +1,15 @@
+<div class="table-content">
+    <table class="table table-responsive">
+        <thead>
+            <tr *ngIf="displayHeader">
+                <th *ngFor='let in of tableColumns() ;let i = index'><div class="loading"></div></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr  *ngFor='let in of rowCounts() ;let j = index'>
+                <td *ngFor='let in of tableColumns() ;let i = index'><div class="loading"></div></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

@@ -22,6 +22,7 @@ export class RateListComponent implements OnInit {
   cargoRateList: CargoRate[] = []
   keyword = 'value';
   totalCount: number = 0;
+  isLoading :boolean= false;
 
   constructor(
     private airportService: AirportService,
@@ -33,28 +34,33 @@ export class RateListComponent implements OnInit {
   }
 
   loadAirports() {
+    this.isLoading=true;
     this.airportService.getSelectList()
       .subscribe(res => {
         if (res.length > 0) {
           this.originAirpots = res;
           Object.assign(this.destinationAirpots, res);
         }
+        this.isLoading=false;
       });
   }
 
   getRateList() {
     if (this.isformValid()) {
+      this.isLoading=true;
       this.cargoRateFilterQuery.originAirportId = this.originAirportId;
       this.cargoRateFilterQuery.destinationAirportId = this.destinationAirportId;
       this.cargoRateListService.getFilteredRateList(this.cargoRateFilterQuery).subscribe(
         {
           next: (res) => {
-            this.cargoRateList = res.data
-            this.totalCount = res.count
+            this.cargoRateList = res.data;
+            this.totalCount = res.count;
+            this.isLoading=false;
           },
           error: (error) => {
             this.totalCount = 0;
-            this.cargoRateList = []
+            this.cargoRateList = [];
+            this.isLoading=false;
           }
         }
       )
