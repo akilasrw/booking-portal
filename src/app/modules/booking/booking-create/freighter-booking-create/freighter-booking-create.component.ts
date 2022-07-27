@@ -143,7 +143,7 @@ export class FreighterBookingCreateComponent implements OnInit {
     if (this.isBookingFormValied()&& this.bookingForm.valid) {
       var booking = this.bookingForm.value;
       if (this.isVolumeNotExceed() == true) {
-        if (await this.isWeightNotExceed(booking.packageItems) == true) {
+        if (await this.isWeightAndVolumeNotExceed(booking.packageItems) == true) {
           if (this.cargoBookingRequest.packageItems == undefined) {
             this.cargoBookingRequest = {
               flightScheduleSectorId: this.flightScheduleSectorId,
@@ -223,7 +223,7 @@ export class FreighterBookingCreateComponent implements OnInit {
     var selectedLength = this.bookingForm.get('packageItems')?.get('length')?.value;
     var selectedWidth = this.bookingForm.get('packageItems')?.get('width')?.value;
     var selectedHeight = this.bookingForm.get('packageItems')?.get('height')?.value;
-    if(selectedVolumeUnitId === "9F0928DF-5D33-4E5D-AFFC-F7E2E2B72680".toLowerCase()){//cm
+    if(selectedVolumeUnitId === Constants.CM_VOLUME_UNIT_ID.toLowerCase()){
       if(selectedLength> 318){
         this.toastr.warning('Max length volume exceed.');
         return false;
@@ -236,7 +236,7 @@ export class FreighterBookingCreateComponent implements OnInit {
         this.toastr.warning('Max height volume exceed.');
         return false;
       }
-    }else if(selectedVolumeUnitId === "FE919429-80EA-4A0E-A218-5DB6E16F690C".toLowerCase()){//m
+    }else if(selectedVolumeUnitId === Constants.METER_VOLUME_UNIT_ID.toLowerCase()){
       if(selectedLength> 3.18){
         this.toastr.warning('Max length volume exceed.');
         return false;
@@ -249,7 +249,7 @@ export class FreighterBookingCreateComponent implements OnInit {
         this.toastr.warning('Max height volume exceed.');
         return false;
       }
-    }else if(selectedVolumeUnitId === "11C39205-4153-49F1-AB50-BBA8913C5BB9".toLowerCase()){//Inches
+    }else if(selectedVolumeUnitId === Constants.INCH_VOLUME_UNIT_ID.toLowerCase()){
       if(selectedLength> 125){
         this.toastr.warning('Max length volume exceed.');
         return false;
@@ -266,12 +266,12 @@ export class FreighterBookingCreateComponent implements OnInit {
     return true;
   }
 
-  async isWeightNotExceed(cargoPackage: PackageItem) {
+  async isWeightAndVolumeNotExceed(cargoPackage: PackageItem) {
     var request: ValidateCargoPositionRequest = {
       packageItem: this.mapPackageItems(cargoPackage),
       flightScheduleSectorId: this.flightScheduleSectorId
     };
-    var response = await this.uldCargoPositionService.validateWeight(request).toPromise();
+    var response = await this.uldCargoPositionService.validateWeightAndVolume(request).toPromise();
    
     if (response !== undefined) {
       if (!response.isValid) {

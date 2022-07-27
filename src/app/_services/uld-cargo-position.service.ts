@@ -17,7 +17,7 @@ export class UldCargoPositionService extends BaseService{
     super(http);
   }
 
-  validateWeight(validateRequest : ValidateCargoPositionRequest){
+  validateWeightAndVolume(validateRequest : ValidateCargoPositionRequest){
     return  this.post<Validate>(this.validateEndpoint, validateRequest);
   }
   
