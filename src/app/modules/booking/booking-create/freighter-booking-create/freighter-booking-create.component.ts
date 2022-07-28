@@ -225,41 +225,41 @@ export class FreighterBookingCreateComponent implements OnInit {
     var selectedHeight = this.bookingForm.get('packageItems')?.get('height')?.value;
     if(selectedVolumeUnitId === Constants.CM_VOLUME_UNIT_ID.toLowerCase()){
       if(selectedLength> 318){
-        this.toastr.warning('Max length volume exceed.');
+        this.toastr.warning('Max length volume (318cm) exceed.');
         return false;
       }
       if(selectedWidth> 224){
-        this.toastr.warning('Max width volume exceed.');
+        this.toastr.warning('Max width volume (224cm) exceed.');
         return false;
       }
       if(selectedHeight> 163){
-        this.toastr.warning('Max height volume exceed.');
+        this.toastr.warning('Max height volume (163cm) exceed.');
         return false;
       }
     }else if(selectedVolumeUnitId === Constants.METER_VOLUME_UNIT_ID.toLowerCase()){
       if(selectedLength> 3.18){
-        this.toastr.warning('Max length volume exceed.');
+        this.toastr.warning('Max length volume (3.18m) exceed.');
         return false;
       }
       if(selectedWidth> 2.24){
-        this.toastr.warning('Max width volume exceed.');
+        this.toastr.warning('Max width volume (2.24m) exceed.');
         return false;
       }
       if(selectedHeight> 1.63){
-        this.toastr.warning('Max height volume exceed.');
+        this.toastr.warning('Max height volume (1.63m) exceed.');
         return false;
       }
     }else if(selectedVolumeUnitId === Constants.INCH_VOLUME_UNIT_ID.toLowerCase()){
       if(selectedLength> 125){
-        this.toastr.warning('Max length volume exceed.');
+        this.toastr.warning('Max length volume (125inch) exceed.');
         return false;
       }
       if(selectedWidth> 88){
-        this.toastr.warning('Max width volume exceed.');
+        this.toastr.warning('Max width volume (88inch) exceed.');
         return false;
       }
       if(selectedHeight> 64){
-        this.toastr.warning('Max height volume exceed.');
+        this.toastr.warning('Max height volume (64inch) exceed.');
         return false;
       }
     }
