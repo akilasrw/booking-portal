@@ -38,4 +38,8 @@ export class FreighterBookingSearchItemComponent implements OnInit {
       this.toastrService.warning('No available space.');
   }
 
+  convertcm3Tom3(volume: number):number{
+    return volume/1000000;
+  }
+
 }

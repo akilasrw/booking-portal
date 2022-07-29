@@ -29,7 +29,7 @@
     </div>
     <div class="card-row">
         <div class="label">Volume</div>
-        <div class="value">120 m3 (Cubic meter)</div>
+        <div class="value">{{convertcm3Tom3(flightScheduleSector.availableVolume) +" "+"m3"}}(Cubic meter)</div>
     </div>
     <div class="card-button">
         <button class="btn btn-primary-outline" [disabled]="!validateSpace(flightScheduleSector)"

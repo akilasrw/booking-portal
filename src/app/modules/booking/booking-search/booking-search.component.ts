@@ -44,7 +44,6 @@ export class BookingSearchComponent implements OnInit {
   }
 
   getId() {
-    debugger
     this.activatedRoute.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
