@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="230" height="60" viewBox="0 0 230 60">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_2053" data-name="Rectangle 2053" width="230" height="60" transform="translate(-13079 -20789)" fill="#d4e8f9"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_8" data-name="Mask Group 8" transform="translate(13079 20789)" clip-path="url(#clip-path)">
+    <g id="Group_6905" data-name="Group 6905">
+      <rect id="Rectangle_2048" data-name="Rectangle 2048" width="64" height="54" transform="translate(-13079 -20786)" fill="#338ce5"/>
+      <path id="Rectangle_2051" data-name="Rectangle 2051" d="M16,0H200a0,0,0,0,1,0,0V60a0,0,0,0,1,0,0H16A16,16,0,0,1,0,44V16A16,16,0,0,1,16,0Z" transform="translate(-13049 -20789)" fill="#d4e8f9"/>
+      <path id="Rectangle_2049" data-name="Rectangle 2049" d="M0,0H230a0,0,0,0,1,0,0V127a15,15,0,0,1-15,15H0a0,0,0,0,1,0,0V0A0,0,0,0,1,0,0Z" transform="translate(-13079 -20917)" fill="#338ce5"/>
+      <path id="Rectangle_2050" data-name="Rectangle 2050" d="M0,0H215a15,15,0,0,1,15,15V594a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V0A0,0,0,0,1,0,0Z" transform="translate(-13079 -20743)" fill="#338ce5"/>
+      <path id="Rectangle_2052" data-name="Rectangle 2052" d="M16,0H225a0,0,0,0,1,0,0V32a0,0,0,0,1,0,0H16A16,16,0,0,1,0,16v0A16,16,0,0,1,16,0Z" transform="translate(-13074 -20775)" fill="#d4e8f9"/>
+    </g>
+  </g>
+</svg>
