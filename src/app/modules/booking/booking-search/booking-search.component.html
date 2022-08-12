@@ -52,9 +52,9 @@
             </div>
         </div>
         <div class="flight-availability">
-            <div class="second-card" *ngFor="let flightScheduleSector of this.flightScheduleSectors">
-                <app-p2c-booking-search-item *ngIf="flightScheduleSector.aircraftConfigType == aircraftConfigType.P2C || flightScheduleSector.aircraftConfigType == aircraftConfigType.None" [flightScheduleSector]="flightScheduleSector" [flightScheduleSectorId]="flightScheduleSectorId" (setCurrentSchedule)="setCurrentScheduleSector()"></app-p2c-booking-search-item>   
-                <app-freighter-booking-search-item *ngIf="flightScheduleSector.aircraftConfigType == aircraftConfigType.Freighter" [flightScheduleSector]="flightScheduleSector" [flightScheduleSectorId]="flightScheduleSectorId" (setCurrentSchedule)="setCurrentScheduleSector()"></app-freighter-booking-search-item>             
+            <div class="second-card" *ngFor="let flightScheduleSector of this.flightScheduleSectors;let indexOfelement=index;">
+                <app-p2c-booking-search-item *ngIf="flightScheduleSector.aircraftConfigType == aircraftConfigType.P2C || flightScheduleSector.aircraftConfigType == aircraftConfigType.None" [flightScheduleSector]="flightScheduleSector" [flightScheduleSectorId]="flightScheduleSectorId" (setCurrentSchedule)="setCurrentScheduleSector()" [elementIndex]="indexOfelement+1"></app-p2c-booking-search-item>   
+                <app-freighter-booking-search-item *ngIf="flightScheduleSector.aircraftConfigType == aircraftConfigType.Freighter" [flightScheduleSector]="flightScheduleSector" [flightScheduleSectorId]="flightScheduleSectorId" (setCurrentSchedule)="setCurrentScheduleSector()" [elementIndex]="indexOfelement+1"></app-freighter-booking-search-item>             
             </div>
         </div>
         <div class="not-available" *ngIf="totalCount == 0 && !showLoader">

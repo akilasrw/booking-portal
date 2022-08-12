@@ -12,6 +12,7 @@ export class P2cBookingSearchItemComponent implements OnInit {
 
   @Input() flightScheduleSector!:FlightScheduleSector;
   @Input() flightScheduleSectorId: string = '';
+  @Input() elementIndex:number = 0;
   @Output() setCurrentSchedule = new EventEmitter<any>();
 
 
