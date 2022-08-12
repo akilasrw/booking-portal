@@ -161,7 +161,7 @@ export class AwbCreateComponent implements OnInit {
 
   selectedDestination(value: any){
     this.awbForm.get('destinationAirportId')?.patchValue(value.id);
-    this.awbForm.get('destinationAirportCode')?.patchValue(value.value);
+    this.awbForm.get('destinationAirportCode')?.patchValue(value.value.substring(0, 3));
   }
 
   saveAWBDetails(){
