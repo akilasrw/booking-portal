@@ -51,6 +51,11 @@
                 <div><label class="value">Under the Seat - 56 x 24 x 23 (Container) </label></div>
             </div>
         </div>
+        <div>
+            <div class="pt-4">
+                <h3>Please select an available flight option.</h3>
+            </div>
+        </div>
         <div class="flight-availability">
             <div class="second-card" *ngFor="let flightScheduleSector of this.flightScheduleSectors;let indexOfelement=index;">
                 <app-p2c-booking-search-item *ngIf="flightScheduleSector.aircraftConfigType == aircraftConfigType.P2C || flightScheduleSector.aircraftConfigType == aircraftConfigType.None" [flightScheduleSector]="flightScheduleSector" [flightScheduleSectorId]="flightScheduleSectorId" (setCurrentSchedule)="setCurrentScheduleSector()" [elementIndex]="indexOfelement+1"></app-p2c-booking-search-item>   

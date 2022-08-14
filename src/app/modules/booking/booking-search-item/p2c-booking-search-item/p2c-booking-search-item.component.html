@@ -1,5 +1,5 @@
 <div class="card-details" [ngClass]="{'selected': flightScheduleSector.id == flightScheduleSectorId}">
-    <div class="card-row card-subtitle">{{"Option "+elementIndex}}</div>
+    <div class="op-count">Option<span class="op-number">{{elementIndex}}</span></div>
     <div class="card-row">
         <div class="label">Flight Number</div>
         <div class="value">{{flightScheduleSector.flightNumber}}</div>
