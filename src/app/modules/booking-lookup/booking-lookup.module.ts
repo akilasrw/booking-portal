@@ -4,11 +4,13 @@ import { CommonModule } from '@angular/common';
 
 import { BookingLookupRoutingModule } from './booking-lookup-routing.module';
 import { BookingLookupSearchComponent } from './booking-lookup-search/booking-lookup-search.component';
+import { BookingLookupPrintComponent } from './booking-lookup-print/booking-lookup-print.component';
 
 
 @NgModule({
   declarations: [
-    BookingLookupSearchComponent
+    BookingLookupSearchComponent,
+    BookingLookupPrintComponent
   ],
   imports: [
     CommonModule,

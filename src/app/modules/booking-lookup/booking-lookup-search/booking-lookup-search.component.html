@@ -113,8 +113,8 @@
                         <div class="details-group">
                             <div class="lable">Actions</div>
                             <div>
-                                <i class="ca ca-icn-print"></i>
-                                <i class="ca ca-icn-view"></i>
+                                <i class="ca ca-icn-print" (click)="generatePDF(package)"></i>
+                                <i class="ca ca-icn-view" (click)="generatePDF(package)"></i>
                                 <i class="ca ca-icn-edit"></i>
                             </div>
                         </div>
@@ -124,4 +124,8 @@
         </div>
     </div>
 </div>
+
+<app-booking-lookup-print [printLookup]="awsPrintLookup"></app-booking-lookup-print>
+
+
 

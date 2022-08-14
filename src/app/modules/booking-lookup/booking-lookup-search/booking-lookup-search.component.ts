@@ -1,7 +1,7 @@
 import { AccountService } from 'src/app/account/account.service';
 import { CargoBookingLookup } from './../../../_models/view-models/cargo-booking-lookup/cargo-booking-lookup.model';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CargoBookingLookupQuery } from 'src/app/_models/queries/cargo-booking-lookup/cargo-booking-lookup-query.model';
 import { BookingLookupService } from 'src/app/_services/booking-lookup.service';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
@@ -9,6 +9,10 @@ import { ToastrService } from 'ngx-toastr';
 import { BookingStatus, PackageItemStatus } from 'src/app/core/enums/common-enums';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { User } from 'src/app/_models/user.model';
+import { BookingService } from 'src/app/_services/booking.service';
+import { CargoBookingDetail } from 'src/app/_models/view-models/cargo-booking/cargo-booking-detail/cargo-booking-detail.model';
+import { PackageItem } from 'src/app/_models/view-models/package-item.model';
+import { AWBDetail } from 'src/app/_models/view-models/awb/awb-detail.model';
 
 
 @Component({
@@ -23,8 +27,9 @@ export class BookingLookupSearchComponent implements OnInit {
   bookingStatus = BookingStatus;
   packageItemStatus = PackageItemStatus;
   subscription?: Subscription;
-  currentUser?: User | null
-
+  currentUser?: User | null;
+  awsPrintLookup?: AWBDetail;
+  
 
   constructor(private fb:FormBuilder,
     private bookingLookupService: BookingLookupService,
@@ -85,6 +90,13 @@ export class BookingLookupSearchComponent implements OnInit {
     this.subscription = this.accountService.currentUser$.subscribe(res => {
       this.currentUser = res;
     });
+  }
+
+  generatePDF(packageItem: PackageItem) { debugger;
+    var pkg = this.cargoBookingLookup?.packageItems.filter(x=> x.id == packageItem.id);
+    if(pkg && pkg?.length > 0) {
+      this.awsPrintLookup = pkg[0].awbInformation;
+    } 
   }
 
 }
