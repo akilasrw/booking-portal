@@ -68,7 +68,7 @@ export class RateListComponent implements OnInit {
   }
 
   isformValid(): boolean {
-    debugger
+    
     if ((this.originAirportId === undefined || this.originAirportId === "") ||
       (this.destinationAirportId === undefined || this.destinationAirportId === "")) {
       this.toastr.error('Please select origin and destination.');

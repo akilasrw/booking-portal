@@ -10,23 +10,27 @@ import { AWBDetail } from 'src/app/_models/view-models/awb/awb-detail.model';
 })
 export class BookingLookupPrintComponent implements OnInit {
 
-  ambPrintData! : AWBDetail;
+  awbPrintData? : AWBDetail;
   @ViewChild('aws') invoiceElement!: ElementRef;
-
-  @Input() set printLookup(value: AWBDetail) {
-    if(value) {
-      this.ambPrintData = value
-      this.generatePDF();
-    }      
-  }
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  generatePDF(): void {console.log('print-generatePDF');
-    html2canvas(this.invoiceElement.nativeElement, { scale: 3 }).then((canvas) => {debugger
+  printData(value: any){
+    this.awbPrintData = value;
+    setTimeout(() => {
+      this.generatePDF();
+    }, 1000);
+  }
+
+  generatePDF(): void {
+    console.log('print-generatePDF');
+    console.log(this.awbPrintData);
+    let data: any = this.invoiceElement?.nativeElement; 
+    if(data != null)
+    html2canvas(data, { scale: 3 }).then((canvas) => {
       const imageGeneratedFromTemplate = canvas.toDataURL('image/png');
       var margin = 3;
       const imgWidth  = 210 - 2*margin;
@@ -46,7 +50,7 @@ export class BookingLookupPrintComponent implements OnInit {
         heightLeft -= pageHeight;
       }
       PDF.html(this.invoiceElement.nativeElement.innerHTML)
-      PDF.save('aws.pdf');
+      PDF.save('awb.pdf');
     });
   }
 }

@@ -1,16 +1,16 @@
-<div style="max-width: 1000px; border: 1px solid black; margin: 0 auto; border-bottom: 0;" id="aws" #aws>
+<div *ngIf="awbPrintData" style="max-width: 1000px; border: 1px solid black; margin: 0 auto; border-bottom: 0;" id="aws" #aws>
     <div style="display: flex;  height: 110px; border-bottom: 1px solid black;">
         <div style="width: 50%; display: flex; border-right: 1px solid black; justify-content: space-between;">
             <div style="padding: 5px;">
                 <label>Shipper's Name and Address</label>
                 <div>
-                    <label>Lorem Ipsum is simply dummy Lorem Ipsum is simply dummy</label>
+                    <label>{{awbPrintData?.shipperName}}<br /> {{awbPrintData?.shipperAddress}}</label>
                 </div>
             </div>
             <div style="padding: 5px; border-left: 1px solid black; height: 50px; border-bottom: 1px solid black; width: 200px;">
                 <label>Shipper's Account Number</label>
                 <div>
-                    <label>0123456789245</label>
+                    <label>{{awbPrintData?.shipperAccountNumber}}</label>
                 </div>
             </div>
         </div>
@@ -34,13 +34,13 @@
             <div style="padding: 5px;">
                 <label>Consignee's Name and Address</label>
                 <div>
-                    <label>Lorem Ipsum is simply dummy Lorem Ipsum is simply dummy</label>
+                    <label>{{awbPrintData?.consigneeName}}<br /> {{awbPrintData?.consigneeAddress}}</label>
                 </div>
             </div>
             <div style="padding: 5px; border-left: 1px solid black; height: 50px; border-bottom: 1px solid black; width: 200px; background-color: #e4e4e4;">
                 <label>Consignee's Account Number</label>
                 <div>
-                    <label>0123456789245</label>
+                    <label>{{awbPrintData?.consigneeAccountNumber}}</label>
                 </div>
             </div>
         </div>
@@ -61,9 +61,15 @@
             <div style="border-bottom: 1px solid black; height: 40px; display: flex;">
                 <div style="width: 50%; border-right: 1px solid black; padding: 0 5px;">
                     <label>Agent's IATA Code</label>
+                    <div>
+                        <label>{{awbPrintData?.agentAITACode}}</label>
+                    </div>
                 </div>
                 <div style="width: 50%; padding: 0 0 0 5px;">
                     <label>Account No.</label>
+                    <div>
+                        <label>{{awbPrintData?.agentAccountNumber}}</label>
+                    </div>
                 </div>
             </div>
             <div style="padding: 5px; height: 50px;">

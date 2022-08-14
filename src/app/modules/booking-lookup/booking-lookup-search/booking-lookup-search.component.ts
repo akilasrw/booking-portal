@@ -1,7 +1,7 @@
 import { AccountService } from 'src/app/account/account.service';
 import { CargoBookingLookup } from './../../../_models/view-models/cargo-booking-lookup/cargo-booking-lookup.model';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { CargoBookingLookupQuery } from 'src/app/_models/queries/cargo-booking-lookup/cargo-booking-lookup-query.model';
 import { BookingLookupService } from 'src/app/_services/booking-lookup.service';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
@@ -13,12 +13,14 @@ import { BookingService } from 'src/app/_services/booking.service';
 import { CargoBookingDetail } from 'src/app/_models/view-models/cargo-booking/cargo-booking-detail/cargo-booking-detail.model';
 import { PackageItem } from 'src/app/_models/view-models/package-item.model';
 import { AWBDetail } from 'src/app/_models/view-models/awb/awb-detail.model';
+import { BookingLookupPrintComponent } from '../booking-lookup-print/booking-lookup-print.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
   selector: 'app-booking-lookup-search',
   templateUrl: './booking-lookup-search.component.html',
-  styleUrls: ['./booking-lookup-search.component.scss']
+  styleUrls: ['./booking-lookup-search.component.scss'],
 })
 export class BookingLookupSearchComponent implements OnInit {
 
@@ -29,12 +31,16 @@ export class BookingLookupSearchComponent implements OnInit {
   subscription?: Subscription;
   currentUser?: User | null;
   awsPrintLookup?: AWBDetail;
+  isPrinting: boolean = false;
+
   
+  @ViewChild(BookingLookupPrintComponent ) child !:any ;
 
   constructor(private fb:FormBuilder,
     private bookingLookupService: BookingLookupService,
     private accountService: AccountService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.getCurrentUser();
@@ -92,10 +98,18 @@ export class BookingLookupSearchComponent implements OnInit {
     });
   }
 
-  generatePDF(packageItem: PackageItem) { debugger;
+  generatePDF(packageItem: PackageItem) { 
+    this.isPrinting =true;
     var pkg = this.cargoBookingLookup?.packageItems.filter(x=> x.id == packageItem.id);
-    if(pkg && pkg?.length > 0) {
+    if(pkg && pkg?.length > 0) {      
+      this.spinner.show();
+      console.log('generatePDF');    
       this.awsPrintLookup = pkg[0].awbInformation;
+      this.child.printData(this.awsPrintLookup);
+      this.isPrinting = false;
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 2000);
     } 
   }
 
