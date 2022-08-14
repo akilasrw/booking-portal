@@ -17,7 +17,6 @@ export class NotificationListComponent implements OnInit {
 
 
   show() {
-    debugger
     this.modalVisible = true;
     setTimeout(() => (this.modalVisibleAnimate = true));
   }
