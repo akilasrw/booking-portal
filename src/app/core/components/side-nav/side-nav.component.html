@@ -10,42 +10,42 @@
             <ul class="main-menu">
                 <li>
                     <div class="menu-item" (click)="menuClickEvent(1)" [ngClass]="{'selected': selectedMenu == 1}">
-                        <div class="icon"></div>
+                        <!-- <div class="icon"></div> -->
                         <span class="menu-icn ca ca-icn-dashboard tool-tip"><span class="tooltiptext">Dashboard</span></span>
                         <span class="menu-title">Dashboard</span>
                     </div>
                 </li>
                 <li>
                     <div class="menu-item" (click)="menuClickEvent(2)" [ngClass]="{'selected': selectedMenu == 2}">
-                        <div class="icon"></div>
+                        <!-- <div class="icon"></div> -->
                         <span class="menu-icn ca ca-icn-booking tool-tip"><span class="tooltiptext">Manage Booking</span></span>
                         <span class="menu-title">Manage Booking</span>
                     </div>
                 </li>
                 <li>
                     <div class="menu-item" (click)="menuClickEvent(3)" [ngClass]="{'selected': selectedMenu == 3}">
-                        <div class="icon"></div>
+                        <!-- <div class="icon"></div> -->
                         <span class="menu-icn ca ca-icn-flight-schedule tool-tip"><span class="tooltiptext">Booking Lookup</span></span>
                         <span class="menu-title">Booking Lookup</span>
                     </div>
                 </li>
                 <li>
                     <div class="menu-item" (click)="menuClickEvent(4)" [ngClass]="{'selected': selectedMenu == 4}">
-                        <div class="icon"></div>
+                        <!-- <div class="icon"></div> -->
                         <span class="menu-icn ca ca-icn-dollar tool-tip"><span class="tooltiptext">Rate View</span></span>
                         <span class="menu-title">Rate View</span>
                     </div>
                 </li>
                 <li>
                     <div class="menu-item" (click)="menuClickEvent(5)" [ngClass]="{'selected': selectedMenu == 5}">
-                        <div class="icon"></div>
+                        <!-- <div class="icon"></div> -->
                         <span class="menu-icn ca ca-icn-awb tool-tip"><span class="tooltiptext">Track AWB</span></span>
                         <span class="menu-title">Track AWB</span>
                     </div>
                 </li>
                 <li>
                     <div class="menu-item" (click)="menuClickEvent(6)" [ngClass]="{'selected': selectedMenu == 6}">
-                        <div class="icon"></div>
+                        <!-- <div class="icon"></div> -->
                         <span class="menu-icn ca ca-icn-bell tool-tip"><span class="tooltiptext">Notifications</span></span>
                         <span class="menu-title">Notifications</span>
                     </div>
@@ -62,8 +62,8 @@
             <div class="pro-pic">
                 <div class="pro-img"><img src="/assets/images/profile-img.png"></div>
             </div>
-            <label>{{currentUser?.fullName}}</label>
-            <label>{{currentUser?.email}}</label>
+            <div class="name">{{currentUser?.fullName}}</div>
+            <div class="email">{{currentUser?.email}}</div>
             <div class="actions">
                 <span class="ca ca-icn-settings" title="Settings" (click)="settings()"></span>
                 <span class="ca ca-icn-edit" title="Edit" (click)="edit()"></span>
