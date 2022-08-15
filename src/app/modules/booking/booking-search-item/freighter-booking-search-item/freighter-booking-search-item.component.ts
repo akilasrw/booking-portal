@@ -21,11 +21,12 @@ export class FreighterBookingSearchItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
   validateSpace(flightScheduleSector: FlightScheduleSector): boolean {
-    //if (flightScheduleSector.flightScheduleSectorCargoPositions.filter(x => x.availableSpaceCount > 0).length > 0)
+    if (flightScheduleSector.flightScheduleSectorCargoPositions.filter(x => x.availableSpaceCount > 0).length > 0)
       return true;
 
-    //return false;
+    return false;
   }
 
   goToBookingCreate(flightScheduleSector: FlightScheduleSector) {
