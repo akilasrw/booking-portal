@@ -30,7 +30,7 @@ export class BookingLookupPrintComponent implements OnInit {
     console.log(this.awbPrintData);
     let data: any = this.invoiceElement?.nativeElement; 
     if(data != null)
-    html2canvas(data, { scale: 3 }).then((canvas) => {
+    html2canvas(data, { scale: 1 }).then((canvas) => {
       const imageGeneratedFromTemplate = canvas.toDataURL('image/png');
       var margin = 3;
       const imgWidth  = 210 - 2*margin;
