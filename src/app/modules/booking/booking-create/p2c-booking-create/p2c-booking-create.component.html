@@ -7,7 +7,7 @@
         </div>
 
     </div>
-    <div class="card-body">
+    <div class="card-body bottom-radius">
         <div class="booking-second-info">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -42,9 +42,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="white-box mt-0 form-group">
-                            <div class="row">
-                                <div class="col-md-6 pe-5">
+                        <div class="white-box">
+                            <div class="row align-items-center">
+                                <div class="col-md-5">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group mb-0">
@@ -106,28 +106,24 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 ps-5">
+                                <div class="col-md-1">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-0">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 text-end">
-                                            <div class="form-group mb-0">
-                                                <label class="form-label">Add AWB</label>
-                                                <div><span class="add-awb"><i class="ca ca-icn-add" (click)="addAWBFromAddPackage()"
-                                                            title="Add AWB"></i></span></div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-label">No. Pieces</label>
+                                                <input class="form-control" type="text">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-3 ps-5">
+                                    <div class="add-detail text-end">
+                                        <button class="btn btn-secondary-outline me-3" (click)="resetForm()">Reset</button>
+                                        <button class="btn btn-primary-outline" type="submit">{{
+                                            bookingForm.get('packageItems')?.value.isEdit?'Update': 'Add'}}</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="add-detail text-end">
-                            <button class="btn btn-secondary-outline me-3" (click)="resetForm()">Reset</button>
-                            <button class="btn btn-primary-outline" type="submit">{{
-                                bookingForm.get('packageItems')?.value.isEdit?'Update': 'Add'}}</button>
                         </div>
                     </div>
                 </form>
@@ -168,9 +164,17 @@
                     </tbody>
                 </table>
             </div>
+            <div class="col-md-12">
+                <div class="form-group d-flex align-items-center pt-5">
+                    <h3>Add Air Waybill</h3>
+                    <div class="ps-3">
+                        <span class="add-awb"><i class="ca ca-icn-add" (click)="addAWBFromAddPackage()" title="Add Air Waybill"></i></span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="card-footer">
+    <div class="card-footer bottom-radius">
         <div class="text-end">
             <button class="btn btn-secondary me-3">Cancel</button>
             <button class="btn btn-primary" (click)="submit()">Submit</button>

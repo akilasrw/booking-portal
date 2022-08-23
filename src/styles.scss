@@ -695,11 +695,17 @@ a {
         &.without-footer {
             height: calc(100vh - 80px);
         }
+        &.bottom-radius {
+            border-radius: 1.25rem 1.25rem 0 0;
+        }
     }
     .card-footer {
         background-color: $default-white;
         border-top: none;
         border-radius: 0 0 0.313rem 0.313rem;
+        &.bottom-radius {
+            border-radius: 0 0 1.25rem 1.25rem;
+        }
     }
 }
 
