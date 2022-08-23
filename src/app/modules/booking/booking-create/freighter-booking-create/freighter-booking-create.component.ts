@@ -43,8 +43,6 @@ export class FreighterBookingCreateComponent implements OnInit {
   currentUser?: User | null
   subscription?: Subscription;
   awbDetail?: AWBCreateRM;
-  selectedPackage?: PackageItemRM
-  selectedPackageIndex?: number;
   awbModel?:AWBCreateRM;
 
 
@@ -105,7 +103,8 @@ export class FreighterBookingCreateComponent implements OnInit {
         volumeUnitId: ['9f0928df-5d33-4e5d-affc-f7e2e2b72680', [Validators.required]],
         packageItemStatus: [PackageItemStatus.Pending],
         description: [''],
-        isEdit: [false]
+        isEdit: [false],
+        pieces:[1,[Validators.required, Validators.min(1)]]
       }),
     })
   }
@@ -145,12 +144,20 @@ export class FreighterBookingCreateComponent implements OnInit {
       if (this.isVolumeNotExceed() == true) {
         if (await this.isWeightAndVolumeNotExceed(booking.packageItems) == true) {
           if (this.cargoBookingRequest.packageItems == undefined) {
+
+            var packageItemRequests : PackageItemRM[] = [];
+            for (var packageItem of this.clonePackages(booking.packageItems)) {
+              packageItemRequests.push(this.mapPackageItems(packageItem));
+            }
             this.cargoBookingRequest = {
               flightScheduleSectorId: this.flightScheduleSectorId,
-              packageItems: [this.mapPackageItems(booking.packageItems)]
+              packageItems: packageItemRequests
             };
+
           } else if (this.cargoBookingRequest.packageItems?.findIndex(x => x.height == booking.height && x.length == booking.length && x.width == booking.width) == -1) {
-            this.cargoBookingRequest.packageItems?.push(this.mapPackageItems(booking.packageItems));
+            for (var packageItem of this.clonePackages(booking.packageItems)) {
+              this.cargoBookingRequest.packageItems?.push(this.mapPackageItems(packageItem));
+            }
           } else {
             this.toastr.warning('Package is already exists.');
           }
@@ -184,7 +191,7 @@ export class FreighterBookingCreateComponent implements OnInit {
     this.bookingForm.get('packageItems')?.get('weightUnitId')?.patchValue(packageItem.weightUnitId);
     this.bookingForm.get('packageItems')?.get('volumeUnitId')?.patchValue(packageItem.volumeUnitId);
     this.bookingForm.get('packageItems')?.get('isEdit')?.patchValue(true);
-    console.log(this.bookingForm.value);
+    this.bookingForm.get('packageItems')?.get('pieces')?.patchValue(packageItem.pieces);
   }
 
   resetForm() {
@@ -197,7 +204,18 @@ export class FreighterBookingCreateComponent implements OnInit {
     this.bookingForm.get('packageItems')?.get('isEdit')?.patchValue(false);
     this.bookingForm.get('packageItems')?.get('weightUnitId')?.patchValue('bc1e3d49-5c26-4de5-9cd4-576bbf6e9d0c');
     this.bookingForm.get('packageItems')?.get('volumeUnitId')?.patchValue('9f0928df-5d33-4e5d-affc-f7e2e2b72680');
+    this.bookingForm.get('packageItems')?.get('pieces')?.patchValue(1);
     this.awbDetail = undefined;
+  }
+
+  clonePackages(packageItem: PackageItem):PackageItem[]{
+    var packages:PackageItem [] =[] ;
+    for (let i = 0; i < packageItem.pieces!; i++) {
+      var pack = new PackageItem();
+      pack = packageItem;
+      packages.push(pack);
+    }
+    return packages;
   }
 
   mapPackageItems(packageItem: any) {
@@ -342,30 +360,16 @@ export class FreighterBookingCreateComponent implements OnInit {
   submitAWBDetail(awb: AWBCreateRM) {
     awb.userId = this.currentUser?.id != null ? this.currentUser?.id : "";
     this.awbDetail = awb;
-    if (this.awbModel != null && this.awbModel?.isPackageUpdate && this.selectedPackage != null && this.selectedPackageIndex != undefined) {
-      this.selectedPackage.aWBDetail = awb;
-      this.selectedPackage.packageItemStatus = PackageItemStatus.AddedAWB;
-      this.cargoBookingRequest.packageItems?.splice(this.selectedPackageIndex!, 1, this.selectedPackage)
+    if (this.awbModel != null) {
+      this.cargoBookingRequest.aWBDetail = awb;
     }
   }
 
-  addAWBFromAddPackage(){
-    this.awbModel = new AWBCreateRM();
-    this.awbModel.isPackageUpdate = false;
-
-    this.modalVisible = true;
-    setTimeout(() => (this.modalVisibleAnimate = true));
-  }
-
-  addAWBFromPackageList(bookingPackage: PackageItemRM, index: number) {
-    this.selectedPackageIndex = index;
-    this.selectedPackage = bookingPackage;
-    if(this.selectedPackage.aWBDetail==null){
+  openAWBForm() {
+    if(this.cargoBookingRequest.aWBDetail==null){
       this.awbModel = new AWBCreateRM();
-      this.awbModel.isPackageUpdate = true;
     }else{
-      this.awbModel = this.selectedPackage.aWBDetail;
-      this.awbModel.isPackageUpdate = true;
+      this.awbModel = this.cargoBookingRequest.aWBDetail;
       this.awbModel.isEditAWB = true;
     }
     

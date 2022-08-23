@@ -98,7 +98,9 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="form-label">No. Pieces</label>
-                                                <input class="form-control" type="text">
+                                                <app-text-input
+                                                    [formControl]='bookingForm.controls["packageItems"].get("pieces")'
+                                                    type="number" [label]='"pieces"'></app-text-input>
                                             </div>
                                         </div>
                                     </div>
@@ -122,7 +124,6 @@
                         <th>Dimensions (L x W x H) cm</th>
                         <th>Weight (kg)</th>
                         <th>AWB Status</th>
-                        <th>Add/Edit AWB</th>
                         <th class="text-center">Actions </th>
                     </thead>
                     <tbody>
@@ -138,11 +139,6 @@
                                 }">{{getPackageStatus(packageItem?.packageItemStatus)}}
                                 </span>
                             </td>
-                            <td>
-                                <i [ngClass]="{'ca ca-icn-add' : packageItem?.packageItemStatus == packageItemStatus.Pending,'ca ca-icn-edit':packageItem?.packageItemStatus != packageItemStatus.Pending}"
-                                    (click)="addAWBFromPackageList(packageItem,i)"
-                                    title="Add AWB"></i>
-                            </td>
                             <td class="text-center">
                                 <i class="ca ca-icn-bin" title="Delete" (click)="delete(packageItem)"></i>
                             </td>
@@ -154,7 +150,7 @@
                 <div class="form-group d-flex align-items-center pt-5">
                     <h3>Add Air Waybill</h3>
                     <div class="ps-3">
-                        <span class="add-awb"><i class="ca ca-icn-add" (click)="addAWBFromAddPackage()" title="Add Air Waybill"></i></span>
+                        <span class="add-awb"><i class="ca ca-icn-add" (click)="openAWBForm()" title="Add Air Waybill"></i></span>
                     </div>
                 </div>
             </div>

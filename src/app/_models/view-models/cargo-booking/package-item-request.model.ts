@@ -2,12 +2,12 @@ import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.mo
 import { PackageContainerType, PackageItemCategory, PackageItemStatus, PackagePriorityType } from "src/app/core/enums/common-enums";
 
 
-export interface PackageItemRM {
-  width: number;
-  length: number;
-  height: number;
+export class PackageItemRM {
+  width?: number;
+  length?: number;
+  height?: number;
   volumeUnitId?: string;
-  weight: number;
+  weight?: number;
   weightUnitId?: string;
   declaredValue?: number;
   packageItemCategory?: PackageItemCategory;

@@ -1,3 +1,3 @@
-export interface BaseModel {
-    id: string;
+export class BaseModel {
+    id?: string;
 }

@@ -77,9 +77,9 @@ export class BookingViewDetailComponent implements OnInit {
 
   editAWB(packageItem:PackageItem) {
     this.awbModel = packageItem.awbInformation;
-    this.awbModel.packageItemId = packageItem.id;
-    this.awbModel.isPackageUpdate = true;
-    this.awbModel.isEditAWB = true;
+    this.awbModel!.packageItemId = packageItem.id;
+    this.awbModel!.isPackageUpdate = true;
+    this.awbModel!.isEditAWB = true;
     this.modalVisible = true;
     setTimeout(() => (this.modalVisibleAnimate = true));
   }
