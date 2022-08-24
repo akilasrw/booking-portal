@@ -288,7 +288,12 @@ export class FreighterBookingCreateComponent implements OnInit {
       packageItem: this.mapPackageItems(cargoPackage),
       flightScheduleSectorId: this.flightScheduleSectorId
     };
-    
+
+    request.packageItem.length = request.packageItem.length!*cargoPackage.pieces!;
+    request.packageItem.width = request.packageItem.width!*cargoPackage.pieces!;
+    request.packageItem.height = request.packageItem.height!*cargoPackage.pieces!;
+    request.packageItem.weight = request.packageItem.weight!*cargoPackage.pieces!;
+
     var response = await this.uldCargoPositionService.validateWeightAndVolume(request).toPromise();
    
     if (response !== undefined) {
