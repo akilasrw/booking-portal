@@ -69,7 +69,7 @@ export class BookingViewDetailComponent implements OnInit {
   addAWB(packageItem:PackageItem) {
     this.awbModel = new AWBCreateRM();
     this.awbModel.packageItemId= packageItem.id
-    this.awbModel.isPackageUpdate = false;
+    this.awbModel.isEditAWB = false;
 
     this.modalVisible = true;
     setTimeout(() => (this.modalVisibleAnimate = true));
@@ -78,7 +78,6 @@ export class BookingViewDetailComponent implements OnInit {
   editAWB(packageItem:PackageItem) {
     this.awbModel = packageItem.awbInformation;
     this.awbModel!.packageItemId = packageItem.id;
-    this.awbModel!.isPackageUpdate = true;
     this.awbModel!.isEditAWB = true;
     this.modalVisible = true;
     setTimeout(() => (this.modalVisibleAnimate = true));
@@ -92,7 +91,7 @@ export class BookingViewDetailComponent implements OnInit {
   submitAWBDetail(awb: AWBCreateRM) {
     awb.userId = this.currentUser?.id != null ? this.currentUser?.id : "";
     this.awbModel = awb;
-    if (this.awbModel != null && this.awbModel?.isPackageUpdate) {
+    if (this.awbModel != null && this.awbModel?.isEditAWB) {
       this.awbService.update(this.awbModel).subscribe({
         next: (res) => {
           this.toastr.success('Successfully update AWB details.');

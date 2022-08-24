@@ -43,9 +43,6 @@ export class P2cBookingCreateComponent implements OnInit {
   currentUser?: User | null
   subscription?: Subscription;
   awbDetail?: AWBCreateRM;
-  selectedPackage?: PackageItemRM
-  selectedPackageIndex?: number;
-  awbModel?:AWBCreateRM;
 
 
 
@@ -117,7 +114,8 @@ export class P2cBookingCreateComponent implements OnInit {
         packageDimention: ['', [Validators.required]],
         packageItemStatus: [PackageItemStatus.Pending],
         description: [''],
-        isEdit: [false]
+        isEdit: [false],
+        pieces:[1,[Validators.required, Validators.min(1)]]
       }),
     })
   }
@@ -210,7 +208,7 @@ export class P2cBookingCreateComponent implements OnInit {
     this.bookingForm.get('packageItems')?.get('weightUnitId')?.patchValue(packageItem.weightUnitId);
     this.bookingForm.get('packageItems')?.get('volumeUnitId')?.patchValue(packageItem.volumeUnitId);
     this.bookingForm.get('packageItems')?.get('isEdit')?.patchValue(true);
-    console.log(this.bookingForm.value);
+    this.bookingForm.get('packageItems')?.get('pieces')?.patchValue(packageItem.pieces);
   }
 
   resetForm() {
@@ -224,7 +222,18 @@ export class P2cBookingCreateComponent implements OnInit {
     this.bookingForm.get('packageItems')?.get('isEdit')?.patchValue(false);
     this.bookingForm.get('packageItems')?.get('weightUnitId')?.patchValue('bc1e3d49-5c26-4de5-9cd4-576bbf6e9d0c');
     this.bookingForm.get('packageItems')?.get('volumeUnitId')?.patchValue('9f0928df-5d33-4e5d-affc-f7e2e2b72680');
+    this.bookingForm.get('packageItems')?.get('pieces')?.patchValue(1);
     this.awbDetail = undefined;
+  }
+
+  clonePackages(packageItem: PackageItem):PackageItem[]{
+    var packages:PackageItem [] =[] ;
+    for (let i = 0; i < packageItem.pieces!; i++) {
+      var pack = new PackageItem();
+      pack = packageItem;
+      packages.push(pack);
+    }
+    return packages;
   }
 
   mapPackageItems(packageItem: any) {
@@ -351,8 +360,6 @@ export class P2cBookingCreateComponent implements OnInit {
     return valid;
   }
 
-
-
   backToSearch() {
     this.router.navigate(['booking/search', this.flightScheduleSectorId]);
   }
@@ -360,37 +367,26 @@ export class P2cBookingCreateComponent implements OnInit {
   submitAWBDetail(awb: AWBCreateRM) {
     awb.userId = this.currentUser?.id != null ? this.currentUser?.id : "";
     this.awbDetail = awb;
-    if (this.awbModel != null && this.awbModel?.isPackageUpdate && this.selectedPackage != null && this.selectedPackageIndex != undefined) {
-      this.selectedPackage.aWBDetail = awb;
-      this.selectedPackage.packageItemStatus = PackageItemStatus.AddedAWB;
-      this.cargoBookingRequest.packageItems?.splice(this.selectedPackageIndex!, 1, this.selectedPackage)
+    if (this.awbDetail != null) {
+      this.cargoBookingRequest.aWBDetail = awb;
     }
   }
 
-  addAWBFromAddPackage(){
-    this.awbModel = new AWBCreateRM();
-    this.awbModel.isPackageUpdate = false;
+  openAWBForm() {
+    if(this.cargoBookingRequest.packageItems != null && this.cargoBookingRequest.packageItems.length >0){
 
-    this.modalVisible = true;
-    setTimeout(() => (this.modalVisibleAnimate = true));
-  }
+      if(this.cargoBookingRequest.aWBDetail==null){
+        this.awbDetail = new AWBCreateRM();
+      }else{
+        this.awbDetail = this.cargoBookingRequest.aWBDetail;
+        this.awbDetail.isEditAWB = true;
+      }
+      
+      this.modalVisible = true;
+      setTimeout(() => (this.modalVisibleAnimate = true));
 
-  addAWBFromPackageList(bookingPackage: PackageItemRM, index: number) {
-    this.selectedPackageIndex = index;
-    this.selectedPackage = bookingPackage;
-    if(this.selectedPackage.aWBDetail==null){
-      this.awbModel = new AWBCreateRM();
-      this.awbModel.isPackageUpdate = true;
-    }else{
-      this.awbModel = this.selectedPackage.aWBDetail;
-      this.awbModel.isPackageUpdate = true;
-      this.awbModel.isEditAWB = true;
     }
-    
-    this.modalVisible = true;
-    setTimeout(() => (this.modalVisibleAnimate = true));
   }
-
 
   closeAWBForm() {
     this.modalVisibleAnimate = false;

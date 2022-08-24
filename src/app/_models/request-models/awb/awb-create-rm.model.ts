@@ -27,7 +27,6 @@ export class AWBCreateRM{
     declaredValueForCustomer?:number;
     amountOfInsurance?:number;   
     packageProducts?:AWBProductRM[];
-    isPackageUpdate?:boolean;
     isEditAWB?:boolean;
   }
   

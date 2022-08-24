@@ -126,7 +126,7 @@
                         <th class="text-center">Actions </th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let packageItem of this.cargoBookingRequest.packageItems; let i = index">
+                        <tr *ngFor="let packageItem of this.cargoBookingRequest.packageItems">
                             <td>{{getCargoType(+packageItem.packageItemCategory)}}</td>
                             <td>{{getPackageDimentions(packageItem)}}</td>
                             <td>{{getPackageWeight(packageItem.weight,packageItem.weightUnitId)}}</td>
