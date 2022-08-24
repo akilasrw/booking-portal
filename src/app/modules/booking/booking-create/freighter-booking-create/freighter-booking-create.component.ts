@@ -43,7 +43,6 @@ export class FreighterBookingCreateComponent implements OnInit {
   currentUser?: User | null
   subscription?: Subscription;
   awbDetail?: AWBCreateRM;
-  awbModel?:AWBCreateRM;
 
 
 
@@ -289,6 +288,7 @@ export class FreighterBookingCreateComponent implements OnInit {
       packageItem: this.mapPackageItems(cargoPackage),
       flightScheduleSectorId: this.flightScheduleSectorId
     };
+    
     var response = await this.uldCargoPositionService.validateWeightAndVolume(request).toPromise();
    
     if (response !== undefined) {
@@ -326,6 +326,10 @@ export class FreighterBookingCreateComponent implements OnInit {
     if (index !== -1) {
       this.cargoBookingRequest?.packageItems?.splice(Number(index), 1);
     }
+    if(this.cargoBookingRequest.packageItems != null && this.cargoBookingRequest.packageItems.length <= 0){
+      this.cargoBookingRequest.aWBDetail = undefined;
+      this.awbDetail = undefined;
+    }
   }
 
   submit() {
@@ -360,21 +364,25 @@ export class FreighterBookingCreateComponent implements OnInit {
   submitAWBDetail(awb: AWBCreateRM) {
     awb.userId = this.currentUser?.id != null ? this.currentUser?.id : "";
     this.awbDetail = awb;
-    if (this.awbModel != null) {
+    if (this.awbDetail != null) {
       this.cargoBookingRequest.aWBDetail = awb;
     }
   }
 
   openAWBForm() {
-    if(this.cargoBookingRequest.aWBDetail==null){
-      this.awbModel = new AWBCreateRM();
-    }else{
-      this.awbModel = this.cargoBookingRequest.aWBDetail;
-      this.awbModel.isEditAWB = true;
+    if(this.cargoBookingRequest.packageItems != null && this.cargoBookingRequest.packageItems.length >0){
+
+      if(this.cargoBookingRequest.aWBDetail==null){
+        this.awbDetail = new AWBCreateRM();
+      }else{
+        this.awbDetail = this.cargoBookingRequest.aWBDetail;
+        this.awbDetail.isEditAWB = true;
+      }
+      
+      this.modalVisible = true;
+      setTimeout(() => (this.modalVisibleAnimate = true));
+
     }
-    
-    this.modalVisible = true;
-    setTimeout(() => (this.modalVisibleAnimate = true));
   }
 
 
