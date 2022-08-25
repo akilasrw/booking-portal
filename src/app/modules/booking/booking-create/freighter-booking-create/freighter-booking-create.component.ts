@@ -143,20 +143,12 @@ export class FreighterBookingCreateComponent implements OnInit {
       if (this.isVolumeNotExceed() == true) {
         if (await this.isWeightAndVolumeNotExceed(booking.packageItems) == true) {
           if (this.cargoBookingRequest.packageItems == undefined) {
-
-            var packageItemRequests : PackageItemRM[] = [];
-            for (var packageItem of this.clonePackages(booking.packageItems)) {
-              packageItemRequests.push(this.mapPackageItems(packageItem));
-            }
             this.cargoBookingRequest = {
               flightScheduleSectorId: this.flightScheduleSectorId,
-              packageItems: packageItemRequests
+              packageItems: [this.mapPackageItems(booking.packageItems)]
             };
-
           } else if (this.cargoBookingRequest.packageItems?.findIndex(x => x.height == booking.height && x.length == booking.length && x.width == booking.width) == -1) {
-            for (var packageItem of this.clonePackages(booking.packageItems)) {
-              this.cargoBookingRequest.packageItems?.push(this.mapPackageItems(packageItem));
-            }
+            this.cargoBookingRequest.packageItems?.push(this.mapPackageItems(booking.packageItems));
           } else {
             this.toastr.warning('Package is already exists.');
           }
@@ -207,16 +199,6 @@ export class FreighterBookingCreateComponent implements OnInit {
     this.awbDetail = undefined;
   }
 
-  clonePackages(packageItem: PackageItem):PackageItem[]{
-    var packages:PackageItem [] =[] ;
-    for (let i = 0; i < packageItem.pieces!; i++) {
-      var pack = new PackageItem();
-      pack = packageItem;
-      packages.push(pack);
-    }
-    return packages;
-  }
-
   mapPackageItems(packageItem: any) {
     return {
       height: Number(packageItem.height),
@@ -231,6 +213,7 @@ export class FreighterBookingCreateComponent implements OnInit {
       description: packageItem.description,
       packageContainerType: PackageContainerType.OnFloor,
       isEdit: packageItem.isEdit,
+      pieces: packageItem.pieces,
       aWBDetail: this.awbDetail,
     };
   }

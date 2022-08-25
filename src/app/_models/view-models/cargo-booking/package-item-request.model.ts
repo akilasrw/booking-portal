@@ -15,4 +15,5 @@ export class PackageItemRM {
   packageContainerType?: PackageContainerType;
   packageItemStatus?: PackageItemStatus;
   description?: string;
+  pieces?:number;
 }
