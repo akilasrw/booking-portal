@@ -89,8 +89,12 @@ export class BookingLookupSearchComponent implements OnInit {
     return CoreExtensions.GetAWBStatus(status)
   }
 
-  GetFormattedAWBNumber(value: number): string {
-    return value == 0? '-':CoreExtensions.PadLeadingZeros(value,8);
+  GetFormattedAWBNumber(cargoBookingLookup: CargoBookingLookup): string {
+    if(cargoBookingLookup != null && cargoBookingLookup.awbInformation != null && cargoBookingLookup.awbInformation.awbTrackingNumber != undefined){
+      return cargoBookingLookup.awbInformation.awbTrackingNumber == 0? '-':CoreExtensions.PadLeadingZeros(cargoBookingLookup.awbInformation.awbTrackingNumber,8);
+    }else{
+      return '-';
+    }
   }
 
   getCurrentUser() {

@@ -67,8 +67,12 @@ export class BookingViewDetailComponent implements OnInit {
     return CoreExtensions.GetAWBStatus(status)
   }
 
-  GetFormattedAWBNumber(value: number): string {
-    return value == 0 ? '-' : CoreExtensions.PadLeadingZeros(value, 8);
+  GetFormattedAWBNumber(cargoBookingDetail: CargoBookingDetail): string {
+    if(cargoBookingDetail != null && cargoBookingDetail.awbInformation != null && cargoBookingDetail.awbInformation.awbTrackingNumber != undefined){
+      return cargoBookingDetail.awbInformation.awbTrackingNumber == 0? '-':CoreExtensions.PadLeadingZeros(cargoBookingDetail.awbInformation.awbTrackingNumber,8);
+    }else{
+      return '-';
+    }
   }
 
   addAWB() {
