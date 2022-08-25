@@ -323,7 +323,7 @@ export class FreighterBookingCreateComponent implements OnInit {
   submit() {
     if (this.isValid()) {
       this.cargoBookingRequest.bookingStatus = BookingStatus.Pending;
-      this.cargoBookingRequest.AWBStatus = this.cargoBookingRequest.aWBDetail == undefined ? AWBStatus.Pending : AWBStatus.AddedAWB
+      this.cargoBookingRequest.aWBStatus = this.cargoBookingRequest.aWBDetail == undefined ? AWBStatus.Pending : AWBStatus.AddedAWB
       this.uldCargoBookingService.create(this.cargoBookingRequest).subscribe(res => {
         this.toastr.success('Saved Successfully.');
         this.flightScheduleSectorService.removeCurrentFlightScheduleSector();
