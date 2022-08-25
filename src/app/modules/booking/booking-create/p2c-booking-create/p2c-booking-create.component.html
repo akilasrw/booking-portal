@@ -118,9 +118,20 @@
                     </div>
                 </form>
             </div>
+            <div class="col-md-12">
+                <div class="add-awb">
+                    <div class="form-group d-flex align-items-center pt-4">
+                        <h3>Add Air Waybill</h3>
+                        <div class="ps-4">
+                            <span [ngClass]="{'active' : this.cargoBookingRequest.packageItems?.length >0,
+                                'disabled':this.cargoBookingRequest.packageItems?.length == 0}"><i class="ca ca-icn-add" (click)="openAWBForm()" title="Add Air Waybill"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="table-content">
                 <table class="table table-responsive">
-                    <thead>
+                    <thead class="sticky-top">
                         <th>Cargo Type</th>
                         <th>Dimensions (L x W x H) cm</th>
                         <th>Weight (kg)</th>
@@ -138,15 +149,6 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            <div class="col-md-12">
-                <div class="form-group d-flex align-items-center pt-5">
-                    <h3>Add Air Waybill</h3>
-                    <div class="ps-3">
-                        <span [ngClass]="{'active' : this.cargoBookingRequest.packageItems?.length >0,
-                            'disabled':this.cargoBookingRequest.packageItems?.length == 0}"><i class="ca ca-icn-add" (click)="openAWBForm()" title="Add Air Waybill"></i></span>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

@@ -970,12 +970,27 @@ a {
         cursor: pointer;
     }
     .add-awb {
-        font-size: 1.875rem;
-        color: $brand-primary;
-        cursor: pointer;
-        padding-right: 0.625rem;
+        span {
+            color: $gray;
+            font-size: 1.875rem;
+            cursor: no-drop;
+            padding-right: 0.625rem;
+        }
+        .active {
+            color: $brand-primary;
+            cursor: pointer;
+        }
+    }
+    .table-content {
+        height: calc(100vh - 595px);
+        overflow: auto;
+        @include customScrollbar(10px);
+        .table {
+            margin-top: 0;
+        }
     }
 }
+
 
 // Booking Lookup
 .lookup-info {
