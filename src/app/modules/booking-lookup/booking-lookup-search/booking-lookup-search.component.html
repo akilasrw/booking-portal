@@ -74,15 +74,15 @@
                             </div>
                             <div class="details-group">
                                 <div class="lable">AWB Number</div>
-                                <div>{{GetFormattedAWBNumber(cargoBookingLookup.awbTrackingNumber)}}</div>
+                                <div>{{GetFormattedAWBNumber(cargoBookingLookup.awbInformation.awbTrackingNumber)}}</div>
                             </div>
                             <div class="details-group">
                                 <div class="lable">AWB Status</div>
                                 <div>
-                                    <span class="status-chip" [ngClass]="{
-                                    'none':cargoBookingLookup?.aWBStatus == awbStatus.None,
-                                    'added':cargoBookingLookup?.aWBStatus == awbStatus.AddedAWB,  
-                                    'pending':cargoBookingLookup?.aWBStatus == awbStatus.Pending  
+                                    <span class="awb-status-chip" [ngClass]="{
+                                    'none':cargoBookingLookup?.awbStatus == awbStatus.None,
+                                    'added':cargoBookingLookup?.awbStatus == awbStatus.AddedAWB,  
+                                    'pending':cargoBookingLookup?.awbStatus == awbStatus.Pending  
                                     }">{{(getAWBStatus(cargoBookingLookup?.awbStatus))}}
                                     </span>
                                 </div>
@@ -90,7 +90,7 @@
                             <div class="details-group">
                                 <div class="lable">Actions</div>
                                 <div>
-                                    <i class="ca ca-icn-print" (click)="generatePDF(package)"></i>
+                                    <i class="ca ca-icn-print" (click)="generatePDF(cargoBookingLookup)"></i>
                                     <i class="ca ca-icn-view"></i>
                                     <i class="ca ca-icn-edit"></i>
                                 </div>

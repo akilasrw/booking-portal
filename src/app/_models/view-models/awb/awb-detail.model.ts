@@ -3,6 +3,7 @@ import { AWBProduct } from "./awb-product.model";
 export class AWBDetail{
     userId?:string
     shipperName?:string;
+    awbTrackingNumber?:string;
     shipperAccountNumber?:string;
     shipperAddress?:string;
     consigneeName?:string;

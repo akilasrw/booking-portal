@@ -32,6 +32,11 @@ export class BookingLookupService extends BaseService {
     if (query.isIncludePackageDetail) {
       params = params.append("isIncludePackageDetail", query.isIncludePackageDetail);
     }
+
+    if (query.isIncludeAWBDetail) {
+      params = params.append("isIncludeAWBDetail", query.isIncludeAWBDetail);
+    }
+    
     return this.getWithParams<CargoBookingLookup>(this.endpointEntityName,params);
   }
 

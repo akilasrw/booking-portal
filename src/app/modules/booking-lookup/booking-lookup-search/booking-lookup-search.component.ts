@@ -62,6 +62,7 @@ export class BookingLookupSearchComponent implements OnInit {
       query.referenceNumber = this.searchForm.value.referenceNumber;
       query.isIncludeFlightDetail=true;
       query.isIncludePackageDetail=true;
+      query.isIncludeAWBDetail=true;
       query.userId = this.currentUser?.id
 
       this.bookingLookupService.getBookingLookupDetail(query).subscribe(
@@ -98,14 +99,12 @@ export class BookingLookupSearchComponent implements OnInit {
     });
   }
 
-  generatePDF(packageItem: PackageItem) { 
+  generatePDF(cargoBookingLookup: CargoBookingLookup) { 
     this.isPrinting =true;
-    var pkg = this.cargoBookingLookup?.packageItems.filter(x=> x.id == packageItem.id);
-    if(pkg && pkg?.length > 0) {      
+    if(cargoBookingLookup.awbInformation !== undefined) {      
       this.spinner.show();
       console.log('generatePDF');    
-      this.awsPrintLookup = pkg[0].awbInformation;
-      this.child.printData(this.awsPrintLookup);
+      this.child.printData(cargoBookingLookup.awbInformation);
       this.isPrinting = false;
       setTimeout(() => {
         this.spinner.hide();

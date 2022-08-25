@@ -3,7 +3,6 @@ import { AWBProductRM } from "./awb-product-rm.model";
 export class AWBCreateRM{
     id?:string;
     userId?:string;
-    packageItemId?:string;
     shipperName?:string;
     shipperAccountNumber?:string;
     shipperAddress?:string;
