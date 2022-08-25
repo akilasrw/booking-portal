@@ -18,10 +18,15 @@ export enum BookingStatus {
   Exported = 60
 }
 
-export enum PackageItemStatus {
+export enum AWBStatus {
   None = 0,
   Pending = 1,
   AddedAWB = 2
+}
+
+export enum PackageItemStatus {
+  None = 0,
+  Pending = 1
 }
 
 export enum PackageContainerType {
