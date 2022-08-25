@@ -115,7 +115,6 @@ export class P2cBookingCreateComponent implements OnInit {
         packageItemStatus: [PackageItemStatus.Pending],
         description: [''],
         isEdit: [false],
-        pieces:[1,[Validators.required, Validators.min(1)]]
       }),
     })
   }
@@ -208,7 +207,6 @@ export class P2cBookingCreateComponent implements OnInit {
     this.bookingForm.get('packageItems')?.get('weightUnitId')?.patchValue(packageItem.weightUnitId);
     this.bookingForm.get('packageItems')?.get('volumeUnitId')?.patchValue(packageItem.volumeUnitId);
     this.bookingForm.get('packageItems')?.get('isEdit')?.patchValue(true);
-    this.bookingForm.get('packageItems')?.get('pieces')?.patchValue(packageItem.pieces);
   }
 
   resetForm() {
@@ -222,18 +220,7 @@ export class P2cBookingCreateComponent implements OnInit {
     this.bookingForm.get('packageItems')?.get('isEdit')?.patchValue(false);
     this.bookingForm.get('packageItems')?.get('weightUnitId')?.patchValue('bc1e3d49-5c26-4de5-9cd4-576bbf6e9d0c');
     this.bookingForm.get('packageItems')?.get('volumeUnitId')?.patchValue('9f0928df-5d33-4e5d-affc-f7e2e2b72680');
-    this.bookingForm.get('packageItems')?.get('pieces')?.patchValue(1);
     this.awbDetail = undefined;
-  }
-
-  clonePackages(packageItem: PackageItem):PackageItem[]{
-    var packages:PackageItem [] =[] ;
-    for (let i = 0; i < packageItem.pieces!; i++) {
-      var pack = new PackageItem();
-      pack = packageItem;
-      packages.push(pack);
-    }
-    return packages;
   }
 
   mapPackageItems(packageItem: any) {
