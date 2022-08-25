@@ -84,8 +84,8 @@ export class BookingLookupSearchComponent implements OnInit {
     return CoreExtensions.GetBookingStatus(status)
   }
 
-  getPackageStatus(status:number):string{
-    return CoreExtensions.GetPackageStatus(status)
+  getAWBStatus(status:number):string{
+    return CoreExtensions.GetAWBStatus(status)
   }
 
   GetFormattedAWBNumber(value: number): string {
