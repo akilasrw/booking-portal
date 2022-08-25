@@ -48,15 +48,15 @@
                             <div class="lable">Origin and Destination</div>
                             <div><span class="status-chip accepted">{{cargoBookingLookup?.flightScheduleSector.originAirportCode +" - "+ cargoBookingLookup?.flightScheduleSector.destinationAirportCode}}</span></div>
                         </div>
+                        <div class="details-group">
+                            <div class="lable">Flight Time</div>
+                            <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date : 'h:mm a'}}</div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="second-box h-100">
                         <div class="">
-                            <div class="details-group">
-                                <div class="lable">Flight Time</div>
-                                <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date : 'h:mm a'}}</div>
-                            </div>
                             <div class="details-group">
                                 <div class="lable">Cargo Acceptance Cutoff Time</div>
                                 <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date : 'h:mm a'}}</div>
@@ -68,6 +68,29 @@
                             <div class="details-group">
                                 <div class="lable">Flight Date</div>
                                 <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date : 'M/d/yyyy'}}</div>
+                            </div>
+                            <div class="details-group">
+                                <div class="lable">AWB Number</div>
+                                <div>{{GetFormattedAWBNumber(package.awbTrackingNumber)}}</div>
+                            </div>
+                            <div class="details-group">
+                                <div class="lable">AWB Status</div>
+                                <div>
+                                    <span class="awb-status-chip" [ngClass]="{
+                                    'none':package?.packageItemStatus == packageItemStatus.None,
+                                    'added':package?.packageItemStatus == packageItemStatus.AddedAWB,  
+                                    'pending':package?.packageItemStatus == packageItemStatus.Pending  
+                                    }">{{(getPackageStatus(package?.packageItemStatus))}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="details-group">
+                                <div class="lable">Actions</div>
+                                <div>
+                                    <i class="ca ca-icn-print" (click)="generatePDF(package)"></i>
+                                    <i class="ca ca-icn-view" (click)="generatePDF(package)"></i>
+                                    <i class="ca ca-icn-edit"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -94,31 +117,7 @@
                             <div>{{package.length +" x "+ package.width +" x "+ package.height}}</div>
                         </div>
                     </div>
-                    <div class="col-md-5 ps-5">
-                        <div class="details-group">
-                            <div class="lable">AWB Number</div>
-                            <div>{{GetFormattedAWBNumber(package.awbTrackingNumber)}}</div>
-                        </div>
-                        <div class="details-group">
-                            <div class="lable">AWB Status</div>
-                            <div>
-                                <span class="awb-status-chip" [ngClass]="{
-                                'none':package?.packageItemStatus == packageItemStatus.None,
-                                'added':package?.packageItemStatus == packageItemStatus.AddedAWB,  
-                                'pending':package?.packageItemStatus == packageItemStatus.Pending  
-                                }">{{(getPackageStatus(package?.packageItemStatus))}}
-                                </span>
-                            </div>
-                        </div>
-                        <div class="details-group">
-                            <div class="lable">Actions</div>
-                            <div>
-                                <i class="ca ca-icn-print" (click)="generatePDF(package)"></i>
-                                <i class="ca ca-icn-view" (click)="generatePDF(package)"></i>
-                                <i class="ca ca-icn-edit"></i>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="col-md-5 ps-5"></div>
                 </div>
             </div>
         </div>
