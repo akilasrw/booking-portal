@@ -1,4 +1,4 @@
-import { PackageItemStatus, PackageContainerType, PackageBoxType, PackageProductType } from './../enums/common-enums';
+import { PackageItemStatus, PackageContainerType, PackageBoxType, PackageProductType, AWBStatus } from './../enums/common-enums';
 import { HttpParams } from "@angular/common/http";
 import { BasePaginationQuery } from "src/app/shared/models/base-pagination-query.model";
 import { BookingStatus } from "../enums/common-enums";
@@ -47,6 +47,24 @@ export class CoreExtensions {
     return statusString;
   }
 
+  public static GetAWBStatus(awbStatus: AWBStatus): string {
+    let statusString = "None";
+    switch (awbStatus) {
+      case AWBStatus.None:
+        statusString = "None";
+        break;
+      case AWBStatus.Pending:
+        statusString = "Pending";
+        break;
+      case AWBStatus.AddedAWB:
+        statusString = "Added AWB";
+        break;
+      default:
+        break;
+    }
+    return statusString;
+  }
+
   public static GetPackageStatus(packageStatus: PackageItemStatus): string {
     let statusString = "None";
     switch (packageStatus) {
@@ -55,9 +73,6 @@ export class CoreExtensions {
         break;
       case PackageItemStatus.Pending:
         statusString = "Pending";
-        break;
-      case PackageItemStatus.AddedAWB:
-        statusString = "Added AWB";
         break;
       default:
         break;

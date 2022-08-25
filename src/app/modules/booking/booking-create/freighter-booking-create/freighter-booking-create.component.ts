@@ -7,7 +7,7 @@ import { PackageContainerListQuery } from 'src/app/_models/queries/package-conta
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 import { CargoBookingRequest } from 'src/app/_models/view-models/cargo-booking/cargo-booking-request.model';
-import { BookingStatus, PackageContainerType, PackageItemStatus, PackagePriorityType, UnitType } from 'src/app/core/enums/common-enums';
+import { AWBStatus, BookingStatus, PackageContainerType, PackageItemStatus, PackagePriorityType, UnitType } from 'src/app/core/enums/common-enums';
 import { UnitService } from 'src/app/_services/unit.service';
 import { FlightScheduleSector } from 'src/app/_models/view-models/flight-schedule-sectors/flight-schedule-sector.model';
 import { User } from 'src/app/_models/user.model';
@@ -209,7 +209,7 @@ export class FreighterBookingCreateComponent implements OnInit {
       packageItemCategory: Number(packageItem.packageItemCategory),
       weightUnitId: packageItem.weightUnitId,
       volumeUnitId: packageItem.volumeUnitId,
-      packageItemStatus: Number(this.awbDetail == undefined ? packageItem.packageItemStatus : PackageItemStatus.AddedAWB),
+      packageItemStatus: Number(PackageItemStatus.Pending),
       description: packageItem.description,
       packageContainerType: PackageContainerType.OnFloor,
       isEdit: packageItem.isEdit,
@@ -323,6 +323,7 @@ export class FreighterBookingCreateComponent implements OnInit {
   submit() {
     if (this.isValid()) {
       this.cargoBookingRequest.bookingStatus = BookingStatus.Pending;
+      this.cargoBookingRequest.aWBStatus = this.cargoBookingRequest.aWBDetail == undefined ? AWBStatus.Pending : AWBStatus.AddedAWB
       this.uldCargoBookingService.create(this.cargoBookingRequest).subscribe(res => {
         this.toastr.success('Saved Successfully.');
         this.flightScheduleSectorService.removeCurrentFlightScheduleSector();

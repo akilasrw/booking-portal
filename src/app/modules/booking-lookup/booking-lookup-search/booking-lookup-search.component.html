@@ -71,16 +71,16 @@
                             </div>
                             <div class="details-group">
                                 <div class="lable">AWB Number</div>
-                                <div>{{GetFormattedAWBNumber(package.awbTrackingNumber)}}</div>
+                                <div>{{GetFormattedAWBNumber(cargoBookingLookup.awbTrackingNumber)}}</div>
                             </div>
                             <div class="details-group">
                                 <div class="lable">AWB Status</div>
                                 <div>
                                     <span class="awb-status-chip" [ngClass]="{
-                                    'none':package?.packageItemStatus == packageItemStatus.None,
-                                    'added':package?.packageItemStatus == packageItemStatus.AddedAWB,  
-                                    'pending':package?.packageItemStatus == packageItemStatus.Pending  
-                                    }">{{(getPackageStatus(package?.packageItemStatus))}}
+                                    'none':cargoBookingLookup?.aWBStatus == packageItemStatus.None,
+                                    'added':cargoBookingLookup?.aWBStatus == packageItemStatus.AddedAWB,  
+                                    'pending':cargoBookingLookup?.aWBStatus == packageItemStatus.Pending  
+                                    }">{{(getAWBStatus(cargoBookingLookup?.aWBStatus))}}
                                     </span>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                 <div class="lable">Actions</div>
                                 <div>
                                     <i class="ca ca-icn-print" (click)="generatePDF(package)"></i>
-                                    <i class="ca ca-icn-view" (click)="generatePDF(package)"></i>
+                                    <i class="ca ca-icn-view"></i>
                                     <i class="ca ca-icn-edit"></i>
                                 </div>
                             </div>
@@ -97,7 +97,7 @@
                 </div>
             </div>
             <div class="lookup-info">
-                <div *ngFor="let package of this.cargoBookingLookup?.packageItems"    class="row">
+                <div *ngFor="let package of this.cargoBookingLookup?.packageItems" class="row">
                     <div class="col-md-2">
                         <div class="second-box text-center">
                             <img src="/assets/images/box.svg">
