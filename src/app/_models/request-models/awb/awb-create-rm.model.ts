@@ -3,7 +3,6 @@ import { AWBProductRM } from "./awb-product-rm.model";
 export class AWBCreateRM{
     id?:string;
     userId?:string;
-    packageItemId?:string;
     shipperName?:string;
     shipperAccountNumber?:string;
     shipperAddress?:string;
@@ -28,5 +27,6 @@ export class AWBCreateRM{
     amountOfInsurance?:number;   
     packageProducts?:AWBProductRM[];
     isEditAWB?:boolean;
+    cargoBookingId?:string;
   }
   

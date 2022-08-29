@@ -1,10 +1,8 @@
 import { PackageItemStatus } from "src/app/core/enums/common-enums";
 import { BaseModel } from "../base-model";
-import { AWBDetail } from "./awb/awb-detail.model";
 
 export class PackageItem extends BaseModel{
     packageRefNumber?: string;
-    awbTrackingNumber?: string;
     width?:number;
     length?:number;
     height?:number;
@@ -15,5 +13,4 @@ export class PackageItem extends BaseModel{
     volumeUnitId?: string;
     pieces?:number;
     isEdit?: boolean; 
-    awbInformation?:AWBDetail;
   }

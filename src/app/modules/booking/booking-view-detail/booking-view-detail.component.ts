@@ -6,7 +6,7 @@ import { CargoBookingDetailQuery } from './../../../_models/queries/cargo-bookin
 import { Component, Input, OnInit } from '@angular/core';
 import { BookingService } from 'src/app/_services/booking.service';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
-import { BookingStatus, PackageItemStatus } from 'src/app/core/enums/common-enums';
+import { AWBStatus, BookingStatus, PackageItemStatus } from 'src/app/core/enums/common-enums';
 import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.model';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/_models/user.model';
@@ -48,6 +48,7 @@ export class BookingViewDetailComponent implements OnInit {
       query.id = this.cargoBookingId;
       query.isIncludeFlightDetail = true;
       query.isIncludePackageDetail = true;
+      query.isIncludeAWBDetail=true;
       query.userId = this.currentUser?.id;
 
       this.bookingSerice.getBookingDetail(query).subscribe(
@@ -62,25 +63,32 @@ export class BookingViewDetailComponent implements OnInit {
     return CoreExtensions.GetBookingStatus(status)
   }
 
-  GetFormattedAWBNumber(value: number): string {
-    return value == 0 ? '-' : CoreExtensions.PadLeadingZeros(value, 8);
+  getAWBStatus(status:number):string{
+    return CoreExtensions.GetAWBStatus(status)
   }
 
-  addAWB(packageItem:PackageItem) {
+  GetFormattedAWBNumber(cargoBookingDetail: CargoBookingDetail): string {
+    if(cargoBookingDetail != null && cargoBookingDetail.awbInformation != null && cargoBookingDetail.awbInformation.awbTrackingNumber != undefined){
+      return cargoBookingDetail.awbInformation.awbTrackingNumber == 0? '-':CoreExtensions.PadLeadingZeros(cargoBookingDetail.awbInformation.awbTrackingNumber,8);
+    }else{
+      return '-';
+    }
+  }
+
+  addAWB() {
     this.awbModel = new AWBCreateRM();
-    this.awbModel.packageItemId= packageItem.id
     this.awbModel.isEditAWB = false;
-
     this.modalVisible = true;
     setTimeout(() => (this.modalVisibleAnimate = true));
   }
 
-  editAWB(packageItem:PackageItem) {
-    this.awbModel = packageItem.awbInformation;
-    this.awbModel!.packageItemId = packageItem.id;
-    this.awbModel!.isEditAWB = true;
-    this.modalVisible = true;
-    setTimeout(() => (this.modalVisibleAnimate = true));
+  editAWB(cargoBookingDetail?:CargoBookingDetail) {
+    if(cargoBookingDetail != null){
+      this.awbModel = cargoBookingDetail!.awbInformation;
+       this.awbModel!.isEditAWB = true;
+       this.modalVisible = true;
+       setTimeout(() => (this.modalVisibleAnimate = true));
+    }
   }
 
   closeAWBForm() {
@@ -90,6 +98,7 @@ export class BookingViewDetailComponent implements OnInit {
 
   submitAWBDetail(awb: AWBCreateRM) {
     awb.userId = this.currentUser?.id != null ? this.currentUser?.id : "";
+    awb.cargoBookingId = this.cargoBookingId;
     this.awbModel = awb;
     if (this.awbModel != null && this.awbModel?.isEditAWB) {
       this.awbService.update(this.awbModel).subscribe({
@@ -117,7 +126,9 @@ export class BookingViewDetailComponent implements OnInit {
   get bookingStatus(): typeof BookingStatus {
     return BookingStatus;
   }
-
+  get awbStatus(): typeof AWBStatus {
+    return AWBStatus;
+  }
   getPackageStatus(status: number): string {
     return CoreExtensions.GetPackageStatus(status)
   }
