@@ -293,12 +293,27 @@ export class FreighterBookingCreateComponent implements OnInit {
     return CoreExtensions.GetPackageDimentions(packageContainer.length, packageContainer.width, packageContainer.height);
   }
 
-  getPackageWeight(weight:number,weightUnitId:string){
-    if(Constants.BASE_WEIGHT_UNIT_ID.toLowerCase()== weightUnitId){
-      return weight;
+  getPackageWeight(packageItem:PackageItem){
+    if(Constants.BASE_WEIGHT_UNIT_ID.toLowerCase()== packageItem.weightUnitId){
+      var totalWeight = packageItem.weight! * packageItem.pieces!;
+      return totalWeight;
     }else{
-      return CoreExtensions.GramToKilogramConversion(weight)
+      var weight =CoreExtensions.GramToKilogramConversion(packageItem.weight!);
+      var totalWeight = weight * packageItem.pieces!;
+      return totalWeight;
     }
+  }
+
+  getChargeableWeight(packageItem:PackageItem){
+    var cargableWeight = 0;
+    if(Constants.CM_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
+      cargableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)*packageItem.pieces!)/6000;
+    }else if(Constants.INCH_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
+      cargableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)*packageItem.pieces!)/366;
+    }else if(Constants.METER_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
+      cargableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)*packageItem.pieces!)/167;
+    }
+    return CoreExtensions.RoundToTwoDecimalPlaces(Number(cargableWeight))
   }
 
   getCargoType(type: number) {
