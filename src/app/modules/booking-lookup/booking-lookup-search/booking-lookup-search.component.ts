@@ -1,3 +1,4 @@
+import { AWBStatus } from './../../../core/enums/common-enums';
 import { AccountService } from 'src/app/account/account.service';
 import { CargoBookingLookup } from './../../../_models/view-models/cargo-booking-lookup/cargo-booking-lookup.model';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
@@ -26,7 +27,6 @@ export class BookingLookupSearchComponent implements OnInit {
 
   public searchForm!:FormGroup;
   cargoBookingLookup?: CargoBookingLookup
-  bookingStatus = BookingStatus;
   packageItemStatus = PackageItemStatus;
   subscription?: Subscription;
   currentUser?: User | null;
@@ -113,4 +113,11 @@ export class BookingLookupSearchComponent implements OnInit {
     } 
   }
 
+  get awbStatus(): typeof AWBStatus {
+    return AWBStatus;
+  }
+
+  get bookingStatus():typeof BookingStatus {
+    return BookingStatus;
+  }
 }

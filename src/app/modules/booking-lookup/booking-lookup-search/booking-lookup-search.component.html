@@ -32,14 +32,17 @@
                             </div>
                             <div class="details-group">
                                 <div class="lable">Status</div>
-                                <div><span class="status-chip" [ngClass]="{
+                                <div>
+                                <span class="status-chip" [ngClass]="{
                                     'none':cargoBookingLookup?.bookingStatus == bookingStatus.None,
+                                'pending': cargoBookingLookup?.bookingStatus == bookingStatus.Pending,
                                     'dispatch':cargoBookingLookup?.bookingStatus == bookingStatus.Dispatched,
                                     'invoiced':cargoBookingLookup?.bookingStatus == bookingStatus.Invoiced,
                                     'accepted':cargoBookingLookup?.bookingStatus == bookingStatus.Accepted,
                                     'loading':cargoBookingLookup?.bookingStatus == bookingStatus.Loading,
                                     'exported':cargoBookingLookup?.bookingStatus == bookingStatus.Exported
-                                }">{{(getBookingStatus(cargoBookingLookup?.bookingStatus))}}</span></div>
+                                }">{{getBookingStatus(cargoBookingLookup?.bookingStatus)}}</span>
+                            </div>
                             </div>
                             <div class="details-group">
                                 <div class="lable">Flight Number</div>
@@ -77,11 +80,11 @@
                                 <div class="details-group">
                                     <div class="lable">AWB Status</div>
                                     <div>
-                                        <span class="awb-status-chip" [ngClass]="{
-                                        'none':cargoBookingLookup?.aWBStatus == packageItemStatus.None,
-                                        'added':cargoBookingLookup?.aWBStatus == packageItemStatus.AddedAWB,  
-                                        'pending':cargoBookingLookup?.aWBStatus == packageItemStatus.Pending  
-                                        }">{{(getAWBStatus(cargoBookingLookup?.aWBStatus))}}
+                                        <span class="status-chip" [ngClass]="{
+                                        'none':cargoBookingLookup?.aWBStatus == awbStatus.None,
+                                        'added':cargoBookingLookup?.aWBStatus == awbStatus.AddedAWB,  
+                                        'pending':cargoBookingLookup?.aWBStatus == awbStatus.Pending  
+                                        }">{{(getAWBStatus(cargoBookingLookup?.awbStatus))}}
                                         </span>
                                     </div>
                                 </div>
