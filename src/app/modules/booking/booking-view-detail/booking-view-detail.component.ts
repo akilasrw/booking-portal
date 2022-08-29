@@ -98,6 +98,7 @@ export class BookingViewDetailComponent implements OnInit {
 
   submitAWBDetail(awb: AWBCreateRM) {
     awb.userId = this.currentUser?.id != null ? this.currentUser?.id : "";
+    awb.cargoBookingId = this.cargoBookingId;
     this.awbModel = awb;
     if (this.awbModel != null && this.awbModel?.isEditAWB) {
       this.awbService.update(this.awbModel).subscribe({

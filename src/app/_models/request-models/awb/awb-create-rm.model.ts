@@ -27,5 +27,6 @@ export class AWBCreateRM{
     amountOfInsurance?:number;   
     packageProducts?:AWBProductRM[];
     isEditAWB?:boolean;
+    cargoBookingId?:string;
   }
   
