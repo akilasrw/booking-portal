@@ -1,20 +1,22 @@
 <div class="main-card">
     <div class="card-header px-0 pt-0">
         <div class="d-flex justify-content-between align-items-center">
-            <div><h1>Booking Lookup</h1></div>
+            <div>
+                <h1>Booking Lookup</h1>
+            </div>
         </div>
     </div>
     <div class="card-body without-footer">
         <div class="d-flex justify-content-between align-items-center">
-                <form [formGroup]='searchForm'  (ngSubmit)="getBookingDetail()">
-                    <div class="d-flex align-items-center">
-                        <div class="form-group">
-                            <label class="form-label">Booking Reference ID</label>
-                            <input [formControl]='searchForm.controls["referenceNumber"]' type="text"  class="form-control">
-                        </div>
-                        <div><button type="submit" class="btn btn-primary-outline ms-5 mb-2">Find</button></div>
+            <form [formGroup]='searchForm' (ngSubmit)="getBookingDetail()">
+                <div class="d-flex align-items-center">
+                    <div class="form-group">
+                        <label class="form-label">Booking Reference ID</label>
+                        <input [formControl]='searchForm.controls["referenceNumber"]' type="text" class="form-control">
                     </div>
-                </form>
+                    <div><button type="submit" class="btn btn-primary-outline ms-5 mb-2">Find</button></div>
+                </div>
+            </form>
         </div>
         <div *ngIf="cargoBookingLookup != null">
             <h3>Booking Information</h3>
@@ -33,16 +35,16 @@
                             <div class="details-group">
                                 <div class="lable">Status</div>
                                 <div>
-                                <span class="status-chip" [ngClass]="{
+                                    <span class="status-chip" [ngClass]="{
                                     'none':cargoBookingLookup?.bookingStatus == bookingStatus.None,
-                                'pending': cargoBookingLookup?.bookingStatus == bookingStatus.Pending,
+                                    'pending': cargoBookingLookup?.bookingStatus == bookingStatus.Pending,
                                     'dispatch':cargoBookingLookup?.bookingStatus == bookingStatus.Dispatched,
                                     'invoiced':cargoBookingLookup?.bookingStatus == bookingStatus.Invoiced,
                                     'accepted':cargoBookingLookup?.bookingStatus == bookingStatus.Accepted,
                                     'loading':cargoBookingLookup?.bookingStatus == bookingStatus.Loading,
                                     'exported':cargoBookingLookup?.bookingStatus == bookingStatus.Exported
                                 }">{{getBookingStatus(cargoBookingLookup?.bookingStatus)}}</span>
-                            </div>
+                                </div>
                             </div>
                             <div class="details-group">
                                 <div class="lable">Flight Number</div>
@@ -50,11 +52,15 @@
                             </div>
                             <div class="details-group">
                                 <div class="lable">Origin and Destination</div>
-                                <div><span class="status-chip accepted">{{cargoBookingLookup?.flightScheduleSector.originAirportCode +" - "+ cargoBookingLookup?.flightScheduleSector.destinationAirportCode}}</span></div>
+                                <div><span
+                                        class="status-chip accepted">{{cargoBookingLookup?.flightScheduleSector.originAirportCode
+                                        +" - "+ cargoBookingLookup?.flightScheduleSector.destinationAirportCode}}</span>
+                                </div>
                             </div>
                             <div class="details-group">
                                 <div class="lable">Flight Time</div>
-                                <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date : 'h:mm a'}}</div>
+                                <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date :
+                                    'h:mm a'}}</div>
                             </div>
                         </div>
                     </div>
@@ -63,15 +69,18 @@
                             <div class="">
                                 <div class="details-group">
                                     <div class="lable">Cargo Acceptance Cutoff Time</div>
-                                    <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date : 'h:mm a'}}</div>
+                                    <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date :
+                                        'h:mm a'}}</div>
                                 </div>
                                 <div class="details-group">
                                     <div class="lable">Cargo Booking Cutoff Time</div>
-                                    <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date : 'h:mm a'}}</div>
+                                    <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date :
+                                        'h:mm a'}}</div>
                                 </div>
                                 <div class="details-group">
                                     <div class="lable">Flight Date</div>
-                                    <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date : 'M/d/yyyy'}}</div>
+                                    <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date :
+                                        'M/d/yyyy'}}</div>
                                 </div>
                                 <div class="details-group">
                                     <div class="lable">AWB Number</div>
@@ -101,8 +110,9 @@
                     </div>
                 </div>
                 <div class="lookup-info">
-                    <div class="row package-row" *ngFor="let package of this.cargoBookingLookup?.packageItems">
-                        <div class="col-md-6">
+                    <div class="row package-row"
+                        *ngFor="let package of this.cargoBookingLookup?.packageItems; let i = index">
+                        <div *ngIf="i % 2 == 0 && this.cargoBookingLookup?.packageItems[i] != null" class="col-md-6">
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="second-box text-center">
@@ -112,20 +122,22 @@
                                 <div class="col-md-9 pe-5">
                                     <div class="details-group">
                                         <div class="lable">Package Number</div>
-                                        <div>{{package.packageRefNumber}}</div>
+                                        <div>{{this.cargoBookingLookup?.packageItems[i].packageRefNumber}}</div>
                                     </div>
                                     <div class="details-group">
                                         <div class="lable">Weight (kg)</div>
-                                        <div>{{package.weight +" kg"}}</div>
+                                        <div>{{this.cargoBookingLookup?.packageItems[i].weight +" kg"}}</div>
                                     </div>
                                     <div class="details-group">
                                         <div class="lable">Dimensions (L x W x H) cm</div>
-                                        <div>{{package.length +" x "+ package.width +" x "+ package.height}}</div>
+                                        <div>{{this.cargoBookingLookup?.packageItems[i].length +" x "+
+                                            this.cargoBookingLookup?.packageItems[i].width +" x "+
+                                            this.cargoBookingLookup?.packageItems[i].height}}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div *ngIf="i % 2 == 0 && this.cargoBookingLookup?.packageItems[i+1] != null" class="col-md-6">
                             <div class="row">
                                 <div class="col-md-3 ps-5">
                                     <div class="second-box text-center">
@@ -135,49 +147,26 @@
                                 <div class="col-md-9">
                                     <div class="details-group">
                                         <div class="lable">Package Number</div>
-                                        <div>{{package.packageRefNumber}}</div>
+                                        <div>{{this.cargoBookingLookup?.packageItems[i+1].packageRefNumber}}</div>
                                     </div>
                                     <div class="details-group">
                                         <div class="lable">Weight (kg)</div>
-                                        <div>{{package.weight +" kg"}}</div>
+                                        <div>{{this.cargoBookingLookup?.packageItems[i+1].weight +" kg"}}</div>
                                     </div>
                                     <div class="details-group">
                                         <div class="lable">Dimensions (L x W x H) cm</div>
-                                        <div>{{package.length +" x "+ package.width +" x "+ package.height}}</div>
+                                        <div>{{this.cargoBookingLookup?.packageItems[i+1].length +" x "+
+                                            this.cargoBookingLookup?.packageItems[i+1].width +" x "+
+                                            this.cargoBookingLookup?.packageItems[i+1].height}}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- <div *ngFor="let package of this.cargoBookingLookup?.packageItems" class="row">
-                        <div class="col-md-2">
-                            <div class="second-box text-center">
-                                <img src="/assets/images/box.svg">
-                            </div>
-                        </div>
-                        <div class="col-md-5 pe-5">
-                            <div class="details-group">
-                                <div class="lable">Package Number</div>
-                                <div>{{package.packageRefNumber}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Weight (kg)</div>
-                                <div>{{package.weight +" kg"}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Dimensions (L x W x H) cm</div>
-                                <div>{{package.length +" x "+ package.width +" x "+ package.height}}</div>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- <app-booking-lookup-print [printLookup]="awsPrintLookup"></app-booking-lookup-print> -->
 <app-booking-lookup-print></app-booking-lookup-print>
-
-
-
