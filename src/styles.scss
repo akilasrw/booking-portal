@@ -994,7 +994,7 @@ a {
 
 // Booking Lookup
 .booking-info {
-    height: calc(100vh - 250px);
+    // height: calc(100vh - 250px);
     overflow: auto;
     overflow-x: hidden;
     @include customScrollbar(10px);
