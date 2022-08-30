@@ -175,78 +175,19 @@
 
         <div class="row pb-4">
             <div>
-                <h3>Add Items Lists</h3>
+                <h3>Rate Information</h3>
             </div>
-            <div class="second-box">
-                <form [formGroup]='productForm' (ngSubmit)="addProduct()">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="form-label">Product ID</label>
-                                <app-text-input [formControl]='productForm.controls["productRefNumber"]' type="text" [label]='"product ID"'>
-                                </app-text-input>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label class="form-label">Product Name</label>
-                                <app-text-input [formControl]='productForm.controls["productName"]' type="text" [label]='"product name"'>
-                                </app-text-input>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row align-items-center">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="form-label">Product Type</label>
-                                <select name="productType" formControlName="productType" class="form-control">
-                                    <option [value]="1">{{getAWBProductType(1)}}</option>
-                                    <option [value]="2">{{getAWBProductType(2)}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label class="form-label">Quantity</label>
-                                <app-text-input [formControl]='productForm.controls["quantity"]' type="number" [label]='"quantity"'>
-                                </app-text-input>
-                            </div>
-                        </div>
-                        <div class="col-md-6 text-end">
-                            <button class="btn btn-secondary-outline mb-2 me-3" type="button"
-                                (click)="resetProduct()">Reset</button>
-                            <button class="btn btn-primary-outline mb-2"
-                                type="submit">{{isUpdate?"Update":"Add"}}</button>
-                        </div>
-                    </div>
-                </form>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Rate Charge</label>
+                    <input type="textbox" class="form-control" [formControl]='awbForm.controls["rateCharge"]' appTwoDigitDecimaNumber/>
+                </div>
             </div>
-        </div>
-
-        <div class="row pb-4">
-            <div *ngFor="let product of this.productList" class="second-box">
-                <div class="details-group">
-                    <div class="lable">Product ID</div>
-                    <div>{{product.productRefNumber}}</div>
-                </div>
-                <div class="details-group">
-                    <div class="lable">Product Name</div>
-                    <div>{{product.productName}}</div>
-                </div>
-                <div class="details-group">
-                    <div class="lable">Product Type</div>
-                    <div>{{getAWBProductType(product.productType)}}</div>
-                </div>
-                <div class="details-group">
-                    <div class="lable">Quantity</div>
-                    <div>{{product.quantity}}</div>
-                </div>
-                <div class="details-group">
-                    <div class="lable">Actions</div>
-                    <div>
-                        <i class="ca ca-icn-edit" title="Edit" (click)="editProduct(product)"></i>
-                        <i class="ca ca-icn-bin pe-0" title="Delete" (click)="removeProduct(product)"></i>
-                    </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="form-label">Nature and Quality of Goods</label>
+                    <app-text-input [formControl]='awbForm.controls["natureAndQualityOfGoods"]' type="text">
+                    </app-text-input>
                 </div>
             </div>
         </div>

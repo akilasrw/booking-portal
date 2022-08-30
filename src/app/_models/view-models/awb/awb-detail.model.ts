@@ -1,4 +1,3 @@
-import { AWBProduct } from "./awb-product.model";
 
 export class AWBDetail{
     userId?:string
@@ -25,5 +24,6 @@ export class AWBDetail{
     declaredValueForCarriage?:number;
     declaredValueForCustomer?:number;
     amountOfInsurance?:number;   
-    packageProducts?:AWBProduct[];
+    rateCharge?:number;
+    natureAndQualityOfGoods?:string;
   }

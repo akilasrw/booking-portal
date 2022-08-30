@@ -1,6 +1,5 @@
 import { AwbService } from './../../../_services/awb.service';
 import { AccountService } from 'src/app/account/account.service';
-import { AWBDetail } from './../../../_models/view-models/awb/awb-detail.model';
 import { CargoBookingDetail } from './../../../_models/view-models/cargo-booking/cargo-booking-detail/cargo-booking-detail.model';
 import { CargoBookingDetailQuery } from './../../../_models/queries/cargo-booking/cargo-booking-detail-query.model';
 import { Component, Input, OnInit } from '@angular/core';
@@ -135,10 +134,6 @@ export class BookingViewDetailComponent implements OnInit {
 
   get packageItemStatus(): typeof PackageItemStatus {
     return PackageItemStatus;
-  }
-
-  getAWBProductType(type: number) {
-    return CoreExtensions.GetAWBProductType(type);
   }
 
   getCurrentUser() {

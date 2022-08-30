@@ -1,4 +1,4 @@
-import { PackageItemStatus, PackageContainerType, PackageBoxType, PackageProductType, AWBStatus } from './../enums/common-enums';
+import { PackageItemStatus, PackageContainerType, PackageBoxType, AWBStatus } from './../enums/common-enums';
 import { HttpParams } from "@angular/common/http";
 import { BasePaginationQuery } from "src/app/shared/models/base-pagination-query.model";
 import { BookingStatus } from "../enums/common-enums";
@@ -168,19 +168,6 @@ export class CoreExtensions {
         break;
     }
     return statusString;
-  }
-
-  public static GetAWBProductType(type: number) {
-    let productType="";
-    switch(type){
-      case PackageProductType.Electronic:
-        productType = "Electronic";
-        break;
-      case PackageProductType.Stationery:
-        productType = "Stationery";
-        break;
-    }
-    return productType;
   }
 
   public static TitleCaseWord(word: string) {

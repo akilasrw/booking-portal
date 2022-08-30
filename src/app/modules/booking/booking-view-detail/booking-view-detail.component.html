@@ -215,30 +215,15 @@
                                 <div>{{(cargoBookingDetail?.awbInformation.amountOfInsurance !=
                                     0)?cargoBookingDetail?.awbInformation.amountOfInsurance:'-'}}</div>
                             </div>
-                            <div class="pt-3">
-                                <div class="details-group">
-                                    <div class="lable">Product List</div>
-                                </div>
-                                <div class="table-content">
-                                    <table class="table table-responsive">
-                                        <thead>
-                                            <th>Product ID</th>
-                                            <th>Product Name</th>
-                                            <th>Product Type</th>
-                                            <th>Quantity</th>
-                                            <th></th>
-                                        </thead>
-                                        <tbody>
-                                            <tr
-                                                *ngFor="let product of cargoBookingDetail?.awbInformation.packageProducts">
-                                                <td>{{product.productRefNumber}}</td>
-                                                <td>{{product.productName}}</td>
-                                                <td>{{getAWBProductType(product.productType)}}</td>
-                                                <td>{{product.quantity}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div class="details-group">
+                                <div class="lable">Rate Charge</div>
+                                <div>{{(cargoBookingDetail?.awbInformation.rateCharge !=
+                                    0)?cargoBookingDetail?.awbInformation.rateCharge:'-'}}</div>
+                            </div>
+                            <div class="details-group">
+                                <div class="lable">Nature and Quality of Goods</div>
+                                <div>{{(cargoBookingDetail?.awbInformation.natureAndQualityOfGoods!=
+                                    null)?cargoBookingDetail?.awbInformation.natureAndQualityOfGoods:'-'}}</div>
                             </div>
                         </div>
                     </div>

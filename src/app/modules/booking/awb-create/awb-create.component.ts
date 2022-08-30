@@ -1,10 +1,7 @@
 import { AWBCreateRM } from './../../../_models/request-models/awb/awb-create-rm.model';
 import { AirportService } from './../../../_services/airport.service';
-import { AWBProductRM } from './../../../_models/request-models/awb/awb-product-rm.model';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
-import { ToastrService } from 'ngx-toastr';
 import { SelectList } from 'src/app/shared/models/select-list.model';
 
 
@@ -16,8 +13,6 @@ import { SelectList } from 'src/app/shared/models/select-list.model';
 export class AwbCreateComponent implements OnInit {
 
   public awbForm!: FormGroup;
-  public productForm!:FormGroup;
-  public productList: AWBProductRM[] = []
   public isUpdate:boolean= false;
   public updateIndex :number=0;
   public keyword = 'value';
@@ -27,11 +22,10 @@ export class AwbCreateComponent implements OnInit {
   @Input() awbModel:AWBCreateRM = new AWBCreateRM(); 
 
 
-  constructor(private toastr: ToastrService,private airportService: AirportService) { }
+  constructor(private airportService: AirportService) { }
 
   ngOnInit(): void {
     this.initializeAWBForm();
-    this.initializeProductForm();
     this.loadAirports();
     if(this.awbModel != null && this.awbModel.isEditAWB){
       this.editAWBForm(this.awbModel);
@@ -62,16 +56,8 @@ export class AwbCreateComponent implements OnInit {
       declaredValueForCarriage:new FormControl(null),
       declaredValueForCustomer:new FormControl(null),
       amountOfInsurance:new FormControl(null),
-    });
-  }
-
-  initializeProductForm() {
-    this.productForm = new FormGroup({
-      productRefNumber: new FormControl(null, [Validators.required]),
-      productName: new FormControl(null, [Validators.required]),
-      productType: new FormControl(null, [Validators.required]),
-      quantity: new FormControl(null,[Validators.required, Validators.min(1)]),
-      id: new FormControl(null)
+      rateCharge:new FormControl(null),
+      natureAndQualityOfGoods:new FormControl(null),
     });
   }
 
@@ -98,56 +84,8 @@ export class AwbCreateComponent implements OnInit {
     this.awbForm.get('declaredValueForCarriage')?.patchValue(awb.declaredValueForCarriage);
     this.awbForm.get('declaredValueForCustomer')?.patchValue(awb.declaredValueForCustomer);
     this.awbForm.get('amountOfInsurance')?.patchValue(awb.amountOfInsurance);
-    if(awb.packageProducts != null)
-      this.productList = awb.packageProducts
-  }
-
-  getAWBProductType(type: number) {
-    return CoreExtensions.GetAWBProductType(type);
-  }
-
-  addProduct(){
-    if( this.isValiedProduct() && this.productForm.valid){
-      var product: AWBProductRM = this.productForm.value;
-      product.productType=Number(this.productForm.value.productType);
-      if(this.isUpdate){
-        this.productList[this.updateIndex]=product;
-      }else{
-        this.productList.push(product);
-      }
-      this.resetProduct();
-    }else{
-      this.productForm.markAllAsTouched();
-    }
-  }
-
-  isValiedProduct():Boolean{
-    if (this.productForm?.get('productType')?.value === null || 
-    this.productForm?.get('productType')?.value === "") {
-      this.toastr.error('Please select product type.');
-      return false;
-    }
-    return true;
-  }
-
-  resetProduct(){
-    this.productForm.reset();
-    this.isUpdate= false;
-  }
-
-  removeProduct(item :AWBProductRM){
-    this.productList.splice(this.productList.indexOf(item),1);
-  }
-
-  editProduct(product:AWBProductRM){
-    this.isUpdate= true;
-    this.updateIndex = this.productList.indexOf(product);
-    this.productForm.get('productRefNumber')?.patchValue(product.productRefNumber);
-    this.productForm.get('productName')?.patchValue(product.productName);
-    this.productForm.get('quantity')?.patchValue(product.quantity);
-    this.productForm.get('productType')?.patchValue(product.productType);
-    this.productForm.get('id')?.patchValue(product.id);
-
+    this.awbForm.get('rateCharge')?.patchValue(awb.rateCharge);
+    this.awbForm.get('natureAndQualityOfGoods')?.patchValue(awb.natureAndQualityOfGoods);
   }
 
   loadAirports(){
@@ -169,12 +107,6 @@ export class AwbCreateComponent implements OnInit {
       var awb: AWBCreateRM = this.awbForm.value;
       awb.id=this.awbModel.id;
       awb.isEditAWB = this.awbModel.isEditAWB;
-      if(this.productList.length == 0){
-        this.toastr.error('Please add product items.');
-        return;
-      }
-      awb.packageProducts = this.productList;
-
       this.submitDetail.emit(awb);
       this.closeModal();
     }else{
