@@ -999,23 +999,40 @@ a {
     overflow-x: hidden;
     @include customScrollbar(10px);
     .lookup-info {
-        margin-top: 2.5rem;
-        background-color: $default-white;
-        border: 0.063rem solid $white-blue;
-        border-radius: 0.313rem;
-        padding: 1.563rem;
-        .second-box {
-            margin-top: 0;
+        &.table-content {
+            height: calc(100vh - 560px);
+            overflow: auto;
+            @include customScrollbar(10px);
+            .table {
+                tbody {
+                    tr {
+                        td {
+                            vertical-align: middle;
+                        }
+                    }
+                }
+            }
         }
-        i {
-            color: $brand-primary;
-            font-size: 1rem;
-            padding: 0 0.938rem;
-            cursor: pointer;
+        img {
+            max-width: 3.125rem;
         }
-        .package-row {
-            margin-bottom: 50px;
-        }
+        // margin-top: 2.5rem;
+        // background-color: $default-white;
+        // border: 0.063rem solid $white-blue;
+        // border-radius: 0.313rem;
+        // padding: 1.563rem;
+        // .second-box {
+        //     margin-top: 0;
+        // }
+        // i {
+        //     color: $brand-primary;
+        //     font-size: 1rem;
+        //     padding: 0 0.938rem;
+        //     cursor: pointer;
+        // }
+        // .package-row {
+        //     margin-bottom: 50px;
+        // }
     }
 }
 .Server-error {
