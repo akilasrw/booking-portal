@@ -23,6 +23,8 @@ import { PackageItem } from 'src/app/_models/view-models/package-item.model';
 import { Unit } from 'src/app/_models/view-models/unit/unit.model';
 import { ValidateCargoPositionRequest } from 'src/app/_models/request-models/cargo-booking/validate-cargo-position-request.model';
 import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.model';
+import { CargoAgent } from 'src/app/_models/view-models/cargo-agent/cargo-agent.model';
+import { CargoAgentQuery } from 'src/app/_models/queries/cargo-agent/cargo-agent-query.model';
 
 @Component({
   selector: 'app-p2c-booking-create',
@@ -43,6 +45,7 @@ export class P2cBookingCreateComponent implements OnInit {
   currentUser?: User | null
   subscription?: Subscription;
   awbDetail?: AWBCreateRM;
+  cargoAgent?:CargoAgent;
 
 
 
@@ -62,11 +65,12 @@ export class P2cBookingCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+    this.getCurrentUser();
+    this.getUnits();
     this.bookingForm?.get('packageItems')?.get("packageItemCategory")?.valueChanges.subscribe(x => {
       var query = new PackageContainerListQuery();
       query.packageItemType = x;
       this.getPackageContainers(query);
-      this.getCurrentUser();
     });
 
     this.bookingForm?.get('packageItems')?.get("packageDimention")?.valueChanges.subscribe(res => {
@@ -81,7 +85,6 @@ export class P2cBookingCreateComponent implements OnInit {
         this.disableInput = false;
       }
     });
-    this.getUnits();
   }
 
   getUnits() {
@@ -145,6 +148,15 @@ export class P2cBookingCreateComponent implements OnInit {
   getPackageContainers(query: PackageContainerListQuery) {
     this.packageContainerService.getList(query).subscribe(res => {
       this.packageContainers = res;
+    });
+  }
+
+  getCargoAgentDetails(userId:string){
+    var query = new CargoAgentQuery();
+    query.appUserId = userId;
+    query.isCountryInclude=true;
+    this.accountService.getUserDetail(query).subscribe(res => {
+      this.cargoAgent = res;
     });
   }
 
@@ -365,6 +377,15 @@ export class P2cBookingCreateComponent implements OnInit {
 
       if(this.cargoBookingRequest.aWBDetail==null){
         this.awbDetail = new AWBCreateRM();
+        this.awbDetail.agentAccountNumber = this.cargoAgent?.cargoAccountNumber;
+        this.awbDetail.agentAITACode = this.cargoAgent?.agentIATACode;
+        this.awbDetail.agentCity = this.cargoAgent?.city;
+        this.awbDetail.agentName = this.cargoAgent?.agentName;
+        this.awbDetail.routingAndDestinationTo = this.flightScheduleSector?.destinationAirportCode;
+        this.awbDetail.routingAndDestinationBy = this.flightScheduleSector?.flightNumber.substring(0, 2);
+        this.awbDetail.requestedFlightDate = this.flightScheduleSector?.scheduledDepartureDateTime;
+        this.awbDetail.destinationAirportName = this.flightScheduleSector?.destinationAirportName;
+        this.awbDetail.destinationAirportId = this.flightScheduleSector?.destinationAirportId;
       }else{
         this.awbDetail = this.cargoBookingRequest.aWBDetail;
         this.awbDetail.isEditAWB = true;
@@ -384,6 +405,7 @@ export class P2cBookingCreateComponent implements OnInit {
   getCurrentUser() {
     this.subscription = this.accountService.currentUser$.subscribe(res => {
       this.currentUser = res;
+      this.getCargoAgentDetails(this.currentUser!.id);
     });
   }
 

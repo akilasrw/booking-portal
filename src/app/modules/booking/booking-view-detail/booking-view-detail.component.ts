@@ -11,6 +11,8 @@ import { Subscription } from 'rxjs';
 import { User } from 'src/app/_models/user.model';
 import { ToastrService } from 'ngx-toastr';
 import { PackageItem } from 'src/app/_models/view-models/package-item.model';
+import { CargoAgentQuery } from 'src/app/_models/queries/cargo-agent/cargo-agent-query.model';
+import { CargoAgent } from 'src/app/_models/view-models/cargo-agent/cargo-agent.model';
 
 @Component({
   selector: 'app-booking-view-detail',
@@ -26,6 +28,7 @@ export class BookingViewDetailComponent implements OnInit {
   awbModel?: AWBCreateRM;
   subscription?: Subscription;
   currentUser?: User | null
+  cargoAgent?:CargoAgent;
 
 
 
@@ -76,7 +79,15 @@ export class BookingViewDetailComponent implements OnInit {
 
   addAWB() {
     this.awbModel = new AWBCreateRM();
-    this.awbModel.isEditAWB = false;
+    this.awbModel.agentAccountNumber = this.cargoAgent?.cargoAccountNumber;
+    this.awbModel.agentAITACode = this.cargoAgent?.agentIATACode;
+    this.awbModel.agentCity = this.cargoAgent?.city;
+    this.awbModel.agentName = this.cargoAgent?.agentName;
+    this.awbModel.routingAndDestinationTo = this.cargoBookingDetail?.flightScheduleSector?.destinationAirportCode;
+    this.awbModel.routingAndDestinationBy = this.cargoBookingDetail?.flightScheduleSector?.flightNumber.substring(0, 2);
+    this.awbModel.requestedFlightDate = this.cargoBookingDetail?.flightScheduleSector?.scheduledDepartureDateTime;
+    this.awbModel.destinationAirportName = this.cargoBookingDetail?.flightScheduleSector?.destinationAirportName;
+    this.awbModel.destinationAirportId = this.cargoBookingDetail?.flightScheduleSector?.destinationAirportId;
     this.modalVisible = true;
     setTimeout(() => (this.modalVisibleAnimate = true));
   }
@@ -139,7 +150,18 @@ export class BookingViewDetailComponent implements OnInit {
   getCurrentUser() {
     this.subscription = this.accountService.currentUser$.subscribe(res => {
       this.currentUser = res;
+      if(this.cargoBookingDetail?.awbStatus != AWBStatus.AddedAWB ){
+        this.getCargoAgentDetails(this.currentUser!.id);
+      }
     });
   }
-
+  
+  getCargoAgentDetails(userId:string){
+    var query = new CargoAgentQuery();
+    query.appUserId = userId;
+    query.isCountryInclude=true;
+    this.accountService.getUserDetail(query).subscribe(res => {
+      this.cargoAgent = res;
+    });
+  }
 }
