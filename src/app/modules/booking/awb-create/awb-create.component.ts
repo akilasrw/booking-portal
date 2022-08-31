@@ -3,6 +3,7 @@ import { AirportService } from './../../../_services/airport.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SelectList } from 'src/app/shared/models/select-list.model';
+import { formatDate } from '@angular/common';
 
 
 @Component({
@@ -76,7 +77,7 @@ export class AwbCreateComponent implements OnInit {
     this.awbForm.get('requestedRouting')?.patchValue(awb.requestedRouting);
     this.awbForm.get('routingAndDestinationTo')?.patchValue(awb.routingAndDestinationTo);
     this.awbForm.get('routingAndDestinationBy')?.patchValue(awb.routingAndDestinationBy);
-    this.awbForm.get('requestedFlightDate')?.patchValue(awb.requestedFlightDate);
+    this.awbForm.get('requestedFlightDate')?.patchValue(formatDate(awb.requestedFlightDate!.toString(), 'MM-dd-yyyy', 'en-US'));
     this.awbForm.get('destinationAirportId')?.patchValue(awb.destinationAirportId);
     this.awbForm.get('destinationAirportName')?.patchValue(awb.destinationAirportName);
     this.awbForm.get('shippingReferenceNumber')?.patchValue(awb.shippingReferenceNumber);
@@ -105,6 +106,7 @@ export class AwbCreateComponent implements OnInit {
   saveAWBDetails(){
     if(this.awbForm.valid){
       var awb: AWBCreateRM = this.awbForm.value;
+      awb.requestedFlightDate = new Date(formatDate(awb.requestedFlightDate!.toString(), 'yyyy-MM-dd', 'en-US'));
       awb.id=this.awbModel.id;
       awb.isEditAWB = this.awbModel.isEditAWB;
       this.submitDetail.emit(awb);
