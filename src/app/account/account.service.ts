@@ -1,5 +1,6 @@
+import { CargoAgent } from './../_models/view-models/cargo-agent/cargo-agent.model';
 import { TokenData } from './../_models/token-data.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, map, Observable, ReplaySubject } from 'rxjs';
@@ -10,6 +11,7 @@ import { CryptoService } from '../shared/services/crypto.service';
 import { Router } from '@angular/router';
 import { CargoAgentRM } from '../_models/request-models/register/cargo-agent-rm.model';
 import { AuthenticateRM } from '../_models/request-models/login/authenticate-rm.model';
+import { CargoAgentQuery } from '../_models/queries/cargo-agent/cargo-agent-query.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +31,17 @@ export class AccountService extends BaseService {
 
   register(cargoAgent: CargoAgentRM){
     return this.post<any>('cargoagent', cargoAgent);
+  }
+
+  getUserDetail(query: CargoAgentQuery) {
+    var params = new HttpParams();
+    if (query.appUserId) {
+      params = params.append("appUserId", query.appUserId);
+    }
+    if (query.isCountryInclude) {
+      params = params.append("isCountryInclude", query.isCountryInclude);
+    }    
+    return this.getWithParams<CargoAgent>('cargoagent',params);
   }
 
   login(model: AuthenticateRM) {
@@ -64,8 +77,8 @@ export class AccountService extends BaseService {
 
   setCurrentUser(user: User) {
     this.startRefreshTokenTimer(user.jwtToken);
-    var enriptedUser = this.cryptoService.encrypt(JSON.stringify(user));
-    localStorage.setItem('user', enriptedUser);
+    var encriptedUser = this.cryptoService.encrypt(JSON.stringify(user));
+    localStorage.setItem('user', encriptedUser);
     this.currentUserSource.next(user);
   }
 

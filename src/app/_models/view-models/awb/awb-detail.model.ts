@@ -18,7 +18,7 @@ export class AWBDetail{
     routingAndDestinationBy?:string;
     requestedFlightDate?:Date;
     destinationAirportId?:string;
-    destinationAirportCode?:string;
+    destinationAirportName?:string;
     shippingReferenceNumber?:string;
     currency?:string;
     declaredValueForCarriage?:number;

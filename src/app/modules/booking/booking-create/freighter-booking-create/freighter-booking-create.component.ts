@@ -1,3 +1,4 @@
+import { CargoAgentQuery } from './../../../../_models/queries/cargo-agent/cargo-agent-query.model';
 import { ToastrService } from 'ngx-toastr';
 import { FlightScheduleSectorService } from 'src/app/_services/flight-schedule-sector.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,7 +14,6 @@ import { FlightScheduleSector } from 'src/app/_models/view-models/flight-schedul
 import { User } from 'src/app/_models/user.model';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
-import { PackageItemRM } from 'src/app/_models/view-models/cargo-booking/package-item-request.model';
 import { Constants } from 'src/app/core/constants/constants';
 import { FlightScheduleSectorQuery } from 'src/app/_models/queries/flight-schedule-sector/flight-schedule-sector-query.model';
 import { PackageContainerService } from 'src/app/_services/package-container.service';
@@ -23,6 +23,7 @@ import { ValidateCargoPositionRequest } from 'src/app/_models/request-models/car
 import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.model';
 import { UldCargoPositionService } from 'src/app/_services/uld-cargo-position.service';
 import { UldCargoBookingService } from 'src/app/_services/uld-cargo-booking.service';
+import { CargoAgent } from 'src/app/_models/view-models/cargo-agent/cargo-agent.model';
 
 @Component({
   selector: 'app-freighter-booking-create',
@@ -35,6 +36,7 @@ export class FreighterBookingCreateComponent implements OnInit {
   flightScheduleSectorId!: string;
   flightScheduleSector?: FlightScheduleSector;
   packageContainers?: PackageContainer[] = [];
+  cargoAgent?:CargoAgent;
   bookingForm!: FormGroup;
   cargoBookingRequest!: CargoBookingRequest;
   volumeUnits: Unit[] = [];
@@ -62,15 +64,15 @@ export class FreighterBookingCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+    this.getCurrentUser();
+    this.getUnits();
+
     this.bookingForm?.get('packageItems')?.get("packageItemCategory")?.valueChanges.subscribe(x => {
       this.disableInput = false;
       var query = new PackageContainerListQuery();
       query.packageItemType = x;
       this.getPackageContainers(query);
-      this.getCurrentUser();
     });
-
-    this.getUnits();
   }
 
   getUnits() {
@@ -113,7 +115,6 @@ export class FreighterBookingCreateComponent implements OnInit {
       const id = params.get('id');
       if (id) {
         this.flightScheduleSectorId = id;
-        console.log(id);
         this.getFlightScheduleSectorData();
       }
     });
@@ -134,6 +135,15 @@ export class FreighterBookingCreateComponent implements OnInit {
   getPackageContainers(query: PackageContainerListQuery) {
     this.packageContainerService.getList(query).subscribe(res => {
       this.packageContainers = res;
+    });
+  }
+
+  getCargoAgentDetails(userId:string){
+    var query = new CargoAgentQuery();
+    query.appUserId = userId;
+    query.isCountryInclude=true;
+    this.accountService.getUserDetail(query).subscribe(res => {
+      this.cargoAgent = res;
     });
   }
 
@@ -375,9 +385,17 @@ export class FreighterBookingCreateComponent implements OnInit {
 
   openAWBForm() {
     if(this.cargoBookingRequest.packageItems != null && this.cargoBookingRequest.packageItems.length >0){
-
       if(this.cargoBookingRequest.aWBDetail==null){
         this.awbDetail = new AWBCreateRM();
+        this.awbDetail.agentAccountNumber = this.cargoAgent?.cargoAccountNumber;
+        this.awbDetail.agentAITACode = this.cargoAgent?.agentIATACode;
+        this.awbDetail.agentCity = this.cargoAgent?.city;
+        this.awbDetail.agentName = this.cargoAgent?.agentName;
+        this.awbDetail.routingAndDestinationTo = this.flightScheduleSector?.destinationAirportCode;
+        this.awbDetail.routingAndDestinationBy = this.flightScheduleSector?.flightNumber.substring(0, 2);
+        this.awbDetail.requestedFlightDate = this.flightScheduleSector?.scheduledDepartureDateTime;
+        this.awbDetail.destinationAirportName = this.flightScheduleSector?.destinationAirportName;
+        this.awbDetail.destinationAirportId = this.flightScheduleSector?.destinationAirportId;
       }else{
         this.awbDetail = this.cargoBookingRequest.aWBDetail;
         this.awbDetail.isEditAWB = true;
@@ -398,6 +416,7 @@ export class FreighterBookingCreateComponent implements OnInit {
   getCurrentUser() {
     this.subscription = this.accountService.currentUser$.subscribe(res => {
       this.currentUser = res;
+      this.getCargoAgentDetails(this.currentUser!.id);
     });
   }
 

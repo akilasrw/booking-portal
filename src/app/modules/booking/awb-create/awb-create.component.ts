@@ -27,7 +27,7 @@ export class AwbCreateComponent implements OnInit {
   ngOnInit(): void {
     this.initializeAWBForm();
     this.loadAirports();
-    if(this.awbModel != null && this.awbModel.isEditAWB){
+    if(this.awbModel != null){
       this.editAWBForm(this.awbModel);
     }
   }
@@ -50,7 +50,7 @@ export class AwbCreateComponent implements OnInit {
       routingAndDestinationBy: new FormControl(null),
       requestedFlightDate: new FormControl(null),
       destinationAirportId:new FormControl(null),
-      destinationAirportCode:new FormControl(null),
+      destinationAirportName:new FormControl(null),
       shippingReferenceNumber:new FormControl(null),
       currency:new FormControl(null),
       declaredValueForCarriage:new FormControl(null),
@@ -78,7 +78,7 @@ export class AwbCreateComponent implements OnInit {
     this.awbForm.get('routingAndDestinationBy')?.patchValue(awb.routingAndDestinationBy);
     this.awbForm.get('requestedFlightDate')?.patchValue(awb.requestedFlightDate);
     this.awbForm.get('destinationAirportId')?.patchValue(awb.destinationAirportId);
-    this.awbForm.get('destinationAirportCode')?.patchValue(awb.destinationAirportCode);
+    this.awbForm.get('destinationAirportName')?.patchValue(awb.destinationAirportName);
     this.awbForm.get('shippingReferenceNumber')?.patchValue(awb.shippingReferenceNumber);
     this.awbForm.get('currency')?.patchValue(awb.currency);
     this.awbForm.get('declaredValueForCarriage')?.patchValue(awb.declaredValueForCarriage);
@@ -99,7 +99,7 @@ export class AwbCreateComponent implements OnInit {
 
   selectedDestination(value: any){
     this.awbForm.get('destinationAirportId')?.patchValue(value.id);
-    this.awbForm.get('destinationAirportCode')?.patchValue(value.value.substring(0, 3));
+    this.awbForm.get('destinationAirportName')?.patchValue(value.value);
   }
 
   saveAWBDetails(){
