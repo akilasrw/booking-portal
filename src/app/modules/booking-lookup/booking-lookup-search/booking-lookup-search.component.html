@@ -109,7 +109,31 @@
                         </div>
                     </div>
                 </div>
-                <div class="lookup-info">
+                <div class="table-content mt-5 lookup-info">
+                    <table class="table mt-0">
+                        <thead class="sticky-top">
+                            <th>Item</th>
+                            <th>Weight (kg)</th>
+                            <th>Dimensions (L x W x H) Cm</th>
+                            <th>No. Package</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img src="/assets/images/box.svg"></td>
+                                <td>50 Kg</td>
+                                <td>20 x 50 x 35 Cm</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td><img src="/assets/images/box.svg"></td>
+                                <td>50 Kg</td>
+                                <td>20 x 50 x 35 Cm</td>
+                                <td>5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- <div class="lookup-info">
                     <div class="row package-row"
                         *ngFor="let package of this.cargoBookingLookup?.packageItems; let i = index">
                         <div *ngIf="i % 2 == 0 && this.cargoBookingLookup?.packageItems[i] != null" class="col-md-6">
@@ -163,7 +187,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
