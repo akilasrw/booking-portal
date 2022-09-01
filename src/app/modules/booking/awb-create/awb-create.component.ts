@@ -21,6 +21,7 @@ export class AwbCreateComponent implements OnInit {
   @Output() closePopup = new EventEmitter<any>();
   @Output() submitDetail = new EventEmitter<any>();
   @Input() awbModel:AWBCreateRM = new AWBCreateRM(); 
+  destinationAirportIndex?: number;
 
 
   constructor(private airportService: AirportService) { }
@@ -94,6 +95,9 @@ export class AwbCreateComponent implements OnInit {
       .subscribe(res => {
         if(res.length > 0) {
           this.destinationAirpots = res;
+          if(this.awbModel != null && this.awbModel.destinationAirportId != null){
+            this.destinationAirportIndex = this.destinationAirpots.findIndex(x => x.id == this.awbModel.destinationAirportId);
+          }
         }
       });
   }
@@ -101,6 +105,11 @@ export class AwbCreateComponent implements OnInit {
   selectedDestination(value: any){
     this.awbForm.get('destinationAirportId')?.patchValue(value.id);
     this.awbForm.get('destinationAirportName')?.patchValue(value.value.substring(4));
+  }
+
+  onClearDestination() {
+    this.awbForm.get('destinationAirportId')?.patchValue(null);
+    this.awbForm.get('destinationAirportName')?.patchValue(null);
   }
 
   saveAWBDetails(){

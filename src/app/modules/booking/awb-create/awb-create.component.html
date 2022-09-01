@@ -129,8 +129,8 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="form-label">Airport Destination</label>
-                    <app-auto-complete-dropdown [data]="destinationAirpots" [keyword]="keyword"
-                            (selectFileOutput)="selectedDestination($event)"></app-auto-complete-dropdown>
+                    <app-auto-complete-dropdown [data]="destinationAirpots" [keyword]="keyword" [selectedIndex]="destinationAirportIndex"
+                            (selectFileOutput)="selectedDestination($event)" (clearSearch)="onClearDestination()"></app-auto-complete-dropdown>
                 </div>
             </div>
         </div>
