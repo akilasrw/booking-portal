@@ -118,76 +118,17 @@
                             <th>No. Package</th>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr *ngFor="let package of this.cargoBookingLookup?.packageItems">
                                 <td><img src="/assets/images/box.svg"></td>
-                                <td>50 Kg</td>
-                                <td>20 x 50 x 35 Cm</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td><img src="/assets/images/box.svg"></td>
-                                <td>50 Kg</td>
-                                <td>20 x 50 x 35 Cm</td>
-                                <td>5</td>
+                                <td>{{this.package.weight +" kg"}}</td>
+                                <td>{{this.package.length +" x "+
+                                    this.package.width +" x "+
+                                    this.package.height}}</td>
+                                <td>{{this.package.pieces}}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <!-- <div class="lookup-info">
-                    <div class="row package-row"
-                        *ngFor="let package of this.cargoBookingLookup?.packageItems; let i = index">
-                        <div *ngIf="i % 2 == 0 && this.cargoBookingLookup?.packageItems[i] != null" class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="second-box text-center">
-                                        <img src="/assets/images/box.svg">
-                                    </div>
-                                </div>
-                                <div class="col-md-9 pe-5">
-                                    <div class="details-group">
-                                        <div class="lable">Package Number</div>
-                                        <div>{{this.cargoBookingLookup?.packageItems[i].packageRefNumber}}</div>
-                                    </div>
-                                    <div class="details-group">
-                                        <div class="lable">Weight (kg)</div>
-                                        <div>{{this.cargoBookingLookup?.packageItems[i].weight +" kg"}}</div>
-                                    </div>
-                                    <div class="details-group">
-                                        <div class="lable">Dimensions (L x W x H) cm</div>
-                                        <div>{{this.cargoBookingLookup?.packageItems[i].length +" x "+
-                                            this.cargoBookingLookup?.packageItems[i].width +" x "+
-                                            this.cargoBookingLookup?.packageItems[i].height}}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div *ngIf="i % 2 == 0 && this.cargoBookingLookup?.packageItems[i+1] != null" class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-3 ps-5">
-                                    <div class="second-box text-center">
-                                        <img src="/assets/images/box.svg">
-                                    </div>
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="details-group">
-                                        <div class="lable">Package Number</div>
-                                        <div>{{this.cargoBookingLookup?.packageItems[i+1].packageRefNumber}}</div>
-                                    </div>
-                                    <div class="details-group">
-                                        <div class="lable">Weight (kg)</div>
-                                        <div>{{this.cargoBookingLookup?.packageItems[i+1].weight +" kg"}}</div>
-                                    </div>
-                                    <div class="details-group">
-                                        <div class="lable">Dimensions (L x W x H) cm</div>
-                                        <div>{{this.cargoBookingLookup?.packageItems[i+1].length +" x "+
-                                            this.cargoBookingLookup?.packageItems[i+1].width +" x "+
-                                            this.cargoBookingLookup?.packageItems[i+1].height}}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
