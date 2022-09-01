@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { ToastrModule } from 'ngx-toastr';
 import { CryptoService } from './services/crypto.service';
-import { AutoCompleteDropdownComponent } from './components/auto-complete-dropdown/auto-complete-dropdown.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { WhiteSpaceInputComponent } from './components/forms/white-space-input/white-space-input.component';
 import { LoaderFlightComponent } from './components/loader-flight/loader-flight.component';
@@ -17,6 +16,7 @@ import { PagerComponent } from './components/pager/pager.component';
 import { PagingHeaderComponent } from './components/paging-header/paging-header.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { TableLoaderComponent } from './components/table-loader/table-loader.component';
+import { AutoCompleteDropdownComponent } from './components/forms/auto-complete-dropdown/auto-complete-dropdown.component';
 
 
 

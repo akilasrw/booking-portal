@@ -8,7 +8,6 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 export class AutoCompleteDropdownComponent implements OnInit {
 
   @Input() keyword: string = '';
-  //@Input() placeholder: string = 'Select Airport';
   @Input() data: any = [];
   @Input() selectedIndex?: number;
   @Output() selectFileOutput = new EventEmitter<any>();
