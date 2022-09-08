@@ -2,7 +2,7 @@
     <div class="card-header px-0 pt-0">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h1>Booking Lookup</h1>
+                <h1>Booking View</h1>
             </div>
         </div>
     </div>
@@ -91,8 +91,8 @@
                                     <div>
                                         <span class="awb-status-chip" [ngClass]="{
                                         'none':cargoBookingLookup?.awbStatus == awbStatus.None,
-                                        'added':cargoBookingLookup?.awbStatus == awbStatus.AddedAWB,  
-                                        'pending':cargoBookingLookup?.awbStatus == awbStatus.Pending  
+                                        'added':cargoBookingLookup?.awbStatus == awbStatus.AddedAWB,
+                                        'pending':cargoBookingLookup?.awbStatus == awbStatus.Pending
                                         }">{{(getAWBStatus(cargoBookingLookup?.awbStatus))}}
                                         </span>
                                     </div>
