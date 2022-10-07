@@ -2,10 +2,11 @@ import { AirportService } from './../../../_services/airport.service';
 import { Component, OnInit } from '@angular/core';
 import { SelectList } from 'src/app/shared/models/select-list.model';
 import { CargoRateListService } from 'src/app/_services/cargo-rate-list.service';
-import { CargoRate } from 'src/app/_models/view-models/cargo-rate-list/cargo-rate.model';
-import { CargoRateFilterQuery } from 'src/app/_models/queries/cargo-rate/cargo-rate-filter-query.model';
-import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
-import { ToastrService } from 'ngx-toastr';
+import { AgentRateFilterQuery } from 'src/app/_models/queries/cargo-rate/agent-rate-filter-query.model';
+import { User } from 'src/app/_models/user.model';
+import { Subscription } from 'rxjs';
+import { AccountService } from 'src/app/account/account.service';
+import { AgentRateManagement } from 'src/app/_models/view-models/cargo-rate-list/agent-rate-management.model';
 
 @Component({
   selector: 'app-rate-list',
@@ -14,23 +15,33 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RateListComponent implements OnInit {
 
-  cargoRateFilterQuery: CargoRateFilterQuery = new CargoRateFilterQuery();
+  cargoRateFilterQuery: AgentRateFilterQuery = new AgentRateFilterQuery();
   originAirportId?: string;
   destinationAirportId?: string;
   originAirpots: SelectList[] = [];
   destinationAirpots: SelectList[] = [];
-  cargoRateList: CargoRate[] = []
+  currentUser?: User | null;
+  subscription?: Subscription;
+  agentRateList: AgentRateManagement[] = []
   keyword = 'value';
   totalCount: number = 0;
   isLoading :boolean= false;
 
   constructor(
     private airportService: AirportService,
-    private toastr: ToastrService,
+    private accountService: AccountService,
     private cargoRateListService: CargoRateListService) { }
 
   ngOnInit(): void {
+    this.getCurrentUser();
     this.loadAirports();
+    this.getRateList(); 
+  }
+
+  getCurrentUser() {
+    this.subscription = this.accountService.currentUser$.subscribe(res => {
+      this.currentUser = res;
+    });
   }
 
   loadAirports() {
@@ -46,41 +57,32 @@ export class RateListComponent implements OnInit {
   }
 
   getRateList() {
-    if (this.isformValid()) {
       this.isLoading=true;
+      this.cargoRateFilterQuery.userId = this.currentUser?.id;
       this.cargoRateFilterQuery.originAirportId = this.originAirportId;
       this.cargoRateFilterQuery.destinationAirportId = this.destinationAirportId;
       this.cargoRateListService.getFilteredRateList(this.cargoRateFilterQuery).subscribe(
         {
           next: (res) => {
-            this.cargoRateList = res.data;
+            this.agentRateList = res.data;
             this.totalCount = res.count;
             this.isLoading=false;
           },
           error: (error) => {
             this.totalCount = 0;
-            this.cargoRateList = [];
+            this.agentRateList = [];
             this.isLoading=false;
           }
         }
       )
-    }
   }
 
-  isformValid(): boolean {
-    
-    if ((this.originAirportId === undefined || this.originAirportId === "") ||
-      (this.destinationAirportId === undefined || this.destinationAirportId === "")) {
-      this.toastr.error('Please select origin and destination.');
-      return false;
-    } else {
-      if (this.originAirportId === this.destinationAirportId) {
-        this.toastr.error('Origin and destination is same.');
-        return false;
-      } else {
-        return true;
-      }
-    }
+  onClearOrigin() {
+    this.originAirportId = undefined;
+  }
+
+  onClearDestination() {
+    this.destinationAirportId = undefined;
   }
 
   selectedOrigin(value: any) {
@@ -91,23 +93,11 @@ export class RateListComponent implements OnInit {
     this.destinationAirportId = value.id;
   }
 
-  GetPackageDimentions(item: CargoRate): string {
-    return CoreExtensions.GetPackageDimentions(item.length, item.width, item.height)
-  }
-
-  GetPackageContainerType(value: number): string {
-    return CoreExtensions.GetPackageContainerType(value)
-
-  }
-
-  GetPackageBoxType(value: number): string {
-    return CoreExtensions.GetPackageBoxType(value)
-  }
-
   public onPageChanged(event: any) {
     if (this.cargoRateFilterQuery?.pageIndex !== event) {
       this.cargoRateFilterQuery.pageIndex = event;
       this.getRateList();
     }
   }
+
 }
