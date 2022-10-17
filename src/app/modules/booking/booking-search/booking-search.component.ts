@@ -128,6 +128,11 @@ export class BookingSearchComponent implements OnInit {
       this.toastr.error('Please select origin and destination.');
       return false;
     }
+
+    if (this.bookingForm.get('originAirportId')?.value === this.bookingForm.get('destinationAirportId')?.value) {
+      this.toastr.error('Origin and destination is same.');
+      return false;
+    }
     
     if (this.bookingForm.get('scheduledDepartureDateTime')?.value === undefined || this.bookingForm.get('scheduledDepartureDateTime')?.value === "") {
       this.toastr.error('Please select flight date.');
