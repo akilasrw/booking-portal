@@ -24,7 +24,7 @@ export class CoreExtensions {
         statusString = "None";
         break;
       case BookingStatus.Pending:
-        statusString = "Pending";
+        statusString = "Booked";
         break;
       case BookingStatus.Accepted:
         statusString = "Accepted";
