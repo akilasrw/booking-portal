@@ -40,7 +40,7 @@ export class AccountService extends BaseService {
     }
     if (query.isCountryInclude) {
       params = params.append("isCountryInclude", query.isCountryInclude);
-    }    
+    }
     return this.getWithParams<CargoAgent>('cargoagent',params);
   }
 
@@ -57,8 +57,11 @@ export class AccountService extends BaseService {
     )
   }
 
-  refreshToken() {
-    return this.http.post(this.baseUrl + 'user/refresh-token', {}, { withCredentials: true }).pipe(
+  refreshToken(token?: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    }
+    return this.http.post(this.baseUrl + 'user/refresh-token', '"' + token + '"', httpOptions).pipe(
       map((response: any) => {
         const user = response;
         if (user) {
