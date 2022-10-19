@@ -316,14 +316,18 @@ export class FreighterBookingCreateComponent implements OnInit {
 
   getChargeableWeight(packageItem:PackageItem){
     var cargableWeight = 0;
+    var chargableWeightTotal= 0;
     if(Constants.CM_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
-      cargableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)*packageItem.pieces!)/6000;
+      cargableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)/1000000)*167;
+      chargableWeightTotal = packageItem.weight!>cargableWeight? packageItem.weight!* packageItem.pieces! : cargableWeight * packageItem.pieces!;
     }else if(Constants.INCH_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
-      cargableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)*packageItem.pieces!)/366;
+      cargableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)/61023.7)*167;
+      chargableWeightTotal = packageItem.weight!>cargableWeight? packageItem.weight!* packageItem.pieces! : cargableWeight * packageItem.pieces!;
     }else if(Constants.METER_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
-      cargableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)*packageItem.pieces!)/167;
+      cargableWeight = (packageItem.width! * packageItem.length! * packageItem.height!)*167;
+      chargableWeightTotal = packageItem.weight!>cargableWeight? packageItem.weight!* packageItem.pieces! : cargableWeight * packageItem.pieces!;
     }
-    return CoreExtensions.RoundToTwoDecimalPlaces(Number(cargableWeight))
+    return CoreExtensions.RoundToTwoDecimalPlaces(Number(chargableWeightTotal))
   }
 
   getCargoType(type: number) {
