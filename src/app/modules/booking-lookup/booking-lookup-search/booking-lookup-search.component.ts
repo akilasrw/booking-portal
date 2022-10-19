@@ -13,6 +13,7 @@ import { User } from 'src/app/_models/user.model';
 import { AWBDetail } from 'src/app/_models/view-models/awb/awb-detail.model';
 import { BookingLookupPrintComponent } from '../booking-lookup-print/booking-lookup-print.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { PackageItem } from 'src/app/_models/view-models/package-item.model';
 
 
 @Component({
@@ -120,6 +121,7 @@ export class BookingLookupSearchComponent implements OnInit {
   generatePDF(cargoBookingLookup: CargoBookingLookup) {
     this.isPrinting = true;
     if (cargoBookingLookup.awbInformation !== undefined) {
+      this.calculatePackageItemDetail(cargoBookingLookup.packageItems);
       this.spinner.show();
       console.log('generatePDF');
       this.child.printData(cargoBookingLookup.awbInformation);
@@ -127,6 +129,24 @@ export class BookingLookupSearchComponent implements OnInit {
       setTimeout(() => {
         this.spinner.hide();
       }, 2000);
+    }
+  }
+
+  calculatePackageItemDetail(packageItems: PackageItem[]){
+    var noPieces:number=0
+    var grossWeight:number=0
+    var chargeableWeight : number=0
+    packageItems.forEach(obj=>{
+      if(obj != undefined && obj.pieces != undefined && obj.weight != undefined){
+        noPieces += obj.pieces;
+        grossWeight += obj.pieces * obj.weight;
+      }
+    })
+    this.cargoBookingLookup!.awbInformation!.packageItemCategory=packageItems[0].packageItemCategory;
+    this.cargoBookingLookup!.awbInformation!.noOfPieces=noPieces;
+    this.cargoBookingLookup!.awbInformation!.grossWeight=grossWeight;
+    if(this.cargoBookingLookup!.awbInformation!.rateCharge != undefined){
+      this.cargoBookingLookup!.awbInformation!.totalCharge = this.cargoBookingLookup!.awbInformation!.rateCharge *chargeableWeight;
     }
   }
 

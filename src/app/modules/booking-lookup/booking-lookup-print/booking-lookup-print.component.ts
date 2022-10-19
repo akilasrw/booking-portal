@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { AWBDetail } from 'src/app/_models/view-models/awb/awb-detail.model';
+import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 
 @Component({
   selector: 'app-booking-lookup-print',
@@ -52,5 +53,9 @@ export class BookingLookupPrintComponent implements OnInit {
       PDF.html(this.invoiceElement.nativeElement.innerHTML)
       PDF.save('awb.pdf');
     });
+  }
+
+  getCargoType(type: number) {
+    return CoreExtensions.GetCargoType(type);
   }
 }
