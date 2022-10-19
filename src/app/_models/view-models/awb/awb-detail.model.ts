@@ -1,3 +1,4 @@
+import { PackageItemCategory } from "src/app/core/enums/common-enums";
 
 export class AWBDetail{
     userId?:string
@@ -26,4 +27,10 @@ export class AWBDetail{
     amountOfInsurance?:number;   
     rateCharge?:number;
     natureAndQualityOfGoods?:string;
+    packageItemCategory?:PackageItemCategory;
+    noOfPieces?:number;
+    grossWeight?:number;
+    comodityType?:string;
+    chargeableWeight?:number;
+    totalCharge?:number;
   }

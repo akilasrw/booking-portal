@@ -7,43 +7,42 @@
         </div>
     </div>
     <div class="card-body without-footer">
-        <div class="row align-items-center">
-            <div class="col-md-3">
-                <div class="form-group">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="filter-wrapper">
+                <div class="filter-group">
                     <label class="form-label">Origin</label>
                     <app-auto-complete-dropdown [data]="originAirpots" [keyword]="keyword"
-                        (selectFileOutput)="selectedOrigin($event)"></app-auto-complete-dropdown>
+                        (selectFileOutput)="selectedOrigin($event)" (changeSearch)="onClearOrigin()"
+                        (clearSearch)="onClearOrigin()"></app-auto-complete-dropdown>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
+                <div class="filter-group">
                     <label class="form-label">Destination</label>
                     <app-auto-complete-dropdown [data]="destinationAirpots" [keyword]="keyword"
-                        (selectFileOutput)="selectedDestination($event)"></app-auto-complete-dropdown>
+                        (selectFileOutput)="selectedDestination($event)" (changeSearch)="onClearDestination()"
+                        (clearSearch)="onClearDestination()"></app-auto-complete-dropdown>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group mb-0">
-                    <button (click)="getRateList()" class="btn btn-primary-outline">Find</button>
-                </div>
+                <div class="button"><button (click)="getRateList()" class="btn sm btn-primary-outline">Add
+                        Filter</button></div>
             </div>
         </div>
         <div *ngIf="!isLoading" class="table-content">
             <table class="table table-responsive">
                 <thead>
-                    <th>Box Type</th>
-                    <th>Dimensions(LxWxH) cm</th>
-                    <th>Max Weight(kg)</th>
-                    <th>Price($)</th>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th>M</th>
+                    <th>-45K</th>
+                    <th>+45K</th>
+                    <th>+100K</th>
+                    <th>+300K</th>
+                    <th>+500K</th>
+                    <th>+1000K</th>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of this.cargoRateList">
-                        <td>{{GetPackageBoxType(item.packageBoxType)}}</td>
-                        <td *ngIf="item.packageBoxType == 2">Custom Dimetions</td>
-                        <td *ngIf="item.packageBoxType != 2">{{GetPackageContainerType(item.packageContainerType)+" -
-                            "+GetPackageDimentions(item)}}</td>
-                        <td>{{item.maxWaight +" kg"}}</td>
-                        <td>{{"$ "+ item.rate}}</td>
+                    <tr *ngFor="let item of this.agentRateList">
+                        <td>{{item.originAirportCode}}</td>
+                        <td>{{item.destinationAirportCode}}</td>
+                        <td *ngFor="let rateItem of item.agentRates">{{rateItem.rate}}</td>
                     </tr>
                 </tbody>
             </table>

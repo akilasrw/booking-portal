@@ -85,7 +85,7 @@
                       <label class="form-label">Country<span class="compulsory">*</span></label>
                       <app-auto-complete-dropdown
                           [data] = "countryList" [keyword] ="keyword" (selectFileOutput)="selectedCountry($event)" [tabindex] ="8"
-                          ></app-auto-complete-dropdown>
+                          (changeSearch)="onClearCountry()" (clearSearch)="onClearCountry()"></app-auto-complete-dropdown>
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -99,22 +99,32 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
+                      <label class="form-label">Base Airport<span class="compulsory">*</span></label>
+                      <app-auto-complete-dropdown [data]="baseAirpots" [keyword]="keyword" [tabindex]="10"
+                      (selectFileOutput)="selectedBaseAirport($event)" (changeSearch)="onClearBaseAirport()"
+                      (clearSearch)="onClearBaseAirport()"></app-auto-complete-dropdown>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
                       <label class="form-label">Agent IATA Code</label>
-                      <app-text-input [formControl]='registrationForm.controls["agentIATACode"]' [label]='"agent IATA code"' [tabindex] ="10">
+                      <app-text-input [formControl]='registrationForm.controls["agentIATACode"]' [label]='"agent IATA code"' [tabindex] ="11">
                       </app-text-input>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="form-label">Password<span class="compulsory">*</span></label>
-                      <app-white-space-input [formControl]='registrationForm.controls["password"]' [type]="'password'" [label]='"password"' [tabindex] ="11">
+                      <app-white-space-input [formControl]='registrationForm.controls["password"]' [type]="'password'" [label]='"password"' [tabindex] ="12">
                       </app-white-space-input>
                     </div>
                   </div>
+                </div>
+                <div class="row">
                   <div class="col-md-4">
-                    <div class="form-group">
+                    <div class="form-group">                    
                       <label class="form-label">Re-Enter Password<span class="compulsory">*</span></label>
-                      <app-white-space-input [formControl]='registrationForm.controls["confirmPassword"]' [type]="'password'" [label]='"re-enter password"' [tabindex] ="12">
+                      <app-white-space-input [formControl]='registrationForm.controls["confirmPassword"]' [type]="'password'" [label]='"re-enter password"' [tabindex] ="13">
                       </app-white-space-input>
                     </div>
                   </div>

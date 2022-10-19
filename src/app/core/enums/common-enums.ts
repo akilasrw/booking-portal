@@ -74,3 +74,14 @@ export enum AircraftConfigType {
   P2C = 1,
   Freighter = 2,
 }
+
+export enum WeightType {
+  None = 0,
+  M = 1,
+  Minus45K = 2,
+  Plus45K = 3,
+  Plus100K = 4,
+  Plus300K = 5,
+  Plus500K = 6,
+  Plus1000K = 7
+}

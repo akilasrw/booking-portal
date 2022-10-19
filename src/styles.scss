@@ -255,6 +255,19 @@ a {
             max-width: 10.625rem;
             @include inputField(1.563rem);
         }
+        .autocomplete-container {
+            height: auto;
+            box-shadow: none;
+            .input-container input {
+                max-width: 10.625rem;
+                @include inputField(1.563rem);
+                border: 1px solid $input-border;
+                border-radius: 0.25rem;
+            }
+            .suggestions-container ul li a {
+                font-size: 12px;
+            }
+        }
     }
     .button {
         margin-top: 1.438rem;

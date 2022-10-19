@@ -1,16 +1,17 @@
 
 export interface CargoAgentRM{
-    agentName:String;
-    userName:String;
-    address:String;
-    primaryTelephoneNumber:String;
-    secondaryTelephoneNumber:String;
-    email:String;
-    cargoAccountNumber:String;
-    countryId:String;
-    city:String;
-    agentIATACode:String;
-    password:String;
-    confirmPassword:String;
+    agentName:string;
+    userName:string;
+    address:string;
+    primaryTelephoneNumber:string;
+    secondaryTelephoneNumber:string;
+    email:string;
+    cargoAccountNumber:string;
+    countryId:string;
+    baseAirportId:string;
+    city:string;
+    agentIATACode:string;
+    password:string;
+    confirmPassword:string;
   }
   

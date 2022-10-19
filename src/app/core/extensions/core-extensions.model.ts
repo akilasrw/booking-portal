@@ -1,4 +1,4 @@
-import { PackageItemStatus, PackageContainerType, PackageBoxType, AWBStatus } from './../enums/common-enums';
+import { PackageItemStatus, PackageContainerType, PackageBoxType, AWBStatus, WeightType } from './../enums/common-enums';
 import { HttpParams } from "@angular/common/http";
 import { BasePaginationQuery } from "src/app/shared/models/base-pagination-query.model";
 import { BookingStatus } from "../enums/common-enums";
@@ -24,7 +24,7 @@ export class CoreExtensions {
         statusString = "None";
         break;
       case BookingStatus.Pending:
-        statusString = "Pending";
+        statusString = "Booked";
         break;
       case BookingStatus.Accepted:
         statusString = "Accepted";
@@ -179,6 +179,39 @@ export class CoreExtensions {
     var s = num+"";
     while (s.length < size) s = "0" + s;
     return s;
+  }
+
+  public static GetWeightType(type: WeightType): string {
+    let statusString = "None";
+    switch (type) {
+      case WeightType.None:
+        statusString = "None";
+        break;
+      case WeightType.M:
+        statusString = "M";
+        break;
+      case WeightType.Minus45K:
+        statusString = "-45K";
+        break;
+      case WeightType.Plus45K:
+        statusString = "+45K";
+        break;
+      case WeightType.Plus100K:
+        statusString = "+100K";
+        break;
+      case WeightType.Plus300K:
+        statusString = "+300K";
+        break;
+      case WeightType.Plus500K:
+        statusString = "+500K";
+        break;
+      case WeightType.Plus1000K:
+        statusString = "+1000K";
+        break;
+      default:
+        break;
+    }
+    return statusString;
   }
 
 }
