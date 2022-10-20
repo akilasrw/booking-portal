@@ -137,14 +137,16 @@ export class BookingLookupSearchComponent implements OnInit {
     var grossWeight:number=0
     var chargeableWeight : number=0
     packageItems.forEach(obj=>{
-      if(obj != undefined && obj.pieces != undefined && obj.weight != undefined){
+      if(obj != undefined && obj.pieces != undefined && obj.weight != undefined && obj.chargeableWeight != undefined ){
         noPieces += obj.pieces;
         grossWeight += obj.pieces * obj.weight;
+        chargeableWeight += obj.pieces * obj.chargeableWeight; 
       }
     })
     this.cargoBookingLookup!.awbInformation!.packageItemCategory=packageItems[0].packageItemCategory;
     this.cargoBookingLookup!.awbInformation!.noOfPieces=noPieces;
     this.cargoBookingLookup!.awbInformation!.grossWeight=grossWeight;
+    this.cargoBookingLookup!.awbInformation!.chargeableWeight=chargeableWeight;
     if(this.cargoBookingLookup!.awbInformation!.rateCharge != undefined){
       this.cargoBookingLookup!.awbInformation!.totalCharge = this.cargoBookingLookup!.awbInformation!.rateCharge *chargeableWeight;
     }

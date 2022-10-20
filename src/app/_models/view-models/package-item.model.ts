@@ -7,6 +7,7 @@ export class PackageItem extends BaseModel{
     length?:number;
     height?:number;
     weight?:number;
+    chargeableWeight?:number;
     description?:string;
     packageItemStatus?: PackageItemStatus;
     packageItemCategory?:PackageItemCategory;
