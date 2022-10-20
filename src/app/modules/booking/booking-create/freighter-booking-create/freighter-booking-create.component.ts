@@ -228,7 +228,8 @@ export class FreighterBookingCreateComponent implements OnInit {
       chargeableWeight: this.getChargeableWeight(
         { weight: CoreExtensions.RoundToTwoDecimalPlaces(Number(packageItem.weight)),
           length: Number(packageItem.length),width: Number(packageItem.width),
-          height:Number(packageItem.height),volumeUnitId: packageItem.volumeUnitId}),
+          height:Number(packageItem.height),volumeUnitId: packageItem.volumeUnitId,
+          weightUnitId: packageItem.weightUnitId}),
     };
   }
 
