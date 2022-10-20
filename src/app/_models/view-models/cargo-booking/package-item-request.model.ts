@@ -8,6 +8,7 @@ export class PackageItemRM {
   height?: number;
   volumeUnitId?: string;
   weight?: number;
+  chargeableWeight?:number;
   weightUnitId?: string;
   declaredValue?: number;
   packageItemCategory?: PackageItemCategory;

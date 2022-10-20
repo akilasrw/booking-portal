@@ -225,6 +225,10 @@ export class FreighterBookingCreateComponent implements OnInit {
       isEdit: packageItem.isEdit,
       pieces: packageItem.pieces,
       aWBDetail: this.awbDetail,
+      chargeableWeight: this.getChargeableWeight(
+        { weight: CoreExtensions.RoundToTwoDecimalPlaces(Number(packageItem.weight)),
+          length: Number(packageItem.length),width: Number(packageItem.width),
+          height:Number(packageItem.height),volumeUnitId: packageItem.volumeUnitId}),
     };
   }
 
@@ -315,19 +319,48 @@ export class FreighterBookingCreateComponent implements OnInit {
   }
 
   getChargeableWeight(packageItem:PackageItem){
-    var cargableWeight = 0;
-    var chargableWeightTotal= 0;
-    if(Constants.CM_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
-      cargableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)/1000000)*167;
-      chargableWeightTotal = packageItem.weight!>cargableWeight? packageItem.weight!* packageItem.pieces! : cargableWeight * packageItem.pieces!;
-    }else if(Constants.INCH_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
-      cargableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)/61023.7)*167;
-      chargableWeightTotal = packageItem.weight!>cargableWeight? packageItem.weight!* packageItem.pieces! : cargableWeight * packageItem.pieces!;
-    }else if(Constants.METER_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
-      cargableWeight = (packageItem.width! * packageItem.length! * packageItem.height!)*167;
-      chargableWeightTotal = packageItem.weight!>cargableWeight? packageItem.weight!* packageItem.pieces! : cargableWeight * packageItem.pieces!;
+    var chargeableWeight = 0;
+    var actualChargeableWeight= 0;
+
+    if(Constants.BASE_WEIGHT_UNIT_ID.toLowerCase()!= packageItem.weightUnitId){
+      var weight =CoreExtensions.GramToKilogramConversion(packageItem.weight!);
+      packageItem.weight = weight
     }
-    return CoreExtensions.RoundToTwoDecimalPlaces(Number(chargableWeightTotal))
+
+    if(Constants.CM_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
+      chargeableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)/1000000)*167;
+      actualChargeableWeight = packageItem.weight!>chargeableWeight? packageItem.weight!: chargeableWeight;
+    }else if(Constants.INCH_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
+      chargeableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)/61023.7)*167;
+      actualChargeableWeight = packageItem.weight!>chargeableWeight? packageItem.weight! : chargeableWeight;
+    }else if(Constants.METER_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
+      chargeableWeight = (packageItem.width! * packageItem.length! * packageItem.height!)*167;
+      actualChargeableWeight = packageItem.weight!>chargeableWeight? packageItem.weight! : chargeableWeight;
+    }
+    return CoreExtensions.RoundToTwoDecimalPlaces(Number(actualChargeableWeight))
+  }
+
+  getChargeableWeightTotal(packageItem:PackageItem){
+
+    var chargeableWeight = 0;
+    var chargeableWeightTotal= 0;
+    
+    if(Constants.BASE_WEIGHT_UNIT_ID.toLowerCase()!= packageItem.weightUnitId){
+      var weight =CoreExtensions.GramToKilogramConversion(packageItem.weight!);
+      packageItem.weight = weight
+    }
+
+    if(Constants.CM_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
+      chargeableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)/1000000)*167;
+      chargeableWeightTotal = packageItem.weight!>chargeableWeight? packageItem.weight!* packageItem.pieces! : chargeableWeight * packageItem.pieces!;
+    }else if(Constants.INCH_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
+      chargeableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)/61023.7)*167;
+      chargeableWeightTotal = packageItem.weight!>chargeableWeight? packageItem.weight!* packageItem.pieces! : chargeableWeight * packageItem.pieces!;
+    }else if(Constants.METER_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
+      chargeableWeight = (packageItem.width! * packageItem.length! * packageItem.height!)*167;
+      chargeableWeightTotal = packageItem.weight!>chargeableWeight? packageItem.weight!* packageItem.pieces! : chargeableWeight * packageItem.pieces!;
+    }
+    return CoreExtensions.RoundToTwoDecimalPlaces(Number(chargeableWeightTotal))
   }
 
   getCargoType(type: number) {
