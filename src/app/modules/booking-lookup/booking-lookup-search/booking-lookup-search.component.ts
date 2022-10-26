@@ -103,15 +103,7 @@ export class BookingLookupSearchComponent implements OnInit {
   getAWBStatus(status: number): string {
     return CoreExtensions.GetAWBStatus(status)
   }
-
-  GetFormattedAWBNumber(cargoBookingLookup: CargoBookingLookup): string {
-    if (cargoBookingLookup != null && cargoBookingLookup.awbInformation != null && cargoBookingLookup.awbInformation.awbTrackingNumber != undefined) {
-      return cargoBookingLookup.awbInformation.awbTrackingNumber == 0 ? '-' : CoreExtensions.PadLeadingZeros(cargoBookingLookup.awbInformation.awbTrackingNumber, 8);
-    } else {
-      return '-';
-    }
-  }
-
+  
   getCurrentUser() {
     this.subscription = this.accountService.currentUser$.subscribe(res => {
       this.currentUser = res;

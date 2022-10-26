@@ -69,14 +69,6 @@ export class BookingViewDetailComponent implements OnInit {
     return CoreExtensions.GetAWBStatus(status)
   }
 
-  GetFormattedAWBNumber(cargoBookingDetail: CargoBookingDetail): string {
-    if(cargoBookingDetail != null && cargoBookingDetail.awbInformation != null && cargoBookingDetail.awbInformation.awbTrackingNumber != undefined){
-      return cargoBookingDetail.awbInformation.awbTrackingNumber == 0? '-':CoreExtensions.PadLeadingZeros(cargoBookingDetail.awbInformation.awbTrackingNumber,8);
-    }else{
-      return '-';
-    }
-  }
-
   addAWB() {
     this.awbModel = new AWBCreateRM();
     this.awbModel.agentAccountNumber = this.cargoAgent?.cargoAccountNumber;

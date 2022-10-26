@@ -27,5 +27,6 @@ export class AWBCreateRM{
     cargoBookingId?:string;
     rateCharge?:number;
     natureAndQualityOfGoods?:string;
+    awbTrackingNumber?:number;
   }
   

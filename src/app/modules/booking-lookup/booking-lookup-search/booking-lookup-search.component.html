@@ -84,7 +84,7 @@
                                 </div>
                                 <div class="details-group">
                                     <div class="lable">AWB Number</div>
-                                    <div>{{GetFormattedAWBNumber(cargoBookingLookup)}}</div>
+                                    <div>{{(cargoBookingLookup?.awbInformation != null && cargoBookingLookup?.awbInformation.awbTrackingNumber !=0)?cargoBookingLookup?.awbInformation.awbTrackingNumber:'-'}}</div>
                                 </div>
                                 <div class="details-group">
                                     <div class="lable">AWB Status</div>

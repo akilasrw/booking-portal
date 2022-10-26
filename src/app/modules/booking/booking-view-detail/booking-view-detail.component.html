@@ -107,7 +107,7 @@
                         <div *ngIf="cargoBookingDetail?.awbInformation != null">
                             <div class="details-group pt-0">
                                 <div class="lable">AWB Tracking Number</div>
-                                <div>{{ GetFormattedAWBNumber(cargoBookingDetail)}}
+                                <div>{{(cargoBookingDetail?.awbInformation.awbTrackingNumber !=0)?cargoBookingDetail?.awbInformation.awbTrackingNumber:'-'}}
                                 </div>
                             </div>
                             <div class="details-group">

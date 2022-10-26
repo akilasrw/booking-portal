@@ -60,6 +60,7 @@ export class AwbCreateComponent implements OnInit {
       amountOfInsurance:new FormControl(null),
       rateCharge:new FormControl(null),
       natureAndQualityOfGoods:new FormControl(null),
+      awbTrackingNumber:new FormControl(null)
     });
   }
 
@@ -88,6 +89,7 @@ export class AwbCreateComponent implements OnInit {
     this.awbForm.get('amountOfInsurance')?.patchValue(awb.amountOfInsurance);
     this.awbForm.get('rateCharge')?.patchValue(awb.rateCharge);
     this.awbForm.get('natureAndQualityOfGoods')?.patchValue(awb.natureAndQualityOfGoods);
+    this.awbForm.get('awbTrackingNumber')?.patchValue(awb.awbTrackingNumber);
   }
 
   loadAirports(){

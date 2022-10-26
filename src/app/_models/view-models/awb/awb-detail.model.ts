@@ -3,7 +3,6 @@ import { PackageItemCategory } from "src/app/core/enums/common-enums";
 export class AWBDetail{
     userId?:string
     shipperName?:string;
-    awbTrackingNumber?:number;
     shipperAccountNumber?:string;
     shipperAddress?:string;
     consigneeName?:string;
@@ -33,4 +32,5 @@ export class AWBDetail{
     comodityType?:string;
     chargeableWeight?:number;
     totalCharge?:number;
+    awbTrackingNumber?:number;
   }
