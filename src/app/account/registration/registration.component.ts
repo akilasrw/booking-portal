@@ -7,6 +7,7 @@ import { SelectList } from 'src/app/shared/models/select-list.model';
 import { ToastrService } from 'ngx-toastr';
 import { CountryService } from 'src/app/_services/country.service';
 import { AirportService } from 'src/app/_services/airport.service';
+import { CargoAgentStatus } from 'src/app/core/enums/common-enums';
 
 
 
@@ -102,9 +103,10 @@ export class RegistrationComponent implements OnInit {
 
     if(this.registrationForm.valid){  
       var agent: CargoAgentRM = this.registrationForm.value;
+      agent.status = CargoAgentStatus.Pending;
       this.accountService.register(agent).subscribe({
         next:(res)=>{
-          this.toastr.success('Successfully registered.');
+          this.toastr.success('User creation request submitted successfully. Await for the approval');
           this.router.navigate([this.returnUrl]);
         },
         error:(err)=>{

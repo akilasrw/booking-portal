@@ -1,3 +1,4 @@
+import { CargoAgentStatus } from "src/app/core/enums/common-enums";
 
 export interface CargoAgentRM{
     agentName:string;
@@ -13,5 +14,6 @@ export interface CargoAgentRM{
     agentIATACode:string;
     password:string;
     confirmPassword:string;
+    status?: CargoAgentStatus;
   }
   

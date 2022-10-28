@@ -85,3 +85,10 @@ export enum WeightType {
   Plus500K = 6,
   Plus1000K = 7
 }
+
+export enum CargoAgentStatus {
+  None = 0,
+  Pending = 1,
+  Active = 2,
+  Suspended = 3
+}

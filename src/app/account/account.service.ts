@@ -45,7 +45,7 @@ export class AccountService extends BaseService {
   }
 
   login(model: AuthenticateRM) {
-    return this.http.post(this.baseUrl + 'user/authenticate', model, { withCredentials: true }).pipe(
+    return this.http.post(this.baseUrl + 'user/cargo-agent-authenticate', model, { withCredentials: true }).pipe(
       map((response: any) => {
         const user = response;
         if (user) {
