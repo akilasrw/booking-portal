@@ -26,11 +26,11 @@
     <div class="card-row card-subtitle">Available Cargo Space</div>
     <div class="card-row">
         <div class="label">Weight</div>
-        <div class="value"> {{flightScheduleSector.availableWeight +" "+"Kg"}}</div>
+        <div class="value"> {{flightScheduleSector.availableWeight|number :'1.2-2'}} Kg</div>
     </div>
     <div class="card-row">
         <div class="label">Volume</div>
-        <div class="value">{{convertcm3Tom3(flightScheduleSector.availableVolume) +" "+"m3"}}(Cubic meter)</div>
+        <div class="value">{{convertcm3Tom3(flightScheduleSector.availableVolume)|number :'1.2-2'}} m3(Cubic meter)</div>
     </div>
     <div class="card-button">
         <button class="btn btn-primary-outline" [disabled]="!validateSpace(flightScheduleSector)"
