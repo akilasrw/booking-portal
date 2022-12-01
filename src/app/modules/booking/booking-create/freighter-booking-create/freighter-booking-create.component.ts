@@ -97,7 +97,7 @@ export class FreighterBookingCreateComponent implements OnInit {
         id: [''],
         width: [0, [Validators.required, Validators.min(1)]],
         length: [0, [Validators.required, Validators.min(1)]],
-        weight: [0, [Validators.required, Validators.min(1)]],
+        weight: [0, [Validators.required, Validators.min(0.1)]],
         height: [0, [Validators.required, Validators.min(1)]],
         packageItemCategory: [],
         weightUnitId: ['bc1e3d49-5c26-4de5-9cd4-576bbf6e9d0c', [Validators.required]],
