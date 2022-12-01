@@ -35,6 +35,10 @@ export class SideNavComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
     this.getCurrentUser();
+    let currentUrl = window.location.href.split('/').pop();
+    if (currentUrl != null) {
+      this.selectedMenu = this.getSelectedMenuType(currentUrl);
+    }
   }
 
   getCurrentUser() {
@@ -93,6 +97,31 @@ export class SideNavComponent implements OnInit,OnDestroy {
         break;
     }
 
+  }
+
+  getSelectedMenuType(url: string): number {
+    let selectedType = MenuType.None
+    switch (url) {
+      case RouteConstants.DashboardRoute:
+        selectedType = MenuType.DashBoard;
+        break;
+      case RouteConstants.BookingInformationRoute:
+        selectedType = MenuType.BookingInformation;
+        break;
+      case RouteConstants.BookingLookupRoute:
+        selectedType = MenuType.BookingLookup;
+        break;
+      case RouteConstants.RateViewRoute:
+        selectedType = MenuType.RateView;
+        break;
+      case RouteConstants.TrackAWBRoute:
+        selectedType = MenuType.TrackAWB;
+        break;
+      case RouteConstants.NotificationsRoute:
+        selectedType = MenuType.Notifications;
+        break;
+    }
+    return selectedType;
   }
 
 }
