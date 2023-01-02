@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { NotificationModel } from './../../../_models/view-models/notification/notification.model';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-notification-view-detail',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./notification-view-detail.component.scss']
 })
 export class NotificationViewDetailComponent implements OnInit {
+
+  @Input() notificationDetail?: NotificationModel;
 
   constructor() { }
 
