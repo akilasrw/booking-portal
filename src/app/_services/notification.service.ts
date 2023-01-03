@@ -24,8 +24,8 @@ export class NotificationService extends BaseService{
       params = params.append("userId", query.userId);
     }
 
-    if (query.isUnread) {
-      params = params.append("isUnread", query.isUnread);
+    if (query.filterType) {
+      params = params.append("filterType", query.filterType);
     }
     
     params = CoreExtensions.AsPaginate(params, query);
@@ -36,5 +36,8 @@ export class NotificationService extends BaseService{
     );
   }
 
+  deleteNotification(id:string){
+    return this.delete<boolean>(`${this.endpointEntityName}/${id}`, null);
+  }
 
 }

@@ -1,35 +1,39 @@
 <div class="main-card">
     <div class="card-header px-0 pt-0">
         <div class="d-flex justify-content-between align-items-center">
-            <div><h1>Notifications</h1></div>
+            <div>
+                <h1>Notifications</h1>
+            </div>
         </div>
     </div>
     <div class="card-body without-footer">
         <div class="notifi-block">
             <div class="notifi-section">
-                <div class="notifications-filters">
-                    <div class="cu-check">
-                        <label class="cu-checkbox">All
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
+                <form [formGroup]="filterForm">
+                    <div class="notifications-filters">
+                        <div class="cu-check">
+                            <label class="cu-checkbox">All
+                                <input type="radio" value="1" checked formControlName="filterType"
+                                    (change)="getNotifications()">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="cu-check">
+                            <label class="cu-checkbox">Read
+                                <input type="radio" value="2" formControlName="filterType"
+                                    (change)="getNotifications()">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="cu-check">
+                            <label class="cu-checkbox">Unread
+                                <input type="radio" value="3" formControlName="filterType"
+                                    (change)="getNotifications()">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="cu-check">
-                        <label class="cu-checkbox">Read
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                    <div class="cu-check">
-                        <label class="cu-checkbox">Unread
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="notifi-action">
-                    <i class="ca ca-icn-bin" title="Delete"></i>
-                </div>
+                </form>
             </div>
             <div class="link">
                 <button class="btn">Mark All As Read</button>
@@ -38,16 +42,15 @@
         <div class="notifi-list">
             <div class="notifi-info">
                 <div *ngFor="let notification of this.notificationList">
-                    <div class="notification-content" [ngClass]="{'read': notification.isRead,'unread': !notification.isRead}">
+                    <div class="notification-content"
+                        [ngClass]="{'read': notification.isRead,'unread': !notification.isRead}">
                         <div class="content-block">
                             <div class="notifi-icon">
-                                <i class="ca ca-icn-bell notifiicon"
-                                [ngClass]="{
+                                <i class="ca ca-icn-bell notifiicon" [ngClass]="{
                                     'success':notification?.notificationType == notificationType.Booking,
                                     'complete':notification?.notificationType == notificationType.None,
                                     'warning':notification?.notificationType == notificationType.Rate
-                                    }"
-                                ></i>
+                                    }"></i>
                             </div>
                             <div class="notifi-content">
                                 <p>{{notification.title}}</p>
@@ -62,6 +65,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <i class="ca ca-icn-bin" title="Delete" (click)="onDelete(notification.id)"></i>
                         </div>
                     </div>
                 </div>
@@ -77,10 +81,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">View Notification</h2>
-                <button type="button" class="close btn" data-dismiss="modal" (click)="hide()" aria-label="Close"><span class="ca ca-icn-close"></span></button>
+                <button type="button" class="close btn" data-dismiss="modal" (click)="hide()" aria-label="Close"><span
+                        class="ca ca-icn-close"></span></button>
             </div>
             <div class="modal-body">
-                <app-notification-view-detail [notificationDetail]="selectedNotification"  (closePopup)="closePopup($event)" *ngIf="modalVisible"></app-notification-view-detail>
+                <app-notification-view-detail [notificationDetail]="selectedNotification"
+                    (closePopup)="closePopup($event)" *ngIf="modalVisible"></app-notification-view-detail>
             </div>
         </div>
     </div>
