@@ -459,6 +459,16 @@ a {
     }
 }
 
+//Loader
+.loader {
+    background: linear-gradient(-45deg, #fff, #E9EBEF, #fff, #E9EBEF);
+    background-size: 400% 400%;
+    animation: gradient 1s ease infinite;
+    height: 14px;
+    display: block;
+    margin: 7px;
+}
+
 // Table lable
 .status-chip {
     @include lable-color;

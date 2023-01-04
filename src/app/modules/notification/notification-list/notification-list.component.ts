@@ -22,18 +22,18 @@ export class NotificationListComponent implements OnInit {
   modalVisibleAnimate = false;
   isLoading = false;
   notificationFilterQuery: NotificationFilterQuery = new NotificationFilterQuery();
-  notificationList:NotificationModel[]=[];
-  selectedNotification?:NotificationModel;
+  notificationList: NotificationModel[] = [];
+  selectedNotification?: NotificationModel;
   totalCount: number = 0;
   currentUser?: User | null
   subscription?: Subscription;
   filterForm?: FormGroup;
 
   constructor(
-    private notificationService:NotificationService,
-    private accountService:AccountService,
+    private notificationService: NotificationService,
+    private accountService: AccountService,
     private fb: FormBuilder,
-    private toastr:ToastrService
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -47,7 +47,10 @@ export class NotificationListComponent implements OnInit {
     })
   }
 
-  show(notification:NotificationModel) {
+  show(notification: NotificationModel) {
+    if (!notification.isRead) {
+      this.markAsRead(notification.id!);
+    }
     this.modalVisible = true;
     this.selectedNotification = notification;
     setTimeout(() => (this.modalVisibleAnimate = true));
@@ -64,8 +67,9 @@ export class NotificationListComponent implements OnInit {
 
   getNotifications() {
     this.isLoading = true;
-    this.notificationFilterQuery.userId= this.currentUser!.id;
-    this.notificationFilterQuery.filterType= this.filterForm?.get('filterType')?.value;
+    this.notificationFilterQuery.userId = this.currentUser!.id;
+    this.notificationFilterQuery.filterType = this.filterForm?.get('filterType')?.value;
+    this.notificationFilterQuery.pageSize = 5;
     this.notificationService.getFilteredList(this.notificationFilterQuery).subscribe(res => {
       this.notificationList = res?.data ?? [];
       this.totalCount = res.count;
@@ -84,22 +88,68 @@ export class NotificationListComponent implements OnInit {
     return NotificationType;
   }
 
-  onDelete(id:string){
-    console.log("On Delete");
-    this.isLoading=true;
+  onDelete(id: string) {
+    this.isLoading = true;
     this.notificationService.deleteNotification(id).subscribe(
       {
         next: (res) => {
           this.toastr.success(CommonMessages.DeletedSuccessMsg);
           this.notificationList = [];
-          this.isLoading=false;
+          this.isLoading = false;
           this.getNotifications();
         },
         error: (error) => {
           this.toastr.error(CommonMessages.DeleteFailMsg);
-          this.isLoading=false;
+          this.isLoading = false;
         }
       }
     );
   }
+
+  public onPageChanged(event: any) {
+    if (this.notificationFilterQuery?.pageIndex !== event) {
+      this.notificationFilterQuery.pageIndex = event;
+      this.getNotifications();
+    }
+  }
+
+  rowCounts() {
+    return new Array(5);
+  }
+
+  markAsRead(id: string) {
+    this.notificationService.markAsRead(id).subscribe(
+      {
+        next: (res) => {
+          this.notificationList = [];
+          this.isLoading = false;
+          this.getNotifications();
+        },
+        error: (error) => {
+          this.isLoading = false;
+        }
+      }
+    );
+  }
+
+  markAllAsRead() {
+    this.notificationService.markAllAsRead(this.currentUser!.id).subscribe(
+      {
+        next: (res) => {
+          this.notificationList = [];
+          this.isLoading = false;
+          this.getNotifications();
+        },
+        error: (error) => {
+          this.isLoading = false;
+        }
+      }
+    );
+  }
+
+  onChangeFilter() {
+    this.notificationFilterQuery.pageIndex = 1;
+    this.getNotifications();
+  }
+
 }
