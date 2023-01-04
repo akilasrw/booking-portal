@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: RouteConstants.RateViewRoute, loadChildren: () => import('./modules/cargo-rate/cargo-rate.module').then(mod => mod.CargoRateModule), canActivate: [AuthGuard] },
   { path: RouteConstants.TrackAWBRoute, loadChildren: () => import('./modules/track-awb/track-awb.module').then(mod => mod.TrackAwbModule), canActivate: [AuthGuard] },
   { path: RouteConstants.NotificationsRoute, loadChildren: () => import('./modules/notification/notification.module').then(mod => mod.NotificationModule), canActivate: [AuthGuard] },
+  { path: RouteConstants.MessagingRoute, loadChildren: () => import('./modules/chatting/chatting.module').then(mod => mod.ChattingModule), canActivate: [AuthGuard] },
   { path: 'server-error', component: ServerErrorComponent },
   { path: '**', component: NotFoundComponent },
 ];

@@ -17,4 +17,5 @@ export class RouteConstants{
   public static RateViewRoute : string = "cargo-rate";
   public static TrackAWBRoute : string = "track-awb";
   public static NotificationsRoute : string = "notification";
+  public static MessagingRoute : string = "message";
 }

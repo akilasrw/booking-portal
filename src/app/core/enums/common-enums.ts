@@ -5,7 +5,8 @@ export enum MenuType {
   BookingLookup = 3,
   RateView = 4,
   TrackAWB = 5,
-  Notifications = 6
+  Notifications = 6,
+  Message = 7
 }
 
 export enum BookingStatus {

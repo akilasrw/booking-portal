@@ -92,6 +92,9 @@ export class SideNavComponent implements OnInit,OnDestroy {
       case MenuType.Notifications:
         this.router.navigate([RouteConstants.NotificationsRoute])
       break;
+      case MenuType.Message:
+        this.router.navigate([RouteConstants.MessagingRoute])
+      break;
       default:
         this.router.navigate([RouteConstants.DashboardRoute]);
         break;
