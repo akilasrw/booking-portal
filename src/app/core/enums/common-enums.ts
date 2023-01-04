@@ -93,3 +93,16 @@ export enum CargoAgentStatus {
   Active = 2,
   Suspended = 3
 }
+
+export enum NotificationType{
+  None = 0,
+  Booking = 1,
+  Rate = 2,
+}
+
+export enum NotificationFilterType{
+  None = 0,
+  All = 1,
+  Read = 2,
+  UnRead = 3,
+}
