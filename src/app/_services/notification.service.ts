@@ -13,6 +13,8 @@ export class NotificationService extends BaseService{
 
   private readonly endpointEntityName = 'Notification';
   private readonly getFilteredListEndpoint = `${this.endpointEntityName}/getFilteredList`;
+  private readonly markAsReadEndpoint =`${this.endpointEntityName}/markAsRead`;
+  private readonly markAllAsReadEndpoint =`${this.endpointEntityName}/markAllAsRead`;
 
   constructor(http:HttpClient) {
     super(http);
@@ -38,6 +40,14 @@ export class NotificationService extends BaseService{
 
   deleteNotification(id:string){
     return this.delete<boolean>(`${this.endpointEntityName}/${id}`, null);
+  }
+
+  markAsRead(id: string){
+    return this.put<any>(`${this.markAsReadEndpoint}?id=${id}`, id);
+  }
+
+  markAllAsRead(userId: string){
+    return this.put<any>(`${this.markAllAsReadEndpoint}?userId=${userId}`, userId);
   }
 
 }
