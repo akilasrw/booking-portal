@@ -25,6 +25,36 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.ca-icn-chat:before {
+  content: "\e928";
+}
+.ca-icn-down-arrow:before {
+  content: "\e929";
+}
+.ca-icn-up-arrow:before {
+  content: "\e92a";
+}
+.ca-icn-active-user:before {
+  content: "\e926";
+}
+.ca-icn-suspend:before {
+  content: "\e927";
+}
+.ca-icn-fil-arrow-left:before {
+  content: "\e924";
+}
+.ca-icn-fil-arrow-right:before {
+  content: "\e925";
+}
+.ca-icn-assign-aircraft:before {
+  content: "\e922";
+}
+.ca-icn-main-schedule:before {
+  content: "\e923";
+}
+.ca-icn-pallet:before {
+  content: "\e921";
+}
 .ca-icn-add:before {
   content: "\e900";
 }
@@ -114,6 +144,9 @@
 }
 .ca-icn-verify:before {
   content: "\e91d";
+}
+.ca-icn-verify-document:before {
+  content: "\e91e";
 }
 .ca-icn-view:before {
   content: "\e91f";
