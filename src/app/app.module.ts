@@ -1,3 +1,4 @@
+import { ChattingModule } from './modules/chatting/chatting.module';
 import { HttpClient,HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +25,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     SharedModule,
     HttpClientModule,
     CoreModule,
+    ChattingModule,
     TranslateModule.forRoot({
       loader:{
         provide: TranslateLoader,

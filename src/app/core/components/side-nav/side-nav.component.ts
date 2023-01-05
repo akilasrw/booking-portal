@@ -21,6 +21,7 @@ export class SideNavComponent implements OnInit,OnDestroy {
   public showCollapseMenu:boolean=false;
   public showProfileCard:boolean=true;
   @Output() hideMenu = new EventEmitter<any>();
+  @Output() showMsg = new EventEmitter<any>();
 
 
   constructor(
@@ -63,7 +64,8 @@ export class SideNavComponent implements OnInit,OnDestroy {
   }
 
   menuClickEvent(menu: MenuType){
-    this.selectedMenu = menu;
+    if(MenuType.Message != menu)
+        this.selectedMenu = menu;
     switch(menu){
       case MenuType.None:
         this.showCollapseMenu=!this.showCollapseMenu;
@@ -93,7 +95,7 @@ export class SideNavComponent implements OnInit,OnDestroy {
         this.router.navigate([RouteConstants.NotificationsRoute])
       break;
       case MenuType.Message:
-        this.router.navigate([RouteConstants.MessagingRoute])
+        this.showMsg.emit(true);
       break;
       default:
         this.router.navigate([RouteConstants.DashboardRoute]);
