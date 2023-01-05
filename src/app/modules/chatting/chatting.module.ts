@@ -14,6 +14,9 @@ import { ChatListComponent } from './chat-list/chat-list.component';
   imports: [
     CommonModule,
     ChattingRoutingModule
+  ],
+  exports:[
+    ChatListComponent
   ]
 })
 export class ChattingModule { }

@@ -14,7 +14,8 @@ export class AppComponent implements OnInit {
   title = 'aeroclub cargo client';
   isLoaded = false;
   public showCollapseMenu:boolean=false;
-
+  chatModalVisible = false;
+  chatModalVisibleAnimate = false;
 
   constructor(
     public translate: TranslateService,
@@ -54,6 +55,16 @@ export class AppComponent implements OnInit {
 
   hideMenu(valu:any){
     this.showCollapseMenu=valu;
+  }
+
+  cancelchatModal() {
+    this.chatModalVisibleAnimate = false;
+    setTimeout(() => (this.chatModalVisible = false), 300);
+  }
+
+  showChatBox(val: any) {
+    this.chatModalVisible = true;
+    setTimeout(() => (this.chatModalVisibleAnimate = true));
   }
 
 }
