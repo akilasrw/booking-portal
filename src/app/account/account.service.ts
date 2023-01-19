@@ -79,7 +79,7 @@ export class AccountService extends BaseService {
   }
 
   setCurrentUser(user: User) {
-    this.startRefreshTokenTimer(user.jwtToken);
+    this.startRefreshTokenTimer(user);
     var encriptedUser = this.cryptoService.encrypt(JSON.stringify(user));
     localStorage.setItem('user', encriptedUser);
     this.currentUserSource.next(user);
@@ -98,14 +98,14 @@ export class AccountService extends BaseService {
 
   private refreshTokenTimeout: any;
 
-  private startRefreshTokenTimer(token:string) {
+  private startRefreshTokenTimer(user: User) {
       // parse json object from base64 encoded jwt token
-      const jwtToken = JSON.parse(atob(token.split('.')[1]));
+      const jwtToken = JSON.parse(atob(user.jwtToken.split('.')[1]));
 
       // set a timeout to refresh the token a minute before it expires
       const expires = new Date(jwtToken.exp * 1000);
       const timeout = expires.getTime() - Date.now() - (60 * 1000);
-      this.refreshTokenTimeout = setTimeout(() => this.refreshToken().subscribe(), timeout);
+      this.refreshTokenTimeout = setTimeout(() => this.refreshToken(user.refreshToken).subscribe(), timeout);
   }
 
   saveUserCredential(model: AuthenticateRM){
