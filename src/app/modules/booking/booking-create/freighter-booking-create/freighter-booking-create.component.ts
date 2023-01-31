@@ -1,6 +1,6 @@
 import { CargoAgentQuery } from './../../../../_models/queries/cargo-agent/cargo-agent-query.model';
 import { ToastrService } from 'ngx-toastr';
-import { FlightScheduleSectorService } from 'src/app/_services/flight-schedule-sector.service';
+import { FlightScheduleService } from 'src/app/_services/flight-schedule.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PackageContainer } from 'src/app/_models/view-models/package-container/package-container.model';
@@ -24,6 +24,7 @@ import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.mo
 import { UldCargoPositionService } from 'src/app/_services/uld-cargo-position.service';
 import { UldCargoBookingService } from 'src/app/_services/uld-cargo-booking.service';
 import { CargoAgent } from 'src/app/_models/view-models/cargo-agent/cargo-agent.model';
+import { FlightScheduleSectorService } from 'src/app/_services/flight-schedule-sector.service';
 
 @Component({
   selector: 'app-freighter-booking-create',
@@ -49,6 +50,7 @@ export class FreighterBookingCreateComponent implements OnInit {
 
 
   constructor(private activatedRoute: ActivatedRoute,
+    private flightScheduleService: FlightScheduleService,
     private flightScheduleSectorService: FlightScheduleSectorService,
     private packageContainerService: PackageContainerService,
     private uldCargoBookingService: UldCargoBookingService,
@@ -389,7 +391,7 @@ export class FreighterBookingCreateComponent implements OnInit {
       this.cargoBookingRequest.aWBStatus = AWBStatus.Pending;
       this.uldCargoBookingService.create(this.cargoBookingRequest).subscribe(res => {
         this.toastr.success('Saved Successfully.');
-        this.flightScheduleSectorService.removeCurrentFlightScheduleSector();
+        this.flightScheduleService.removeCurrentFlightSchedule();
         this.router.navigate(['booking']);
       })
     }

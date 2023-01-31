@@ -1,5 +1,5 @@
 import { ToastrService } from 'ngx-toastr';
-import { FlightScheduleSectorService } from 'src/app/_services/flight-schedule-sector.service';
+import { FlightScheduleService } from 'src/app/_services/flight-schedule.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PackageContainer } from 'src/app/_models/view-models/package-container/package-container.model';
@@ -25,6 +25,7 @@ import { ValidateCargoPositionRequest } from 'src/app/_models/request-models/car
 import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.model';
 import { CargoAgent } from 'src/app/_models/view-models/cargo-agent/cargo-agent.model';
 import { CargoAgentQuery } from 'src/app/_models/queries/cargo-agent/cargo-agent-query.model';
+import { FlightScheduleSectorService } from 'src/app/_services/flight-schedule-sector.service';
 
 @Component({
   selector: 'app-p2c-booking-create',
@@ -50,6 +51,7 @@ export class P2cBookingCreateComponent implements OnInit {
 
 
   constructor(private activatedRoute: ActivatedRoute,
+    private flightScheduleService: FlightScheduleService,
     private flightScheduleSectorService: FlightScheduleSectorService,
     private packageContainerService: PackageContainerService,
     private bookingService: BookingService,
@@ -342,7 +344,7 @@ export class P2cBookingCreateComponent implements OnInit {
       this.cargoBookingRequest.aWBStatus = AWBStatus.Pending;
       this.bookingService.create(this.cargoBookingRequest).subscribe(res => {
         this.toastr.success('Saved Successfully.');
-        this.flightScheduleSectorService.removeCurrentFlightScheduleSector();
+        this.flightScheduleService.removeCurrentFlightSchedule();
         this.router.navigate(['booking']);
       })
     }

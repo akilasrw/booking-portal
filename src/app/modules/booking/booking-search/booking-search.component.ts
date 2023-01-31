@@ -5,9 +5,10 @@ import { SelectList } from './../../../shared/models/select-list.model';
 import { AirportService } from './../../../_services/airport.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BookingFilterListQuery } from 'src/app/_models/queries/booking-filter-list-query.model';
-import { FlightScheduleSectorService } from 'src/app/_services/flight-schedule-sector.service';
+import { FlightScheduleService } from 'src/app/_services/flight-schedule.service';
 import { FlightScheduleSector } from 'src/app/_models/view-models/flight-schedule-sectors/flight-schedule-sector.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FlightSchedule } from 'src/app/_models/view-models/flight-schedule/flight-schedule.model';
 
 @Component({
   selector: 'app-booking-search',
@@ -21,14 +22,14 @@ export class BookingSearchComponent implements OnInit {
   originAirpots: SelectList[] = [];
   destinationAirpots: SelectList[] = [];
   bookingFilterQuery: BookingFilterListQuery = new BookingFilterListQuery();
-  flightScheduleSectors: FlightScheduleSector[] = []
+  flightSchedules: FlightSchedule[] = []
   flightScheduleSectorId: string = '';
   totalCount : number = 0;
   public showLoader = true;
 
 
   constructor(
-    private flightScheduleSectorService: FlightScheduleSectorService,
+    private flightScheduleService: FlightScheduleService,
     private airportService: AirportService,
     private fb: FormBuilder,
     private router: Router,
@@ -47,7 +48,7 @@ export class BookingSearchComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
-        this.bookingFilterQuery = this.flightScheduleSectorService.getCurrentFlightScheduleSector();
+        this.bookingFilterQuery = this.flightScheduleService.getCurrentFlightSchedule();
         this.flightScheduleSectorId = id;
         if (this.bookingFilterQuery) {
           if (this.bookingFilterQuery.scheduledDepartureDateTime)
@@ -55,7 +56,7 @@ export class BookingSearchComponent implements OnInit {
           this.getFilteredList();
         }
       } else
-        this.flightScheduleSectorService.removeCurrentFlightScheduleSector();
+        this.flightScheduleService.removeCurrentFlightSchedule();
     });
   }
 
@@ -113,11 +114,11 @@ export class BookingSearchComponent implements OnInit {
       this.bookingFilterQuery.destinationAirportId = this.bookingForm.value.destinationAirportId;
       this.bookingFilterQuery.scheduledDepartureDateTime = this.bookingForm.value.scheduledDepartureDateTime;
       //this.bookingFilterQuery.pageSize =  3;
-      this.flightScheduleSectors = [];
+      this.flightSchedules = [];
       this.getFilteredList();
       this.flightScheduleSectorId = '';
     }else{
-      this.flightScheduleSectors = [];
+      this.flightSchedules = [];
       this.totalCount =0;
     }
   }
@@ -144,13 +145,13 @@ export class BookingSearchComponent implements OnInit {
  
   getFilteredList() {
     this.showLoader=true
-    this.flightScheduleSectorService.getFilteredList(this.bookingFilterQuery).subscribe(res => {
+    this.flightScheduleService.getFilteredList(this.bookingFilterQuery).subscribe(res => {
       if (res.count < 1) {
         this.toastrService.warning('No record found.');
         this.totalCount = res.count;
-        this.flightScheduleSectors = [];
+        this.flightSchedules = [];
       } else {
-        this.flightScheduleSectors = res.data;
+        this.flightSchedules = res.data;
         this.totalCount = res.count;
       }
       this.showLoader=false
@@ -161,7 +162,7 @@ export class BookingSearchComponent implements OnInit {
   }
 
   setCurrentScheduleSector(){
-    this.flightScheduleSectorService.setCurrentFlightScheduleSector(this.bookingFilterQuery);
+    this.flightScheduleService.setCurrentFlightSchedule(this.bookingFilterQuery);
   }
 
   get aircraftConfigType(): typeof AircraftConfigType {
