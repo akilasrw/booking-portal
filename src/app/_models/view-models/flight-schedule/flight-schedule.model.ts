@@ -16,6 +16,7 @@ export interface FlightSchedule extends BaseVM{
   availableVolume:number;
   originAirportId:string;
   destinationAirportId:string;
+  flightScheduleSectorIds:string[];
   flightScheduleSectorCargoPositions: FlightScheduleSectorCargoPosition[];
 }
 
