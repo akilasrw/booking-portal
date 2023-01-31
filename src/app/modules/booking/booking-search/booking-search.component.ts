@@ -161,7 +161,7 @@ export class BookingSearchComponent implements OnInit {
     });
   }
 
-  setCurrentScheduleSector(){
+  setCurrentSchedule(){
     this.flightScheduleService.setCurrentFlightSchedule(this.bookingFilterQuery);
   }
 
