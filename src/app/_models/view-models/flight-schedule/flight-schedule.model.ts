@@ -12,8 +12,6 @@ export interface FlightSchedule extends BaseVM{
   scheduledDepartureDateTime: Date;
   acceptanceCutoffTime?: Date;
   bookingCutoffTime: Date;
-  actualDepartureDateTime: Date;
-  flightScheduleStatus: number;
   availableWeight:number;
   availableVolume:number;
   originAirportId:string;

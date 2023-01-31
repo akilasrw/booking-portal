@@ -11,7 +11,7 @@ import { FlightSchedule } from 'src/app/_models/view-models/flight-schedule/flig
 export class P2cBookingSearchItemComponent implements OnInit {
 
   @Input() flightSchedule!:FlightSchedule;
-  @Input() flightScheduleSectorId: string = '';
+  @Input() flightScheduleId: string = '';
   @Input() elementIndex:number = 0;
   @Output() setCurrentSchedule = new EventEmitter<any>();
 
@@ -41,16 +41,16 @@ export class P2cBookingSearchItemComponent implements OnInit {
     return position;
   }
 
-  validateSpace(flightScheduleSector: FlightSchedule): boolean {
-    if (flightScheduleSector.flightScheduleSectorCargoPositions.filter(x => x.availableSpaceCount > 0).length > 0)
+  validateSpace(flightSchedule: FlightSchedule): boolean {
+    if (flightSchedule.flightScheduleSectorCargoPositions.filter(x => x.availableSpaceCount > 0).length > 0)
       return true;
 
     return false;
   }
 
-  goToBookingCreate(flightScheduleSector: FlightSchedule) {
-    let id = flightScheduleSector.id;
-    var recordCount = flightScheduleSector.flightScheduleSectorCargoPositions.filter(x => x.availableSpaceCount > 0).length;
+  goToBookingCreate(flightSchedule: FlightSchedule) {
+    let id = flightSchedule.id;
+    var recordCount = flightSchedule.flightScheduleSectorCargoPositions.filter(x => x.availableSpaceCount > 0).length;
     if (recordCount > 0) {
       this.setCurrentSchedule.emit();
       this.router.navigate(['booking/p2cCreate', id]);

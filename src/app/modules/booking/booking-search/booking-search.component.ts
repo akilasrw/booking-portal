@@ -23,7 +23,7 @@ export class BookingSearchComponent implements OnInit {
   destinationAirpots: SelectList[] = [];
   bookingFilterQuery: BookingFilterListQuery = new BookingFilterListQuery();
   flightSchedules: FlightSchedule[] = []
-  flightScheduleSectorId: string = '';
+  flightScheduleId: string = '';
   totalCount : number = 0;
   public showLoader = true;
 
@@ -49,7 +49,7 @@ export class BookingSearchComponent implements OnInit {
       const id = params.get('id');
       if (id) {
         this.bookingFilterQuery = this.flightScheduleService.getCurrentFlightSchedule();
-        this.flightScheduleSectorId = id;
+        this.flightScheduleId = id;
         if (this.bookingFilterQuery) {
           if (this.bookingFilterQuery.scheduledDepartureDateTime)
             this.bookingFilterQuery.scheduledDepartureDateTime = new Date(this.bookingFilterQuery.scheduledDepartureDateTime);
@@ -116,7 +116,7 @@ export class BookingSearchComponent implements OnInit {
       //this.bookingFilterQuery.pageSize =  3;
       this.flightSchedules = [];
       this.getFilteredList();
-      this.flightScheduleSectorId = '';
+      this.flightScheduleId = '';
     }else{
       this.flightSchedules = [];
       this.totalCount =0;

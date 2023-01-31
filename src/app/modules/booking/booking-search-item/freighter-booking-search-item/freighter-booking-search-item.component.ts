@@ -11,7 +11,7 @@ import { FlightSchedule } from 'src/app/_models/view-models/flight-schedule/flig
 export class FreighterBookingSearchItemComponent implements OnInit {
 
   @Input() flightSchedule!:FlightSchedule;
-  @Input() flightScheduleSectorId: string = '';
+  @Input() flightScheduleId: string = '';
   @Input() elementIndex :number= 0;
   @Output() setCurrentSchedule = new EventEmitter<any>();
 
