@@ -8,6 +8,8 @@ export class CargoBookingRequest {
   flightScheduleSectorIds?: string[];
   packageItems?: PackageItemRM[];
   aWBDetail?: AWBCreateRM;
+  originAirportId?:string;
+  destinationAirportId?:string;
 }
 
 

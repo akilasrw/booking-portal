@@ -103,7 +103,6 @@ export class P2cBookingCreateComponent implements OnInit {
 
   createForm() {
     this.bookingForm = this.fb.group({
-      flightScheduleSectorIds: [''],
       packageItems: this.fb.group({
         id: [''],
         width: [0, [Validators.required, Validators.min(1)]],
@@ -143,7 +142,6 @@ export class P2cBookingCreateComponent implements OnInit {
         if (await this.isWeightNotExceed(booking.packageItems) == true) {
           if (this.cargoBookingRequest.packageItems == undefined) {
             this.cargoBookingRequest = {
-              flightScheduleSectorIds: this.flightSchedule?.flightScheduleSectorIds,
               packageItems: [this.mapPackageItems(booking.packageItems)]
             };
           } else if (this.cargoBookingRequest.packageItems?.findIndex(x => x.height == booking.height && x.length == booking.length && x.width == booking.width) == -1) {
@@ -314,8 +312,11 @@ export class P2cBookingCreateComponent implements OnInit {
 
   submit() {
     if (this.isValid()) {
+      this.cargoBookingRequest.flightScheduleSectorIds = this.flightSchedule?.flightScheduleSectorIds;
       this.cargoBookingRequest.bookingStatus = BookingStatus.Pending;
       this.cargoBookingRequest.aWBStatus = AWBStatus.Pending;
+      this.cargoBookingRequest.originAirportId = this.flightSchedule?.originAirportId;
+      this.cargoBookingRequest.destinationAirportId = this.flightSchedule?.destinationAirportId;
       this.bookingService.create(this.cargoBookingRequest).subscribe(res => {
         this.toastr.success('Saved Successfully.');
         this.flightScheduleService.removeCurrentFlightSchedule();
