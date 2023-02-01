@@ -30,11 +30,10 @@ export class FreighterBookingSearchItemComponent implements OnInit {
   }
 
   goToBookingCreate(flightSchedule: FlightSchedule) {
-    let id = flightSchedule.id;
     var recordCount = flightSchedule.flightScheduleSectorCargoPositions.filter(x => x.availableSpaceCount > 0).length;
     if (recordCount > 0) {
       this.setCurrentSchedule.emit();
-      this.router.navigate(['booking/freighterCreate', id]);
+      this.router.navigate(['booking/freighterCreate'],{ state: { flightScheduleData: flightSchedule } });
     }
     else
       this.toastrService.warning('No available space.');

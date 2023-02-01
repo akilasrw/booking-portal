@@ -49,11 +49,10 @@ export class P2cBookingSearchItemComponent implements OnInit {
   }
 
   goToBookingCreate(flightSchedule: FlightSchedule) {
-    let id = flightSchedule.id;
     var recordCount = flightSchedule.flightScheduleSectorCargoPositions.filter(x => x.availableSpaceCount > 0).length;
     if (recordCount > 0) {
       this.setCurrentSchedule.emit();
-      this.router.navigate(['booking/p2cCreate', id]);
+      this.router.navigate(['booking/p2cCreate'],{ state: { flightScheduleData: flightSchedule } });
     }
     else
       this.toastrService.warning('No available space.');
