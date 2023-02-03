@@ -1,7 +1,7 @@
 export class User {
   id!: string;
   email!: string;
-  userName!: string;
+  username!: string;
   fullName!: string;
   userRoles?: string[];
   jwtToken!: string;

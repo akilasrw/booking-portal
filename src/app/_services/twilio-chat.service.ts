@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class TwilioChatService {
+export class TwilioChatService { // this class needs to be removed. - Yohan
 
   baseUr: string ='https://conversations.twilio.com/v1';
   twilioUserName: string = 'AC704d657e6c0a6363d7c1b9f93af91976';
@@ -13,14 +13,25 @@ export class TwilioChatService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
-      'Authorization': 'Basic ' + btoa(this.twilioUserName+':'+ this.twilioPassword)
+      'Authorization': 'Basic ' + btoa(this.twilioUserName+':'+ this.twilioPassword),
     })
   };
+
+  protected getRequestHeaders(): { headers: HttpHeaders } {
+    let headerList = new HttpHeaders({ 'Content-Type': 'application/json' });
+    headerList = headerList.append('Cache-Control', 'no-cache');
+    headerList = headerList.append("Access-Control-Allow-Origin", "*")
+    headerList = headerList.append("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS")
+    headerList = headerList.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
+    //headerList = headerList.append("Authorization", 'Basic ' + btoa(this.twilioUserName+':'+ this.twilioPassword))
+    headerList = headerList.append("Authorization", 'Basic QUM3MDRkNjU3ZTZjMGE2MzYzZDdjMWI5ZjkzYWY5MTk3NjozYzNhNTg4NGQ0MGQ4YTU3MDgwZmM5MDYyMTZkMTQyYw==')
+    return { headers: headerList };
+  }
 
   constructor(private http: HttpClient) { }
 
   getParticipants(conversionId: string){
-    return this.http.get<any>(`${this.baseUr}/Conversations/${conversionId}/Participants`, this.httpOptions);
+    return this.http.get<any[]>(`${this.baseUr}/Conversations/${conversionId}/Participants`, this.httpOptions);
   }
 
   getConversationByUserId(userId: string){
@@ -28,7 +39,7 @@ export class TwilioChatService {
   }
 
   getMessages(conversionId: string) {
-    return this.http.get<any>(`${this.baseUr}/Conversations/${conversionId}/Messages`, this.httpOptions);
+    return this.http.get<any[]>(`${this.baseUr}/Conversations/${conversionId}/Messages`, this.httpOptions);
   }
 
   getMessageById(conversionId: string, msgId: string) {
@@ -36,7 +47,7 @@ export class TwilioChatService {
   }
 
   getAllUsers() {
-    return this.http.get<any>(`${this.baseUr}/Users`, this.httpOptions);
+    return this.http.get<any[]>(`${this.baseUr}/Users`, this.getRequestHeaders());
   }
 
   getUserById(userId: string) {

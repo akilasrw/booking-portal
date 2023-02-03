@@ -47,6 +47,7 @@ export class SideNavComponent implements OnInit,OnDestroy {
       this.currentUser = res;
     });
   }
+
   profileClick(){
     this.showProfileCard = !this.showProfileCard
   }
@@ -63,7 +64,7 @@ export class SideNavComponent implements OnInit,OnDestroy {
 
   }
 
-  menuClickEvent(menu: MenuType){
+  menuClickEvent(menu: MenuType) {
     if(MenuType.Message != menu)
         this.selectedMenu = menu;
     switch(menu){
@@ -101,7 +102,6 @@ export class SideNavComponent implements OnInit,OnDestroy {
         this.router.navigate([RouteConstants.DashboardRoute]);
         break;
     }
-
   }
 
   getSelectedMenuType(url: string): number {
@@ -128,5 +128,4 @@ export class SideNavComponent implements OnInit,OnDestroy {
     }
     return selectedType;
   }
-
 }
