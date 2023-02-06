@@ -8,7 +8,12 @@ export interface CargoBookingDetail{
     bookingNumber: string;
     bookingDate: Date;
     bookingStatus: BookingStatus;
-    flightScheduleSector: FlightScheduleSector;
+    destinationAirportCode:string;
+    originAirportCode:string;
+    flightNumber:string;
+    destinationAirportName:string;
+    destinationAirportId:string;
+    scheduledDepartureDateTime:Date;
     awbInformation?:AWBDetail;
     awbStatus:AWBStatus;
     packageItems: PackageItem[];    
