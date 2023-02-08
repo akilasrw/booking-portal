@@ -1,6 +1,7 @@
 export interface ChatUser {
-  sId: string;
+  sid: string;
   accountSid: string;
   identity: string;
   friendlyName: string;
+  chatServiceSid: string;
 }
