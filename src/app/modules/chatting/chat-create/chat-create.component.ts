@@ -4,6 +4,7 @@ import { AccountService } from 'src/app/account/account.service';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 import { User } from 'src/app/_models/user.model';
 import { MessageRm } from 'src/app/_models/view-models/chatting/message-rm.model';
+import { Message } from 'src/app/_models/view-models/chatting/message.model';
 import { UserConversation } from 'src/app/_models/view-models/chatting/user-conversation.model';
 import { ChatService } from 'src/app/_services/chat.service';
 
@@ -17,12 +18,14 @@ export class ChatCreateComponent implements OnInit {
   currentUser?:User | null;
   subscription?:Subscription;
   @Input() currentUserConversation?: UserConversation;
+  chatbox: string ='';
 
   constructor(private accountService: AccountService,
     private chatService: ChatService) { }
 
   ngOnInit(): void {
     console.log('ngOnInit',this.currentUserConversation);
+    this.getCurrentUser();
   }
 
 
@@ -34,11 +37,26 @@ export class ChatCreateComponent implements OnInit {
     msg.pathConversationSid = this.currentUserConversation?.conversationSid; // 'CHee0e231a0ff24be182a8b486b4c4bde1';
     this.chatService.createMessage(msg)
     .subscribe(res=> {
+      if(msg?.pathConversationSid){
+        this.loadMessages(msg?.pathConversationSid);
+        this.chatbox = '';
+      }
 
-      // if(msg?.pathConversationSid)
-      //   this.loadMessages(msg?.pathConversationSid);
     });
   }
+
+  // Get all messages by Auther/ identity
+  loadMessages (conversationId: string) {
+    this.chatService.getMessages(conversationId)
+    .subscribe(c=> {
+      var messages: Message[]=[];
+      c.forEach(el=>{
+        messages.push(el);
+      });
+      const users :UserConversation = {conversationSid: conversationId, messages: messages};
+      this.currentUserConversation = users;
+    });
+}
 
   getFirstLetters(str: string) {
     return CoreExtensions.GetFirstLetters(str);

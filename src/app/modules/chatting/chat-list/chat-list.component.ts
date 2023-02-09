@@ -31,7 +31,7 @@ export class ChatListComponent implements OnInit {
   participantConversations:ParticipantConversation[]=[];
   isNewConversation: boolean = false;
   conversationId: string = '';
-  messages: Message[]=[];
+  //messages: Message[]=[];
   conversations?: Conversation[]=[];
   currentUserConversations?: UserConversation[] =[];
   @Output() popupCreate = new EventEmitter<any>();
@@ -162,12 +162,11 @@ export class ChatListComponent implements OnInit {
   loadMessages (conversationId: string) {
       this.chatService.getMessages(conversationId)
       .subscribe(c=> {
-
-        this.messages=[];
+        var messages: Message[]=[];
         c.forEach(el=>{
-          this.messages.push(el);
+          messages.push(el);
         });
-        const users :UserConversation = {conversationSid: conversationId, messages: this.messages};
+        const users :UserConversation = {conversationSid: conversationId, messages: messages};
         this.currentUserConversations?.push(users);
         console.log(this.currentUserConversations);
 

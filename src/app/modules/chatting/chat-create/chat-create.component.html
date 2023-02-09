@@ -14,5 +14,5 @@
   </div>
 </div>
 <div>
-  <input type="text" (keyup.enter)="sendMsg($event.target.value)"/>
+  <input type="text" (keyup.enter)="sendMsg($event.target.value)" placeholder="Type here" [(ngModel)]="chatbox" name="chatbox"/>
 </div>
