@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AccountService } from './account/account.service';
 import { User } from './_models/user.model';
 import { Constants } from './core/constants/constants';
+import { UserConversation } from './_models/view-models/chatting/user-conversation.model';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,9 @@ export class AppComponent implements OnInit {
   public showCollapseMenu:boolean=false;
   chatModalVisible = false;
   chatModalVisibleAnimate = false;
+  chatCreateModalVisible = false;
+  chatCreateModalVisibleAnimate = false;
+  currentUserConversation?: UserConversation;
 
   constructor(
     public translate: TranslateService,
@@ -62,9 +66,21 @@ export class AppComponent implements OnInit {
     setTimeout(() => (this.chatModalVisible = false), 300);
   }
 
+  closeChatCreate() {
+    this.chatCreateModalVisibleAnimate = false;
+    setTimeout(() => (this.chatCreateModalVisible = false), 300);
+  }
+
   showChatBox(val: any) {
     this.chatModalVisible = true;
     setTimeout(() => (this.chatModalVisibleAnimate = true));
+  }
+
+  showMsgCreatePopup(event: any) {
+    console.log('showMsgCreatePopup',event);
+    this.currentUserConversation = event;
+    this.chatCreateModalVisible= true;
+    setTimeout(() => (this.chatCreateModalVisibleAnimate = true));
   }
 
 }

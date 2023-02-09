@@ -8,6 +8,7 @@ import { MessageRm } from '../_models/view-models/chatting/message-rm.model';
 import { Message } from '../_models/view-models/chatting/message.model';
 import { ParticipantConversation } from '../_models/view-models/chatting/participant-conversation.model';
 import { Participant } from '../_models/view-models/chatting/participant.model';
+import { UserConversation } from '../_models/view-models/chatting/user-conversation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -71,7 +72,7 @@ export class ChatService extends BaseService {
     if (conversationSid) {
       params = params.append("pathConversationSid", conversationSid);
     }
-    return this.getWithParams<ParticipantConversation[]>(this.endpointEntityGetUserConversation, params);
+    return this.getWithParams<UserConversation[]>(this.endpointEntityGetUserConversation, params);
   }
 
   getUsers() {

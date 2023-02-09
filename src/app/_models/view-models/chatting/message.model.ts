@@ -4,5 +4,5 @@ export interface Message {
   body: string;
   pathConversationSid: string;
   pathSid: string;
-
+  created: string;
 }

@@ -1,1 +1,18 @@
-<p>chat-create works!</p>
+<div class="user-list-container" *ngFor="let msg of this.currentUserConversation?.messages">
+  <div class="user-list" *ngIf="msg">
+      <div class="user-img bg-a">
+        {{getFirstLetters(msg?.auther)| uppercase}}</div>
+      <div class="user-data">
+          <div class="user-info">
+              <div class="text-truncate">{{msg?.auther}}</div>
+              <h3>{{msg?.body}}</h3>
+          </div>
+          <div class="status">
+              <div><small>{{msg?.created | date :'short'}}</small></div>
+          </div>
+      </div>
+  </div>
+</div>
+<div>
+  <input type="text" (keyup.enter)="sendMsg($event.target.value)"/>
+</div>

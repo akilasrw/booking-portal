@@ -214,6 +214,17 @@ export class CoreExtensions {
     return statusString;
   }
 
+  public static GetFirstLetters(str: string) {
+    if(str.indexOf(' ')>0) {
+      var res = str.split(' ');
+      if(res.length> 0)
+          return res[0]+''+res[1];
+    } else if(str.length>0) {
+      return str[0];
+    }
+    return '';
+}
+
 }
 
 

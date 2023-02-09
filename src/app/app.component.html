@@ -25,8 +25,25 @@
                         class="ca ca-icn-close"></span></button>
             </div>
             <div class="modal-body">
-              <app-chat-list></app-chat-list>
+              <app-chat-list (popupCreate)="showMsgCreatePopup($event)"></app-chat-list>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" tabindex="-1" [ngClass]="{'in': chatCreateModalVisible}"
+    [ngStyle]="{'display': chatCreateModalVisible ? 'block' : 'none', 'opacity': chatCreateModalVisibleAnimate ? 1 : 0}">
+    <div class="modal-dialog modal-xxl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">New Chat</h2>
+                <button type="button" class="close btn" data-dismiss="modal" (click)="closeChatCreate()"
+                    aria-label="Close"><span class="ca ca-icn-close"></span></button>
+            </div>
+            <div>
+                <app-chat-create [currentUserConversation]="currentUserConversation"></app-chat-create>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -16,7 +16,8 @@ import { ChatListComponent } from './chat-list/chat-list.component';
     ChattingRoutingModule
   ],
   exports:[
-    ChatListComponent
+    ChatListComponent,
+    ChatCreateComponent
   ]
 })
 export class ChattingModule { }

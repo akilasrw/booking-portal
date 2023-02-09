@@ -1,5 +1,5 @@
 import { DatePipe, NgForOf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
 import { ConversationRm } from 'src/app/_models/request-models/chatting/conversation-rm.model';
@@ -14,6 +14,8 @@ import { formatDate } from '@angular/common';
 import { Conversation } from 'src/app/_models/view-models/chatting/conversation.model';
 import { Message } from 'src/app/_models/view-models/chatting/message.model';
 import { MessageRm } from 'src/app/_models/view-models/chatting/message-rm.model';
+import { UserConversation } from 'src/app/_models/view-models/chatting/user-conversation.model';
+import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 
 @Component({
   selector: 'app-chat-list',
@@ -31,19 +33,20 @@ export class ChatListComponent implements OnInit {
   conversationId: string = '';
   messages: Message[]=[];
   conversations?: Conversation[]=[];
+  currentUserConversations?: UserConversation[] =[];
+  @Output() popupCreate = new EventEmitter<any>();
 
   constructor(private accountService: AccountService,
-              private twilioChatService: TwilioChatService,
               private chatService: ChatService,
               ) { }
 
   ngOnInit(): void {
-    this.LoadConversations()
+    // this.LoadConversations()
     this.initializeChat()
   }
 
   initializeChat() {
-    debugger
+
     // get the email of logged user
     this.getCurrentUser();
     let userName =  this.currentUser?.username!;
@@ -51,7 +54,7 @@ export class ChatListComponent implements OnInit {
     if(userName) {
       // Get all user from twilio
     this.chatService.getUsers()
-    .subscribe(res => { debugger; console.log(res);
+    .subscribe(res => {
 
       this.chatUsers = res;
       var user = this.chatUsers.filter(x=>x.identity == userName);
@@ -60,13 +63,12 @@ export class ChatListComponent implements OnInit {
         // Create user
         this.chatService.createUser(userName)
         .subscribe(x=> {
-          debugger;
-          console.log(x);
+
           //this.loadUserConversation(user,userName);
           //this.loadParticipantConversation(userName)
         });
       } else { // user exists
-        debugger;
+
         if(this.isNewConversation)
           this.createConversation(userName);
 
@@ -81,14 +83,11 @@ export class ChatListComponent implements OnInit {
   loadParticipantConversation(userName: string) {
     this.chatService.getParticipantConversation(userName)
     .subscribe(s=> {
-      debugger;
+
       if(s.length>0) {
         this.participantConversations = s;
-        console.log(s);
-
-
       } else {
-        debugger;
+
 
         // if no record
         if(this.isNewConversation)
@@ -104,11 +103,11 @@ export class ChatListComponent implements OnInit {
     if(user.length > 0)
         this.chatService.getUserConversation(userName, user[0].chatServiceSid)
         .subscribe(o=> {
-          console.log(o);
-          debugger;
+
           if(o.length >0){
             o.forEach(el=> {
-              this.loadMessages(el.conversationSid)
+              if(el.conversationSid)
+                this.loadMessages(el.conversationSid);
             });
           } else {
               // this.createParticipant(userName,)
@@ -136,8 +135,7 @@ export class ChatListComponent implements OnInit {
     participant.conversationSid = conversationSid;
     this.chatService.createParticipant(participant)
     .subscribe(y=> {
-      debugger;
-      console.log(y);
+
     });
   }
 
@@ -151,8 +149,7 @@ export class ChatListComponent implements OnInit {
 
     this.chatService.createConversation(conversation)
     .subscribe(t=> {
-      debugger;
-      console.log(t);
+
       // Create particpant
       this.createParticipant(username, t.sid);
       // add Admin to the conservation
@@ -165,11 +162,15 @@ export class ChatListComponent implements OnInit {
   loadMessages (conversationId: string) {
       this.chatService.getMessages(conversationId)
       .subscribe(c=> {
-        debugger;
-        console.log(c);
+
+        this.messages=[];
         c.forEach(el=>{
           this.messages.push(el);
         });
+        const users :UserConversation = {conversationSid: conversationId, messages: this.messages};
+        this.currentUserConversations?.push(users);
+        console.log(this.currentUserConversations);
+
       });
   }
 
@@ -183,15 +184,12 @@ export class ChatListComponent implements OnInit {
     this.subscription?.unsubscribe();
   }
 
-  sendMsg(event: any) { debugger;
-    console.log('enter',event);
-    var msg: MessageRm = new MessageRm();
-    msg.auther =  this.currentUser?.username;
-    msg.body = event;
-    msg.pathConversationSid = 'CHee0e231a0ff24be182a8b486b4c4bde1';
-    this.chatService.createMessage(msg)
-    .subscribe(res=> {
-      debugger;
-    })
+  getFirstLetters(str: string) {
+      return CoreExtensions.GetFirstLetters(str);
+  }
+
+  popupMessage(con: any) {
+    console.log('popupMessage',con);
+    this.popupCreate.emit(con);
   }
 }
