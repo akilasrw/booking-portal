@@ -31,10 +31,10 @@ export class ChatListComponent implements OnInit {
   participantConversations:ParticipantConversation[]=[];
   isNewConversation: boolean = false;
   conversationId: string = '';
-  //messages: Message[]=[];
   conversations?: Conversation[]=[];
   currentUserConversations?: UserConversation[] =[];
   @Output() popupCreate = new EventEmitter<any>();
+  @Output() newChatPopup = new EventEmitter<any>();
 
   constructor(private accountService: AccountService,
               private chatService: ChatService,
@@ -68,10 +68,6 @@ export class ChatListComponent implements OnInit {
           //this.loadParticipantConversation(userName)
         });
       } else { // user exists
-
-        if(this.isNewConversation)
-          this.createConversation(userName);
-
         this.loadUserConversation(user,userName);
         this.loadParticipantConversation(userName)
       }
@@ -87,11 +83,6 @@ export class ChatListComponent implements OnInit {
       if(s.length>0) {
         this.participantConversations = s;
       } else {
-
-
-        // if no record
-        if(this.isNewConversation)
-          this.createConversation(userName);
       }
       // if no exisiting msgs,
       // create new message
@@ -103,8 +94,8 @@ export class ChatListComponent implements OnInit {
     if(user.length > 0)
         this.chatService.getUserConversation(userName, user[0].chatServiceSid)
         .subscribe(o=> {
-
           if(o.length >0){
+            this.currentUserConversations =[]
             o.forEach(el=> {
               if(el.conversationSid)
                 this.loadMessages(el.conversationSid);
@@ -112,22 +103,8 @@ export class ChatListComponent implements OnInit {
           } else {
               // this.createParticipant(userName,)
           }
-
         });
   }
-
-  LoadConversations() {
-    this.chatService.getConversations()
-    .subscribe(res=> {
-      this.conversations= res;
-      // this.messages=[];
-      // this.conversations.forEach(el=> {
-      //   if(el.sid)
-      //   this.loadMessages(el.sid);
-      // });
-    });
-  }
-
 
   createParticipant(username: string, conversationSid: string){
     var participant : ParticipantRm= new ParticipantRm();
@@ -135,25 +112,6 @@ export class ChatListComponent implements OnInit {
     participant.conversationSid = conversationSid;
     this.chatService.createParticipant(participant)
     .subscribe(y=> {
-
-    });
-  }
-
-  createConversation(username: string) {
-    // create conversation
-    var conversation: ConversationRm = new ConversationRm();
-    let currentDateTime = formatDate(new Date().toString(), 'yyyy-MM-dd', 'en-US');
-    let name = username + '_'+ currentDateTime?.toString();
-    conversation.friendlyName = name;
-    conversation.uniqueName = name;
-
-    this.chatService.createConversation(conversation)
-    .subscribe(t=> {
-
-      // Create particpant
-      this.createParticipant(username, t.sid);
-      // add Admin to the conservation
-      this.createParticipant('backofficeadmin@yopmail.com', t.sid);
 
     });
   }
@@ -168,8 +126,6 @@ export class ChatListComponent implements OnInit {
         });
         const users :UserConversation = {conversationSid: conversationId, messages: messages};
         this.currentUserConversations?.push(users);
-        console.log(this.currentUserConversations);
-
       });
   }
 
@@ -188,7 +144,22 @@ export class ChatListComponent implements OnInit {
   }
 
   popupMessage(con: any) {
-    console.log('popupMessage',con);
     this.popupCreate.emit(con);
   }
+
+  newChat() {
+    this.newChatPopup.emit();
+  }
+
+  // loadConversations() {
+  //   this.chatService.getConversations()
+  //   .subscribe(res=> {
+  //     this.conversations= res;
+  //     // this.messages=[];
+  //     // this.conversations.forEach(el=> {
+  //     //   if(el.sid)
+  //     //   this.loadMessages(el.sid);
+  //     // });
+  //   });
+  // }
 }

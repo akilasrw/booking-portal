@@ -1,10 +1,11 @@
 import { CryptoService } from './shared/services/crypto.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AccountService } from './account/account.service';
 import { User } from './_models/user.model';
 import { Constants } from './core/constants/constants';
 import { UserConversation } from './_models/view-models/chatting/user-conversation.model';
+import { ChatListComponent } from './modules/chatting/chat-list/chat-list.component';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,9 @@ export class AppComponent implements OnInit {
   chatCreateModalVisible = false;
   chatCreateModalVisibleAnimate = false;
   currentUserConversation?: UserConversation;
+  isNewChat: boolean = false;
+
+  @ViewChild(ChatListComponent) child:any;
 
   constructor(
     public translate: TranslateService,
@@ -69,6 +73,7 @@ export class AppComponent implements OnInit {
   closeChatCreate() {
     this.chatCreateModalVisibleAnimate = false;
     setTimeout(() => (this.chatCreateModalVisible = false), 300);
+    this.child.initializeChat();
   }
 
   showChatBox(val: any) {
@@ -77,8 +82,15 @@ export class AppComponent implements OnInit {
   }
 
   showMsgCreatePopup(event: any) {
-    console.log('showMsgCreatePopup',event);
+    this.isNewChat = false;
     this.currentUserConversation = event;
+    this.chatCreateModalVisible= true;
+    setTimeout(() => (this.chatCreateModalVisibleAnimate = true));
+  }
+
+  showNewChatPopup(){
+    this.isNewChat = true;
+    this.currentUserConversation = undefined;
     this.chatCreateModalVisible= true;
     setTimeout(() => (this.chatCreateModalVisibleAnimate = true));
   }

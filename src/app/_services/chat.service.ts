@@ -20,11 +20,11 @@ export class ChatService extends BaseService {
   private readonly endpointEntityCreateParticipant=  `${this.endpointEntityName}/createParticipant`;
   private readonly endpointEntityGetUsers=  `${this.endpointEntityName}/getUserList`;
   private readonly endpointEntityGetParticipantConversation=  `${this.endpointEntityName}/getParticipantConversation`;
-  private readonly endpointEntityGetUserConversation=  `${this.endpointEntityName}/GetUserConversation`;
+  private readonly endpointEntityGetUserConversation=  `${this.endpointEntityName}/getUserConversation`;
   private readonly endpointEntityGetMessages=  `${this.endpointEntityName}/getMessages`;
   private readonly endpointEntityCreateConversation=  `${this.endpointEntityName}/createConversation`;
-  private readonly endpointEntityGetConversations=  `${this.endpointEntityName}/GetConversations`;
-  private readonly endpointEntityCreateMessage=  `${this.endpointEntityName}/CreateMessage`;
+  private readonly endpointEntityGetConversations=  `${this.endpointEntityName}/getConversations`;
+  private readonly endpointEntityCreateMessage=  `${this.endpointEntityName}/createMessage`;
 
 
 
