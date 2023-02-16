@@ -7,8 +7,8 @@ import { FreighterBookingCreateComponent } from './booking-create/freighter-book
 
 const routes: Routes = [
   { path: '', component: BookingListComponent},
-  { path: 'p2cCreate/:id', component: P2cBookingCreateComponent},
-  { path: 'freighterCreate/:id', component: FreighterBookingCreateComponent},
+  { path: 'p2cCreate', component: P2cBookingCreateComponent},
+  { path: 'freighterCreate', component: FreighterBookingCreateComponent},
   { path: 'search', component: BookingSearchComponent},
   { path: 'search/:id', component: BookingSearchComponent},
 ];

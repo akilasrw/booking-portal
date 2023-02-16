@@ -1,8 +1,9 @@
+import { FlightSchedule } from './../../../../_models/view-models/flight-schedule/flight-schedule.model';
 import { CargoAgentQuery } from './../../../../_models/queries/cargo-agent/cargo-agent-query.model';
 import { ToastrService } from 'ngx-toastr';
-import { FlightScheduleSectorService } from 'src/app/_services/flight-schedule-sector.service';
+import { FlightScheduleService } from 'src/app/_services/flight-schedule.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { PackageContainer } from 'src/app/_models/view-models/package-container/package-container.model';
 import { PackageContainerListQuery } from 'src/app/_models/queries/package-container/package-container-list-query.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -10,12 +11,10 @@ import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 import { CargoBookingRequest } from 'src/app/_models/view-models/cargo-booking/cargo-booking-request.model';
 import { AWBStatus, BookingStatus, PackageContainerType, PackageItemStatus, PackagePriorityType, UnitType } from 'src/app/core/enums/common-enums';
 import { UnitService } from 'src/app/_services/unit.service';
-import { FlightScheduleSector } from 'src/app/_models/view-models/flight-schedule-sectors/flight-schedule-sector.model';
 import { User } from 'src/app/_models/user.model';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
 import { Constants } from 'src/app/core/constants/constants';
-import { FlightScheduleSectorQuery } from 'src/app/_models/queries/flight-schedule-sector/flight-schedule-sector-query.model';
 import { PackageContainerService } from 'src/app/_services/package-container.service';
 import { PackageItem } from 'src/app/_models/view-models/package-item.model';
 import { Unit } from 'src/app/_models/view-models/unit/unit.model';
@@ -33,8 +32,6 @@ import { CargoAgent } from 'src/app/_models/view-models/cargo-agent/cargo-agent.
 export class FreighterBookingCreateComponent implements OnInit {
   modalVisible = false;
   modalVisibleAnimate = false;
-  flightScheduleSectorId!: string;
-  flightScheduleSector?: FlightScheduleSector;
   packageContainers?: PackageContainer[] = [];
   cargoAgent?:CargoAgent;
   bookingForm!: FormGroup;
@@ -45,11 +42,10 @@ export class FreighterBookingCreateComponent implements OnInit {
   currentUser?: User | null
   subscription?: Subscription;
   awbDetail?: AWBCreateRM;
+  flightSchedule?:FlightSchedule;
 
-
-
-  constructor(private activatedRoute: ActivatedRoute,
-    private flightScheduleSectorService: FlightScheduleSectorService,
+  constructor(
+    private flightScheduleService: FlightScheduleService,
     private packageContainerService: PackageContainerService,
     private uldCargoBookingService: UldCargoBookingService,
     private accountService: AccountService,
@@ -58,7 +54,10 @@ export class FreighterBookingCreateComponent implements OnInit {
     private toastr: ToastrService,
     private unitService: UnitService,
     private router: Router) {
-    this.getId();
+      let nav = this.router.getCurrentNavigation();
+      if (nav?.extras && nav.extras.state && nav.extras.state['flightScheduleData']) {
+        this.flightSchedule = nav.extras.state['flightScheduleData'] as FlightSchedule;
+      }
     this.cargoBookingRequest = new CargoBookingRequest();
   }
 
@@ -92,7 +91,6 @@ export class FreighterBookingCreateComponent implements OnInit {
 
   createForm() {
     this.bookingForm = this.fb.group({
-      flightScheduleSectorId: [''],
       packageItems: this.fb.group({
         id: [''],
         width: [0, [Validators.required, Validators.min(1)]],
@@ -108,28 +106,6 @@ export class FreighterBookingCreateComponent implements OnInit {
         pieces:[1,[Validators.required, Validators.min(1)]]
       }),
     })
-  }
-
-  getId() {
-    this.activatedRoute.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (id) {
-        this.flightScheduleSectorId = id;
-        this.getFlightScheduleSectorData();
-      }
-    });
-  }
-
-  getFlightScheduleSectorData() {
-    var query: FlightScheduleSectorQuery = {
-      id: this.flightScheduleSectorId,
-      includeLoadPlan: false
-    };
-
-    this.flightScheduleSectorService.getFlightScheduleSector(query)
-      .subscribe(res => {
-        this.flightScheduleSector = res;
-      });
   }
 
   getPackageContainers(query: PackageContainerListQuery) {
@@ -154,7 +130,6 @@ export class FreighterBookingCreateComponent implements OnInit {
         if (await this.isWeightAndVolumeNotExceed(booking.packageItems) == true) {
           if (this.cargoBookingRequest.packageItems == undefined) {
             this.cargoBookingRequest = {
-              flightScheduleSectorId: this.flightScheduleSectorId,
               packageItems: [this.mapPackageItems(booking.packageItems)]
             };
           } else if (this.cargoBookingRequest.packageItems?.findIndex(x => x.height == booking.height && x.length == booking.length && x.width == booking.width) == -1) {
@@ -284,7 +259,7 @@ export class FreighterBookingCreateComponent implements OnInit {
   async isWeightAndVolumeNotExceed(cargoPackage: PackageItem) {
     var request: ValidateCargoPositionRequest = {
       packageItem: this.mapPackageItems(cargoPackage),
-      flightScheduleSectorId: this.flightScheduleSectorId
+      flightScheduleSectorIds: this.flightSchedule?.flightScheduleSectorIds
     };
 
     request.packageItem.length = request.packageItem.length!*cargoPackage.pieces!;
@@ -385,11 +360,14 @@ export class FreighterBookingCreateComponent implements OnInit {
 
   submit() {
     if (this.isValid()) {
+      this.cargoBookingRequest.flightScheduleSectorIds = this.flightSchedule?.flightScheduleSectorIds;
       this.cargoBookingRequest.bookingStatus = BookingStatus.Pending;
       this.cargoBookingRequest.aWBStatus = AWBStatus.Pending;
+      this.cargoBookingRequest.originAirportId = this.flightSchedule?.originAirportId;
+      this.cargoBookingRequest.destinationAirportId = this.flightSchedule?.destinationAirportId;
       this.uldCargoBookingService.create(this.cargoBookingRequest).subscribe(res => {
         this.toastr.success('Saved Successfully.');
-        this.flightScheduleSectorService.removeCurrentFlightScheduleSector();
+        this.flightScheduleService.removeCurrentFlightSchedule();
         this.router.navigate(['booking']);
       })
     }
@@ -410,7 +388,7 @@ export class FreighterBookingCreateComponent implements OnInit {
 
 
   backToSearch() {
-    this.router.navigate(['booking/search', this.flightScheduleSectorId]);
+    this.router.navigate(['booking/search', this.flightSchedule?.id]);
   }
 
   submitAWBDetail(awb: AWBCreateRM) {
@@ -429,11 +407,11 @@ export class FreighterBookingCreateComponent implements OnInit {
         this.awbDetail.agentAITACode = this.cargoAgent?.agentIATACode;
         this.awbDetail.agentCity = this.cargoAgent?.city;
         this.awbDetail.agentName = this.cargoAgent?.agentName;
-        this.awbDetail.routingAndDestinationTo = this.flightScheduleSector?.destinationAirportCode;
-        this.awbDetail.routingAndDestinationBy = this.flightScheduleSector?.flightNumber.substring(0, 2);
-        this.awbDetail.requestedFlightDate = this.flightScheduleSector?.scheduledDepartureDateTime;
-        this.awbDetail.destinationAirportName = this.flightScheduleSector?.destinationAirportName;
-        this.awbDetail.destinationAirportId = this.flightScheduleSector?.destinationAirportId;
+        this.awbDetail.routingAndDestinationTo = this.flightSchedule?.destinationAirportCode;
+        this.awbDetail.routingAndDestinationBy = this.flightSchedule?.flightNumber.substring(0, 2);
+        this.awbDetail.requestedFlightDate = this.flightSchedule?.scheduledDepartureDateTime;
+        this.awbDetail.destinationAirportName = this.flightSchedule?.destinationAirportName;
+        this.awbDetail.destinationAirportId = this.flightSchedule?.destinationAirportId;
       }else{
         this.awbDetail = this.cargoBookingRequest.aWBDetail;
         this.awbDetail.isEditAWB = true;

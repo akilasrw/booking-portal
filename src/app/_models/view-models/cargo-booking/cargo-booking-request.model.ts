@@ -5,9 +5,11 @@ import { PackageItemRM } from "./package-item-request.model";
 export class CargoBookingRequest {
   bookingStatus?: BookingStatus;
   aWBStatus?: AWBStatus;
-  flightScheduleSectorId?: string | null;
+  flightScheduleSectorIds?: string[];
   packageItems?: PackageItemRM[];
   aWBDetail?: AWBCreateRM;
+  originAirportId?:string;
+  destinationAirportId?:string;
 }
 
 

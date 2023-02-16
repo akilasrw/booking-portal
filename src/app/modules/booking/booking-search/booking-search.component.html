@@ -51,15 +51,15 @@
                 <div><label class="value">Under the Seat - 56 x 24 x 23 (Container) </label></div>
             </div>
         </div>
-        <div *ngIf="this.flightScheduleSectors.length > 0">
+        <div *ngIf="this.flightSchedules.length > 0">
             <div class="pt-4">
                 <h3>Please select an available flight option.</h3>
             </div>
         </div>
         <div class="flight-availability">
-            <div class="second-card" *ngFor="let flightScheduleSector of this.flightScheduleSectors;let indexOfelement=index;">
-                <app-p2c-booking-search-item *ngIf="flightScheduleSector.aircraftConfigType == aircraftConfigType.P2C || flightScheduleSector.aircraftConfigType == aircraftConfigType.None" [flightScheduleSector]="flightScheduleSector" [flightScheduleSectorId]="flightScheduleSectorId" (setCurrentSchedule)="setCurrentScheduleSector()" [elementIndex]="indexOfelement+1"></app-p2c-booking-search-item>   
-                <app-freighter-booking-search-item *ngIf="flightScheduleSector.aircraftConfigType == aircraftConfigType.Freighter" [flightScheduleSector]="flightScheduleSector" [flightScheduleSectorId]="flightScheduleSectorId" (setCurrentSchedule)="setCurrentScheduleSector()" [elementIndex]="indexOfelement+1"></app-freighter-booking-search-item>             
+            <div class="second-card" *ngFor="let flightSchedule of this.flightSchedules;let indexOfelement=index;">
+                <app-p2c-booking-search-item *ngIf="flightSchedule.aircraftConfigType == aircraftConfigType.P2C || flightSchedule.aircraftConfigType == aircraftConfigType.None" [flightSchedule]="flightSchedule" [flightScheduleId]="flightScheduleId" (setCurrentSchedule)="setCurrentSchedule()" [elementIndex]="indexOfelement+1"></app-p2c-booking-search-item>   
+                <app-freighter-booking-search-item *ngIf="flightSchedule.aircraftConfigType == aircraftConfigType.Freighter" [flightSchedule]="flightSchedule" [flightScheduleId]="flightScheduleId" (setCurrentSchedule)="setCurrentSchedule()" [elementIndex]="indexOfelement+1"></app-freighter-booking-search-item>             
             </div>
         </div>
         <div class="not-available" *ngIf="totalCount == 0 && !showLoader">

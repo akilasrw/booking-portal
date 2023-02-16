@@ -75,11 +75,11 @@ export class BookingViewDetailComponent implements OnInit {
     this.awbModel.agentAITACode = this.cargoAgent?.agentIATACode;
     this.awbModel.agentCity = this.cargoAgent?.city;
     this.awbModel.agentName = this.cargoAgent?.agentName;
-    this.awbModel.routingAndDestinationTo = this.cargoBookingDetail?.flightScheduleSector?.destinationAirportCode;
-    this.awbModel.routingAndDestinationBy = this.cargoBookingDetail?.flightScheduleSector?.flightNumber.substring(0, 2);
-    this.awbModel.requestedFlightDate = this.cargoBookingDetail?.flightScheduleSector?.scheduledDepartureDateTime;
-    this.awbModel.destinationAirportName = this.cargoBookingDetail?.flightScheduleSector?.destinationAirportName;
-    this.awbModel.destinationAirportId = this.cargoBookingDetail?.flightScheduleSector?.destinationAirportId;
+     this.awbModel.routingAndDestinationTo = this.cargoBookingDetail?.destinationAirportCode;
+    this.awbModel.routingAndDestinationBy = this.cargoBookingDetail?.flightNumber.substring(0, 2);
+    this.awbModel.requestedFlightDate = this.cargoBookingDetail?.scheduledDepartureDateTime;
+    this.awbModel.destinationAirportName = this.cargoBookingDetail?.destinationAirportName;
+    this.awbModel.destinationAirportId = this.cargoBookingDetail?.destinationAirportId;
     this.modalVisible = true;
     setTimeout(() => (this.modalVisibleAnimate = true));
   }

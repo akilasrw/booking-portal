@@ -2,7 +2,7 @@ import { PackageItemRM } from "../../view-models/cargo-booking/package-item-requ
 
 
 export interface ValidateCargoPositionRequest {
-  flightScheduleSectorId: string;
+  flightScheduleSectorIds?: string[];
   packageItem: PackageItemRM;
 }
 
