@@ -1,10 +1,12 @@
 <div>
     <div class="searsh-bar">
         <div class="input-group">
-            <input class="form-control border rounded-pill" type="search" value="search" id="example-search-input"><span (click)="newChat()"><img style="width:20px;cursor: pointer;margin-top: 3px;" src="https://www.freepnglogos.com/uploads/plus-icon/plus-icon-plus-svg-png-icon-download-1.png"></span>
+            <input class="form-control border rounded-pill" type="search" placeholder="search" id="example-search-input" [(ngModel)]="searchText" (keypress)="filteredMsg($event.target.value)"/>
+            <span (click)="newChat()"><img style="width:20px;cursor: pointer;margin-top: 3px;"
+              src="https://www.freepnglogos.com/uploads/plus-icon/plus-icon-plus-svg-png-icon-download-1.png"></span>
         </div>
     </div>
-    <div *ngFor="let conversation of this.currentUserConversations; let i = index;">
+    <div *ngFor="let conversation of filteredMsg(); let i = index;">
       <div class="user-list-container" *ngIf="conversation?.messages?.length > 0">
         <div class="user-list" (click)="popupMessage(conversation)">
             <div [ngClass]="{'bg-a': i%3==0, 'bg-b' : i%3==1, 'bg-c' : i%3==2  }" class="user-img">{{getFirstLetters(conversation.messages[conversation?.messages?.length-1].auther)| uppercase}}</div>
@@ -14,7 +16,7 @@
                     <h3>{{conversation?.messages[conversation?.messages?.length-1]?.body}}</h3>
                 </div>
                 <div class="status">
-                    <div><small>{{conversation?.messages[conversation?.messages?.length-1]?.created | date :'short'}}</small></div>
+                    <div><small>{{conversation?.messages[conversation?.messages?.length-1]?.created | timeAgoPipe }}</small></div>
                     <!-- <div class="chat-count"><small>{{conversation?.messages?.length}}</small></div> -->
                 </div>
             </div>

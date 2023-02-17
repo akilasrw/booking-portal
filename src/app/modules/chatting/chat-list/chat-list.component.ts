@@ -35,6 +35,7 @@ export class ChatListComponent implements OnInit {
   currentUserConversations?: UserConversation[] =[];
   @Output() popupCreate = new EventEmitter<any>();
   @Output() newChatPopup = new EventEmitter<any>();
+  searchText? :string ='';
 
   constructor(private accountService: AccountService,
               private chatService: ChatService,
@@ -63,16 +64,14 @@ export class ChatListComponent implements OnInit {
         // Create user
         this.chatService.createUser(userName)
         .subscribe(x=> {
-
-          //this.loadUserConversation(user,userName);
-          //this.loadParticipantConversation(userName)
+          this.loadUserConversation(user,userName);
+          this.loadParticipantConversation(userName);
         });
       } else { // user exists
         this.loadUserConversation(user,userName);
         this.loadParticipantConversation(userName)
       }
     });
-
     }
   }
 
@@ -151,15 +150,29 @@ export class ChatListComponent implements OnInit {
     this.newChatPopup.emit();
   }
 
-  // loadConversations() {
-  //   this.chatService.getConversations()
-  //   .subscribe(res=> {
-  //     this.conversations= res;
-  //     // this.messages=[];
-  //     // this.conversations.forEach(el=> {
-  //     //   if(el.sid)
-  //     //   this.loadMessages(el.sid);
-  //     // });
-  //   });
-  // }
+
+  filteredMsg(val?: string) {
+    var cons:UserConversation[]=[];
+    var filteredChats = this.currentUserConversations;
+    if(this.searchText != undefined && this.searchText !='') {
+      cons=[];
+      this.currentUserConversations?.forEach(con => {
+        let text = this.searchText? this.searchText:'';
+        let msgs = con?.messages?.filter(y=>y.body.indexOf(text) > -1);
+        if(msgs)
+          if(msgs.length > 0){
+            cons.push(con);
+            return;
+          }
+      });
+      if(cons.length>0) {
+        return cons;
+      }
+    } else if (this.searchText === '') {
+      return filteredChats;
+    }
+    return cons;
+  }
+
+
 }
