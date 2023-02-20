@@ -148,9 +148,11 @@ export class ChatListComponent implements OnInit {
   }
 
   updateMsgReadStatus(con: UserConversation) {
-    con.messages?.forEach(msg=> {
-      msg.chatStatus = { isRead : true}
-      this.updateMessage(msg);
+    con.messages?.forEach(msg=> { debugger;
+      if(msg.chatStatus.isRead != true) {
+        msg.chatStatus = { isRead : true}
+        this.updateMessage(msg);
+      }
     });
   }
 
