@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ServerErrorComponent } from './components/server-error/server-error.component';
 import { CustomPackageFilterPipe } from './pipes/custom-package-filter.pipe';
 import { TimeAgoPipe } from './pipes/time-ago.pipe';
+import { NiceDateFormatPipe } from './pipes/nice-date-format.pipe';
 
 
 
@@ -16,7 +17,8 @@ import { TimeAgoPipe } from './pipes/time-ago.pipe';
     SideNavComponent,
     ServerErrorComponent,
     CustomPackageFilterPipe,
-    TimeAgoPipe
+    TimeAgoPipe,
+    NiceDateFormatPipe
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { TimeAgoPipe } from './pipes/time-ago.pipe';
   ],
   exports:[
     SideNavComponent,
-    TimeAgoPipe
+    TimeAgoPipe,
+    NiceDateFormatPipe
   ]
 })
 export class CoreModule { }

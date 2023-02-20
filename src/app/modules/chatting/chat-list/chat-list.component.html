@@ -17,7 +17,7 @@
                 </div>
                 <div class="status">
                     <div><small>{{conversation?.messages[conversation?.messages?.length-1]?.created | timeAgoPipe }}</small></div>
-                    <!-- <div class="chat-count"><small>{{conversation?.messages?.length}}</small></div> -->
+                    <div *ngIf="unreadCount(conversation)>0" class="chat-count"><small>{{unreadCount(conversation)}}</small></div>
                 </div>
             </div>
         </div>

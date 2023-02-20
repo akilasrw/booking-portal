@@ -1,3 +1,5 @@
+import { ChatStatus } from "./chat-status.model";
+
 export interface Message {
   sId: string;
   auther: string;
@@ -5,4 +7,5 @@ export interface Message {
   pathConversationSid: string;
   pathSid: string;
   created: string;
+  chatStatus: ChatStatus;
 }

@@ -6,6 +6,7 @@ import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 import { ConversationRm } from 'src/app/_models/request-models/chatting/conversation-rm.model';
 import { ParticipantRm } from 'src/app/_models/request-models/chatting/participant-rm.model';
 import { User } from 'src/app/_models/user.model';
+import { ChatStatus } from 'src/app/_models/view-models/chatting/chat-status.model';
 import { MessageRm } from 'src/app/_models/view-models/chatting/message-rm.model';
 import { Message } from 'src/app/_models/view-models/chatting/message.model';
 import { UserConversation } from 'src/app/_models/view-models/chatting/user-conversation.model';
@@ -42,6 +43,8 @@ export class ChatCreateComponent implements OnInit {
     msg.auther =  this.currentUser?.username;
     msg.body = event;
     msg.pathConversationSid = this.currentUserConversation?.conversationSid; // 'CHee0e231a0ff24be182a8b486b4c4bde1';
+    msg.chatStatus = new ChatStatus();
+    msg.chatStatus.isRead = false;
     this.chatService.createMessage(msg)
     .subscribe(res=> {
       if(msg?.pathConversationSid){
@@ -61,6 +64,7 @@ export class ChatCreateComponent implements OnInit {
       });
       const users :UserConversation = {conversationSid: conversationId, messages: messages};
       this.currentUserConversation = users;
+
     });
 }
 

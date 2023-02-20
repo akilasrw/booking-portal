@@ -9,4 +9,5 @@ export interface UserConversation {
   conversationDateCreated?: string;
   userId?: string;
   messages?:  Message[];
+  isRead?: boolean;
 }

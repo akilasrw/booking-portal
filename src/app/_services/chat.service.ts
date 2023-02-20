@@ -25,6 +25,7 @@ export class ChatService extends BaseService {
   private readonly endpointEntityCreateConversation=  `${this.endpointEntityName}/createConversation`;
   private readonly endpointEntityGetConversations=  `${this.endpointEntityName}/getConversations`;
   private readonly endpointEntityCreateMessage=  `${this.endpointEntityName}/createMessage`;
+  private readonly endpointEntityUpdateMessage=  `${this.endpointEntityName}/updateMessage`;
 
 
 
@@ -38,6 +39,10 @@ export class ChatService extends BaseService {
 
   createMessage(msg : MessageRm) {
     return this.post<Message>(this.endpointEntityCreateMessage, msg)
+  }
+
+  updateMessage(msg : MessageRm) {
+    return this.put<Message>(this.endpointEntityUpdateMessage, msg)
   }
 
   createUser(userName: string) {

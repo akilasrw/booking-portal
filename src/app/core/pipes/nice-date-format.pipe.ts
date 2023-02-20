@@ -44,8 +44,8 @@ export class NiceDateFormatPipe implements PipeTransform {
 //       daydiff < 31 && Math.ceil(daydiff / 7) + " week(s) ago";
 //   }
 
-transform(value: Date) {
-
+transform(date: string) {
+  let value = new Date(date);
   const today = new Date()
   const yesterday = new Date(today)
   yesterday.setDate(yesterday.getDate() - 1)

@@ -143,13 +143,35 @@ export class ChatListComponent implements OnInit {
   }
 
   popupMessage(con: any) {
+    this.updateMsgReadStatus(con);
     this.popupCreate.emit(con);
+  }
+
+  updateMsgReadStatus(con: UserConversation) {
+    con.messages?.forEach(msg=> {
+      msg.chatStatus = { isRead : true}
+      this.updateMessage(msg);
+    });
+  }
+
+  updateMessage(msg: Message) {
+    this.chatService.updateMessage(msg)
+    .subscribe(res=>{
+
+    });
+  }
+
+  unreadCount(con: UserConversation) {
+    if(!con || con.messages?.length==0) {
+      return 0;
+    }
+
+    return con.messages?.filter(x=>x.chatStatus?.isRead == undefined || x.chatStatus?.isRead == false).length;
   }
 
   newChat() {
     this.newChatPopup.emit();
   }
-
 
   filteredMsg(val?: string) {
     var cons:UserConversation[]=[];
@@ -173,6 +195,4 @@ export class ChatListComponent implements OnInit {
     }
     return cons;
   }
-
-
 }
