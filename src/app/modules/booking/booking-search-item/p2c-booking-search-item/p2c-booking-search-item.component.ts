@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { FlightScheduleSector } from 'src/app/_models/view-models/flight-schedule-sectors/flight-schedule-sector.model';
+import { FlightSchedule } from 'src/app/_models/view-models/flight-schedule/flight-schedule.model';
 
 @Component({
   selector: 'app-p2c-booking-search-item',
@@ -10,8 +10,8 @@ import { FlightScheduleSector } from 'src/app/_models/view-models/flight-schedul
 })
 export class P2cBookingSearchItemComponent implements OnInit {
 
-  @Input() flightScheduleSector!:FlightScheduleSector;
-  @Input() flightScheduleSectorId: string = '';
+  @Input() flightSchedule!:FlightSchedule;
+  @Input() flightScheduleId: string = '';
   @Input() elementIndex:number = 0;
   @Output() setCurrentSchedule = new EventEmitter<any>();
 
@@ -41,19 +41,18 @@ export class P2cBookingSearchItemComponent implements OnInit {
     return position;
   }
 
-  validateSpace(flightScheduleSector: FlightScheduleSector): boolean {
-    if (flightScheduleSector.flightScheduleSectorCargoPositions.filter(x => x.availableSpaceCount > 0).length > 0)
+  validateSpace(flightSchedule: FlightSchedule): boolean {
+    if (flightSchedule.flightScheduleSectorCargoPositions.filter(x => x.availableSpaceCount > 0).length > 0)
       return true;
 
     return false;
   }
 
-  goToBookingCreate(flightScheduleSector: FlightScheduleSector) {
-    let id = flightScheduleSector.id;
-    var recordCount = flightScheduleSector.flightScheduleSectorCargoPositions.filter(x => x.availableSpaceCount > 0).length;
+  goToBookingCreate(flightSchedule: FlightSchedule) {
+    var recordCount = flightSchedule.flightScheduleSectorCargoPositions.filter(x => x.availableSpaceCount > 0).length;
     if (recordCount > 0) {
       this.setCurrentSchedule.emit();
-      this.router.navigate(['booking/p2cCreate', id]);
+      this.router.navigate(['booking/p2cCreate'],{ state: { flightScheduleData: flightSchedule } });
     }
     else
       this.toastrService.warning('No available space.');

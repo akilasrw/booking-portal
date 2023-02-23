@@ -38,7 +38,7 @@
             </div>
         </div>
         <div *ngIf="!isLoading">
-            <div class="notification-list-body">
+            <div class="notification-list-body" *ngIf="totalCount != 0">
                 <div class="notifi-list">
                     <div class="notifi-info">
                         <div *ngFor="let notification of this.notificationList">

@@ -48,18 +48,18 @@
                             </div>
                             <div class="details-group">
                                 <div class="lable">Flight Number</div>
-                                <div>{{cargoBookingLookup?.flightScheduleSector.flightNumber}}</div>
+                                <div>{{cargoBookingLookup?.flightNumber}}</div>
                             </div>
                             <div class="details-group">
                                 <div class="lable">Origin and Destination</div>
                                 <div><span
-                                        class="status-chip accepted">{{cargoBookingLookup?.flightScheduleSector.originAirportCode
-                                        +" - "+ cargoBookingLookup?.flightScheduleSector.destinationAirportCode}}</span>
+                                        class="status-chip accepted">{{cargoBookingLookup?.originAirportCode
+                                        +" - "+ cargoBookingLookup?.destinationAirportCode}}</span>
                                 </div>
                             </div>
                             <div class="details-group">
                                 <div class="lable">Flight Time</div>
-                                <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date :
+                                <div>{{cargoBookingLookup?.scheduledDepartureDateTime | date :
                                     'h:mm a'}}</div>
                             </div>
                         </div>
@@ -69,17 +69,17 @@
                             <div class="">
                                 <div class="details-group">
                                     <div class="lable">Cargo Acceptance Cutoff Time</div>
-                                    <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date :
+                                    <div>{{cargoBookingLookup?.scheduledDepartureDateTime | date :
                                         'h:mm a'}}</div>
                                 </div>
                                 <div class="details-group">
                                     <div class="lable">Cargo Booking Cutoff Time</div>
-                                    <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date :
+                                    <div>{{cargoBookingLookup?.scheduledDepartureDateTime | date :
                                         'h:mm a'}}</div>
                                 </div>
                                 <div class="details-group">
                                     <div class="lable">Flight Date</div>
-                                    <div>{{cargoBookingLookup?.flightScheduleSector.scheduledDepartureDateTime | date :
+                                    <div>{{cargoBookingLookup?.scheduledDepartureDateTime | date :
                                         'M/d/yyyy'}}</div>
                                 </div>
                                 <div class="details-group">

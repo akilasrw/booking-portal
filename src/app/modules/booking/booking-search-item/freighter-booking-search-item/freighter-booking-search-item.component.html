@@ -1,40 +1,38 @@
-<div class="card-details" [ngClass]="{'selected': flightScheduleSector.id == flightScheduleSectorId}">
+<div class="card-details" [ngClass]="{'selected': flightSchedule.id == flightScheduleId}">
     <div class="op-count">Option<span class="op-number">{{elementIndex}}</span></div>
     <div class="card-row">
         <div class="label">Flight Number</div>
-        <div class="value">{{flightScheduleSector.flightNumber}}</div>
+        <div class="value">{{flightSchedule.flightNumber}}</div>
     </div>
     <div class="card-row">
         <div class="label">Origin and Destination</div>
-        <div class="value chip"><span>{{flightScheduleSector.originAirportCode}}</span><i
-                class="ca ca-icn-flight"></i><span>{{flightScheduleSector.destinationAirportCode}}</span>
+        <div class="value chip"><span>{{flightSchedule.originAirportCode}}</span><i
+                class="ca ca-icn-flight"></i><span>{{flightSchedule.destinationAirportCode}}</span>
         </div>
     </div>
     <div class="card-row">
         <div class="label">Acceptance Cutoff Time</div>
-        <div class="value">{{flightScheduleSector.acceptanceCutoffTime| date:'shortTime'}}</div>
+        <div class="value">{{flightSchedule.acceptanceCutoffTime| date:'shortTime'}}</div>
     </div>
     <div class="card-row">
         <div class="label">Booking Cutoff Time</div>
-        <div class="value">{{flightScheduleSector.bookingCutoffTime| date:'shortTime'}}</div>
+        <div class="value">{{flightSchedule.bookingCutoffTime| date:'shortTime'}}</div>
     </div>
     <div class="card-row">
         <div class="label">Date and Time</div>
-        <div class="value">{{flightScheduleSector.scheduledDepartureDateTime | date:'dd/MM/yyyy hh:mm
-            aa'}}</div>
+        <div class="value">{{flightSchedule.scheduledDepartureDateTime | date:'dd/MM/yyyy hh:mm aa'}}</div>
     </div>
     <div class="card-row card-subtitle">Available Cargo Space</div>
     <div class="card-row">
         <div class="label">Weight</div>
-        <div class="value"> {{flightScheduleSector.availableWeight|number :'1.2-2'}} Kg</div>
+        <div class="value"> {{flightSchedule.availableWeight|number :'1.2-2'}} Kg</div>
     </div>
     <div class="card-row">
         <div class="label">Volume</div>
-        <div class="value">{{convertcm3Tom3(flightScheduleSector.availableVolume)|number :'1.2-2'}} m3(Cubic meter)</div>
+        <div class="value">{{convertcm3Tom3(flightSchedule.availableVolume)|number :'1.2-2'}} m3(Cubic meter)</div>
     </div>
     <div class="card-button">
-        <button class="btn btn-primary-outline" [disabled]="!validateSpace(flightScheduleSector)"
-            (click)="goToBookingCreate(flightScheduleSector)">Next</button>
+        <button class="btn btn-primary-outline" [disabled]="!validateSpace(flightSchedule)"
+            (click)="goToBookingCreate(flightSchedule)">Next</button>
     </div>
 </div>
-
