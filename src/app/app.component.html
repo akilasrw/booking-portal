@@ -17,7 +17,7 @@
 
 <div class="modal fade right" tabindex="-1" [ngClass]="{'in': chatModalVisibleAnimate}"
     [ngStyle]="{'display': chatModalVisible ? 'block' : 'none', 'opacity': chatModalVisibleAnimate ? 1 : 0}">
-    <div class="modal-dialog modal-lg modal-dialog-m modal-dialog-centered">
+    <div class="modal-dialog modal-m modal-dialog-m modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">Messaging</h2>
@@ -31,16 +31,16 @@
     </div>
 </div>
 
-<div class="modal fade" tabindex="-1" [ngClass]="{'in': chatCreateModalVisible}"
+<div class="modal fade right" tabindex="-1" [ngClass]="{'in': chatCreateModalVisible}"
     [ngStyle]="{'display': chatCreateModalVisible ? 'block' : 'none', 'opacity': chatCreateModalVisibleAnimate ? 1 : 0}">
-    <div class="modal-dialog modal-xxl modal-dialog-centered">
+    <div class="modal-dialog modal-m modal-dialog-m modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">{{isNewChat?'New Chat':'Chat'}}</h2>
                 <button type="button" class="close btn" data-dismiss="modal" (click)="closeChatCreate()"
                     aria-label="Close"><span class="ca ca-icn-close"></span></button>
             </div>
-            <div>
+            <div class="modal-body">
                 <app-chat-create [currentUserConversation]="currentUserConversation" [isNewConversation]="isNewChat"></app-chat-create>
             </div>
         </div>

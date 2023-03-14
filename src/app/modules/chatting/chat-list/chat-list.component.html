@@ -2,8 +2,7 @@
     <div class="searsh-bar">
         <div class="input-group">
             <input class="form-control border rounded-pill" type="search" placeholder="search" id="example-search-input" [(ngModel)]="searchText" (keypress)="filteredMsg($event.target.value)"/>
-            <span (click)="newChat()"><img style="width:20px;cursor: pointer;margin-top: 3px;"
-              src="https://www.freepnglogos.com/uploads/plus-icon/plus-icon-plus-svg-png-icon-download-1.png"></span>
+            <span (click)="newChat()"><i class="ca ca-icn-add"></i></span>
         </div>
     </div>
     <div *ngFor="let conversation of filteredMsg(); let i = index;">
