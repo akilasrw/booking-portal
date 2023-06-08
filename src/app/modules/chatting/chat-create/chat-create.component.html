@@ -13,7 +13,44 @@
       </div>
   </div>
 </div> -->
+
+
 <div class="conversations">
+  <div class="chat-section">
+    <div class="back-button"><i class="ca ca-icn-left-arrow-dash"></i></div>
+    <div class="user-list-container">
+      <div class="user-list">
+        <div class="user-img bg-a">{{getFirstLetters(msgUser)| uppercase}}</div>
+        <div class="user-data">
+          <div class="user-info">
+            <h3>{{this.msgUser}}</h3>
+            <small>Online</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="conversations-box">
+    <div class="chat-post" [ngClass]="msgUser != msg?.auther ? 'chat-out' : 'chat-in'" *ngFor="let msg of this.currentUserConversation?.messages">
+      <span>{{msg?.body}}</span>
+      <span class="chat-spacer"></span>
+      <div class="date-time">{{msg?.created | timeAgoPipe}}</div>
+    </div>
+  </div>
+  <div class="send-text">
+    <div class="form-group">
+      <input class="form-control" type="text" (keyup.enter)="sendMsg($event.target.value)" placeholder="Type here" [(ngModel)]="chatbox" name="chatbox"/>
+    </div>
+    <div class="send-button">
+      <span><i class="ca ca-icn-fil-arrow-right"></i></span>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- <div class="conversations">
   <div class="chat-section">
     <div class="back-button"><i class="ca ca-icn-left-arrow-dash"></i></div>
     <div class="user-list-container">
@@ -50,4 +87,4 @@
   </div>
 </div>
 
-
+ -->

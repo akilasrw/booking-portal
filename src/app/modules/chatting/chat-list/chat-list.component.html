@@ -8,10 +8,10 @@
     <div *ngFor="let conversation of filteredMsg(); let i = index;">
       <div class="user-list-container" *ngIf="conversation?.messages?.length > 0">
         <div class="user-list" (click)="popupMessage(conversation)">
-            <div [ngClass]="{'bg-a': i%3==0, 'bg-b' : i%3==1, 'bg-c' : i%3==2  }" class="user-img">{{getFirstLetters(conversation.messages[conversation?.messages?.length-1].auther)| uppercase}}</div>
+            <div [ngClass]="{'bg-a': i%3==0, 'bg-b' : i%3==1, 'bg-c' : i%3==2  }" class="user-img">{{getFirstLetters(msgUser)| uppercase}}</div>
             <div class="user-data">
                 <div class="user-info">
-                    <div class="text-truncate">{{conversation.messages[conversation?.messages?.length-1]?.auther}}</div>
+                    <div class="text-truncate">{{msgUser}}</div>
                     <h3>{{conversation?.messages[conversation?.messages?.length-1]?.body}}</h3>
                 </div>
                 <div class="status">

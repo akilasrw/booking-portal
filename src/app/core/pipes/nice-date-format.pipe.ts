@@ -14,7 +14,7 @@ export class NiceDateFormatPipe implements PipeTransform {
 
 //     if ( dif < 30 ){
 //          return this.convertToNiceDate(value);
-//     } else {debugger;
+//     } else {
 //         var datePipe = new DatePipe("en-US");
 //         var newvalue = datePipe.transform(value, 'MMM-dd-yyyy');
 

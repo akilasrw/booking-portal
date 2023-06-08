@@ -218,7 +218,7 @@ export class CoreExtensions {
     if(str.indexOf(' ')>0) {
       var res = str.split(' ');
       if(res.length> 0)
-          return res[0]+''+res[1];
+          return res[0][0]+ ''+ res[1][0];
     } else if(str.length>0) {
       return str[0];
     }

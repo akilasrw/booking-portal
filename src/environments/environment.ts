@@ -8,7 +8,9 @@ export const environment = {
   production: false,
   baseEndpoint: 'https://localhost:7130/api/v1/',
   encriptionKey:"123456$#@$^@1ERF",
-  aircraftLayoutType : AircraftConfigType.Freighter
+  aircraftLayoutType : AircraftConfigType.Freighter,
+  backofficeUsername:"backoffice admin",
+  backofficeEmail:"backofficeadmin@yopmail.com",
 };
 
 /*

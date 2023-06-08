@@ -16,6 +16,7 @@ import { Message } from 'src/app/_models/view-models/chatting/message.model';
 import { MessageRm } from 'src/app/_models/view-models/chatting/message-rm.model';
 import { UserConversation } from 'src/app/_models/view-models/chatting/user-conversation.model';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-chat-list',
@@ -36,6 +37,8 @@ export class ChatListComponent implements OnInit {
   @Output() popupCreate = new EventEmitter<any>();
   @Output() newChatPopup = new EventEmitter<any>();
   searchText? :string ='';
+  msgUser: string = environment.backofficeUsername;
+  backofficeUserEmail = environment.backofficeEmail;
 
   constructor(private accountService: AccountService,
               private chatService: ChatService,
@@ -164,10 +167,9 @@ export class ChatListComponent implements OnInit {
   }
 
   unreadCount(con: UserConversation) {
-    if(!con || con.messages?.length==0) {
+    if(!con || con.messages?.length == 0) {
       return 0;
     }
-
     return con.messages?.filter(x=>x.chatStatus?.isRead == undefined || x.chatStatus?.isRead == false).length;
   }
 

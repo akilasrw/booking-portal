@@ -11,6 +11,7 @@ import { MessageRm } from 'src/app/_models/view-models/chatting/message-rm.model
 import { Message } from 'src/app/_models/view-models/chatting/message.model';
 import { UserConversation } from 'src/app/_models/view-models/chatting/user-conversation.model';
 import { ChatService } from 'src/app/_services/chat.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-chat-create',
@@ -29,6 +30,8 @@ export class ChatCreateComponent implements OnInit {
     }
   }
   chatbox: string ='';
+  msgUser: string = environment.backofficeUsername;
+  backofficeUserEmail = environment.backofficeEmail;
 
   constructor(private accountService: AccountService,
     private chatService: ChatService) { }
@@ -66,6 +69,7 @@ export class ChatCreateComponent implements OnInit {
       this.currentUserConversation = users;
 
     });
+
 }
 
 createConversation() {
@@ -84,7 +88,7 @@ createConversation() {
       // Create particpant
       this.createParticipant(userName, t.sid);
       // add Admin to the conservation
-      this.createParticipant('backofficeadmin@yopmail.com', t.sid);
+      this.createParticipant(this.backofficeUserEmail, t.sid);
     }
   });
 }
