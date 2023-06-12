@@ -31,7 +31,7 @@
     </div>
   </div>
   <div class="conversations-box">
-    <div class="chat-post" [ngClass]="msgUser != msg?.auther ? 'chat-out' : 'chat-in'" *ngFor="let msg of this.currentUserConversation?.messages">
+    <div class="chat-post" [ngClass]="backofficeUserEmail != msg?.auther ? 'chat-out' : 'chat-in'" *ngFor="let msg of this.currentUserConversation?.messages">
       <span>{{msg?.body}}</span>
       <span class="chat-spacer"></span>
       <div class="date-time">{{msg?.created | timeAgoPipe}}</div>

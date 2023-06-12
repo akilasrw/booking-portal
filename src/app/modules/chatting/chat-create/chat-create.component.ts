@@ -32,16 +32,18 @@ export class ChatCreateComponent implements OnInit {
   chatbox: string ='';
   msgUser: string = environment.backofficeUsername;
   backofficeUserEmail = environment.backofficeEmail;
+  timer?:number = 0;
 
   constructor(private accountService: AccountService,
     private chatService: ChatService) { }
 
   ngOnInit(): void {
     this.getCurrentUser();
+    this.startChattingTimer();
   }
 
 
-  sendMsg(event: any) {
+  sendMsg(event: any) { debugger
     var msg: MessageRm = new MessageRm();
     msg.auther =  this.currentUser?.username;
     msg.body = event;
@@ -115,5 +117,20 @@ createParticipant(username: string, conversationSid: string){
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
+  }
+
+  startChattingTimer() {
+    debugger;
+    this.timer = window.setInterval(() => {
+      this.callLoadMsgs();
+    }, 5000);
+  }
+
+  callLoadMsgs() {
+    console.log('loadMessages')
+    if(this.currentUserConversation?.conversationSid) {
+      var chId = this.currentUserConversation?.conversationSid;
+      this.loadMessages(chId);
+    }
   }
 }

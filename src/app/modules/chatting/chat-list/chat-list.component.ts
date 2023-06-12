@@ -195,6 +195,13 @@ export class ChatListComponent implements OnInit {
         return cons;
       }
     } else if (this.searchText === '') {
+      if(filteredChats && filteredChats.length > 0) {
+        filteredChats?.sort((a,b)=> {
+          if(a && b && a.messages && b.messages)
+            return new Date(b?.messages[b?.messages?.length-1]?.created).valueOf() - new Date(a?.messages[a?.messages?.length-1]?.created).valueOf();
+          return -1;
+        });
+      } console.log(filteredChats)
       return filteredChats;
     }
     return cons;
