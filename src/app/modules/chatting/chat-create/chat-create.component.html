@@ -17,7 +17,7 @@
 
 <div class="conversations">
   <div class="chat-section">
-    <div class="back-button"><i class="ca ca-icn-left-arrow-dash"></i></div>
+    <div class="back-button" (click)="backButtonClicked()"><i class="ca ca-icn-left-arrow-dash"></i></div>
     <div class="user-list-container">
       <div class="user-list">
         <div class="user-img bg-a">{{getFirstLetters(msgUser)| uppercase}}</div>

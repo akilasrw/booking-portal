@@ -17,6 +17,7 @@ import { MessageRm } from 'src/app/_models/view-models/chatting/message-rm.model
 import { UserConversation } from 'src/app/_models/view-models/chatting/user-conversation.model';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 import { environment } from 'src/environments/environment';
+import { MessageList } from 'src/app/_models/view-models/chatting/message-list';
 
 @Component({
   selector: 'app-chat-list',
@@ -34,11 +35,13 @@ export class ChatListComponent implements OnInit {
   conversationId: string = '';
   conversations?: Conversation[]=[];
   currentUserConversations?: UserConversation[] =[];
-  @Output() popupCreate = new EventEmitter<any>();
-  @Output() newChatPopup = new EventEmitter<any>();
   searchText? :string ='';
+  filteredMsgs: MessageList[]=[];
   msgUser: string = environment.backofficeUsername;
   backofficeUserEmail = environment.backofficeEmail;
+
+  @Output() popupCreate = new EventEmitter<any>();
+  @Output() newChatPopup = new EventEmitter<any>();
 
   constructor(private accountService: AccountService,
               private chatService: ChatService,
@@ -46,11 +49,11 @@ export class ChatListComponent implements OnInit {
 
   ngOnInit(): void {
     // this.LoadConversations()
-    this.initializeChat()
+    this.initializeChat();
+    this.filteredMsg();
   }
 
   initializeChat() {
-
     // get the email of logged user
     this.getCurrentUser();
     let userName =  this.currentUser?.username!;
@@ -145,9 +148,22 @@ export class ChatListComponent implements OnInit {
       return CoreExtensions.GetFirstLetters(str);
   }
 
-  popupMessage(con: any) {
-    this.updateMsgReadStatus(con);
-    this.popupCreate.emit(con);
+  popupMessage(conversationId: string) {
+    var con = this.getUserConversation(conversationId);
+    if(con) {
+      this.updateMsgReadStatus(con);
+      this.popupCreate.emit(con);
+    }else {
+      this.newChat();
+    }
+  }
+
+  newChat() {
+    this.newChatPopup.emit();
+  }
+
+  getUserConversation(conversationId: string) {
+    return this.currentUserConversations?.filter(x=> x.conversationSid = conversationId)[0];
   }
 
   updateMsgReadStatus(con: UserConversation) {
@@ -173,37 +189,55 @@ export class ChatListComponent implements OnInit {
     return con.messages?.filter(x=>x.chatStatus?.isRead == undefined || x.chatStatus?.isRead == false).length;
   }
 
-  newChat() {
-    this.newChatPopup.emit();
-  }
-
   filteredMsg(val?: string) {
-    var cons:UserConversation[]=[];
-    var filteredChats = this.currentUserConversations;
-    if(this.searchText != undefined && this.searchText !='') {
-      cons=[];
-      this.currentUserConversations?.forEach(con => {
-        let text = this.searchText? this.searchText:'';
-        let msgs = con?.messages?.filter(y=>y.body.indexOf(text) > -1);
-        if(msgs)
-          if(msgs.length > 0){
-            cons.push(con);
-            return;
-          }
+    this.filteredMsgs =[];
+    if(this.currentUserConversations) {
+      this.currentUserConversations?.forEach(el => {
+        if(el.messages) {
+          this.filteredMsgs.push({
+            'conversationId' : el?.conversationSid!,
+            'created': el?.messages[el?.messages?.length-1]?.created,
+            'lastMessageBody': el?.messages[el?.messages?.length-1]?.body,
+            'userName': el?.messages[el?.messages?.length-1]?.auther,
+            'isNew' : false});
+        }
       });
-      if(cons.length>0) {
-        return cons;
-      }
-    } else if (this.searchText === '') {
-      if(filteredChats && filteredChats.length > 0) {
-        filteredChats?.sort((a,b)=> {
-          if(a && b && a.messages && b.messages)
-            return new Date(b?.messages[b?.messages?.length-1]?.created).valueOf() - new Date(a?.messages[a?.messages?.length-1]?.created).valueOf();
-          return -1;
-        });
-      } console.log(filteredChats)
-      return filteredChats;
+    } else {
+      var user = this.backofficeUserEmail;
+        if(this.searchText != undefined && this.searchText !='') {
+          if(this.filteredMsgs.filter(x=>x.userName == user).length == 0 && user.indexOf(this.searchText)>-1) {
+            this.filteredMsgs.push({'conversationId' : '' ,'created': '', 'lastMessageBody': '', 'userName': user, 'isNew' : true});
+          }
+        }
     }
-    return cons;
+    return this.filteredMsgs
+
+    // var cons:UserConversation[]=[];
+    // var filteredChats = this.currentUserConversations;
+    // if(this.searchText != undefined && this.searchText !='') {
+    //   cons=[];
+    //   this.currentUserConversations?.forEach(con => {
+    //     let text = this.searchText? this.searchText:'';
+    //     let msgs = con?.messages?.filter(y=>y.body.indexOf(text) > -1);
+    //     if(msgs)
+    //       if(msgs.length > 0){
+    //         cons.push(con);
+    //         return;
+    //       }
+    //   });
+    //   if(cons.length>0) {
+    //     return cons;
+    //   }
+    // } else if (this.searchText === '') {
+    //   if(filteredChats && filteredChats.length > 0) {
+    //     filteredChats?.sort((a,b)=> {
+    //       if(a && b && a.messages && b.messages)
+    //         return new Date(b?.messages[b?.messages?.length-1]?.created).valueOf() - new Date(a?.messages[a?.messages?.length-1]?.created).valueOf();
+    //       return -1;
+    //     });
+    //   } console.log(filteredChats)
+    //   return filteredChats;
+    // }
+    // return cons;
   }
 }

@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
@@ -34,6 +34,8 @@ export class ChatCreateComponent implements OnInit {
   backofficeUserEmail = environment.backofficeEmail;
   timer?:number = 0;
 
+  @Output() closeChatCreation = new EventEmitter<any>();
+
   constructor(private accountService: AccountService,
     private chatService: ChatService) { }
 
@@ -42,11 +44,10 @@ export class ChatCreateComponent implements OnInit {
     this.startChattingTimer();
   }
 
-
-  sendMsg(event: any) { debugger
+  sendMsg(event?: any) {
     var msg: MessageRm = new MessageRm();
     msg.auther =  this.currentUser?.username;
-    msg.body = event;
+    msg.body = event?event: this.chatbox;
     msg.pathConversationSid = this.currentUserConversation?.conversationSid; // 'CHee0e231a0ff24be182a8b486b4c4bde1';
     msg.chatStatus = new ChatStatus();
     msg.chatStatus.isRead = false;
@@ -120,7 +121,6 @@ createParticipant(username: string, conversationSid: string){
   }
 
   startChattingTimer() {
-    debugger;
     this.timer = window.setInterval(() => {
       this.callLoadMsgs();
     }, 5000);
@@ -132,5 +132,10 @@ createParticipant(username: string, conversationSid: string){
       var chId = this.currentUserConversation?.conversationSid;
       this.loadMessages(chId);
     }
+  }
+
+  backButtonClicked() { console.log('backButtonClicked');
+    window.clearInterval(this.timer);
+    this.closeChatCreation.emit();
   }
 }

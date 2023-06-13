@@ -2,10 +2,27 @@
     <div class="searsh-bar">
         <div class="input-group">
             <input class="form-control border rounded-pill" type="search" placeholder="search" id="example-search-input" [(ngModel)]="searchText" (keypress)="filteredMsg($event.target.value)"/>
-            <span (click)="newChat()"><i class="ca ca-icn-add"></i></span>
+            <!-- <span (click)="newChat()"><i class="ca ca-icn-add"></i></span> -->
         </div>
     </div>
     <div *ngFor="let conversation of filteredMsg(); let i = index;">
+      <div class="user-list-container" *ngIf="conversation">
+        <div class="user-list" (click)="popupMessage(conversation?.conversationId)">
+            <div [ngClass]="{'bg-a': i%3==0, 'bg-b' : i%3==1, 'bg-c' : i%3==2  }" class="user-img">{{getFirstLetters(msgUser)| uppercase}}</div>
+            <div class="user-data">
+                <div class="user-info">
+                    <div class="text-truncate">{{msgUser}}</div>
+                    <h3>{{conversation?.lastMessageBody}}</h3>
+                </div>
+                <div class="status">
+                    <div><small>{{conversation?.created | timeAgoPipe }}</small></div>
+                    <div *ngIf="unreadCount(conversation)>0" class="chat-count"><small>{{unreadCount(conversation)}}</small></div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div *ngFor="let conversation of filteredMsg(); let i = index;">
       <div class="user-list-container" *ngIf="conversation?.messages?.length > 0">
         <div class="user-list" (click)="popupMessage(conversation)">
             <div [ngClass]="{'bg-a': i%3==0, 'bg-b' : i%3==1, 'bg-c' : i%3==2  }" class="user-img">{{getFirstLetters(msgUser)| uppercase}}</div>
@@ -20,8 +37,8 @@
                 </div>
             </div>
         </div>
-    </div>
-    </div>
+      </div>
+    </div> -->
 
 </div>
 

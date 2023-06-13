@@ -37,11 +37,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">{{isNewChat?'New Chat':'Chat'}}</h2>
-                <button type="button" class="close btn" data-dismiss="modal" (click)="closeChatCreate()"
-                    aria-label="Close"><span class="ca ca-icn-close"></span></button>
+                <!-- <button type="button" class="close btn" data-dismiss="modal" (click)="closeChatCreate()"
+                    aria-label="Close"><span class="ca ca-icn-close"></span></button> -->
             </div>
             <div class="modal-body">
-                <app-chat-create [currentUserConversation]="currentUserConversation" [isNewConversation]="isNewChat"></app-chat-create>
+                <app-chat-create [currentUserConversation]="currentUserConversation" (closeChatCreation)="closeChatCreate()" [isNewConversation]="isNewChat"></app-chat-create>
             </div>
         </div>
     </div>
