@@ -1376,6 +1376,16 @@ a {
 // Messaging
 .searsh-bar {
     padding-bottom: 15px;
+    .input-group {
+        align-items: center;
+        justify-content: space-between;
+        span {
+            font-size: 22px;
+            padding-left: 16px;
+            color: $brand-primary;
+            cursor: pointer;
+        }
+    }
 }
 .user-list-container {
     max-height: calc(100% - 75px);
@@ -1456,6 +1466,97 @@ a {
                 }
             }
             
+        }
+    }
+}
+.chat-section {
+    display: flex;
+    .back-button {
+        color: $brand-primary;
+        padding-right: 16px;
+        margin-top: 8px;
+        cursor: pointer;
+        i {
+            font-size: 26px;
+        }
+    }
+    .user-list-container {
+        padding-top: 0;
+    }
+}
+.conversations-box {
+    height: calc(100vh - 220px);
+    background-color: $off-white;
+    border-radius: 5px;
+    padding: 16px 25px;
+    overflow-y: auto;
+    @include customScrollbar(10px);
+    .chat-post {
+        background: $default-white;
+        border-radius: 4px;
+        padding: 9px 10px;
+        float: left;
+        width: 90%;
+        clear: both;
+        margin-bottom: 15px;
+        position: relative;
+        &::before {
+            content: "";
+            display: block;
+            position: absolute;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            top: 10px;
+        }
+        &.chat-in {
+            &::before {
+                border-right: 14px solid $default-white;
+                left: -13px;
+            }
+        }
+        &.chat-out {
+            background: $blue;
+            float: right;
+            &::before {
+                border-left: 14px solid $blue;
+                right: -13px;
+            }
+        }
+        span {
+            font-size: 12px;
+            &.chat-spacer {
+                width: 50px;
+                display: inline-block;
+            }
+        }
+        .date-time {
+            text-align: right;
+            font-size: 10px;
+            margin-top: -15px;
+        }
+    }
+}
+.send-text {
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    .form-group {
+        flex-grow: 1;
+        margin-bottom: 0;
+        .form-control {
+            background-color: $off-white;
+        }
+    }
+    .send-button {
+        background-color: $brand-primary;
+        border-radius: 50px;
+        padding: 10px 14px;
+        margin-left: 16px;
+        cursor: pointer;
+        span {
+            i {
+                color: $default-white;
+            }
         }
     }
 }

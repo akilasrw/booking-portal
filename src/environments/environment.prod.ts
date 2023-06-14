@@ -1,5 +1,7 @@
 export const environment = {
   production: true,
   baseEndpoint: '',
-  encriptionKey:""
+  encriptionKey:"",
+  backofficeUsername:"",
+  backofficeEmail:"",
 };
