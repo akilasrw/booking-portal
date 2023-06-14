@@ -2,18 +2,14 @@ import { DatePipe, NgForOf } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
-import { ConversationRm } from 'src/app/_models/request-models/chatting/conversation-rm.model';
 import { ParticipantRm } from 'src/app/_models/request-models/chatting/participant-rm.model';
 import { User } from 'src/app/_models/user.model';
 import { ChatUser } from 'src/app/_models/view-models/chatting/chat-user.model';
 import { ParticipantConversation } from 'src/app/_models/view-models/chatting/participant-conversation.model';
 import { Participant } from 'src/app/_models/view-models/chatting/participant.model';
 import { ChatService } from 'src/app/_services/chat.service';
-import { TwilioChatService } from 'src/app/_services/twilio-chat.service';
-import { formatDate } from '@angular/common';
 import { Conversation } from 'src/app/_models/view-models/chatting/conversation.model';
 import { Message } from 'src/app/_models/view-models/chatting/message.model';
-import { MessageRm } from 'src/app/_models/view-models/chatting/message-rm.model';
 import { UserConversation } from 'src/app/_models/view-models/chatting/user-conversation.model';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 import { environment } from 'src/environments/environment';
@@ -39,7 +35,6 @@ export class ChatListComponent implements OnInit {
   filteredMsgs: MessageList[]=[];
   msgUser: string = environment.backofficeUsername;
   backofficeUserEmail = environment.backofficeEmail;
-
   @Output() popupCreate = new EventEmitter<any>();
   @Output() newChatPopup = new EventEmitter<any>();
 
@@ -97,7 +92,7 @@ export class ChatListComponent implements OnInit {
 
   loadUserConversation(user: ChatUser[], userName: string){
     if(user.length > 0)
-        this.chatService.getUserConversation(userName, user[0].chatServiceSid)
+        this.chatService.getUserConversation(userName)
         .subscribe(o=> {
           if(o.length >0){
             this.currentUserConversations =[]
@@ -191,7 +186,7 @@ export class ChatListComponent implements OnInit {
 
   filteredMsg(val?: string) {
     this.filteredMsgs =[];
-    if(this.currentUserConversations) {
+    if(this.currentUserConversations && this.currentUserConversations?.length > 0) {
       this.currentUserConversations?.forEach(el => {
         if(el.messages) {
           this.filteredMsgs.push({
