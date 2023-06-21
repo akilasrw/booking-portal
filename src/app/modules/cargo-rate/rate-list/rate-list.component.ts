@@ -7,6 +7,7 @@ import { User } from 'src/app/_models/user.model';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
 import { AgentRateManagement } from 'src/app/_models/view-models/cargo-rate-list/agent-rate-management.model';
+import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 
 @Component({
   selector: 'app-rate-list',
@@ -35,7 +36,7 @@ export class RateListComponent implements OnInit {
   ngOnInit(): void {
     this.getCurrentUser();
     this.loadAirports();
-    this.getRateList(); 
+    this.getRateList();
   }
 
   getCurrentUser() {
@@ -98,6 +99,14 @@ export class RateListComponent implements OnInit {
       this.cargoRateFilterQuery.pageIndex = event;
       this.getRateList();
     }
+  }
+
+  GetCargoType(type:number){
+    return CoreExtensions.GetCargoType(type);
+  }
+
+  GetRateType(type:number){
+    return CoreExtensions.GetRateType(type);
   }
 
 }

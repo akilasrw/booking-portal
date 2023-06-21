@@ -106,3 +106,11 @@ export enum NotificationFilterType{
   Read = 2,
   UnRead = 3,
 }
+
+export enum RateType{
+  None=0,
+  SpotRate =1,
+  PromotionalRate=2,
+  ContractRate=3,
+  MarketPublishRate=4
+}

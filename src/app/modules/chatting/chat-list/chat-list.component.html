@@ -16,7 +16,7 @@
                 </div>
                 <div class="status">
                     <div><small>{{conversation?.created | timeAgoPipe }}</small></div>
-                    <div *ngIf="unreadCount(conversation)>0" class="chat-count"><small>{{unreadCount(conversation)}}</small></div>
+                    <div *ngIf="unreadCount(conversation)>0" class="chat-count"><small>{{unreadCount(conversation?.conversationId)}}</small></div>
                 </div>
             </div>
         </div>

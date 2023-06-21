@@ -28,6 +28,8 @@
         <div *ngIf="!isLoading" class="table-content">
             <table class="table table-responsive">
                 <thead>
+                    <th>Rate Type</th>
+                    <th>Cargo Type</th>
                     <th>Origin</th>
                     <th>Destination</th>
                     <th>Start Date</th>
@@ -42,6 +44,8 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of this.agentRateList">
+                        <td>{{GetRateType(item.rateType)}}</td>
+                        <td>{{GetCargoType(item.cargoType)}}</td>
                         <td>{{item.originAirportCode}}</td>
                         <td>{{item.destinationAirportCode}}</td>
                         <td>{{item.startDate | date}}</td>

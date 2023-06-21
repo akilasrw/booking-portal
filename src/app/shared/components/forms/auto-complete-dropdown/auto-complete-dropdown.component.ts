@@ -34,8 +34,10 @@ export class AutoCompleteDropdownComponent implements OnInit {
   }
 
   onFocused(e: any) {
-    console.log('onFocused');
+    e.stopPropagation();
+    this.autocompleteDropdown.focus();
   }
+
   onClearSearch() {
     this.clearSearch.emit();
   }

@@ -177,11 +177,17 @@ export class ChatListComponent implements OnInit {
     });
   }
 
-  unreadCount(con: UserConversation) {
+  unreadCount(conversationId: string) {
+    var con = this.getUserConversation(conversationId);
     if(!con || con.messages?.length == 0) {
       return 0;
     }
-    return con.messages?.filter(x=>x.chatStatus?.isRead == undefined || x.chatStatus?.isRead == false).length;
+
+    if(con?.messages && con?.messages[con?.messages?.length-1]?.auther != this.currentUser?.username) {
+      return con.messages?.filter(x=>x.chatStatus?.isRead == undefined || x.chatStatus?.isRead == false).length;
+    }
+
+    return 0;
   }
 
   filteredMsg(val?: string) {

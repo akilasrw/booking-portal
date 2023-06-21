@@ -1,4 +1,4 @@
-import { PackageItemStatus, PackageContainerType, PackageBoxType, AWBStatus, WeightType } from './../enums/common-enums';
+import { PackageItemStatus, PackageContainerType, PackageBoxType, AWBStatus, WeightType, RateType } from './../enums/common-enums';
 import { HttpParams } from "@angular/common/http";
 import { BasePaginationQuery } from "src/app/shared/models/base-pagination-query.model";
 import { BookingStatus } from "../enums/common-enums";
@@ -125,8 +125,32 @@ export class CoreExtensions {
       case 1:
         cargoType = "General";
         break;
+      case 2:
+        cargoType = "DGR";
+        break;
     }
     return cargoType;
+  }
+
+  public static GetRateType(type:RateType):string{
+    let statusString = "None";
+    switch (type) {
+      case RateType.SpotRate:
+        statusString = "Spot Rate";
+        break;
+      case RateType.ContractRate:
+        statusString = "Contract Rate";
+        break
+      case RateType.PromotionalRate:
+        statusString = "Promotional Rate";
+        break
+      case RateType.MarketPublishRate:
+        statusString = "Market Publish Rate";
+        break
+      default:
+        break;
+    }
+    return statusString;
   }
 
   public static GetContainerName(packageContainerType: PackageContainerType) {
