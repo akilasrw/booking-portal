@@ -35,6 +35,7 @@ export class ChatListComponent implements OnInit {
   filteredMsgs: MessageList[]=[];
   msgUser: string = environment.backofficeUsername;
   backofficeUserEmail = environment.backofficeEmail;
+  timer?:number = 0;
   @Output() popupCreate = new EventEmitter<any>();
   @Output() newChatPopup = new EventEmitter<any>();
 
@@ -46,6 +47,7 @@ export class ChatListComponent implements OnInit {
     // this.LoadConversations()
     this.initializeChat();
     this.filteredMsg();
+    this.startChattingTimer();
   }
 
   initializeChat() {
@@ -125,6 +127,13 @@ export class ChatListComponent implements OnInit {
           messages.push(el);
         });
         const users :UserConversation = {conversationSid: conversationId, messages: messages};
+        // remove if already existed.
+        if(this.currentUserConversations && this.currentUserConversations?.find(c=>c.conversationSid == conversationId)) {
+          const index = this.currentUserConversations.findIndex(obj => obj.conversationSid === conversationId);
+          if (index !== -1) {
+            this.currentUserConversations.splice(index, 1);
+          }
+        }
         this.currentUserConversations?.push(users);
       });
   }
@@ -133,10 +142,6 @@ export class ChatListComponent implements OnInit {
     this.subscription = this.accountService.currentUser$.subscribe(res => {
       this.currentUser = res;
     });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
   }
 
   getFirstLetters(str: string) {
@@ -158,7 +163,7 @@ export class ChatListComponent implements OnInit {
   }
 
   getUserConversation(conversationId: string) {
-    return this.currentUserConversations?.filter(x=> x.conversationSid = conversationId)[0];
+    return this.currentUserConversations?.find(x=> x.conversationSid = conversationId);
   }
 
   updateMsgReadStatus(con: UserConversation) {
@@ -240,5 +245,25 @@ export class ChatListComponent implements OnInit {
     //   return filteredChats;
     // }
     // return cons;
+  }
+
+  startChattingTimer() {
+    this.timer = window.setInterval(() => {
+      this.callLoadMsgs();
+    }, 2000);
+  }
+
+  callLoadMsgs() {
+    this.currentUserConversations?.forEach(currentUserConversation=>{
+      if(currentUserConversation?.conversationSid) {
+        var chId = currentUserConversation?.conversationSid;
+        this.loadMessages(chId);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    window.clearInterval(this.timer);
+    this.subscription?.unsubscribe();
   }
 }

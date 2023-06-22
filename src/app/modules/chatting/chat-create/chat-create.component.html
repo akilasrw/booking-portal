@@ -39,10 +39,10 @@
   </div>
   <div class="send-text">
     <div class="form-group">
-      <input class="form-control" type="text" (keyup.enter)="sendMsg($event.target.value)" placeholder="Type here" [(ngModel)]="chatbox" name="chatbox"/>
+      <input class="form-control" type="text" (keyup.enter)="sendMsg()" placeholder="Type here" [(ngModel)]="chatbox" name="chatbox"/>
     </div>
     <div class="send-button">
-      <span><i class="ca ca-icn-fil-arrow-right"></i></span>
+      <span><i class="ca ca-icn-fil-arrow-right" (click)="sendMsg()"></i></span>
     </div>
   </div>
 </div>

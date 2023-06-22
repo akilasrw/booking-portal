@@ -25,7 +25,7 @@
                         class="ca ca-icn-close"></span></button>
             </div>
             <div class="modal-body">
-              <app-chat-list (popupCreate)="showMsgCreatePopup($event)" (newChatPopup)="showNewChatPopup()"></app-chat-list>
+              <app-chat-list (popupCreate)="showMsgCreatePopup($event)" (newChatPopup)="showNewChatPopup()" *ngIf="chatModalVisible"></app-chat-list>
             </div>
         </div>
     </div>
@@ -41,7 +41,11 @@
                     aria-label="Close"><span class="ca ca-icn-close"></span></button> -->
             </div>
             <div class="modal-body">
-                <app-chat-create [currentUserConversation]="currentUserConversation" (closeChatCreation)="closeChatCreate()" [isNewConversation]="isNewChat"></app-chat-create>
+                <app-chat-create
+                [currentUserConversation]="currentUserConversation"
+                (closeChatCreation)="closeChatCreate()"
+                [isNewConversation]="isNewChat"
+                *ngIf="chatCreateModalVisible"></app-chat-create>
             </div>
         </div>
     </div>
