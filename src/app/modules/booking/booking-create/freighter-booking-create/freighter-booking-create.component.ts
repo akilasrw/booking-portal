@@ -43,6 +43,7 @@ export class FreighterBookingCreateComponent implements OnInit {
   subscription?: Subscription;
   awbDetail?: AWBCreateRM;
   flightSchedule?:FlightSchedule;
+  cargoHandlingInstruction?: string;
 
   constructor(
     private flightScheduleService: FlightScheduleService,
@@ -148,9 +149,9 @@ export class FreighterBookingCreateComponent implements OnInit {
     }
   }
 
-  isBookingFormValied():boolean{
-    
-    if (this.bookingForm?.get('packageItems')?.get("packageItemCategory")?.value === null || 
+  isBookingFormValied():boolean {
+
+    if (this.bookingForm?.get('packageItems')?.get("packageItemCategory")?.value === null ||
     this.bookingForm?.get('packageItems')?.get("packageItemCategory")?.value === "") {
       this.toastr.error('Please select cargo type.');
       return false;
@@ -268,7 +269,7 @@ export class FreighterBookingCreateComponent implements OnInit {
     request.packageItem.weight = request.packageItem.weight!*cargoPackage.pieces!;
 
     var response = await this.uldCargoPositionService.validateWeightAndVolume(request).toPromise();
-   
+
     if (response !== undefined) {
       if (!response.isValid) {
         this.toastr.error(response.validationMessage);
@@ -320,7 +321,7 @@ export class FreighterBookingCreateComponent implements OnInit {
 
     var chargeableWeight = 0;
     var chargeableWeightTotal= 0;
-    
+
     if(Constants.BASE_WEIGHT_UNIT_ID.toLowerCase()!= packageItem.weightUnitId){
       var weight =CoreExtensions.GramToKilogramConversion(packageItem.weight!);
       packageItem.weight = weight
@@ -365,6 +366,7 @@ export class FreighterBookingCreateComponent implements OnInit {
       this.cargoBookingRequest.aWBStatus = AWBStatus.Pending;
       this.cargoBookingRequest.originAirportId = this.flightSchedule?.originAirportId;
       this.cargoBookingRequest.destinationAirportId = this.flightSchedule?.destinationAirportId;
+      this.cargoBookingRequest.cargoHandlingInstruction = this.cargoHandlingInstruction;
       this.uldCargoBookingService.create(this.cargoBookingRequest).subscribe(res => {
         this.toastr.success('Saved Successfully.');
         this.flightScheduleService.removeCurrentFlightSchedule();
@@ -416,7 +418,7 @@ export class FreighterBookingCreateComponent implements OnInit {
         this.awbDetail = this.cargoBookingRequest.aWBDetail;
         this.awbDetail.isEditAWB = true;
       }
-      
+
       this.modalVisible = true;
       setTimeout(() => (this.modalVisibleAnimate = true));
 

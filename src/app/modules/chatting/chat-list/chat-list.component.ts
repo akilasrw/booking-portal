@@ -57,24 +57,24 @@ export class ChatListComponent implements OnInit {
 
     if(userName) {
       // Get all user from twilio
-    this.chatService.getUsers()
-    .subscribe(res => {
+      this.chatService.getUsers()
+      .subscribe(res => {
 
-      this.chatUsers = res;
-      var user = this.chatUsers.filter(x=>x.identity == userName);
-      // Check exists the user,
-      if (user.length == 0) { // user not exists
-        // Create user
-        this.chatService.createUser(userName)
-        .subscribe(x=> {
+        this.chatUsers = res;
+        var user = this.chatUsers.filter(x=>x.identity == userName);
+        // Check exists the user,
+        if (user.length == 0) { // user not exists
+          // Create user
+          this.chatService.createUser(userName)
+          .subscribe(x=> {
+            this.loadUserConversation(user,userName);
+            this.loadParticipantConversation(userName);
+          });
+        } else { // user exists
           this.loadUserConversation(user,userName);
-          this.loadParticipantConversation(userName);
-        });
-      } else { // user exists
-        this.loadUserConversation(user,userName);
-        this.loadParticipantConversation(userName)
-      }
-    });
+          this.loadParticipantConversation(userName)
+        }
+      });
     }
   }
 

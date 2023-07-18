@@ -10,6 +10,7 @@ export class CargoBookingRequest {
   aWBDetail?: AWBCreateRM;
   originAirportId?:string;
   destinationAirportId?:string;
+  cargoHandlingInstruction?: string;
 }
 
 
