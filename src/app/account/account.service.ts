@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { CargoAgentRM } from '../_models/request-models/register/cargo-agent-rm.model';
 import { AuthenticateRM } from '../_models/request-models/login/authenticate-rm.model';
 import { CargoAgentQuery } from '../_models/queries/cargo-agent/cargo-agent-query.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class AccountService extends BaseService {
 
   constructor(http: HttpClient,
     private cryptoService: CryptoService,
+    private toastr: ToastrService,
     private router: Router) {
     super(http);
     this.currentUserSource = new BehaviorSubject<User|null>(null);
@@ -73,6 +75,9 @@ export class AccountService extends BaseService {
   }
 
   logout(optionalErrorMessage? : string) {
+    if(optionalErrorMessage)
+    this.toastr.error(optionalErrorMessage);
+
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
     this.router.navigate(['/account']);
