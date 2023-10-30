@@ -15,5 +15,6 @@ export interface CargoAgentRM{
     password:string;
     confirmPassword:string;
     status?: CargoAgentStatus;
+    agreementFile: File;
   }
   

@@ -1,4 +1,4 @@
-<div class="container-fluid p-0">
+<div class="container-fluid p-0 scroll-container">
     <div class="login-wrapper">
       <div class="login-container">
         <div class="login-left">
@@ -110,6 +110,12 @@
                       <label class="form-label">Agent IATA Code</label>
                       <app-text-input [formControl]='registrationForm.controls["agentIATACode"]' [label]='"agent IATA code"' [tabindex] ="11">
                       </app-text-input>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="form-label">Upload File</label>
+                      <input type="file" (change)="onFileChange($event)" [tabindex]="13">
                     </div>
                   </div>
                   <div class="col-md-4">

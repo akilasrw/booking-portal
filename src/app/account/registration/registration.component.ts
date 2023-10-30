@@ -87,36 +87,74 @@ export class RegistrationComponent implements OnInit {
     this.registrationForm.get('baseAirportId')?.patchValue(value.id);
   }
 
+  selectedFile: File | null = null;
+
+  onFileChange(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
   onClearBaseAirport() {
     this.registrationForm.get('baseAirportId')?.patchValue(null);
   }
 
-  register(){
-
-    if(this.registrationForm.get('countryId')?.value === null || this.registrationForm.get('countryId')?.value === ""){
-       this.toastr.error('Please select country.');
+  register() {
+    // Check if countryId and baseAirportId are selected
+    if (this.registrationForm.get('countryId')?.value === null || this.registrationForm.get('countryId')?.value === "") {
+      this.toastr.error('Please select a country.');
+      return; // Return early to prevent further execution
     }
-
-    if(this.registrationForm.get('baseAirportId')?.value === null || this.registrationForm.get('baseAirportId')?.value === ""){
-      this.toastr.error('Please select base airport.');
-   }
-
-    if(this.registrationForm.valid){  
-      var agent: CargoAgentRM = this.registrationForm.value;
-      agent.status = CargoAgentStatus.Pending;
-      this.accountService.register(agent).subscribe({
-        next:(res)=>{
-          this.toastr.success('User creation request submitted successfully. Await for the approval');
+  
+    if (this.registrationForm.get('baseAirportId')?.value === null || this.registrationForm.get('baseAirportId')?.value === "") {
+      this.toastr.error('Please select a base airport.');
+      return; // Return early to prevent further execution
+    }
+  
+    // Check if the form is valid
+    if (this.registrationForm.valid) {
+      // Create a new FormData object
+      const formData = new FormData();
+  
+      // Append the selected file to the FormData object
+      if (this.selectedFile) {
+        formData.append('agreementFile', this.selectedFile, this.selectedFile.name);
+      }
+  
+      // Append individual form fields to the FormData object
+      formData.append('agentName', this.registrationForm.get('agentName')?.value);
+      formData.append('userName', this.registrationForm.get('userName')?.value);
+      formData.append('address', this.registrationForm.get('address')?.value);
+      formData.append('primaryTelephoneNumber', this.registrationForm.get('primaryTelephoneNumber')?.value);
+      formData.append('secondaryTelephoneNumber', this.registrationForm.get('secondaryTelephoneNumber')?.value);
+      formData.append('email', this.registrationForm.get('email')?.value);
+      formData.append('cargoAccountNumber', this.registrationForm.get('cargoAccountNumber')?.value);
+      formData.append('countryId', this.registrationForm.get('countryId')?.value);
+      formData.append('baseAirportId', this.registrationForm.get('baseAirportId')?.value);
+      formData.append('city', this.registrationForm.get('city')?.value);
+      formData.append('agentIATACode', this.registrationForm.get('agentIATACode')?.value);
+      formData.append('password', this.registrationForm.get('password')?.value);
+      formData.append('confirmPassword', this.registrationForm.get('confirmPassword')?.value);
+  
+      // Set the status after appending all form fields
+      formData.append('status', '1');
+  
+      // Submit the form data to the server
+      this.accountService.register(formData).subscribe({
+        next: (res) => {
+          this.toastr.success('User creation request submitted successfully. Await approval.');
           this.router.navigate([this.returnUrl]);
         },
-        error:(err)=>{
-
+        error: (err) => {
+          // Handle errors
         }
-      })
-    }else{
+      });
+    } else {
+      // Mark all form fields as touched to show validation errors
       this.registrationForm.markAllAsTouched();
     }
   }
+  
+  
+  
 
   cancelSignUp(){
     this.router.navigate([this.returnUrl]);
