@@ -60,6 +60,10 @@ export class AccountService extends BaseService {
     return this.getWithParams<CargoAgent>('cargoagent', params);
   }
 
+  getProfile(){
+    return this.http.get(this.baseUrl + 'CargoAgent/profile')
+  }
+
   login(model: AuthenticateRM) {
     return this.http
       .post(this.baseUrl + 'user/cargo-agent-authenticate', model, {
@@ -100,6 +104,10 @@ export class AccountService extends BaseService {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
     this.router.navigate(['/account']);
+  }
+
+  updateUser(data:FormData){
+    return this.http.put(this.baseUrl + 'CargoAgent/updateProfile', data)
   }
 
   setCurrentUser(user: User) {

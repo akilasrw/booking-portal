@@ -114,11 +114,6 @@ export class RegistrationComponent implements OnInit {
       // Create a new FormData object
       const formData = new FormData();
   
-      // Append the selected file to the FormData object
-      if (this.selectedFile) {
-        formData.append('agreementFile', this.selectedFile, this.selectedFile.name);
-      }
-  
       // Append individual form fields to the FormData object
       formData.append('agentName', this.registrationForm.get('agentName')?.value);
       formData.append('userName', this.registrationForm.get('userName')?.value);
