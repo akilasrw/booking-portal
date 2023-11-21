@@ -30,6 +30,7 @@ export class BookingLookupSearchComponent implements OnInit {
   currentUser?: User | null;
   awsPrintLookup?: AWBDetail;
   isPrinting: boolean = false;
+  isAWBChecked: boolean = false;
 
 
   @ViewChild(BookingLookupPrintComponent) child !: any;
@@ -49,6 +50,10 @@ export class BookingLookupSearchComponent implements OnInit {
     this.searchForm = this.fb.group({
       referenceNumber: new FormControl(null)
     });
+  }
+
+  check(){
+    this.isAWBChecked = !this.isAWBChecked
   }
 
   getBookingDetail() {
