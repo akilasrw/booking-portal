@@ -15,72 +15,99 @@ import { CargoAgentQuery } from '../_models/queries/cargo-agent/cargo-agent-quer
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AccountService extends BaseService {
   baseUrl = environment.baseEndpoint;
-  private currentUserSource: BehaviorSubject<User|null>;
-  currentUser$: Observable<User| null>;
+  private currentUserSource: BehaviorSubject<User | null>;
+  currentUser$: Observable<User | null>;
 
-  constructor(http: HttpClient,
+  constructor(
+    http: HttpClient,
     private cryptoService: CryptoService,
     private toastr: ToastrService,
-    private router: Router) {
+    private router: Router
+  ) {
     super(http);
-    this.currentUserSource = new BehaviorSubject<User|null>(null);
+    this.currentUserSource = new BehaviorSubject<User | null>(null);
     this.currentUser$ = this.currentUserSource.asObservable();
   }
 
-  register(cargoAgent: CargoAgentRM){
-    return this.post<any>('cargoagent', cargoAgent);
+  register(formData: FormData) {
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data'); // Set the content type to multipart/form-data
+  
+    const options = {
+      headers: headers,
+    };
+  
+    return this.http.post<any>(this.baseUrl + 'CargoAgent', formData, options)
+      .pipe(
+        map((response: any) => {
+          // Handle the response as needed
+        })
+      );
   }
 
   getUserDetail(query: CargoAgentQuery) {
     var params = new HttpParams();
     if (query.appUserId) {
-      params = params.append("appUserId", query.appUserId);
+      params = params.append('appUserId', query.appUserId);
     }
     if (query.isCountryInclude) {
-      params = params.append("isCountryInclude", query.isCountryInclude);
+      params = params.append('isCountryInclude', query.isCountryInclude);
     }
-    return this.getWithParams<CargoAgent>('cargoagent',params);
+    return this.getWithParams<CargoAgent>('cargoagent', params);
+  }
+
+  getProfile(){
+    return this.http.get(this.baseUrl + 'CargoAgent/profile')
   }
 
   login(model: AuthenticateRM) {
-    return this.http.post(this.baseUrl + 'user/cargo-agent-authenticate', model, { withCredentials: true }).pipe(
-      map((response: any) => {
-        const user = response;
-        if (user) {
-          this.setCurrentUser(user);
-          this.saveUserCredential(model);
-          return user;
-        }
+    return this.http
+      .post(this.baseUrl + 'user/cargo-agent-authenticate', model, {
+        withCredentials: true,
       })
-    )
+      .pipe(
+        map((response: any) => {
+          const user = response;
+          if (user) {
+            this.setCurrentUser(user);
+            this.saveUserCredential(model);
+            return user;
+          }
+        })
+      );
   }
 
   refreshToken(token?: string) {
     const httpOptions = {
-      headers: new HttpHeaders({'Content-Type': 'application/json'})
-    }
-    return this.http.post(this.baseUrl + 'user/refresh-token', '"' + token + '"', httpOptions).pipe(
-      map((response: any) => {
-        const user = response;
-        if (user) {
-          this.setCurrentUser(user);
-          return user;
-        }
-      })
-    )
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    };
+    return this.http
+      .post(this.baseUrl + 'user/refresh-token', '"' + token + '"', httpOptions)
+      .pipe(
+        map((response: any) => {
+          const user = response;
+          if (user) {
+            this.setCurrentUser(user);
+            return user;
+          }
+        })
+      );
   }
 
-  logout(optionalErrorMessage? : string) {
-    if(optionalErrorMessage)
-    this.toastr.error(optionalErrorMessage);
+  logout(optionalErrorMessage?: string) {
+    if (optionalErrorMessage) this.toastr.error(optionalErrorMessage);
 
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
     this.router.navigate(['/account']);
+  }
+
+  updateUser(data:FormData){
+    return this.http.put(this.baseUrl + 'CargoAgent/updateProfile', data)
   }
 
   setCurrentUser(user: User) {
@@ -104,20 +131,23 @@ export class AccountService extends BaseService {
   private refreshTokenTimeout: any;
 
   private startRefreshTokenTimer(user: User) {
-      // parse json object from base64 encoded jwt token
-      const jwtToken = JSON.parse(atob(user.jwtToken.split('.')[1]));
+    // parse json object from base64 encoded jwt token
+    const jwtToken = JSON.parse(atob(user.jwtToken.split('.')[1]));
 
-      // set a timeout to refresh the token a minute before it expires
-      const expires = new Date(jwtToken.exp * 1000);
-      const timeout = expires.getTime() - Date.now() - (60 * 1000);
-      this.refreshTokenTimeout = setTimeout(() => this.refreshToken(user.refreshToken).subscribe(), timeout);
+    // set a timeout to refresh the token a minute before it expires
+    const expires = new Date(jwtToken.exp * 1000);
+    const timeout = expires.getTime() - Date.now() - 60 * 1000;
+    this.refreshTokenTimeout = setTimeout(
+      () => this.refreshToken(user.refreshToken).subscribe(),
+      timeout
+    );
   }
 
-  saveUserCredential(model: AuthenticateRM){
-    if(model.rememberMe){
+  saveUserCredential(model: AuthenticateRM) {
+    if (model.rememberMe) {
       var enriptedCredentil = this.cryptoService.encrypt(JSON.stringify(model));
       localStorage.setItem('UserCredential', enriptedCredentil);
-    }else{
+    } else {
       localStorage.removeItem('UserCredential');
     }
   }

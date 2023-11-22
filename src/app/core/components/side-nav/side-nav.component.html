@@ -65,16 +65,110 @@
         </div>
         <div class="profile-card" *ngIf="showProfileCard">
             <div class="pro-pic">
-                <div class="pro-img"><img src="/assets/images/profile-img.png"></div>
+                <div class="pro-img" (click)="openProfileModel()"><img src="/assets/images/profile-img.png"></div>
             </div>
             <div class="name">{{currentUser?.fullName}}</div>
             <div class="email">{{currentUser?.email}}</div>
             <div class="actions">
                 <span class="ca ca-icn-settings" title="Settings" (click)="settings()"></span>
-                <span class="ca ca-icn-edit" title="Edit" (click)="edit()"></span>
+                <span class="ca ca-icn-edit" title="Edit" (click)="openEditModal()"></span>
                 <span class="ca ca-icn-shutdown" title="Sign Out" (click)="signOut()"></span>
             </div>
         </div>
     </div>
 </div>
+<div class="modal fade right" tabindex="-1" [ngClass]="{'in': isProfileModalVisible}"
+    [ngStyle]="{'display': isProfileModalVisible ? 'block' : 'none', 'opacity': isProfileModalAnimateVisible ? 1 : 0}">
+    <div class="modal-dialog modal-lg modal-dialog-m modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">User Profile</h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="closeProfileModel()"></button>
+            </div>
+            <div>
+                
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 item">
+                            <label class="form-label">Agent Name:</label>
+                            <p class="profile-info">{{this.agentName}}</p>
+                        </div>
+                        <div class="col-md-6 item">
+                            <label class="form-label">User Name:</label>
+                            <p class="profile-info">{{ this.userName }}</p>
+                        </div>
+                        <div class="col-md-6 item">
+                            <label class="form-label">Telephone Number:</label>
+                            <p class="profile-info">{{ this.phoneNumber }}</p>
+                        </div>
+                        <div class="col-md-6 item">
+                            <label class="form-label">Email:</label>
+                            <p class="profile-info">{{ this.email }}</p>
+                        </div>
+                        <div class="col-md-12 item">
+                            <label class="form-label">Agreement:</label>
+                            <!-- Display agreement file details or a placeholder -->
+                            <a href="https://bloblircargo.blob.core.windows.net/uploadlir/{{ this.agreement }}" class="profile-info" target="_blank">
+                               View Agreement
+                              </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary me-3" type="button" (click)="closeProfileModel()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<div class="modal fade right" tabindex="-1" [ngClass]="{'in': isEditModalVisible}"
+    [ngStyle]="{'display': isEditModalVisible ? 'block' : 'none', 'opacity': isEditModalAnimateVisible ? 1 : 0}">
+    <div class="modal-dialog modal-lg modal-dialog-m modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">User Profile</h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="closeEditModel()"></button>
+            </div>   
+          <div class="update-user">
+            
+            <form  class="update-form"  [formGroup]="agentForm">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Agent Name<span class="compulsory">*</span></label>
+                    <input   [tabindex] ="1" formControlName="agentName" >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">User Name<span class="compulsory">*</span></label>
+                    <input   [tabindex] ="1" formControlName="userName">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Telephone Number<span class="compulsory">*</span></label>
+                    <input   [tabindex] ="1" formControlName="phoneNumber" >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Email<span class="compulsory">*</span></label>
+                    <input   [tabindex] ="1"  formControlName="email" >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                
+                </div>
+               
+              </div>
+            </form>
+            <div class="modal-footer">
+              <button class="btn btn-secondary me-3" type="button" (click)="closeEditModel()">Cancel</button>
+              <button class="btn btn-primary" type="button" (click)="onSubmit()" >Update</button>
+          </div>
+        </div>
+        </div>
+    </div>
+</div>
