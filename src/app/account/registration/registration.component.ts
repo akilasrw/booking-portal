@@ -87,12 +87,6 @@ export class RegistrationComponent implements OnInit {
     this.registrationForm.get('baseAirportId')?.patchValue(value.id);
   }
 
-  selectedFile: File | null = null;
-
-  onFileChange(event: any) {
-    this.selectedFile = event.target.files[0];
-  }
-
   onClearBaseAirport() {
     this.registrationForm.get('baseAirportId')?.patchValue(null);
   }
