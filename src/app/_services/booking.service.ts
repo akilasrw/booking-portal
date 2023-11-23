@@ -40,10 +40,12 @@ export class BookingService extends BaseService {
       params = params.append("destination", query.destination);
     }
 
-    if (query.bookingDate) {
-      params = params.append("bookingDate", query.bookingDate.toDateString());
+    if (query.fromDate) {
+      params = params.append("fromDate", query.fromDate.toDateString());
     }
-
+    if (query.toDate) {
+      params = params.append("toDate", query.toDate.toDateString());
+    }
     params = CoreExtensions.AsPaginate(params, query);
 
     return this.getWithParams<IPagination<CargoBooking>>(
