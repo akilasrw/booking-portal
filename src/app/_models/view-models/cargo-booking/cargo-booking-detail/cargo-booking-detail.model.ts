@@ -17,3 +17,5 @@ export interface CargoBookingDetail{
     awbStatus:AWBStatus;
     packageItems: PackageItem[];    
   }
+
+  

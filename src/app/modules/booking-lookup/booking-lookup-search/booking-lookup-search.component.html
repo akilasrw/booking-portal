@@ -32,7 +32,7 @@
             <h3>Booking Information</h3>
             <div class="booking-info row">
                 <div class="timeline">  
-                    <div class="tl-content tl-content-active">
+                    <div class="tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 10 }">
                       <div class="tl-header">
                         <span class="tl-marker"></span>
                         <p class="tl-title">
@@ -40,7 +40,7 @@
                         <p>
                       </div>
                     </div>
-                    <div class="tl-content tl-content-active">
+                    <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 20 }">
                         <div class="tl-header">
                           <span class="tl-marker"></span>
                           <p class="tl-title">
@@ -48,7 +48,7 @@
                           <p>
                         </div>
                       </div>
-                    <div class="tl-content tl-content">
+                    <div class="tl-content tl-content"  [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 30 }">
                         <div class="tl-header">
                           <span class="tl-marker"></span>
                           <p class="tl-title">
@@ -57,7 +57,7 @@
                         </div>
                       </div>
 
-                      <div class="tl-content tl-content">
+                      <div class="tl-content tl-content"  [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 40 }">
                         <div class="tl-header">
                           <span class="tl-marker"></span>
                           <p class="tl-title">
@@ -65,7 +65,7 @@
                           <p>
                         </div>
                       </div>
-                      <div class="tl-content tl-content">
+                      <div class="tl-content tl-content"  [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 50 }">
                         <div class="tl-header">
                           <span class="tl-marker"></span>
                           <p class="tl-title">
@@ -73,7 +73,7 @@
                           <p>
                         </div>
                       </div>
-                      <div class="tl-content tl-content">
+                      <div class="tl-content tl-content"  [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 60 }">
                         <div class="tl-header">
                           <span class="tl-marker"></span>
                           <p class="tl-title">

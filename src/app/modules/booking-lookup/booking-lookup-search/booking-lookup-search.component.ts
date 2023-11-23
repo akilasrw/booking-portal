@@ -14,6 +14,7 @@ import { AWBDetail } from 'src/app/_models/view-models/awb/awb-detail.model';
 import { BookingLookupPrintComponent } from '../booking-lookup-print/booking-lookup-print.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PackageItem } from 'src/app/_models/view-models/package-item.model';
+import { BookingStatusEnum } from 'src/app/_models/view-models/cargo-booking/cargo-booking.model';
 
 
 @Component({
@@ -31,6 +32,8 @@ export class BookingLookupSearchComponent implements OnInit {
   awsPrintLookup?: AWBDetail;
   isPrinting: boolean = false;
   isAWBChecked: boolean = false;
+
+  
 
 
   @ViewChild(BookingLookupPrintComponent) child !: any;
@@ -99,6 +102,10 @@ export class BookingLookupSearchComponent implements OnInit {
     } else {
       this.toastr.error('Please enter booking number or package number.');
     }
+  }
+
+  getStatus(e:number):string{
+    return BookingStatusEnum[e]
   }
 
   getBookingStatus(status: number): string {
