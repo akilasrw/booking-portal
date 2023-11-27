@@ -57,7 +57,7 @@
                         </div>
                       </div>
 
-                      <div class="tl-content tl-content"  [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 40 }">
+                      <div class="tl-content tl-content" *ngIf="verifyStatus == 2" [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 40 }">
                         <div class="tl-header">
                           <span class="tl-marker"></span>
                           <p class="tl-title">

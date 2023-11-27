@@ -32,6 +32,7 @@ export class BookingLookupSearchComponent implements OnInit {
   awsPrintLookup?: AWBDetail;
   isPrinting: boolean = false;
   isAWBChecked: boolean = false;
+  verifyStatus:number = 0;
 
   
 
@@ -62,7 +63,12 @@ export class BookingLookupSearchComponent implements OnInit {
   getBookingDetail() {
     if (this.searchForm.value.referenceNumber != null) {
       var query = new CargoBookingLookupQuery;
-      query.referenceNumber = this.searchForm.value.referenceNumber;
+      if(this.isAWBChecked){
+        query.AWBNumber = this.searchForm.value.referenceNumber;
+      }else{
+        query.referenceNumber = this.searchForm.value.referenceNumber;
+      }
+     
       query.isIncludeFlightDetail = true;
       query.isIncludePackageDetail = true;
       query.isIncludeAWBDetail = true;
@@ -72,7 +78,7 @@ export class BookingLookupSearchComponent implements OnInit {
         {
           next: (res) => {
             this.cargoBookingLookup = res;
-
+            this.verifyStatus = res.verifyStatus
             var packages = this.cargoBookingLookup.packageItems;
             this.cargoBookingLookup.packageItems = [];
 
