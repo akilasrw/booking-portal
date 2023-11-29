@@ -3,5 +3,6 @@ import { BasePaginationQuery } from "src/app/shared/models/base-pagination-query
 export class BookingFilterListQuery extends BasePaginationQuery {
   originAirportId?: string;
   destinationAirportId?: string;
-  scheduledDepartureDateTime?: Date;
+  scheduledDepartureFromDate?: Date;
+  scheduledDepartureToDate?: Date;
 }

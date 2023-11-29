@@ -51,8 +51,10 @@ export class BookingSearchComponent implements OnInit {
         this.bookingFilterQuery = this.flightScheduleService.getCurrentFlightSchedule();
         this.flightScheduleId = id;
         if (this.bookingFilterQuery) {
-          if (this.bookingFilterQuery.scheduledDepartureDateTime)
-            this.bookingFilterQuery.scheduledDepartureDateTime = new Date(this.bookingFilterQuery.scheduledDepartureDateTime);
+          if (this.bookingFilterQuery.scheduledDepartureFromDate && this.bookingFilterQuery.scheduledDepartureToDate) {
+            this.bookingFilterQuery.scheduledDepartureFromDate = new Date(this.bookingFilterQuery.scheduledDepartureToDate);
+            this.bookingFilterQuery.scheduledDepartureToDate = new Date(this.bookingFilterQuery.scheduledDepartureToDate);
+          }
           this.getFilteredList();
         }
       } else
@@ -64,7 +66,8 @@ export class BookingSearchComponent implements OnInit {
     this.bookingForm = this.fb.group({
       originAirportId: ['', [Validators.required]],
       destinationAirportId: ['', [Validators.required]],
-      scheduledDepartureDateTime: ['', [Validators.required]],
+      scheduledDepartureFromDate: ['', [Validators.required]],
+      scheduledDepartureToDate: ['', [Validators.required]],
     });
   }
 
@@ -112,7 +115,8 @@ export class BookingSearchComponent implements OnInit {
     if (this.isFormValied() && this.bookingForm.valid) {
       this.bookingFilterQuery.originAirportId = this.bookingForm.value.originAirportId;
       this.bookingFilterQuery.destinationAirportId = this.bookingForm.value.destinationAirportId;
-      this.bookingFilterQuery.scheduledDepartureDateTime = this.bookingForm.value.scheduledDepartureDateTime;
+      this.bookingFilterQuery.scheduledDepartureFromDate = this.bookingForm.value.scheduledDepartureFromDate;
+      this.bookingFilterQuery.scheduledDepartureToDate = this.bookingForm.value.scheduledDepartureToDate;
       //this.bookingFilterQuery.pageSize =  3;
       this.flightSchedules = [];
       this.getFilteredList();
@@ -135,7 +139,11 @@ export class BookingSearchComponent implements OnInit {
       return false;
     }
     
-    if (this.bookingForm.get('scheduledDepartureDateTime')?.value === undefined || this.bookingForm.get('scheduledDepartureDateTime')?.value === "") {
+    if (this.bookingForm.get('scheduledDepartureFromDate')?.value === undefined || this.bookingForm.get('scheduledDepartureFromDate')?.value === "") {
+      this.toastr.error('Please select flight date.');
+      return false;
+    }
+    if (this.bookingForm.get('scheduledDepartureToDate')?.value === undefined || this.bookingForm.get('scheduledDepartureToDate')?.value === "") {
       this.toastr.error('Please select flight date.');
       return false;
     }

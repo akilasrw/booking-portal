@@ -10,34 +10,41 @@
             <div class="filter-block">
                 <div class="row">
                     <form [formGroup]="bookingForm" (ngSubmit)="submit()">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="form-label">Origin</label>
-                                    <app-auto-complete-dropdown [data]="originAirpots" [keyword]="keyword"
-                                        (selectFileOutput)="selectedOrigin($event)" (clearSearch)="onClearOrigin()" (changeSearch)="onChangeOrigin()"></app-auto-complete-dropdown>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="form-label">Destination</label>
-                                    <app-auto-complete-dropdown [data]="destinationAirpots" [keyword]="keyword"
-                                        (selectFileOutput)="selectedDestination($event)" (clearSearch)="onClearDestination()" (changeSearch)="onChangeDestination()"></app-auto-complete-dropdown>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="form-label">Flight Date</label>
-                                    <input type="text" formControlName="scheduledDepartureDateTime" placeholder="Date"
-                                        class="form-control" bsDatepicker>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group filter-btn">
-                                    <button class="btn btn-primary-outline" type="submit">Find</button>
-                                </div>
-                            </div>
+                      <div class="row">
+                        <div class="col-md-2">
+                          <div class="form-group">
+                            <label class="form-label">Origin</label>
+                            <app-auto-complete-dropdown [data]="originAirpots" [keyword]="keyword"
+                                                        (selectFileOutput)="selectedOrigin($event)" (clearSearch)="onClearOrigin()" (changeSearch)="onChangeOrigin()"></app-auto-complete-dropdown>
+                          </div>
                         </div>
+                        <div class="col-md-2">
+                          <div class="form-group">
+                            <label class="form-label">Destination</label>
+                            <app-auto-complete-dropdown [data]="destinationAirpots" [keyword]="keyword"
+                                                        (selectFileOutput)="selectedDestination($event)" (clearSearch)="onClearDestination()" (changeSearch)="onChangeDestination()"></app-auto-complete-dropdown>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group">
+                            <label class="form-label">From Date</label>
+                            <input type="text" formControlName="scheduledDepartureFromDate" placeholder="Date"
+                                   class="form-control" bsDatepicker>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group">
+                            <label class="form-label">To Date</label>
+                            <input type="text" formControlName="scheduledDepartureToDate" placeholder="Date"
+                                   class="form-control" bsDatepicker>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group filter-btn">
+                            <button class="btn btn-primary-outline" type="submit">Find</button>
+                          </div>
+                        </div>
+                      </div>
                     </form>
                 </div>
             </div>
