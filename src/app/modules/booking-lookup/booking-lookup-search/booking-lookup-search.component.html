@@ -81,10 +81,9 @@
                           <p>
                         </div>
                       </div>
-                  
                   </div>
-                
                 <div class="col">
+                    <button class="btn btn-primary-outline m-3" (click)="generatePDF(cargoBookingLookup)">Print</button>
                     <div class="col-md-12">
                         <div class="second-box h-100">
                             <div class="details-group">
@@ -163,7 +162,6 @@
                                 <div *ngIf="cargoBookingLookup.awbInformation != null" class="details-group">
                                     <div class="lable">Actions</div>
                                     <div>
-                                        <i class="ca ca-icn-print" (click)="generatePDF(cargoBookingLookup)"></i>
                                         <i class="ca ca-icn-view"></i>
                                         <i class="ca ca-icn-edit"></i>
                                     </div>
