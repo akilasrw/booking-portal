@@ -21,6 +21,10 @@ export class BookingLookupService extends BaseService {
       params = params.append("referenceNumber", query.referenceNumber);
     }
 
+    if (query.AWBNumber) {
+      params = params.append("AWBNumber", query.AWBNumber);
+    }
+
     if (query.userId) {
       params = params.append("userId", query.userId);
     }
@@ -39,6 +43,5 @@ export class BookingLookupService extends BaseService {
     
     return this.getWithParams<CargoBookingLookup>(this.endpointEntityName,params);
   }
-
 
 }

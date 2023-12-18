@@ -10,6 +10,7 @@ export interface CargoBookingLookup{
     bookingStatus: BookingStatus;
     aWBStatus: AWBStatus;
     flightNumber:string;
+    verifyStatus:number;
     originAirportCode:string;
     destinationAirportCode:string;
     scheduledDepartureDateTime:Date;
