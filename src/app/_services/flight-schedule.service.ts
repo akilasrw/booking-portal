@@ -35,8 +35,12 @@ export class FlightScheduleService extends BaseService {
       params = params.append("destinationAirportId", query.destinationAirportId);
     }
 
-    if (query.scheduledDepartureDateTime) {
-      params = params.append("scheduledDepartureDateTime", query.scheduledDepartureDateTime.toDateString());
+    if (query.scheduledDepartureFromDate) {
+      params = params.append("scheduledDepartureFromDate", query.scheduledDepartureFromDate.toDateString());
+    }
+
+    if (query.scheduledDepartureToDate) {
+      params = params.append("scheduledDepartureToDate", query.scheduledDepartureToDate.toDateString());
     }
 
     params = CoreExtensions.AsPaginate(params, query);

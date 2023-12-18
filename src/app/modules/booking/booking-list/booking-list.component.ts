@@ -24,7 +24,8 @@ export class BookingListComponent implements OnInit {
   bookingListfilterQuery: CargoBookingFilterQuery = new CargoBookingFilterQuery();
   bookingId?: string;
   destination?: string;
-  bookingDate?: Date;
+  fromDate?: Date;
+  toDate?: Date;
   cargoBookingList: CargoBooking[] = []
   cargoBookingId?: string;
   bookingStatus = BookingStatus;
@@ -46,7 +47,8 @@ export class BookingListComponent implements OnInit {
     this.isLoading=true;
     this.bookingListfilterQuery.bookingId = this.bookingId;
     this.bookingListfilterQuery.destination = this.destination;
-    this.bookingListfilterQuery.bookingDate = this.bookingDate;
+    this.bookingListfilterQuery.fromDate = this.fromDate;
+    this.bookingListfilterQuery.toDate = this.toDate;
     this.bookingListfilterQuery.userId = this.currentUser?.id != null ? this.currentUser?.id : "";
 
     this.bookingService.getFilteredBookingList(this.bookingListfilterQuery).subscribe(
@@ -68,7 +70,7 @@ export class BookingListComponent implements OnInit {
   onChangeFilterFrm(event:any) {
       if ((this.bookingId !== undefined && this.bookingId !== "") ||
         (this.destination !== undefined && this.destination !== "") ||
-        (this.bookingDate !== null)) {
+        (this.fromDate !== null) || (this.toDate !== null)) {
         this.filterFormHasValue = true;
       } else {
         this.filterFormHasValue = false;
@@ -101,8 +103,9 @@ export class BookingListComponent implements OnInit {
 
   clearFilter() {
     this.bookingId=undefined;
-    this.destination=undefined;
-    this.bookingDate=undefined;
+    this.destination = undefined;
+    this.fromDate = undefined;
+    this.toDate = undefined;
     this.filterFormHasValue = false;
   }
   public onPageChanged(event: any) {

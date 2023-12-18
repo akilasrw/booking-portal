@@ -3,6 +3,7 @@ import { BasePaginationQuery } from "src/app/shared/models/base-pagination-query
 export class CargoBookingFilterQuery extends BasePaginationQuery {
   bookingId?: string;
   destination?: string;
-  bookingDate?: Date;
+  fromDate?: Date;
+  toDate?: Date;
   userId?:string;
 }

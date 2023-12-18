@@ -4,6 +4,7 @@ import { BookingStatus } from "src/app/core/enums/common-enums";
 export interface CargoBooking{
   id:string;
   bookingNumber: string;
+  awbNumber: string;
   bookingDate: Date;
   destinationAirportId: string;
   destinationAirportCode: string;
