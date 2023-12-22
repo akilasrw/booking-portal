@@ -48,6 +48,11 @@ export class BookingLookupSearchComponent implements OnInit {
   ngOnInit(): void {
     this.getCurrentUser();
     this.initializeForm();
+    const screenWidth = window.innerWidth - 315;
+    const rowElement = document.querySelector('.awb_checked') as HTMLElement;
+    if (rowElement) {
+      rowElement.style.width = screenWidth + 'px';
+    }
   }
 
   initializeForm() {
