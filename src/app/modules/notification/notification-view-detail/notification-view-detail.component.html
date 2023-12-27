@@ -1,8 +1,26 @@
 <div class="row">
-    <div class="col-md-12">
-        <h3 class="section-title">{{notificationDetail?.title}}</h3>
-
-        <p>{{notificationDetail?.body}}</p>        
+  <div class="col-md-12">
+    <div class="details">
+      <details open>
+        <summary>{{notificationDetail?.title}}</summary>
+        <div class="card-details">
+          <div *ngFor="let label of this.label; let i = index">
+            <div class="details-group">
+              <div class="lable">{{label}}</div>
+              <div>{{this.labelValue[i]}}</div>
+            </div>
+          </div>
+          </div>
+      </details>
     </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="second-box">
+      <p>{{this.description}}</p>
+      <p>Thank you.</p>
+    </div>
+  </div>
 </div>
 

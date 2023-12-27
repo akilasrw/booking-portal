@@ -9,10 +9,29 @@ import { Component, Input, OnInit } from '@angular/core';
 export class NotificationViewDetailComponent implements OnInit {
 
   @Input() notificationDetail?: NotificationModel;
+   description: any;
+   label: Array<string> = [];
+   labelValue: Array<string> = [];
+   index: any = 0;
+ 
 
   constructor() { }
 
   ngOnInit(): void {
+    let body = this.notificationDetail?.body;
+    let values = body?.split(",");
+    if (values != undefined) {
+      this.description = values.pop();
+      for (let i in values) {
+        this.index++;
+        let value = values[i].split(";");
+          this.label.push(value[0]);
+          this.labelValue.push(value[1]);
+        value = [];
+      }
+    }
+    
+   
   }
 
 }
