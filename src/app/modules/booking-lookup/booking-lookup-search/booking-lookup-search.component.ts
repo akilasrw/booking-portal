@@ -14,6 +14,7 @@ import { AWBDetail } from 'src/app/_models/view-models/awb/awb-detail.model';
 import { BookingLookupPrintComponent } from '../booking-lookup-print/booking-lookup-print.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PackageItem } from 'src/app/_models/view-models/package-item.model';
+import { BookingStatusEnum } from 'src/app/_models/view-models/cargo-booking/cargo-booking.model';
 
 
 @Component({
@@ -30,6 +31,10 @@ export class BookingLookupSearchComponent implements OnInit {
   currentUser?: User | null;
   awsPrintLookup?: AWBDetail;
   isPrinting: boolean = false;
+  isAWBChecked: boolean = false;
+  verifyStatus:number = 0;
+
+  
 
 
   @ViewChild(BookingLookupPrintComponent) child !: any;
@@ -43,6 +48,11 @@ export class BookingLookupSearchComponent implements OnInit {
   ngOnInit(): void {
     this.getCurrentUser();
     this.initializeForm();
+    const screenWidth = window.innerWidth - 315;
+    const rowElement = document.querySelector('.awb_checked') as HTMLElement;
+    if (rowElement) {
+      rowElement.style.width = screenWidth + 'px';
+    }
   }
 
   initializeForm() {
@@ -51,10 +61,19 @@ export class BookingLookupSearchComponent implements OnInit {
     });
   }
 
+  check(){
+    this.isAWBChecked = !this.isAWBChecked
+  }
+
   getBookingDetail() {
     if (this.searchForm.value.referenceNumber != null) {
       var query = new CargoBookingLookupQuery;
-      query.referenceNumber = this.searchForm.value.referenceNumber;
+      if(this.isAWBChecked){
+        query.AWBNumber = this.searchForm.value.referenceNumber;
+      }else{
+        query.referenceNumber = this.searchForm.value.referenceNumber;
+      }
+     
       query.isIncludeFlightDetail = true;
       query.isIncludePackageDetail = true;
       query.isIncludeAWBDetail = true;
@@ -64,7 +83,7 @@ export class BookingLookupSearchComponent implements OnInit {
         {
           next: (res) => {
             this.cargoBookingLookup = res;
-
+            this.verifyStatus = res.verifyStatus
             var packages = this.cargoBookingLookup.packageItems;
             this.cargoBookingLookup.packageItems = [];
 
@@ -94,6 +113,10 @@ export class BookingLookupSearchComponent implements OnInit {
     } else {
       this.toastr.error('Please enter booking number or package number.');
     }
+  }
+
+  getStatus(e:number):string{
+    return BookingStatusEnum[e]
   }
 
   getBookingStatus(status: number): string {

@@ -2,7 +2,7 @@
     <div class="card-header px-0 pt-0">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h1>Booking View</h1>
+                <h1>Track Booking</h1>
             </div>
         </div>
     </div>
@@ -10,19 +10,87 @@
         <div class="d-flex justify-content-between align-items-center">
             <form [formGroup]='searchForm' (ngSubmit)="getBookingDetail()">
                 <div class="d-flex align-items-center">
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="!isAWBChecked">
                         <label class="form-label">Booking Reference ID</label>
                         <input [formControl]='searchForm.controls["referenceNumber"]' type="text" class="form-control">
                     </div>
+                    <div class="form-group" *ngIf="isAWBChecked">
+                        <label class="form-label">AWB Number</label>
+                        <input [formControl]='searchForm.controls["referenceNumber"]' type="text" class="form-control">
+                    </div>
                     <div><button type="submit" class="btn btn-primary-outline ms-5 mb-2">Find</button></div>
+                </div>
+                <div class="row awb_checked">
+                    <div class="col-md-11">
+                        <div class="cu-check">
+                            <label class="cu-checkbox">Search With AWB
+                                <input type="checkbox" (change)="check()" value="isAWBChecked">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-1" *ngIf="cargoBookingLookup != null">
+                        <button class="btn btn-primary-outline" (click)="generatePDF(cargoBookingLookup)">Print</button>
+                    </div>
                 </div>
             </form>
         </div>
         <div *ngIf="cargoBookingLookup != null">
             <h3>Booking Information</h3>
-            <div class="booking-info">
-                <div class="row">
-                    <div class="col-md-6">
+            <div class="booking-info row">
+                <div class="timeline">  
+                    <div class="tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 10 }">
+                      <div class="tl-header">
+                        <span class="tl-marker"></span>
+                        <p class="tl-title">
+                          Booked
+                        <p>
+                      </div>
+                    </div>
+                    <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 20 }">
+                        <div class="tl-header">
+                          <span class="tl-marker"></span>
+                          <p class="tl-title">
+                            AWB Added
+                          <p>
+                        </div>
+                      </div>
+                    <div class="tl-content tl-content"  [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 30 }">
+                        <div class="tl-header">
+                          <span class="tl-marker"></span>
+                          <p class="tl-title">
+                            Cargo Received
+                          <p>
+                        </div>
+                      </div>
+                      <div class="tl-content tl-content" *ngIf="verifyStatus == 2" [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 40 }">
+                        <div class="tl-header">
+                          <span class="tl-marker"></span>
+                          <p class="tl-title">
+                           Off Loaded
+                          <p>
+                        </div>
+                      </div>
+                      <div class="tl-content tl-content"  [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 50 }">
+                        <div class="tl-header">
+                          <span class="tl-marker"></span>
+                          <p class="tl-title">
+                            Flight Dispatched
+                          <p>
+                        </div>
+                      </div>
+                      <div class="tl-content tl-content"  [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 60 }">
+                        <div class="tl-header">
+                          <span class="tl-marker"></span>
+                          <p class="tl-title">
+                            Flight Arrived
+                          <p>
+                        </div>
+                      </div>
+                  </div>      
+                <div class="col">
+                  
+                    <div class="col-md-12">
                         <div class="second-box h-100">
                             <div class="details-group">
                                 <div class="lable">Booking ID</div>
@@ -58,15 +126,20 @@
                                 </div>
                             </div>
                             <div class="details-group">
+                                <div class="lable">Flight Date</div>
+                                <div>{{cargoBookingLookup?.scheduledDepartureDateTime | date :
+                                    'M/d/yyyy'}}</div>
+                            </div>
+                            <div class="details-group">
                                 <div class="lable">Flight Time</div>
                                 <div>{{cargoBookingLookup?.scheduledDepartureDateTime | date :
                                     'h:mm a'}}</div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="second-box h-100">
-                            <div class="">
+                            <div>
                                 <div class="details-group">
                                     <div class="lable">Cargo Acceptance Cutoff Time</div>
                                     <div>{{cargoBookingLookup?.scheduledDepartureDateTime | date :
@@ -76,11 +149,6 @@
                                     <div class="lable">Cargo Booking Cutoff Time</div>
                                     <div>{{cargoBookingLookup?.scheduledDepartureDateTime | date :
                                         'h:mm a'}}</div>
-                                </div>
-                                <div class="details-group">
-                                    <div class="lable">Flight Date</div>
-                                    <div>{{cargoBookingLookup?.scheduledDepartureDateTime | date :
-                                        'M/d/yyyy'}}</div>
                                 </div>
                                 <div class="details-group">
                                     <div class="lable">AWB Number</div>
@@ -100,7 +168,6 @@
                                 <div *ngIf="cargoBookingLookup.awbInformation != null" class="details-group">
                                     <div class="lable">Actions</div>
                                     <div>
-                                        <i class="ca ca-icn-print" (click)="generatePDF(cargoBookingLookup)"></i>
                                         <i class="ca ca-icn-view"></i>
                                         <i class="ca ca-icn-edit"></i>
                                     </div>
@@ -109,7 +176,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="table-content mt-5 lookup-info">
+                <!-- <div class="table-content mt-5 lookup-info">
                     <table class="table mt-0">
                         <thead class="sticky-top">
                             <th>Item</th>
@@ -128,7 +195,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

@@ -4,5 +4,6 @@ export class CargoBookingLookupQuery{
     isIncludePackageDetail?:boolean;
     isIncludeAWBDetail?:boolean;
     userId?:string;
+    AWBNumber?:string;
   }
   

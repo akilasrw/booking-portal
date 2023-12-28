@@ -16,3 +16,14 @@ export interface CargoBooking{
 }
 
 
+export enum BookingStatusEnum {
+  None = 0,
+  BookingMade = 10,
+  AWBAdded = 20,
+  CargoReceived = 30,
+  OffLoaded = 40,
+  FlightDispatched = 50,
+  FlightArrived = 60,
+  Cancelled = 70
+}
+
