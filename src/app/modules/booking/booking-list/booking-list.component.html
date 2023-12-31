@@ -67,17 +67,16 @@
                 <td>{{booking.destinationAirportCode}}</td>
                 <td>{{booking.flightNumber}}</td>
                 <td>{{booking.flightDate | date}}</td>
-                <td>
-                  <span class="status-chip" [ngClass]="{
-                            'none':booking.bookingStatus == bookingStatus.None,
-                            'pending': booking.bookingStatus == bookingStatus.Pending,
-                            'dispatch':booking.bookingStatus == bookingStatus.Dispatched,
-                            'invoiced':booking.bookingStatus == bookingStatus.Invoiced,
-                            'accepted':booking.bookingStatus == bookingStatus.Accepted,
-                            'loading':booking.bookingStatus == bookingStatus.Loading,
-                            'exported':booking.bookingStatus == bookingStatus.Exported
-                        }">{{getBookingStatus(booking?.bookingStatus)}}</span>
-                </td>
+                <td style="width: 150px;"><span class="status-chip" [ngClass]="{
+                  'none':booking?.bookingStatus == bookingStatus.None,
+                  'pending': booking?.bookingStatus == bookingStatus.Booking_Made,
+                  'awb_added': booking?.bookingStatus == bookingStatus.AWB_Added,
+                  'dispatch':booking?.bookingStatus == bookingStatus.Flight_Dispatched,
+                  'invoiced':booking?.bookingStatus == bookingStatus.Flight_Arrived,
+                  'accepted':booking?.bookingStatus == bookingStatus.Cargo_Received,
+                  'loading':booking?.bookingStatus == bookingStatus.Off_Loaded,
+                  'cancelled':booking?.bookingStatus == bookingStatus.Cancelled
+              }">{{getBookingStatus(booking?.bookingStatus)}}</span></td>
                 <td>{{booking.numberOfBoxes}}</td>
                 <td>{{booking.totalWeight}}</td>
                 <td>

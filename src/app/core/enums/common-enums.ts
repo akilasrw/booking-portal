@@ -11,12 +11,13 @@ export enum MenuType {
 
 export enum BookingStatus {
   None = 0,
-  Pending = 10,
-  Accepted = 20,
-  Loading = 30,
-  Invoiced = 40,
-  Dispatched = 50,
-  Exported = 60
+  Booking_Made = 10,
+  AWB_Added = 20,
+  Cargo_Received = 30,
+  Off_Loaded = 40,
+  Flight_Dispatched = 50,
+  Flight_Arrived = 60,
+  Cancelled = 70
 }
 
 export enum AWBStatus {

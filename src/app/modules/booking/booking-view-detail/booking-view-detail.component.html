@@ -16,14 +16,15 @@
                         <div class="lable">Status</div>
                         <div>
                             <span class="status-chip" [ngClass]="{
-                            'none':cargoBookingDetail?.bookingStatus == bookingStatus.None,
-                            'pending': cargoBookingDetail?.bookingStatus == bookingStatus.Pending,
-                            'dispatch':cargoBookingDetail?.bookingStatus == bookingStatus.Dispatched,
-                            'invoiced':cargoBookingDetail?.bookingStatus == bookingStatus.Invoiced,
-                            'accepted':cargoBookingDetail?.bookingStatus == bookingStatus.Accepted,
-                            'loading':cargoBookingDetail?.bookingStatus == bookingStatus.Loading,
-                            'exported':cargoBookingDetail?.bookingStatus == bookingStatus.Exported
-                        }">{{getBookingStatus(cargoBookingDetail?.bookingStatus)}}</span>
+                                'none':cargoBookingDetail?.bookingStatus == bookingStatus.None,
+                                'pending': cargoBookingDetail?.bookingStatus == bookingStatus.Booking_Made,
+                                'awb_added': cargoBookingDetail?.bookingStatus == bookingStatus.AWB_Added,
+                                'dispatch':cargoBookingDetail?.bookingStatus == bookingStatus.Flight_Dispatched,
+                                'invoiced':cargoBookingDetail?.bookingStatus == bookingStatus.Flight_Arrived,
+                                'accepted':cargoBookingDetail?.bookingStatus == bookingStatus.Cargo_Received,
+                                'loading':cargoBookingDetail?.bookingStatus == bookingStatus.Off_Loaded,
+                                'cancelled':cargoBookingDetail?.bookingStatus == bookingStatus.Cancelled
+                            }">{{getBookingStatus(cargoBookingDetail?.bookingStatus)}}</span>
                         </div>
                     </div>
                     <div class="details-group">
