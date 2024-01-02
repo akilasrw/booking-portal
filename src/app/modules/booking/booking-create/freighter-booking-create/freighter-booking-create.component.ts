@@ -362,7 +362,7 @@ export class FreighterBookingCreateComponent implements OnInit {
   submit() {
     if (this.isValid()) {
       this.cargoBookingRequest.flightScheduleSectorIds = this.flightSchedule?.flightScheduleSectorIds;
-      this.cargoBookingRequest.bookingStatus = BookingStatus.Pending;
+      this.cargoBookingRequest.bookingStatus = BookingStatus.Booking_Made;
       this.cargoBookingRequest.aWBStatus = AWBStatus.Pending;
       this.cargoBookingRequest.originAirportId = this.flightSchedule?.originAirportId;
       this.cargoBookingRequest.destinationAirportId = this.flightSchedule?.destinationAirportId;

@@ -63,6 +63,10 @@
     border-color: $purple;
     color: $purple;
   }
+  &.awb_added {
+    border-color: $brand-primary;
+    color: $brand-primary;
+  }
   &.exported  {
     border-color: $orange;
     color: $orange;
