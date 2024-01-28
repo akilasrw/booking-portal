@@ -55,14 +55,14 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="form-label">Primary Telephone Number<span class="compulsory">*</span></label>
-                      <app-text-input [formControl]='registrationForm.controls["primaryTelephoneNumber"]' [type]="'number'" [label]='"primary telephone number"' [tabindex] ="4">
+                      <app-text-input [formControl]='registrationForm.controls["primaryTelephoneNumber"]'  [label]='"primary telephone number"' [tabindex] ="4">
                       </app-text-input>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="form-label">Secondary Telephone Number</label>
-                      <app-text-input [formControl]='registrationForm.controls["secondaryTelephoneNumber"]' [type]="'number'" [label]='"secondary telephone number"' [tabindex] ="5">
+                      <app-text-input [formControl]='registrationForm.controls["secondaryTelephoneNumber"]'  [label]='"secondary telephone number"' [tabindex] ="5">
                       </app-text-input>
                     </div>
                   </div>
@@ -122,7 +122,7 @@
                 </div>
                 <div class="row">
                   <div class="col-md-4">
-                    <div class="form-group">                    
+                    <div class="form-group">
                       <label class="form-label">Re-Enter Password<span class="compulsory">*</span></label>
                       <app-white-space-input [formControl]='registrationForm.controls["confirmPassword"]' [type]="'password'" [label]='"re-enter password"' [tabindex] ="13">
                       </app-white-space-input>

@@ -33,8 +33,9 @@ export class BookingLookupSearchComponent implements OnInit {
   isPrinting: boolean = false;
   isAWBChecked: boolean = false;
   verifyStatus:number = 0;
+  packageItemCount = 0;
 
-  
+
 
 
   @ViewChild(BookingLookupPrintComponent) child !: any;
@@ -68,12 +69,13 @@ export class BookingLookupSearchComponent implements OnInit {
   getBookingDetail() {
     if (this.searchForm.value.referenceNumber != null) {
       var query = new CargoBookingLookupQuery;
-      if(this.isAWBChecked){
-        query.AWBNumber = this.searchForm.value.referenceNumber;
+     if(this.isAWBChecked){
+       query.referenceNumber = this.searchForm.value.referenceNumber;
+        this.getPackageDetails();
       }else{
-        query.referenceNumber = this.searchForm.value.referenceNumber;
+       query.AWBNumber = this.searchForm.value.referenceNumber;
       }
-     
+
       query.isIncludeFlightDetail = true;
       query.isIncludePackageDetail = true;
       query.isIncludeAWBDetail = true;
@@ -83,7 +85,9 @@ export class BookingLookupSearchComponent implements OnInit {
         {
           next: (res) => {
             this.cargoBookingLookup = res;
-            this.verifyStatus = res.verifyStatus
+            console.log(this.cargoBookingLookup);
+            this.verifyStatus = res.verifyStatus;
+            this.packageItemCount = res.packageItems?.length;
             var packages = this.cargoBookingLookup.packageItems;
             this.cargoBookingLookup.packageItems = [];
 
@@ -96,8 +100,8 @@ export class BookingLookupSearchComponent implements OnInit {
             for (let i = 0; i < filtered.length; i++) {
               var count = 0;
               for (let j = 0; j < packages.length; j++) {
-                if (filtered[i].length === packages[j].length && 
-                  filtered[i].width === packages[j].width && 
+                if (filtered[i].length === packages[j].length &&
+                  filtered[i].width === packages[j].width &&
                   filtered[i].height === packages[j].height) {
                   count += 1;
                 }
@@ -126,7 +130,7 @@ export class BookingLookupSearchComponent implements OnInit {
   getAWBStatus(status: number): string {
     return CoreExtensions.GetAWBStatus(status)
   }
-  
+
   getCurrentUser() {
     this.subscription = this.accountService.currentUser$.subscribe(res => {
       this.currentUser = res;
@@ -155,7 +159,7 @@ export class BookingLookupSearchComponent implements OnInit {
       if(obj != undefined && obj.pieces != undefined && obj.weight != undefined && obj.chargeableWeight != undefined ){
         noPieces += obj.pieces;
         grossWeight += obj.pieces * obj.weight;
-        chargeableWeight += obj.pieces * obj.chargeableWeight; 
+        chargeableWeight += obj.pieces * obj.chargeableWeight;
       }
     })
     this.cargoBookingLookup!.awbInformation!.packageItemCategory=packageItems[0].packageItemCategory;
@@ -173,5 +177,8 @@ export class BookingLookupSearchComponent implements OnInit {
 
   get bookingStatus(): typeof BookingStatus {
     return BookingStatus;
+  }
+  getPackageDetails(){
+
   }
 }

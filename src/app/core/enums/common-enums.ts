@@ -15,9 +15,13 @@ export enum BookingStatus {
   AWB_Added = 20,
   Cargo_Received = 30,
   Off_Loaded = 40,
+  Partialy_Dispatched = 45,
   Flight_Dispatched = 50,
+  Partialy_Arrived = 55,
   Flight_Arrived = 60,
-  Cancelled = 70
+  Cancelled = 70,
+  Accepted_for_Flight = 80,
+  Partshipment_for_Flight = 75
 }
 
 export enum AWBStatus {

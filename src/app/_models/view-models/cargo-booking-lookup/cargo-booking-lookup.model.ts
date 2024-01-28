@@ -14,6 +14,8 @@ export interface CargoBookingLookup{
     originAirportCode:string;
     destinationAirportCode:string;
     scheduledDepartureDateTime:Date;
-    packageItems: PackageItem[];    
-    awbInformation?:AWBDetail;   
+    packageItems: PackageItem[];
+    awbInformation?:AWBDetail;
+    actualDepDateTime?: Date;
+    actualArvDateTime?: Date;
   }
