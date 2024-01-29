@@ -1,4 +1,4 @@
-import { AWBStatus } from './../../../core/enums/common-enums';
+import {AWBStatus, MenuType} from './../../../core/enums/common-enums';
 import { AccountService } from 'src/app/account/account.service';
 import { CargoBookingLookup } from './../../../_models/view-models/cargo-booking-lookup/cargo-booking-lookup.model';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
@@ -15,6 +15,7 @@ import { BookingLookupPrintComponent } from '../booking-lookup-print/booking-loo
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PackageItem } from 'src/app/_models/view-models/package-item.model';
 import { BookingStatusEnum } from 'src/app/_models/view-models/cargo-booking/cargo-booking.model';
+import {RouteConstants} from "../../../core/constants/constants";
 
 
 @Component({
@@ -34,6 +35,7 @@ export class BookingLookupSearchComponent implements OnInit {
   isAWBChecked: boolean = false;
   verifyStatus:number = 0;
   packageItemCount = 0;
+  packagestatus: number =0;
 
 
 
@@ -71,7 +73,6 @@ export class BookingLookupSearchComponent implements OnInit {
       var query = new CargoBookingLookupQuery;
      if(this.isAWBChecked){
        query.referenceNumber = this.searchForm.value.referenceNumber;
-        this.getPackageDetails();
       }else{
        query.AWBNumber = this.searchForm.value.referenceNumber;
       }
@@ -88,7 +89,9 @@ export class BookingLookupSearchComponent implements OnInit {
             console.log(this.cargoBookingLookup);
             this.verifyStatus = res.verifyStatus;
             this.packageItemCount = res.packageItems?.length;
+            this.getPackageStatus(this.cargoBookingLookup.bookingStatus)
             var packages = this.cargoBookingLookup.packageItems;
+
             this.cargoBookingLookup.packageItems = [];
 
             var filtered = packages.filter((value, index, self) =>
@@ -178,7 +181,35 @@ export class BookingLookupSearchComponent implements OnInit {
   get bookingStatus(): typeof BookingStatus {
     return BookingStatus;
   }
-  getPackageDetails(){
-
+  getPackageStatus(bookingStatus: BookingStatus){
+    switch (bookingStatus) {
+      case BookingStatus.AWB_Added:
+        this.packagestatus = 1;
+        break;
+      case BookingStatus.Cargo_Received:
+        this.packagestatus = 2;
+        break;
+      case BookingStatus.Partshipment_for_Flight:
+        this.packagestatus = 3;
+        break;
+      case BookingStatus.Accepted_for_Flight:
+        this.packagestatus = 4;
+        break;
+      case BookingStatus.Flight_Dispatched:
+        this.packagestatus = 5;
+        break;
+      case BookingStatus.Flight_Arrived:
+        this.packagestatus = 6;
+        break;
+      case BookingStatus.IndestinationWarehouse:
+        this.packagestatus = 7;
+        break;
+      case BookingStatus.TruckForDelivery:
+        this.packagestatus = 8;
+        break;
+      case BookingStatus.Deliverd:
+        this.packagestatus = 9;
+        break;
+    }
   }
 }
