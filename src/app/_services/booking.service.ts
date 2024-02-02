@@ -11,6 +11,10 @@ import { CargoBookingFilterQuery } from '../_models/queries/cargo-booking/cargo-
 import { CargoBookingDetailQuery } from '../_models/queries/cargo-booking/cargo-booking-detail-query.model';
 import { CargoBookingDetail } from '../_models/view-models/cargo-booking/cargo-booking-detail/cargo-booking-detail.model';
 import { CargoBookingRequest } from '../_models/view-models/cargo-booking/cargo-booking-request.model';
+import {CargoBookingShipmentQuery} from "../_models/queries/booking-shipment/cargo-booking-shipment-query.model";
+import {CargoBookingLookupQuery} from "../_models/queries/cargo-booking-lookup/cargo-booking-lookup-query.model";
+import {CargoBookingLookup} from "../_models/view-models/cargo-booking-lookup/cargo-booking-lookup.model";
+import {BookingShipment} from "../_models/view-models/booking-shipment/booking-shipment.model";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +24,7 @@ export class BookingService extends BaseService {
 
   private readonly endpointEntityName = 'cargoBooking';
   private readonly getFilteredListEndpoint = `${this.endpointEntityName}/getFilteredList`;
+  private readonly getShipmentListEndpoint = `${this.endpointEntityName}/getShipments`;
 
 
   constructor(http: HttpClient) {
@@ -76,12 +81,24 @@ export class BookingService extends BaseService {
     if (query.isIncludeAWBDetail) {
       params = params.append("isIncludeAWBDetail", query.isIncludeAWBDetail);
     }
-    
+
     return this.getWithParams<CargoBookingDetail>(this.endpointEntityName,params);
   }
 
   create(cargoBookingRequest: CargoBookingRequest){
     return this.post<any>(this.endpointEntityName, cargoBookingRequest);
+  }
+
+  getBookingShipmentDetail(query: CargoBookingShipmentQuery) {
+    var params = new HttpParams();
+    if (query.packageID) {
+      params = params.append("packageID", query.packageID);
+    }
+
+    if (query.AWBNumber) {
+      params = params.append("AWBNumber", query.AWBNumber);
+    }
+    return this.getWithParams<Array<BookingShipment>>(this.getShipmentListEndpoint,params);
   }
 
 }
