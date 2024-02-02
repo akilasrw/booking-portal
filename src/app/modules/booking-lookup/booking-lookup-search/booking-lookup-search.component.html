@@ -52,7 +52,7 @@
       <h3>Booking Information</h3>
       <div class="booking-info row">
         <div class="timeline">
-          <div class="tl-content" [ngClass]="{'tl-content-active': packageStatus >= 1 }">
+          <div class="tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 0 }">
             <div class="tl-header">
               <span class="tl-marker"></span>
               <p class="tl-title">
@@ -60,7 +60,7 @@
               <p>
             </div>
           </div>
-          <div class="tl-content" [ngClass]="{'tl-content-active': packageStatus >= 1 }">
+          <div class="tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 0 }">
             <div class="tl-header">
               <span class="tl-marker"></span>
               <p class="tl-title">
@@ -68,7 +68,7 @@
               <p>
             </div>
           </div>
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': packageStatus >= 2 }">
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 1 }">
             <div class="tl-header">
               <span class="tl-marker"></span>
               <p class="tl-title">
@@ -76,7 +76,7 @@
               <p>
             </div>
           </div>
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': packageStatus >= 4 }">
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 4 }">
             <div class="tl-header">
               <span class="tl-marker"></span>
               <p class="tl-title">
@@ -92,7 +92,7 @@
           <!--                          <p>-->
           <!--                        </div>-->
           <!--                      </div>-->
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': packageStatus >= 5 }">
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 5 }">
             <div class="tl-header">
               <span class="tl-marker"></span>
               <p class="tl-title">
@@ -100,7 +100,7 @@
               <p>
             </div>
           </div>
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': packageStatus >= 6 }">
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 6 }">
             <div class="tl-header">
               <span class="tl-marker"></span>
               <p class="tl-title">
@@ -108,7 +108,7 @@
               <p>
             </div>
           </div>
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': packageStatus >= 7 }">
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 7 }">
             <div class="tl-header">
               <span class="tl-marker"></span>
               <p class="tl-title">
@@ -116,7 +116,7 @@
               <p>
             </div>
           </div>
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': packageStatus >= 8 }">
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 8 }">
             <div class="tl-header">
               <span class="tl-marker"></span>
               <p class="tl-title">
@@ -124,7 +124,7 @@
               <p>
             </div>
           </div>
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': packageStatus >= 9 }">
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 9 }">
             <div class="tl-header">
               <span class="tl-marker"></span>
               <p class="tl-title">
