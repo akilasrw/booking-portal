@@ -37,20 +37,19 @@ export enum AWBStatus {
 //   None = 0,
 //   Pending = 1
 // }
-export enum PackageItemStatus
-{
+export enum PackageItemStatus {
   Booking_Made = 0,
   Cargo_Received = 1,
-  Dispatched = 2,
-  IndestinationWarehouse = 3,
+  AcceptedForFlight = 2,
+  FlightDispatched = 3,
   Arrived = 4,
-  Returned = 5,
-  Offloaded = 6,
-  AcceptedForFLight = 7,
-  TruckForDelivery = 8,
-  Deliverd = 9,
-None = 11,
-Pending = 10
+  InDestinationWarehouse = 5,
+  TruckForDelivery = 6,
+  Delivered = 7,
+  Returned = 8,
+  Offloaded = 9,
+  Pending = 10,
+  None = 11,
 }
 export enum PackageContainerType {
   None = 0,

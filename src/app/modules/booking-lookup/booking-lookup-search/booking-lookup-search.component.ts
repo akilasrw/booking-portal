@@ -95,7 +95,6 @@ export class BookingLookupSearchComponent implements OnInit {
               if (this.cargoBookingShipmentList?.length > 1) {
                 this.isSplitBooking = true;
               } else {
-                this.getPackageStatus(this.cargoBookingShipmentList[0].shipmentStatus);
                 this.cargoBookingLookup = this.cargoBookingShipmentList[0];
               }
             }
@@ -139,32 +138,32 @@ export class BookingLookupSearchComponent implements OnInit {
     return BookingStatus;
   }
 
-  getPackageStatus(bookingStatus?: PackageItemStatus) {
-    switch (bookingStatus) {
-      case PackageItemStatus.Booking_Made:
-        this.packageStatus = 1;
-        break;
-      case PackageItemStatus.Cargo_Received:
-        this.packageStatus = 2;
-        break;
-      case PackageItemStatus.AcceptedForFLight:
-        this.packageStatus = 4;
-        break;
-      case PackageItemStatus.Dispatched:
-        this.packageStatus = 5;
-        break;
-      case PackageItemStatus.Arrived:
-        this.packageStatus = 6;
-        break;
-      case PackageItemStatus.IndestinationWarehouse:
-        this.packageStatus = 7;
-        break;
-      case PackageItemStatus.TruckForDelivery:
-        this.packageStatus = 8;
-        break;
-      case PackageItemStatus.Deliverd:
-        this.packageStatus = 9;
-        break;
-    }
-  }
+  // getPackageStatus(bookingStatus?: PackageItemStatus) {
+  //   switch (bookingStatus) {
+  //     case PackageItemStatus.Booking_Made:
+  //       this.packageStatus = 1;
+  //       break;
+  //     case PackageItemStatus.Cargo_Received:
+  //       this.packageStatus = 2;
+  //       break;
+  //     case PackageItemStatus.AcceptedForFLight:
+  //       this.packageStatus = 4;
+  //       break;
+  //     case PackageItemStatus.Dispatched:
+  //       this.packageStatus = 5;
+  //       break;
+  //     case PackageItemStatus.Arrived:
+  //       this.packageStatus = 6;
+  //       break;
+  //     case PackageItemStatus.IndestinationWarehouse:
+  //       this.packageStatus = 7;
+  //       break;
+  //     case PackageItemStatus.TruckForDelivery:
+  //       this.packageStatus = 8;
+  //       break;
+  //     case PackageItemStatus.Deliverd:
+  //       this.packageStatus = 9;
+  //       break;
+  //   }
+  // }
 }

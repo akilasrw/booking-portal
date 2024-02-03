@@ -11,6 +11,7 @@
       <form [formGroup]='searchForm' (ngSubmit)="getBookingDetail()">
         <div class="d-flex align-items-center">
           <div class="form-group" *ngIf="isAWBChecked">
+
             <label class="form-label">Package ID</label>
             <input [formControl]='searchForm.controls["referenceNumber"]' type="text" class="form-control">
           </div>
@@ -76,7 +77,7 @@
               <p>
             </div>
           </div>
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 4 }">
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 2}">
             <div class="tl-header">
               <span class="tl-marker"></span>
               <p class="tl-title">
@@ -92,7 +93,7 @@
           <!--                          <p>-->
           <!--                        </div>-->
           <!--                      </div>-->
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 5 }">
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 3 }">
             <div class="tl-header">
               <span class="tl-marker"></span>
               <p class="tl-title">
@@ -100,7 +101,7 @@
               <p>
             </div>
           </div>
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 6 }">
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 4 }">
             <div class="tl-header">
               <span class="tl-marker"></span>
               <p class="tl-title">
@@ -108,7 +109,7 @@
               <p>
             </div>
           </div>
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 7 }">
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 5 }">
             <div class="tl-header">
               <span class="tl-marker"></span>
               <p class="tl-title">
@@ -116,7 +117,7 @@
               <p>
             </div>
           </div>
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 8 }">
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 6 }">
             <div class="tl-header">
               <span class="tl-marker"></span>
               <p class="tl-title">
@@ -124,11 +125,27 @@
               <p>
             </div>
           </div>
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 9 }">
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 7 }">
             <div class="tl-header">
               <span class="tl-marker"></span>
               <p class="tl-title">
                 Delivered
+              <p>
+            </div>
+          </div>
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus == 8}">
+            <div class="tl-header">
+              <span class="tl-marker"></span>
+              <p class="tl-title">
+                Returned
+              <p>
+            </div>
+          </div>
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus == 9 }">
+            <div class="tl-header">
+              <span class="tl-marker"></span>
+              <p class="tl-title">
+                Offloaded
               <p>
             </div>
           </div>
