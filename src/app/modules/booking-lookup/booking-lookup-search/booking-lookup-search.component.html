@@ -65,7 +65,7 @@
             <div class="tl-header">
               <span class="tl-marker"></span>
               <p class="tl-title">
-                En route to Warehouse
+                Enroute to Warehouse
               <p>
             </div>
           </div>
@@ -133,19 +133,19 @@
               <p>
             </div>
           </div>
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 8 }">
+<!--          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 8 }">-->
+<!--            <div class="tl-header">-->
+<!--              <span class="tl-marker"></span>-->
+<!--              <p class="tl-title">-->
+<!--                On Truck for delivery-->
+<!--              <p>-->
+<!--            </div>-->
+<!--          </div>-->
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 9 }">
             <div class="tl-header">
               <span class="tl-marker"></span>
               <p class="tl-title">
-                On Truck for delivery
-              <p>
-            </div>
-          </div>
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 7 }">
-            <div class="tl-header">
-              <span class="tl-marker"></span>
-              <p class="tl-title">
-                Delivered
+                Delivered to Agent
               <p>
             </div>
           </div>
@@ -162,6 +162,10 @@
               <div class="details-group">
                 <div class="lable">Packages</div>
                 <div>{{ (!isAWBChecked)? cargoBookingLookup?.packageCount: 1 }}</div>
+              </div>
+              <div class="details-group">
+                <div class="lable">Booked Date</div>
+                <div>{{ cargoBookingLookup?.bookedDate | date : 'M/d/yyyy, h:mm a' }}</div>
               </div>
               <div class="details-group">
                 <div class="lable">Flight Number</div>
@@ -197,7 +201,7 @@
                 <div>{{ cargoBookingLookup?.bookedDate | date : 'M/d/yyyy, h:mm a' }}</div>
               </div>
               <div class="details-group">
-                <div class="lable">En route to Warehouse</div>
+                <div class="lable">Enroute to Warehouse</div>
                 <div>{{ cargoBookingLookup?.enrouteToWahouse | date : 'M/d/yyyy, h:mm a' }}</div>
               </div>
               <div class="details-group">

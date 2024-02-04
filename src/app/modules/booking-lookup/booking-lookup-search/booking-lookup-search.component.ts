@@ -91,7 +91,6 @@ export class BookingLookupSearchComponent implements OnInit {
           next: (res) => {
             this.cargoBookingShipmentList = res;
             if (null != this.cargoBookingShipmentList && this.cargoBookingShipmentList.length > 0) {
-             // console.log(this.cargoBookingShipmentList?.length);
               if (this.cargoBookingShipmentList?.length > 1) {
                 this.isSplitBooking = true;
               } else {
