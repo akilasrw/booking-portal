@@ -32,6 +32,9 @@ export class CoreExtensions {
       case BookingStatus.Cargo_Received:
         statusString = "Received";
         break;
+      case BookingStatus.IndestinationWarehouse:
+        statusString = "In destination Warehouse";
+        break;
       case BookingStatus.Flight_Dispatched:
         statusString = "Dispatched";
         break;
@@ -43,6 +46,15 @@ export class CoreExtensions {
         break;
       case BookingStatus.Off_Loaded:
         statusString = "Off Loaded";
+        break;
+      case BookingStatus.Accepted_for_Flight:
+        statusString = "Accepted for Flight";
+        break;
+      case BookingStatus.Partshipment_for_Flight:
+        statusString = "Part Shipment";
+        break;
+      case BookingStatus.Deliverd | BookingStatus.TruckForDelivery:
+        statusString = "Delivered to Agent";
         break;
       default:
         break;

@@ -8,8 +8,9 @@
         </div>
         <div class="menu-scroller">
             <ul class="main-menu">
-                <li>
-                    <div class="menu-item" (click)="menuClickEvent(1)" [ngClass]="{'selected': selectedMenu == 1}">
+                <li disabled>
+<!--                    <div class="menu-item" (click)="menuClickEvent(1)" [ngClass]="{'selected': selectedMenu == 1}">-->
+                    <div class="menu-item-disable">
                         <!-- <div class="icon"></div> -->
                         <span class="menu-icn ca ca-icn-dashboard tool-tip"><span class="tooltiptext">Dashboard</span></span>
                         <span class="menu-title">Dashboard</span>
@@ -30,7 +31,8 @@
                     </div>
                 </li>
                 <li>
-                    <div class="menu-item" (click)="menuClickEvent(4)" [ngClass]="{'selected': selectedMenu == 4}">
+<!--                    <div class="menu-item" (click)="menuClickEvent(4)" [ngClass]="{'selected': selectedMenu == 4}">-->
+                  <div class="menu-item-disable" >
                         <!-- <div class="icon"></div> -->
                         <span class="menu-icn ca ca-icn-dollar tool-tip"><span class="tooltiptext">Rate View</span></span>
                         <span class="menu-title">Rate View</span>
@@ -43,14 +45,16 @@
                     </div>
                 </li> -->
                 <li>
-                    <div class="menu-item" (click)="menuClickEvent(6)" [ngClass]="{'selected': selectedMenu == 6}">
+<!--                    <div class="menu-item" (click)="menuClickEvent(6)" [ngClass]="{'selected': selectedMenu == 6}">-->
+                  <div class="menu-item-disable">
                         <!-- <div class="icon"></div> -->
                         <span class="menu-icn ca ca-icn-bell tool-tip"><span class="tooltiptext">Notifications</span></span>
                         <span class="menu-title">Notifications</span>
                     </div>
                 </li>
                 <li>
-                    <div class="menu-item" (click)="menuClickEvent(7)">
+<!--                    <div class="menu-item" (click)="menuClickEvent(7)">-->
+                      <div class="menu-item-disable" >
                         <!-- <div class="icon"></div> -->
                         <span class="menu-icn ca ca-icn-chat tool-tip"><span class="tooltiptext">Messaging</span></span>
                         <span class="menu-title">Messaging</span>
@@ -86,7 +90,7 @@
                 <button type="button" class="btn-close" aria-label="Close" (click)="closeProfileModel()"></button>
             </div>
             <div>
-                
+
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6 item">
@@ -129,9 +133,9 @@
             <div class="modal-header">
                 <h5 class="modal-title">User Profile</h5>
                 <button type="button" class="btn-close" aria-label="Close" (click)="closeEditModel()"></button>
-            </div>   
+            </div>
           <div class="update-user">
-            
+
             <form  class="update-form"  [formGroup]="agentForm">
               <div class="row">
                 <div class="col-md-6">
@@ -159,9 +163,9 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                
+
                 </div>
-               
+
               </div>
             </form>
             <div class="modal-footer">

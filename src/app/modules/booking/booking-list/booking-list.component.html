@@ -4,7 +4,7 @@
             <div>
                 <h1>Booking</h1>
             </div>
-            <div><button class="btn btn-primary" (click)="goToCreateBooking()">Add New Booking</button></div>
+            <div><button class="btn btn-primary" disabled (click)="goToCreateBooking()">Add New Booking</button></div>
         </div>
     </div>
     <div class="card-body without-footer">
@@ -41,33 +41,33 @@
                  (click)="clearFilter()"></i>
             </div>
           </div>
-            <div class="mt-4">
-                <button class="btn sm btn-primary-outline">Advanced Filter</button>
-            </div>
+<!--            <div class="mt-4">-->
+<!--                <button class="btn sm btn-primary-outline">Advanced Filter</button>-->
+<!--            </div>-->
         </div>
         <div *ngIf="!isLoading"  class="table-content">
           <table class="table table-responsive">
             <thead>
-            <th>Booking ID</th>
-            <th>AWB Number</th>
-            <th>Booking Date</th>
-            <th>Destination</th>
-            <th>Flight Number</th>
-            <th>Flight Date</th>
-            <th>Status</th>
-            <th>Number of Boxes</th>
-            <th>Total Weight (kg)</th>
-            <th>Actions </th>
+            <th style="text-align: center">Booking ID</th>
+            <th style="text-align: center">AWB Number</th>
+            <th style="text-align: center">Booking Date</th>
+            <th style="text-align: center">Destination</th>
+            <th style="text-align: center">Flight Number</th>
+            <th style="text-align: center">Flight Date</th>
+            <th style="text-align: center">Status</th>
+            <th style="text-align: center">Packages</th>
+            <th style="text-align: center">Total Weight (kg)</th>
+            <th style="text-align: center">Actions </th>
             </thead>
             <tbody>
               <tr *ngFor="let booking of this.cargoBookingList">
-                <td>{{booking.bookingNumber}}</td>
-                <td>{{booking.awbNumber}}</td>
-                <td>{{booking.bookingDate | date}}</td>
-                <td>{{booking.destinationAirportCode}}</td>
-                <td>{{booking.flightNumber}}</td>
-                <td>{{booking.flightDate | date}}</td>
-                <td style="width: 150px;"><span class="status-chip" [ngClass]="{
+                <td style="text-align: center">{{booking.bookingNumber}}</td>
+                <td style="text-align: center">{{booking.awbNumber}}</td>
+                <td style="text-align: center">{{booking.bookingDate | date}}</td>
+                <td style="text-align: center">{{booking.destinationAirportCode}}</td>
+                <td style="text-align: center">{{booking.flightNumber}}</td>
+                <td style="text-align: center">{{booking.flightDate | date}}</td>
+                <td style="width: 150px; text-align: center"><span class="status-chip" [ngClass]="{
                   'none':booking?.bookingStatus == bookingStatus.None,
                   'pending': booking?.bookingStatus == bookingStatus.Booking_Made,
                   'awb_added': booking?.bookingStatus == bookingStatus.AWB_Added,
@@ -77,12 +77,12 @@
                   'loading':booking?.bookingStatus == bookingStatus.Off_Loaded,
                   'cancelled':booking?.bookingStatus == bookingStatus.Cancelled
               }">{{getBookingStatus(booking?.bookingStatus)}}</span></td>
-                <td>{{booking.numberOfBoxes}}</td>
-                <td>{{booking.totalWeight}}</td>
-                <td>
+                <td style="text-align: center">{{booking.numberOfBoxes}}</td>
+                <td style="text-align: center">{{booking.totalWeight}}</td>
+                <td style="text-align: center">
                   <i class="ca ca-icn-view" (click)="show(booking.id)" title="View"></i>
-                  <i class="ca ca-icn-edit" title="Edit"></i>
-                  <i class="ca ca-icn-bin" title="Delete"></i>
+                  <i class="ca ca-icn-edit" title="Edit" style="cursor: not-allowed" ></i>
+                  <i class="ca ca-icn-bin" title="Delete" style="cursor: not-allowed"></i>
                 </td>
               </tr>
             </tbody>
