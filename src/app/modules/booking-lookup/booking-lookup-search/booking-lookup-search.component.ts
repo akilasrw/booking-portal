@@ -1,20 +1,19 @@
-import { AWBStatus } from './../../../core/enums/common-enums';
-import { AccountService } from 'src/app/account/account.service';
-import { CargoBookingLookup } from './../../../_models/view-models/cargo-booking-lookup/cargo-booking-lookup.model';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CargoBookingLookupQuery } from 'src/app/_models/queries/cargo-booking-lookup/cargo-booking-lookup-query.model';
-import { BookingLookupService } from 'src/app/_services/booking-lookup.service';
-import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
-import { ToastrService } from 'ngx-toastr';
-import { BookingStatus, PackageItemStatus } from 'src/app/core/enums/common-enums';
-import { Subscription } from 'rxjs/internal/Subscription';
-import { User } from 'src/app/_models/user.model';
-import { AWBDetail } from 'src/app/_models/view-models/awb/awb-detail.model';
-import { BookingLookupPrintComponent } from '../booking-lookup-print/booking-lookup-print.component';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { PackageItem } from 'src/app/_models/view-models/package-item.model';
-import { BookingStatusEnum } from 'src/app/_models/view-models/cargo-booking/cargo-booking.model';
+import {AWBStatus, MenuType} from './../../../core/enums/common-enums';
+import {AccountService} from 'src/app/account/account.service';
+import {FormGroup, FormBuilder, FormControl} from '@angular/forms';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {CoreExtensions} from 'src/app/core/extensions/core-extensions.model';
+import {ToastrService} from 'ngx-toastr';
+import {BookingStatus, PackageItemStatus} from 'src/app/core/enums/common-enums';
+import {Subscription} from 'rxjs/internal/Subscription';
+import {User} from 'src/app/_models/user.model';
+import {AWBDetail} from 'src/app/_models/view-models/awb/awb-detail.model';
+import {BookingLookupPrintComponent} from '../booking-lookup-print/booking-lookup-print.component';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {BookingStatusEnum, CargoBooking} from 'src/app/_models/view-models/cargo-booking/cargo-booking.model';
+import {BookingService} from "../../../_services/booking.service";
+import {CargoBookingShipmentQuery} from "../../../_models/queries/booking-shipment/cargo-booking-shipment-query.model";
+import {BookingShipment} from "../../../_models/view-models/booking-shipment/booking-shipment.model";
 
 
 @Component({
@@ -25,34 +24,40 @@ import { BookingStatusEnum } from 'src/app/_models/view-models/cargo-booking/car
 export class BookingLookupSearchComponent implements OnInit {
 
   public searchForm!: FormGroup;
-  cargoBookingLookup?: CargoBookingLookup
-  packageItemStatus = PackageItemStatus;
+  public selectionForm!: FormGroup;
+  cargoBookingLookup?: BookingShipment;
+  cargoBookingShipmentList?: BookingShipment[] = [];
   subscription?: Subscription;
   currentUser?: User | null;
-  awsPrintLookup?: AWBDetail;
-  isPrinting: boolean = false;
   isAWBChecked: boolean = false;
-  verifyStatus:number = 0;
-
-  
+  packageItemCount = 0;
+  packageStatus: number = 0;
+  isSplitBooking: boolean = false;
+  packageItemShipment: number = 0;
 
 
   @ViewChild(BookingLookupPrintComponent) child !: any;
 
   constructor(private fb: FormBuilder,
-    private bookingLookupService: BookingLookupService,
-    private accountService: AccountService,
-    private toastr: ToastrService,
-    private spinner: NgxSpinnerService) { }
+              private bookingService: BookingService,
+              private accountService: AccountService,
+              private toastr: ToastrService,
+              private spinner: NgxSpinnerService) {
+  }
 
   ngOnInit(): void {
     this.getCurrentUser();
     this.initializeForm();
+    this.initializeSelectionForm();
+    this.selectionForm.get('packageItemShipment')?.valueChanges?.subscribe(value => {
+      this.getShipmentDetail(value);
+    });
     const screenWidth = window.innerWidth - 315;
     const rowElement = document.querySelector('.awb_checked') as HTMLElement;
     if (rowElement) {
       rowElement.style.width = screenWidth + 'px';
     }
+
   }
 
   initializeForm() {
@@ -61,50 +66,37 @@ export class BookingLookupSearchComponent implements OnInit {
     });
   }
 
-  check(){
+  initializeSelectionForm() {
+    this.selectionForm = this.fb.group({
+      packageItemShipment: -1
+    });
+  }
+
+  check() {
     this.isAWBChecked = !this.isAWBChecked
+
   }
 
   getBookingDetail() {
     if (this.searchForm.value.referenceNumber != null) {
-      var query = new CargoBookingLookupQuery;
-      if(this.isAWBChecked){
+      var query = new CargoBookingShipmentQuery();
+      if (this.isAWBChecked) {
+        query.packageID = this.searchForm.value.referenceNumber;
+      } else {
         query.AWBNumber = this.searchForm.value.referenceNumber;
-      }else{
-        query.referenceNumber = this.searchForm.value.referenceNumber;
       }
-     
-      query.isIncludeFlightDetail = true;
-      query.isIncludePackageDetail = true;
-      query.isIncludeAWBDetail = true;
-      query.userId = this.currentUser?.id
 
-      this.bookingLookupService.getBookingLookupDetail(query).subscribe(
+      this.bookingService.getBookingShipmentDetail(query).subscribe(
         {
           next: (res) => {
-            this.cargoBookingLookup = res;
-            this.verifyStatus = res.verifyStatus
-            var packages = this.cargoBookingLookup.packageItems;
-            this.cargoBookingLookup.packageItems = [];
-
-            var filtered = packages.filter((value, index, self) =>
-              index === self.findIndex((t) => (
-                t.length === value.length && t.width === value.width && t.weight === value.weight
-              ))
-            )
-
-            for (let i = 0; i < filtered.length; i++) {
-              var count = 0;
-              for (let j = 0; j < packages.length; j++) {
-                if (filtered[i].length === packages[j].length && 
-                  filtered[i].width === packages[j].width && 
-                  filtered[i].height === packages[j].height) {
-                  count += 1;
-                }
+            this.cargoBookingShipmentList = res;
+            if (null != this.cargoBookingShipmentList && this.cargoBookingShipmentList.length > 0) {
+              if (this.cargoBookingShipmentList?.length > 1) {
+                this.isSplitBooking = true;
+              } else {
+                this.cargoBookingLookup = this.cargoBookingShipmentList[0];
               }
-              filtered[i].pieces = count;
             }
-            this.cargoBookingLookup.packageItems = filtered;
           },
           error: (error) => {
             this.cargoBookingLookup = undefined;
@@ -115,7 +107,7 @@ export class BookingLookupSearchComponent implements OnInit {
     }
   }
 
-  getStatus(e:number):string{
+  getStatus(e: number): string {
     return BookingStatusEnum[e]
   }
 
@@ -126,45 +118,15 @@ export class BookingLookupSearchComponent implements OnInit {
   getAWBStatus(status: number): string {
     return CoreExtensions.GetAWBStatus(status)
   }
-  
+
   getCurrentUser() {
     this.subscription = this.accountService.currentUser$.subscribe(res => {
       this.currentUser = res;
     });
   }
 
-  generatePDF(cargoBookingLookup: CargoBookingLookup) {
-    this.isPrinting = true;
-    if (cargoBookingLookup.awbInformation !== undefined) {
-      this.calculatePackageItemDetail(cargoBookingLookup.packageItems);
-      this.spinner.show();
-      console.log('generatePDF');
-      this.child.printData(cargoBookingLookup.awbInformation);
-      this.isPrinting = false;
-      setTimeout(() => {
-        this.spinner.hide();
-      }, 2000);
-    }
-  }
-
-  calculatePackageItemDetail(packageItems: PackageItem[]){
-    var noPieces:number=0
-    var grossWeight:number=0
-    var chargeableWeight : number=0
-    packageItems.forEach(obj=>{
-      if(obj != undefined && obj.pieces != undefined && obj.weight != undefined && obj.chargeableWeight != undefined ){
-        noPieces += obj.pieces;
-        grossWeight += obj.pieces * obj.weight;
-        chargeableWeight += obj.pieces * obj.chargeableWeight; 
-      }
-    })
-    this.cargoBookingLookup!.awbInformation!.packageItemCategory=packageItems[0].packageItemCategory;
-    this.cargoBookingLookup!.awbInformation!.noOfPieces=noPieces;
-    this.cargoBookingLookup!.awbInformation!.grossWeight=grossWeight;
-    this.cargoBookingLookup!.awbInformation!.chargeableWeight=chargeableWeight;
-    if(this.cargoBookingLookup!.awbInformation!.rateCharge != undefined){
-      this.cargoBookingLookup!.awbInformation!.totalCharge = this.cargoBookingLookup!.awbInformation!.rateCharge *chargeableWeight;
-    }
+  getShipmentDetail(selectedShipment: BookingShipment) {
+    this.cargoBookingLookup = selectedShipment;
   }
 
   get awbStatus(): typeof AWBStatus {
@@ -174,4 +136,33 @@ export class BookingLookupSearchComponent implements OnInit {
   get bookingStatus(): typeof BookingStatus {
     return BookingStatus;
   }
+
+  // getPackageStatus(bookingStatus?: PackageItemStatus) {
+  //   switch (bookingStatus) {
+  //     case PackageItemStatus.Booking_Made:
+  //       this.packageStatus = 1;
+  //       break;
+  //     case PackageItemStatus.Cargo_Received:
+  //       this.packageStatus = 2;
+  //       break;
+  //     case PackageItemStatus.AcceptedForFLight:
+  //       this.packageStatus = 4;
+  //       break;
+  //     case PackageItemStatus.Dispatched:
+  //       this.packageStatus = 5;
+  //       break;
+  //     case PackageItemStatus.Arrived:
+  //       this.packageStatus = 6;
+  //       break;
+  //     case PackageItemStatus.IndestinationWarehouse:
+  //       this.packageStatus = 7;
+  //       break;
+  //     case PackageItemStatus.TruckForDelivery:
+  //       this.packageStatus = 8;
+  //       break;
+  //     case PackageItemStatus.Deliverd:
+  //       this.packageStatus = 9;
+  //       break;
+  //   }
+  // }
 }

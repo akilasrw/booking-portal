@@ -1,3 +1,6 @@
+$default-white: #fff;
+$default-black: #000;
+
 .modal-content {
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
@@ -40,4 +43,66 @@
     margin-top: 10%;
     padding: 5%;
     background-color: white;
+}
+
+
+.menu-item-disable {
+  padding: 0.938rem 1.25rem;
+  display: flex;
+  align-items: center;
+  cursor: not-allowed;
+  opacity: .7;
+  &.selected {
+    position: relative;
+    background-color: #D4E8F9;
+    border-top-left-radius: 1.563rem;
+    border-bottom-left-radius: 1.563rem;
+    // .icon {
+    //     width: 20px;
+    //     height: 80px;
+    //     position: absolute;
+    //     background-color: #D4E8F9;
+    //     right: 0;
+    //     &::before {
+    //         position: absolute;
+    //         content: '';
+    //         width: 20px;
+    //         height: 15px;
+    //         background-color: $brand-primary;
+    //         border-bottom-right-radius: 15px;
+    //     }
+    //     &::after {
+    //         position: absolute;
+    //         bottom: 0;
+    //         content: '';
+    //         width: 20px;
+    //         height: 15px;
+    //         background-color: $brand-primary;
+    //         border-top-right-radius: 15px;
+    //     }
+    // }
+  }
+  .menu-icn {
+    font-size: 1.125rem;
+    margin-right: 0.938rem;
+    color: $default-white;
+    &.tool-tip {
+      .tooltiptext {
+        display: none;
+      }
+    }
+  }
+  .menu-title {
+    font-size: 0.875rem;
+    color: $default-white;
+    &:hover {
+      color: $default-white;
+    }
+  }
+  &.selected .menu-title {
+    color: $default-black;
+  }
+  .menu-icn:hover, &.selected .menu-icn {
+    color: $default-white;
+  }
 }

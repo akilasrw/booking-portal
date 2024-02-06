@@ -1,204 +1,248 @@
-<div class="main-card">
-    <div class="card-header px-0 pt-0">
-        <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <h1>Track Booking</h1>
-            </div>
-        </div>
+<div class="main-card" xmlns="http://www.w3.org/1999/html">
+  <div class="card-header px-0 pt-0">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h1>Track Booking</h1>
+      </div>
     </div>
-    <div class="card-body without-footer">
-        <div class="d-flex justify-content-between align-items-center">
-            <form [formGroup]='searchForm' (ngSubmit)="getBookingDetail()">
-                <div class="d-flex align-items-center">
-                    <div class="form-group" *ngIf="!isAWBChecked">
-                        <label class="form-label">Booking Reference ID</label>
-                        <input [formControl]='searchForm.controls["referenceNumber"]' type="text" class="form-control">
-                    </div>
-                    <div class="form-group" *ngIf="isAWBChecked">
-                        <label class="form-label">AWB Number</label>
-                        <input [formControl]='searchForm.controls["referenceNumber"]' type="text" class="form-control">
-                    </div>
-                    <div><button type="submit" class="btn btn-primary-outline ms-5 mb-2">Find</button></div>
-                </div>
-                <div class="row awb_checked">
-                    <div class="col-md-11">
-                        <div class="cu-check">
-                            <label class="cu-checkbox">Search With AWB
-                                <input type="checkbox" (change)="check()" value="isAWBChecked">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-1" *ngIf="cargoBookingLookup != null">
-                        <button class="btn btn-primary-outline" (click)="generatePDF(cargoBookingLookup)">Print</button>
-                    </div>
-                </div>
-            </form>
+  </div>
+  <div class="card-body without-footer">
+    <div class="row  second-box-tracking d-flex justify-content-between align-items-center" style="margin-left: 5px; margin-right: 5px">
+      <div class="col-6">
+      <form [formGroup]='searchForm' (ngSubmit)="getBookingDetail()">
+        <div class="d-flex align-items-center ">
+          <div class="form-group col-8" *ngIf="isAWBChecked">
+
+            <label class="form-label">Package ID</label>
+            <input [formControl]='searchForm.controls["referenceNumber"]' type="text" class="form-control">
+          </div>
+          <div class="form-group col-8" *ngIf="!isAWBChecked">
+            <label class="form-label">AWB Number</label>
+            <input [formControl]='searchForm.controls["referenceNumber"]' type="text" class="form-control">
+          </div>
+          <div class=" col-4">
+            <button type="submit" class="btn btn-primary-outline ms-5 mb-2">Find</button>
+          </div>
         </div>
-        <div *ngIf="cargoBookingLookup != null">
-            <h3>Booking Information</h3>
-            <div class="booking-info row">
-                <div class="timeline">  
-                    <div class="tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 10 }">
-                      <div class="tl-header">
-                        <span class="tl-marker"></span>
-                        <p class="tl-title">
-                          Booked
-                        <p>
-                      </div>
-                    </div>
-                    <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 20 }">
-                        <div class="tl-header">
-                          <span class="tl-marker"></span>
-                          <p class="tl-title">
-                            AWB Added
-                          <p>
-                        </div>
-                      </div>
-                    <div class="tl-content tl-content"  [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 30 }">
-                        <div class="tl-header">
-                          <span class="tl-marker"></span>
-                          <p class="tl-title">
-                            Cargo Received
-                          <p>
-                        </div>
-                      </div>
-                      <div class="tl-content tl-content" *ngIf="verifyStatus == 2" [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 40 }">
-                        <div class="tl-header">
-                          <span class="tl-marker"></span>
-                          <p class="tl-title">
-                           Off Loaded
-                          <p>
-                        </div>
-                      </div>
-                      <div class="tl-content tl-content"  [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 50 }">
-                        <div class="tl-header">
-                          <span class="tl-marker"></span>
-                          <p class="tl-title">
-                            Flight Dispatched
-                          <p>
-                        </div>
-                      </div>
-                      <div class="tl-content tl-content"  [ngClass]="{'tl-content-active': cargoBookingLookup?.bookingStatus >= 60 }">
-                        <div class="tl-header">
-                          <span class="tl-marker"></span>
-                          <p class="tl-title">
-                            Flight Arrived
-                          <p>
-                        </div>
-                      </div>
-                  </div>      
-                <div class="col">
-                  
-                    <div class="col-md-12">
-                        <div class="second-box h-100">
-                            <div class="details-group">
-                                <div class="lable">Booking ID</div>
-                                <div>{{cargoBookingLookup?.bookingNumber}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Booking Date</div>
-                                <div>{{cargoBookingLookup?.bookingDate | date : 'M/d/yyyy'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Status</div>
-                                <div>
-                                    <span class="status-chip" [ngClass]="{
-                                    'none':cargoBookingLookup?.bookingStatus == bookingStatus.None,
-                                    'pending': cargoBookingLookup?.bookingStatus == bookingStatus.Pending,
-                                    'dispatch':cargoBookingLookup?.bookingStatus == bookingStatus.Dispatched,
-                                    'invoiced':cargoBookingLookup?.bookingStatus == bookingStatus.Invoiced,
-                                    'accepted':cargoBookingLookup?.bookingStatus == bookingStatus.Accepted,
-                                    'loading':cargoBookingLookup?.bookingStatus == bookingStatus.Loading,
-                                    'exported':cargoBookingLookup?.bookingStatus == bookingStatus.Exported
-                                }">{{getBookingStatus(cargoBookingLookup?.bookingStatus)}}</span>
-                                </div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Flight Number</div>
-                                <div>{{cargoBookingLookup?.flightNumber}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Origin and Destination</div>
-                                <div><span
-                                        class="status-chip accepted">{{cargoBookingLookup?.originAirportCode
-                                        +" - "+ cargoBookingLookup?.destinationAirportCode}}</span>
-                                </div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Flight Date</div>
-                                <div>{{cargoBookingLookup?.scheduledDepartureDateTime | date :
-                                    'M/d/yyyy'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Flight Time</div>
-                                <div>{{cargoBookingLookup?.scheduledDepartureDateTime | date :
-                                    'h:mm a'}}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="second-box h-100">
-                            <div>
-                                <div class="details-group">
-                                    <div class="lable">Cargo Acceptance Cutoff Time</div>
-                                    <div>{{cargoBookingLookup?.scheduledDepartureDateTime | date :
-                                        'h:mm a'}}</div>
-                                </div>
-                                <div class="details-group">
-                                    <div class="lable">Cargo Booking Cutoff Time</div>
-                                    <div>{{cargoBookingLookup?.scheduledDepartureDateTime | date :
-                                        'h:mm a'}}</div>
-                                </div>
-                                <div class="details-group">
-                                    <div class="lable">AWB Number</div>
-                                    <div>{{(cargoBookingLookup?.awbInformation != null && cargoBookingLookup?.awbInformation.awbTrackingNumber !=0)?cargoBookingLookup?.awbInformation.awbTrackingNumber:'-'}}</div>
-                                </div>
-                                <div class="details-group">
-                                    <div class="lable">AWB Status</div>
-                                    <div>
-                                        <span class="awb-status-chip" [ngClass]="{
-                                        'none':cargoBookingLookup?.awbStatus == awbStatus.None,
-                                        'added':cargoBookingLookup?.awbStatus == awbStatus.AddedAWB,
-                                        'pending':cargoBookingLookup?.awbStatus == awbStatus.Pending
-                                        }">{{(getAWBStatus(cargoBookingLookup?.awbStatus))}}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div *ngIf="cargoBookingLookup.awbInformation != null" class="details-group">
-                                    <div class="lable">Actions</div>
-                                    <div>
-                                        <i class="ca ca-icn-view"></i>
-                                        <i class="ca ca-icn-edit"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="table-content mt-5 lookup-info">
-                    <table class="table mt-0">
-                        <thead class="sticky-top">
-                            <th>Item</th>
-                            <th>Weight (kg)</th>
-                            <th>Dimensions (L x W x H) Cm</th>
-                            <th>No. Package</th>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let package of this.cargoBookingLookup?.packageItems">
-                                <td><img src="/assets/images/box.svg"></td>
-                                <td>{{this.package.weight +" kg"}}</td>
-                                <td>{{this.package.length +" x "+
-                                    this.package.width +" x "+
-                                    this.package.height}}</td>
-                                <td>{{this.package.pieces}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div> -->
+        <div class="row awb_checked">
+          <div class="col-md-11">
+            <div class="cu-check">
+              <label class="cu-checkbox">Search With Package ID
+                <input type="checkbox" (change)="check()" value="isAWBChecked">
+                <span class="checkmark"></span>
+              </label>
             </div>
+          </div>
         </div>
+      </form>
+      </div>
+<!--      <div class="form-group" *ngIf="isSplitBooking && !isAWBChecked">-->
+      <div class="form-group col-6" *ngIf="isSplitBooking && !isAWBChecked">
+        <form [formGroup]='selectionForm'>
+          <div >
+            <div class="form-group col-8">
+              <label class="form-label">Select Shipment</label>
+              <select name="shipment" formControlName="packageItemShipment" class="form-select">
+                <option *ngFor="let unit of cargoBookingShipmentList; let i = index" [ngValue]="unit">Shipment -
+                  {{ i + 1 }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
+
+    <div *ngIf="cargoBookingLookup != null">
+      <h3 style="margin-top: 30px; font-weight: 600">Booking Information</h3>
+      <div class="booking-info row">
+        <div class="timeline col-md-4">
+          <div class="tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 0 }">
+            <div class="tl-header">
+              <span class="tl-marker"></span>
+              <p class="tl-title">
+                Booked with AWB
+              <p>
+            </div>
+          </div>
+          <div class="tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 0 }">
+            <div class="tl-header">
+              <span class="tl-marker"></span>
+              <p class="tl-title">
+                Enroute to Warehouse
+              <p>
+            </div>
+          </div>
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 1 }">
+            <div class="tl-header">
+              <span class="tl-marker"></span>
+              <p class="tl-title">
+                In Origin Warehouse
+              <p>
+            </div>
+          </div>
+          <div class="tl-content tl-content" *ngIf="cargoBookingLookup.shipmentStatus != 3 && cargoBookingLookup.shipmentStatus != 4" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 2}">
+            <div class="tl-header">
+              <span class="tl-marker"></span>
+              <p class="tl-title">
+                Accepted for flight
+              <p>
+            </div>
+          </div>
+          <div class="tl-content tl-content" *ngIf="cargoBookingLookup.shipmentStatus == 3" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus == 3}">
+            <div class="tl-header">
+              <span class="tl-marker"></span>
+              <p class="tl-title">
+                Returned
+              <p>
+            </div>
+          </div>
+          <div class="tl-content tl-content" *ngIf="cargoBookingLookup.shipmentStatus == 4" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus == 4 }">
+            <div class="tl-header">
+              <span class="tl-marker"></span>
+              <p class="tl-title">
+                Offloaded
+              <p>
+            </div>
+          </div>
+          <!--                      <div class="tl-content tl-content" *ngIf="cargoBookingShipment?.bookingStatus == 75" [ngClass]="{'tl-content-active': packageStatus >= 3 }">-->
+          <!--                        <div class="tl-header">-->
+          <!--                          <span class="tl-marker"></span>-->
+          <!--                          <p class="tl-title">-->
+          <!--                            Part shipment for flight-->
+          <!--                          <p>-->
+          <!--                        </div>-->
+          <!--                      </div>-->
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 5 }">
+            <div class="tl-header">
+              <span class="tl-marker"></span>
+              <p class="tl-title">
+                Flight Departed
+              <p>
+            </div>
+          </div>
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 6 }">
+            <div class="tl-header">
+              <span class="tl-marker"></span>
+              <p class="tl-title">
+                Flight Arrived
+              <p>
+            </div>
+          </div>
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 7 }">
+            <div class="tl-header">
+              <span class="tl-marker"></span>
+              <p class="tl-title">
+                In Destination Warehouse
+              <p>
+            </div>
+          </div>
+<!--          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 8 }">-->
+<!--            <div class="tl-header">-->
+<!--              <span class="tl-marker"></span>-->
+<!--              <p class="tl-title">-->
+<!--                On Truck for delivery-->
+<!--              <p>-->
+<!--            </div>-->
+<!--          </div>-->
+          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 9 }">
+            <div class="tl-header">
+              <span class="tl-marker"></span>
+              <p class="tl-title">
+                Delivered to Agent
+              <p>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-8">
+
+          <div class="col-md-12">
+            <div class="second-box-tracking h-100">
+              <div class="details-group header-text">
+                <div class="tracking-heder-lable col-4">AWB Number</div>
+                <div class="tracking-heder-lable col-8">{{ (cargoBookingLookup?.awbNumber != null && cargoBookingLookup?.awbNumber != 0) ? cargoBookingLookup?.awbNumber : '-' }}</div>
+              </div>
+
+              <div class="details-group">
+                <div class="tracking-lable col-4">Packages</div>
+                <div class=" tracking-lable col-8">{{ (!isAWBChecked)? cargoBookingLookup?.packageCount: 1 }}</div>
+              </div>
+              <div class="divider"></div>
+              <div class="details-group">
+                <div class="tracking-lable col-4 " >Booked Date</div>
+                <div class="tracking-lable col-8">{{ cargoBookingLookup?.bookedDate | date : 'M/d/yyyy, h:mm a' }}</div>
+              </div>
+              <div class="divider"></div>
+              <div class="details-group">
+                <div class="tracking-lable col-4">Flight Number</div>
+                <div class="tracking-lable col-8">{{ cargoBookingLookup?.flightNumber }}</div>
+              </div>
+              <div class="divider"></div>
+              <div class="details-group">
+                <div class="tracking-lable col-4">Flight Date</div>
+                <div class="tracking-lable col-8">{{
+                    cargoBookingLookup?.flightDate | date :
+                      'M/d/yyyy, h:mm a'
+                  }}
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="details-group">
+                <div class="tracking-lable col-4">Sector</div>
+                <div class="tracking-lable col-8"><span
+                  class="status-chip accepted">{{
+                    cargoBookingLookup?.from
+                    + " - " + cargoBookingLookup?.to
+                  }}</span>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="details-group">
+                <div class="tracking-lable col-4">Flight Dep</div>
+                <div class="tracking-lable col-8">{{ cargoBookingLookup?.flightDep | date : 'M/d/yyyy, h:mm a' }}</div>
+              </div>
+              <div class="divider"></div>
+              <div class="details-group">
+                <div class="tracking-lable col-4">Flight Arrv</div>
+                <div class="tracking-lable col-8">{{ cargoBookingLookup?.flightArr | date : 'M/d/yyyy, h:mm a' }}</div>
+              </div>
+              <div class="divider"></div>
+              <div class="details-group">
+                <div class="tracking-lable col-4">Booked Date</div>
+                <div class="tracking-lable col-8">{{ cargoBookingLookup?.bookedDate | date : 'M/d/yyyy, h:mm a' }}</div>
+              </div>
+              <div class="divider"></div>
+              <div class="details-group">
+                <div class="tracking-lable col-4">Enroute to Warehouse</div>
+                <div class="tracking-lable col-8" >{{ cargoBookingLookup?.enrouteToWahouse | date : 'M/d/yyyy, h:mm a' }}</div>
+              </div>
+              <div class="divider"></div>
+              <div class="details-group">
+                <div class="tracking-lable col-4">In Origin Warehouse</div>
+                <div class="tracking-lable col-8">{{ cargoBookingLookup?.inOriginWahouse | date : 'M/d/yyyy, h:mm a' }}</div>
+              </div>
+              <div class="divider"></div>
+              <div class="details-group">
+                <div class="tracking-lable col-4">Accepted for flight</div>
+                <div class="tracking-lable col-8">{{ cargoBookingLookup?.acceptedForFLight | date : 'M/d/yyyy, h:mm a' }}</div>
+              </div>
+              <div class="divider"></div>
+              <div class="details-group">
+                <div class="tracking-lable col-4">In Destination Warehouse</div>
+                <div class="tracking-lable col-8">{{ cargoBookingLookup?.inDestinationWahouse | date : 'M/d/yyyy, h:mm a' }}</div>
+              </div>
+              <div class="divider"></div>
+              <div class="details-group">
+                <div class="tracking-lable col-4">Delivered to Agent</div>
+                <div class="tracking-lable col-8">{{ cargoBookingLookup?.deliverdToAgent | date : 'M/d/yyyy, h:mm a' }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<app-booking-lookup-print></app-booking-lookup-print>
+<!--<app-booking-lookup-print></app-booking-lookup-print>-->

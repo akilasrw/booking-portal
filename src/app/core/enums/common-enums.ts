@@ -14,10 +14,17 @@ export enum BookingStatus {
   Booking_Made = 10,
   AWB_Added = 20,
   Cargo_Received = 30,
+  IndestinationWarehouse= 35,
   Off_Loaded = 40,
+  Partialy_Dispatched = 45,
   Flight_Dispatched = 50,
+  Partialy_Arrived = 55,
   Flight_Arrived = 60,
-  Cancelled = 70
+  Cancelled = 70,
+  Accepted_for_Flight = 80,
+  Partshipment_for_Flight = 75,
+  TruckForDelivery = 85,
+  Deliverd = 90
 }
 
 export enum AWBStatus {
@@ -26,11 +33,24 @@ export enum AWBStatus {
   AddedAWB = 2
 }
 
+// export enum PackageItemStatus {
+//   None = 0,
+//   Pending = 1
+// }
 export enum PackageItemStatus {
-  None = 0,
-  Pending = 1
+  Booking_Made = 0,
+  Cargo_Received = 1,
+  AcceptedForFlight = 2,
+  Returned = 3,
+  Offloaded = 4,
+  FlightDispatched = 5,
+  Arrived = 6,
+  InDestinationWarehouse = 7,
+  TruckForDelivery = 8,
+  Delivered = 9,
+  Pending = 10,
+  None = 11,
 }
-
 export enum PackageContainerType {
   None = 0,
   OnFloor = 1,
