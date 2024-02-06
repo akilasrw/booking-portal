@@ -12,15 +12,23 @@
 
   .tracking-lable{
     color: #464646;
-    font-size: 16px;
+    //font-size: 16px;
     font-weight: 500;
     line-height: 24px;
+    padding-left: 5px;
+  }
+  .tracking-lable-active{
+    color: #464646;
+    //font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    padding-left: 5px;
   }
   .tracking-heder-lable{
     color: #464646;
-    font-size: 16px;
+    //font-size: 16px;
     font-weight: 600;
-    line-height: 24px;
+    margin-bottom: 10px;
   }
 
   .divider{
@@ -29,6 +37,8 @@
   }
   .header-text{
     background-color: #FFFFFF;
+    border-radius: 0.5rem;
+    padding-left: 5px;
   }
   .tl-content .tl-header,
   .tl-content .tl-body {
@@ -43,6 +53,9 @@
 
   .tl-content:last-child .tl-body {
     border-left: 3px solid transparent;
+  }
+  .tl-content{
+    height: 60px;
   }
 
   .tl-header {
@@ -101,7 +114,7 @@
   }
   .second-box-tracking {
     background-color: #F8F8F8;
-    border-radius: 0.313rem;
+    border-radius: 0.5rem;
     margin-top: 1.25rem;
     padding: 1rem;
   }

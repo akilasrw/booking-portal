@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="card-body without-footer">
-    <div class="row  second-box d-flex justify-content-between align-items-center">
+    <div class="row  second-box-tracking d-flex justify-content-between align-items-center" style="margin-left: 5px; margin-right: 5px">
       <div class="col-6">
       <form [formGroup]='searchForm' (ngSubmit)="getBookingDetail()">
         <div class="d-flex align-items-center ">
@@ -54,7 +54,7 @@
     </div>
 
     <div *ngIf="cargoBookingLookup != null">
-      <h3>Booking Information</h3>
+      <h3 style="margin-top: 30px; font-weight: 600">Booking Information</h3>
       <div class="booking-info row">
         <div class="timeline col-md-4">
           <div class="tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 0 }">
@@ -158,7 +158,7 @@
         <div class="col-md-8">
 
           <div class="col-md-12">
-            <div class="second-box h-100">
+            <div class="second-box-tracking h-100">
               <div class="details-group header-text">
                 <div class="tracking-heder-lable col-4">AWB Number</div>
                 <div class="tracking-heder-lable col-8">{{ (cargoBookingLookup?.awbNumber != null && cargoBookingLookup?.awbNumber != 0) ? cargoBookingLookup?.awbNumber : '-' }}</div>
@@ -170,7 +170,7 @@
               </div>
               <div class="divider"></div>
               <div class="details-group">
-                <div class="tracking-lable col-4">Booked Date</div>
+                <div class="tracking-lable col-4 " >Booked Date</div>
                 <div class="tracking-lable col-8">{{ cargoBookingLookup?.bookedDate | date : 'M/d/yyyy, h:mm a' }}</div>
               </div>
               <div class="divider"></div>
