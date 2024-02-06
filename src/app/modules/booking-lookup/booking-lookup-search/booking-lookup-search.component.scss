@@ -1,81 +1,107 @@
 
-  
+
   .timeline {
     padding: 3rem 2rem;
-    
+
     max-width: 460px;
     border-radius: 12px;
-    
+
     background-color: white;
-    box-shadow: 0 4px 25px -20px rgba(0,0,0.2);
+    //box-shadow: 0 4px 25px -20px rgba(0,0,0.2);
   }
-  
-  .tl-content .tl-header, 
+
+  .tracking-lable{
+    color: #464646;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+  .tracking-heder-lable{
+    color: #464646;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+  }
+
+  .divider{
+    border-bottom: 1px solid #E2E2E2;
+    margin-top: 10px;
+  }
+  .header-text{
+    background-color: #FFFFFF;
+  }
+  .tl-content .tl-header,
   .tl-content .tl-body {
     padding-left: 25.6px;
-    
+
     border-left: 3px solid gainsboro;
   }
-  
+
   .tl-body {
     padding-bottom:1rem;
   }
-  
+
   .tl-content:last-child .tl-body {
     border-left: 3px solid transparent;
   }
-  
+
   .tl-header {
     position: relative;
     display: grid;
-    
+
 
   }
-  
+
   .tl-title {
     font-weight: 600;
     font-size: 1em;
     margin-top: 30px;
   }
-  
+
   .tl-time {
     font-size: 0.7em;
   }
-  
+
   .tl-marker {
     display:block;
     position: absolute;
-  
+
     width: 16px;
     height: 16px;
     border-radius: 50% / 50%;
-    
+
     background: gainsboro;
-    
+
     left: -1.1rem;
     top: 50%;
-    
+
     transform: translate(50%,-50%);
   }
-  
+
   .tl-content-active .tl-marker {
     padding: 1.6px;
-    
+
     left: -1.25rem;
-    
+
     width: 18px;
     height: 18px;
-    
+
     border: 2px solid #338ce5;
-    
+
     background-color: #338ce5;
     background-clip: content-box;
-    
+
     box-shadow: 0 0 15px -2px #338ce5;
   }
-  
+
   .tl-content-active .tl-title {
     font-weight: 700;
-    
+
     color: #338ce5;
+  }
+  .second-box-tracking {
+    background-color: #F8F8F8;
+    border-radius: 0.313rem;
+    margin-top: 1.25rem;
+    padding: 1rem;
   }
