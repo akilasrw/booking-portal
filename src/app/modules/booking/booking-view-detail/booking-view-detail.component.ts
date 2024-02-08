@@ -29,6 +29,12 @@ export class BookingViewDetailComponent implements OnInit {
   subscription?: Subscription;
   currentUser?: User | null
   cargoAgent?:CargoAgent;
+  pickedUpBoxes?:number = 0;
+  wh_rec:number = 0;
+  uld_packed:number = 0;
+  offloaded:number = 0;
+  uld_unpacked:number= 0;
+  delivered:number = 0;
 
 
 
@@ -45,17 +51,19 @@ export class BookingViewDetailComponent implements OnInit {
 
   getBookingDetail() {
     if (this.cargoBookingId != null) {
-      var query = new CargoBookingDetailQuery;
 
-      query.id = this.cargoBookingId;
-      query.isIncludeFlightDetail = true;
-      query.isIncludePackageDetail = true;
-      query.isIncludeAWBDetail=true;
-      query.userId = this.currentUser?.id;
 
-      this.bookingSerice.getBookingDetail(query).subscribe(
-        res => {
-          this.cargoBookingDetail = res;
+
+      this.bookingSerice.getPackageAuditStatus(this.cargoBookingId).subscribe(
+        (res:any) => {
+          console.log(res)
+          this.cargoBookingDetail= res
+          this.pickedUpBoxes = res.length;
+          this.wh_rec = res.filter((x:any)=> x.packageItemStatus == PackageItemStatus.Cargo_Received).length
+          this.uld_packed = res.filter((x:any)=> x.packageItemStatus == PackageItemStatus.AcceptedForFlight).length
+          this.offloaded = res.filter((x:any)=> x.packageItemStatus == PackageItemStatus.Offloaded).length
+          this.uld_unpacked = res.filter((x:any)=> x.packageItemStatus == PackageItemStatus.InDestinationWarehouse).length
+          this.delivered = res.filter((x:any)=> x.packageItemStatus == PackageItemStatus.Delivered).length
         }
       );
     }
@@ -147,7 +155,7 @@ export class BookingViewDetailComponent implements OnInit {
       }
     });
   }
-  
+
   getCargoAgentDetails(userId:string){
     var query = new CargoAgentQuery();
     query.appUserId = userId;

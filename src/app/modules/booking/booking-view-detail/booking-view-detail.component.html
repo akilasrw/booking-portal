@@ -1,283 +1,38 @@
-<div class="row">
-    <div class="col-md-12">
-        <div class="details">
-            <details open>
-                <summary>Booking Information</summary>
-                <div class="card-details">
-                    <div class="details-group">
-                        <div class="lable">Booking ID</div>
-                        <div>{{cargoBookingDetail?.bookingNumber}}</div>
-                    </div>
-                    <div class="details-group">
-                        <div class="lable">Booking Date</div>
-                        <div>{{cargoBookingDetail?.bookingDate | date}}</div>
-                    </div>
-                    <div class="details-group">
-                        <div class="lable">Status</div>
-                        <div>
-                            <span class="status-chip" [ngClass]="{
-                                'none':cargoBookingDetail?.bookingStatus == bookingStatus.None,
-                                'pending': cargoBookingDetail?.bookingStatus == bookingStatus.Booking_Made,
-                                'awb_added': cargoBookingDetail?.bookingStatus == bookingStatus.AWB_Added,
-                                'dispatch':cargoBookingDetail?.bookingStatus == bookingStatus.Flight_Dispatched,
-                                'invoiced':cargoBookingDetail?.bookingStatus == bookingStatus.Flight_Arrived,
-                                'accepted':cargoBookingDetail?.bookingStatus == bookingStatus.Cargo_Received,
-                                'loading':cargoBookingDetail?.bookingStatus == bookingStatus.Off_Loaded,
-                                'cancelled':cargoBookingDetail?.bookingStatus == bookingStatus.Cancelled
-                            }">{{getBookingStatus(cargoBookingDetail?.bookingStatus)}}</span>
-                        </div>
-                    </div>
-                    <div class="details-group">
-                        <div class="lable">AWB Status</div>
-                        <div>
-                            <span class="awb-status-chip" [ngClass]="{
-                            'none':cargoBookingDetail?.awbStatus == awbStatus.None,
-                            'added':cargoBookingDetail?.awbStatus == awbStatus.AddedAWB,
-                            'pending':cargoBookingDetail?.awbStatus == awbStatus.Pending
-                            }">{{(getAWBStatus(cargoBookingDetail?.awbStatus))}}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </details>
-        </div>
-        <div class="details">
-            <details>
-                <summary>Flight Details</summary>
-                <div class="card-details">
-                    <div class="details-group">
-                        <div class="lable">Flight Number</div>
-                        <div>{{cargoBookingDetail?.flightNumber}}</div>
-                    </div>
-                    <div class="details-group">
-                        <div class="lable">Origin and Destination</div>
-                        <div><span
-                                class="status-chip accepted">{{cargoBookingDetail?.originAirportCode
-                                +" - "+ cargoBookingDetail?.destinationAirportCode}}</span></div>
-                    </div>
-                    <div class="details-group">
-                        <div class="lable">Cargo Acceptance Cutoff Time</div>
-                        <div>{{cargoBookingDetail?.scheduledDepartureDateTime | date : 'h:mm a'}}
-                        </div>
-                    </div>
-                    <div class="details-group">
-                        <div class="lable">Cargo Booking Cutoff Time</div>
-                        <div>{{cargoBookingDetail?.scheduledDepartureDateTime | date : 'h:mm a'}}
-                        </div>
-                    </div>
-                    <div class="details-group">
-                        <div class="lable">Flight Date</div>
-                        <div>{{cargoBookingDetail?.scheduledDepartureDateTime | date : 'M/d/yyyy'}}
-                        </div>
-                    </div>
-                    <div class="details-group">
-                        <div class="lable">Flight Time</div>
-                        <div>{{cargoBookingDetail?.scheduledDepartureDateTime | date : 'h:mm a'}}
-                        </div>
-                    </div>
-
-                </div>
-            </details>
-        </div>
-        <div class="details">
-            <details>
-                <summary>AWB Details</summary>
-                <div class="card-details">
-                    <div class="awb-section">
-                        <div class="awb-details pt-0 pb-3">
-                            <div class="d-flex align-items-center">
-                                <span class="awb-status-chip" [ngClass]="{
-                                    'none':cargoBookingDetail?.awbStatus == awbStatus.None,
-                                    'added':cargoBookingDetail?.awbStatus == awbStatus.AddedAWB,
-                                    'pending':cargoBookingDetail?.awbStatus == awbStatus.Pending
-                                }">{{getAWBStatus(cargoBookingDetail?.awbStatus)}}
-                                </span>
-                            </div>
-                            <div>
-                                <span class="pe-4" [ngClass]="{'edit disabled' : cargoBookingDetail?.awbStatus == awbStatus.Pending,
-                                'edit active':cargoBookingDetail?.awbStatus != awbStatus.Pending}"><i
-                                        class="ca ca-icn-edit" title="Edit"
-                                        (click)="(cargoBookingDetail?.awbStatus != awbStatus.Pending)?editAWB(this.cargoBookingDetail):false"></i></span>
-
-                                <span [ngClass]="{'add active' : cargoBookingDetail?.awbStatus == awbStatus.Pending,
-                                'add disabled':cargoBookingDetail?.awbStatus != awbStatus.Pending}"><i
-                                        class="ca ca-icn-add" title="Add"
-                                        (click)="(cargoBookingDetail?.awbStatus == awbStatus.Pending)?addAWB():false"></i></span>
-                            </div>
-                        </div>
-                        <div *ngIf="cargoBookingDetail?.awbInformation != null">
-                            <div class="details-group pt-0">
-                                <div class="lable">AWB Tracking Number</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.awbTrackingNumber !=0)?cargoBookingDetail?.awbInformation.awbTrackingNumber:'-'}}
-                                </div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Shipper Name</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.shipperName!=
-                                    null)?cargoBookingDetail?.awbInformation.shipperName:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Shipper's Account Number</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.shipperAccountNumber!=
-                                    null)?cargoBookingDetail?.awbInformation.shipperAccountNumber:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Shipper Address</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.shipperAddress!=
-                                    null)?cargoBookingDetail?.awbInformation.shipperAddress:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Consignee Name</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.consigneeName!=
-                                    null)?cargoBookingDetail?.awbInformation.consigneeName:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Consignee's Account Number</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.consigneeAccountNumber!=
-                                    null)?cargoBookingDetail?.awbInformation.consigneeAccountNumber:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Consignee Address</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.consigneeAddress!=
-                                    null)?cargoBookingDetail?.awbInformation.consigneeAddress:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Carrier's Agent Name</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.agentName!=
-                                    null)?cargoBookingDetail?.awbInformation.agentName:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Carrier's Agent City</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.agentCity!=
-                                    null)?cargoBookingDetail?.awbInformation.agentCity:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Agent's AITA Code</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.agentAITACode!=
-                                    null)?cargoBookingDetail?.awbInformation.agentAITACode:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Account Number</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.agentAccountNumber!=
-                                    null)?cargoBookingDetail?.awbInformation.agentAccountNumber:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Accounting Information</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.agentAccountInformation!=
-                                    null)?cargoBookingDetail?.awbInformation.agentAccountInformation:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Requested Routing</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.requestedRouting!=
-                                    null)?cargoBookingDetail?.awbInformation.requestedRouting:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Requested Flight Date</div>
-                                <div>{{cargoBookingDetail?.awbInformation.requestedFlightDate | date : 'M/d/yyyy'}}
-                                </div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Routing and Destination To</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.routingAndDestinationTo!=
-                                    null)?cargoBookingDetail?.awbInformation.routingAndDestinationTo:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Routing and Destination By</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.routingAndDestinationBy!=
-                                    null)?cargoBookingDetail?.awbInformation.routingAndDestinationBy:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Airport Destination</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.destinationAirportName!=
-                                    null)?cargoBookingDetail?.awbInformation.destinationAirportName:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Reference Number</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.shippingReferenceNumber!=
-                                    null)?cargoBookingDetail?.awbInformation.shippingReferenceNumber:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Currency</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.currency!=
-                                    null)?cargoBookingDetail?.awbInformation.currency:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Declared Value for Carriage</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.declaredValueForCarriage !=
-                                    0)?cargoBookingDetail?.awbInformation.declaredValueForCarriage:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Declared Value for Customer</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.declaredValueForCustomer !=
-                                    0)?cargoBookingDetail?.awbInformation.declaredValueForCustomer:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Amount Of Insurance</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.amountOfInsurance !=
-                                    0)?cargoBookingDetail?.awbInformation.amountOfInsurance:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Rate Charge</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.rateCharge !=
-                                    0)?cargoBookingDetail?.awbInformation.rateCharge:'-'}}</div>
-                            </div>
-                            <div class="details-group">
-                                <div class="lable">Nature and Quality of Goods</div>
-                                <div>{{(cargoBookingDetail?.awbInformation.natureAndQualityOfGoods!=
-                                    null)?cargoBookingDetail?.awbInformation.natureAndQualityOfGoods:'-'}}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </details>
-        </div>
-        <div class="row">
-            <h3 class="section-title">Package Details</h3>
-            <div class="details sub-collapse">
-                <details *ngFor="let package of this.cargoBookingDetail?.packageItems">
-                    <summary>Package Number:<span>{{package.packageRefNumber}}</span></summary>
-                    <div class="card-details">
-                        <div class="details-group">
-                            <div class="lable">Width</div>
-                            <div>{{package.width+" cm"}}</div>
-                        </div>
-                        <div class="details-group">
-                            <div class="lable">Height</div>
-                            <div>{{package.height+" cm"}}</div>
-                        </div>
-                        <div class="details-group">
-                            <div class="lable">Length</div>
-                            <div>{{package.length+" cm"}}</div>
-                        </div>
-                        <div class="details-group">
-                            <div class="lable">Weight</div>
-                            <div>{{package.weight+" kg"}}</div>
-                        </div>
-                        <div class="details-group">
-                            <div class="lable">Description</div>
-                            <div>{{package.description}}</div>
-                        </div>
-                    </div>
-                </details>
-            </div>
-        </div>
+<div style="display: grid; grid-template-columns: auto auto; align-items: start;">
+  <div style="margin-left: 20px;">
+    <span style="font-family: 'Poppins'; font-style: normal; font-weight: 500; font-size: 18px; line-height: 27px; color: #464646;">View</span>
+    <div class="text-box">
+      <span class="text-item">Picked up boxes</span>
+      <span class="text-item">{{pickedUpBoxes}}</span>
+      <div></div>
     </div>
-</div>
-
-
-<div class="modal fade right" tabindex="-1" [ngClass]="{'in': modalVisibleAnimate}"
-    [ngStyle]="{'display': modalVisible ? 'block' : 'none', 'opacity': modalVisibleAnimate ? 1 : 0}">
-    <div class="modal-dialog modal-lg modal-dialog-m modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">AWB Information</h2>
-                <button type="button" class="close btn" data-dismiss="modal" (click)="closeAWBForm()"
-                    aria-label="Close"><span class="ca ca-icn-close"></span></button>
-            </div>
-            <div>
-                <app-awb-create [awbModel]="awbModel" (submitDetail)="submitAWBDetail($event)"
-                    (closePopup)="closeAWBForm()" *ngIf="modalVisible"></app-awb-create>
-            </div>
-        </div>
+    <div class="text-box">
+      <span class="text-item">WH Rec</span>
+      <span class="text-item">{{wh_rec}}</span>
+      <div></div>
     </div>
+    <div class="text-box">
+      <span class="text-item">ULD Packed</span>
+      <span class="text-item">{{uld_packed}}</span>
+      <div></div>
+    </div>
+    <div class="text-box">
+      <span class="text-item">Off Loaded</span>
+      <span class="text-item">{{offloaded}}</span>
+      <i class="ca ca-icn-view"   title="View"></i>
+    </div>
+    <div class="text-box">
+      <span class="text-item">ULD Unpacked</span>
+      <span class="text-item">{{uld_unpacked}}</span>
+      <div></div>
+    </div>
+    <div class="text-box">
+      <span class="text-item">Delivered to Agent</span>
+      <span class="text-item">{{delivered}}</span>
+      <div></div>
+    </div>
+  </div>
+  <div>
+    <span style="font-family: 'Poppins'; font-style: normal; font-weight: 500; font-size: 18px; line-height: 27px; color: #464646;">Discrepancy</span>
+  </div>
 </div>
