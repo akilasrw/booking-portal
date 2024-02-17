@@ -8,14 +8,17 @@ import { BookingLookupPrintComponent } from './booking-lookup-print/booking-look
 
 
 @NgModule({
-  declarations: [
-    BookingLookupSearchComponent,
-    BookingLookupPrintComponent
-  ],
-  imports: [
-    CommonModule,
-    BookingLookupRoutingModule,
-    SharedModule,
-  ]
+    declarations: [
+        BookingLookupSearchComponent,
+        BookingLookupPrintComponent
+    ],
+    exports: [
+        BookingLookupSearchComponent
+    ],
+    imports: [
+        CommonModule,
+        BookingLookupRoutingModule,
+        SharedModule,
+    ]
 })
 export class BookingLookupModule { }

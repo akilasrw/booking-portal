@@ -18,7 +18,7 @@
           </div>
           <div class="form-group col-8" *ngIf="!isAWBChecked">
             <label class="form-label">AWB Number</label>
-            <input [formControl]='searchForm.controls["referenceNumber"]' type="text" class="form-control">
+            <input [formControl]='searchForm.controls["referenceNumber"]' [(ngModel)]="awbnumber" type="text" class="form-control">
           </div>
           <div class=" col-4">
             <button type="submit" class="btn btn-primary-outline ms-5 mb-2">Find</button>

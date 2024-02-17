@@ -32,6 +32,7 @@ export class BookingListComponent implements OnInit {
   currentUser?: User | null;
   subscription?: Subscription;
   isLoading :boolean= false;
+  redirectToTrackBooking: boolean=false;
 
   constructor(
     private bookingService: BookingService,
@@ -119,5 +120,10 @@ export class BookingListComponent implements OnInit {
     this.subscription = this.accountService.currentUser$.subscribe(res => {
       this.currentUser = res;
     });
+  }
+  showTrackBooking(awbNumber: any){
+    // this.redirectToTrackBooking = true;
+    console.log(awbNumber)
+    this.router.navigate(['booking-lookup', awbNumber])
   }
 }

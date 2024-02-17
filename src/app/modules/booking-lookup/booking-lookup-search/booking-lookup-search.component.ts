@@ -14,6 +14,7 @@ import {BookingStatusEnum, CargoBooking} from 'src/app/_models/view-models/cargo
 import {BookingService} from "../../../_services/booking.service";
 import {CargoBookingShipmentQuery} from "../../../_models/queries/booking-shipment/cargo-booking-shipment-query.model";
 import {BookingShipment} from "../../../_models/view-models/booking-shipment/booking-shipment.model";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -34,6 +35,7 @@ export class BookingLookupSearchComponent implements OnInit {
   packageStatus: number = 0;
   isSplitBooking: boolean = false;
   packageItemShipment: number = 0;
+  awbnumber: string = '';
 
 
   @ViewChild(BookingLookupPrintComponent) child !: any;
@@ -42,7 +44,15 @@ export class BookingLookupSearchComponent implements OnInit {
               private bookingService: BookingService,
               private accountService: AccountService,
               private toastr: ToastrService,
-              private spinner: NgxSpinnerService) {
+              private spinner: NgxSpinnerService,
+              private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (null != id && id && id !="0") {
+        this.awbnumber = id;
+        this.getBookingDetail();
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -78,10 +88,12 @@ export class BookingLookupSearchComponent implements OnInit {
   }
 
   getBookingDetail() {
-    if (this.searchForm.value.referenceNumber != null) {
+    if ( this.awbnumber != '') {
       var query = new CargoBookingShipmentQuery();
       if (this.isAWBChecked) {
         query.packageID = this.searchForm.value.referenceNumber;
+      } else if(this.awbnumber != ''){
+        query.AWBNumber = this.awbnumber;
       } else {
         query.AWBNumber = this.searchForm.value.referenceNumber;
       }
