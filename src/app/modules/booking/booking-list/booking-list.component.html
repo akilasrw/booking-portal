@@ -81,7 +81,7 @@
                 <td style="text-align: center">{{booking.totalWeight}}</td>
                 <td style="text-align: center">
                   <i class="ca ca-icn-view" (click)="show(booking.id)" title="View"></i>
-                  <i class="ca ca-icn-edit" title="Edit" style="cursor: not-allowed" ></i>
+                  <i class="ca ca-icn-edit" (click)="showTrackBooking(booking.awbNumber)" title="Edit" ></i>
                   <i class="ca ca-icn-bin" title="Delete" style="cursor: not-allowed"></i>
                 </td>
               </tr>

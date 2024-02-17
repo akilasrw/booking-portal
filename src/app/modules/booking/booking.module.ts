@@ -11,6 +11,7 @@ import { P2cBookingSearchItemComponent } from './booking-search-item/p2c-booking
 import { FreighterBookingSearchItemComponent } from './booking-search-item/freighter-booking-search-item/freighter-booking-search-item.component';
 import { P2cBookingCreateComponent } from './booking-create/p2c-booking-create/p2c-booking-create.component';
 import { FreighterBookingCreateComponent } from './booking-create/freighter-booking-create/freighter-booking-create.component';
+import {BookingLookupModule} from "../booking-lookup/booking-lookup.module";
 
 @NgModule({
   declarations: [
@@ -23,11 +24,12 @@ import { FreighterBookingCreateComponent } from './booking-create/freighter-book
     P2cBookingCreateComponent,
     FreighterBookingCreateComponent
   ],
-  imports: [
-    CommonModule,
-    BookingRoutingModule,
-    SharedModule,
-    BsDatepickerModule
-  ]
+    imports: [
+        CommonModule,
+        BookingRoutingModule,
+        SharedModule,
+        BsDatepickerModule,
+        BookingLookupModule
+    ]
 })
 export class BookingModule { }
