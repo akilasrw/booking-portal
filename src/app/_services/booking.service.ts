@@ -59,6 +59,10 @@ export class BookingService extends BaseService {
     );
   }
 
+  getPackageAuditStatus(bookingId:string){
+   return this.get(`Package/AuditByBooking?bookingID=${bookingId}`)
+  }
+
 
   getBookingDetail(query: CargoBookingDetailQuery) {
     var params = new HttpParams();
