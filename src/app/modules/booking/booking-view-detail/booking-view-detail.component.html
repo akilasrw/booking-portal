@@ -3,36 +3,84 @@
     <span style="font-family: 'Poppins'; font-style: normal; font-weight: 500; font-size: 18px; line-height: 27px; color: #464646;">View</span>
     <div class="text-box">
       <span class="text-item">Picked up boxes</span>
-      <span class="text-item">{{pickedUpBoxes}}</span>
+      <span class="text-item">{{pickedUpBoxes?.length || 0}}</span>
       <div></div>
     </div>
     <div class="text-box">
       <span class="text-item">WH Rec</span>
-      <span class="text-item">{{wh_rec}}</span>
+      <span class="text-item">{{wh_rec?.length || 0}}</span>
       <div></div>
     </div>
     <div class="text-box">
       <span class="text-item">ULD Packed</span>
-      <span class="text-item">{{uld_packed}}</span>
+      <span class="text-item">{{uld_packed?.length || 0}}</span>
       <div></div>
     </div>
     <div class="text-box">
       <span class="text-item">Off Loaded</span>
-      <span class="text-item">{{offloaded}}</span>
+      <span class="text-item">{{offloaded?.length || 0}}</span>
       <i class="ca ca-icn-view"   title="View"></i>
     </div>
     <div class="text-box">
       <span class="text-item">ULD Unpacked</span>
-      <span class="text-item">{{uld_unpacked}}</span>
+      <span class="text-item">{{uld_unpacked?.length || 0}}</span>
       <div></div>
     </div>
     <div class="text-box">
       <span class="text-item">Delivered to Agent</span>
-      <span class="text-item">{{delivered}}</span>
+      <span class="text-item">{{delivered?.length || 0}}</span>
       <div></div>
     </div>
   </div>
-  <div>
+  <div style="margin-left: 20px">
     <span style="font-family: 'Poppins'; font-style: normal; font-weight: 500; font-size: 18px; line-height: 27px; color: #464646;">Discrepancy</span>
+
+    <div class="text-box-two" style="margin-top: 72px">
+
+
+      <span class="text-item">{{((pickedUpBoxes?.length || 0) - (wh_rec?.length || 0))}}</span>
+      <i class="ca ca-icn-view" style="cursor: pointer"  title="View" (click)="setOpenList('wh')" ></i>
+    </div>
+    <div  style="height: 300px; overflow-y: scroll" *ngIf="openList =='wh'">
+      <p style="height: 20px" *ngFor="let x of dWh_rec">{{x.packageItem.packageRefNumber}}</p>
+    </div>
+    <div class="text-box-two" style="margin-top: 20px">
+
+
+      <span class="text-item">{{((pickedUpBoxes?.length || 0) - (uld_packed?.length || 0))}}</span>
+      <i class="ca ca-icn-view" style="cursor: pointer"    title="View" (click)="setOpenList('uldp')"></i>
+    </div>
+    <div  style="height: 300px; overflow-y: scroll" *ngIf="openList == 'uldp'">
+      <p style="height: 20px" *ngFor="let x of dUld_packed">{{x.packageItem.packageRefNumber}}</p>
+    </div>
+    <div class="text-box-two" style="margin-top: 20px">
+
+
+      <span class="text-item">{{((pickedUpBoxes?.length || 0) - (offloaded?.length || 0))}}</span>
+      <i class="ca ca-icn-view" style="cursor: pointer"   title="View" (click)="setOpenList('ol')"></i>
+
+    </div>
+    <div  style="height: 300px; overflow-y: scroll" *ngIf="openList=='ol'">
+      <p style="height: 20px" *ngFor="let x of dOffloaded">{{x.packageItem.packageRefNumber}}</p>
+    </div>
+
+    <div class="text-box-two" style="margin-top: 20px">
+
+
+      <span class="text-item">{{((pickedUpBoxes?.length || 0) - (uld_unpacked?.length || 0))}}</span>
+      <i class="ca ca-icn-view" style="cursor: pointer"    title="View" (click)="setOpenList('uldup')"></i>
+    </div>
+    <div  style="height: 300px; overflow-y: scroll" *ngIf="openList == 'uldup'">
+      <p style="height: 20px" *ngFor="let x of dUld_unpacked">{{x.packageItem.packageRefNumber}}</p>
+    </div>
+    <div class="text-box-two" style="margin-top: 20px">
+
+
+      <span class="text-item">{{((pickedUpBoxes?.length || 0) - (delivered?.length || 0))}}</span>
+      <i class="ca ca-icn-view" style="cursor: pointer"   title="View" (click)="setOpenList('d')"></i>
+    </div>
+    <div  style="height: 300px; overflow-y: scroll" *ngIf="openList == 'd'">
+      <p style="height: 20px" *ngFor="let x of dDelivered">{{x.packageItem.packageRefNumber}}</p>
+    </div>
   </div>
 </div>
