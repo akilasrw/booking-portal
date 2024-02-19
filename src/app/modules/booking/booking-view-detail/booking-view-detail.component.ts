@@ -7,6 +7,7 @@ import { BookingService } from 'src/app/_services/booking.service';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 import { AWBStatus, BookingStatus, PackageItemStatus } from 'src/app/core/enums/common-enums';
 import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.model';
+import {PackageModel} from "../../../_models/view-models/package-container/package-model";
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/_models/user.model';
 import { ToastrService } from 'ngx-toastr';
@@ -29,17 +30,17 @@ export class BookingViewDetailComponent implements OnInit {
   subscription?: Subscription;
   currentUser?: User | null
   cargoAgent?:CargoAgent;
-  pickedUpBoxes?:any[] = [];
-  wh_rec?:any[] = [];
-  dWh_rec?:any[] = [];
-  uld_packed?:any[] = [];
-  offloaded?:any[] = [];
-  uld_unpacked?:any[] = [];
-  delivered?:any[] = [];
-  dUld_packed?:any[] = [];
-  dOffloaded?:any[] = [];
-  dUld_unpacked?:any[] = [];
-  dDelivered?:any[] = [];
+  pickedUpBoxes?:PackageModel[] = [];
+  wh_rec?:PackageModel[] = [];
+  dWh_rec?:PackageModel[] = [];
+  uld_packed?:PackageModel[] = [];
+  offloaded?:PackageModel[] = [];
+  uld_unpacked?:PackageModel[] = [];
+  delivered?:PackageModel[] = [];
+  dUld_packed?:PackageModel[] = [];
+  dOffloaded?:PackageModel[] = [];
+  dUld_unpacked?:PackageModel[] = [];
+  dDelivered?:PackageModel[] = [];
   openList?:string | null = null
 
 
@@ -78,10 +79,10 @@ export class BookingViewDetailComponent implements OnInit {
           this.dUld_unpacked = (this?.pickedUpBoxes || []).filter((x)=>  !(this.uld_unpacked || []).includes(x))
           this.dOffloaded = (this?.pickedUpBoxes || []).filter((x)=>  !(this.offloaded || []).includes(x))
           this.dDelivered = (this?.pickedUpBoxes || []).filter((x)=>  !(this.delivered || []).includes(x))
-          this.uld_packed = res.filter((x:any)=> x.packageItemStatus == PackageItemStatus.AcceptedForFlight)
-          this.offloaded = res.filter((x:any)=> x.packageItemStatus == PackageItemStatus.Offloaded)
-          this.uld_unpacked = res.filter((x:any)=> x.packageItemStatus == PackageItemStatus.InDestinationWarehouse)
-          this.delivered = res.filter((x:any)=> x.packageItemStatus == PackageItemStatus.Delivered)
+          this.uld_packed = res.filter((x:PackageModel)=> x.packageItemStatus == PackageItemStatus.AcceptedForFlight)
+          this.offloaded = res.filter((x:PackageModel)=> x.packageItemStatus == PackageItemStatus.Offloaded)
+          this.uld_unpacked = res.filter((x:PackageModel)=> x.packageItemStatus == PackageItemStatus.InDestinationWarehouse)
+          this.delivered = res.filter((x:PackageModel)=> x.packageItemStatus == PackageItemStatus.Delivered)
         }
       );
     }
