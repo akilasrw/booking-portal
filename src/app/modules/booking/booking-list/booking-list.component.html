@@ -76,11 +76,11 @@
                   'accepted':booking?.bookingStatus == bookingStatus.Cargo_Received,
                   'loading':booking?.bookingStatus == bookingStatus.Off_Loaded,
                   'cancelled':booking?.bookingStatus == bookingStatus.Cancelled
-              }">{{getBookingStatus(booking?.bookingStatus)}}</span></td>
+              }">{{getBookingStatus(booking.bookingStatus)}}</span></td>
                 <td style="text-align: center">{{booking.numberOfBoxes}}</td>
                 <td style="text-align: center">{{booking.totalWeight}}</td>
                 <td style="text-align: center">
-                  <i class="ca ca-icn-view" (click)="show(booking.id)" title="View"></i>
+                  <i class="ca ca-icn-view" (click)="show(booking)" title="View"></i>
                   <i class="ca ca-icn-edit" (click)="showTrackBooking(booking.awbNumber)" title="Edit" ></i>
                   <i class="ca ca-icn-bin" title="Delete" style="cursor: not-allowed"></i>
                 </td>
@@ -115,7 +115,7 @@
                         class="ca ca-icn-close"></span></button>
             </div>
             <div class="modal-body">
-                <app-booking-view-detail [cargoBookingId]="cargoBookingId" *ngIf="modalVisible"></app-booking-view-detail>
+                <app-booking-view-detail [cargoBooking]="cargoBooking" *ngIf="modalVisible"></app-booking-view-detail>
             </div>
         </div>
     </div>

@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 import { PackageItem } from 'src/app/_models/view-models/package-item.model';
 import { CargoAgentQuery } from 'src/app/_models/queries/cargo-agent/cargo-agent-query.model';
 import { CargoAgent } from 'src/app/_models/view-models/cargo-agent/cargo-agent.model';
+import {CargoBooking} from "../../../_models/view-models/cargo-booking/cargo-booking.model";
 
 @Component({
   selector: 'app-booking-view-detail',
@@ -22,7 +23,7 @@ import { CargoAgent } from 'src/app/_models/view-models/cargo-agent/cargo-agent.
 })
 export class BookingViewDetailComponent implements OnInit {
 
-  @Input() cargoBookingId?: string;
+  @Input() cargoBooking?: CargoBooking;
   cargoBookingDetail?: CargoBookingDetail
   modalVisible = false;
   modalVisibleAnimate = false;
@@ -64,11 +65,11 @@ export class BookingViewDetailComponent implements OnInit {
   }
 
   getBookingDetail() {
-    if (this.cargoBookingId != null) {
+    if (this.cargoBooking?.id != null) {
 
 
 
-      this.bookingSerice.getPackageAuditStatus(this.cargoBookingId).subscribe(
+      this.bookingSerice.getPackageAuditStatus(this.cargoBooking.id).subscribe(
         (res:any) => {
           console.log(res)
           this.cargoBookingDetail= res
@@ -127,7 +128,7 @@ export class BookingViewDetailComponent implements OnInit {
 
   submitAWBDetail(awb: AWBCreateRM) {
     awb.userId = this.currentUser?.id != null ? this.currentUser?.id : "";
-    awb.cargoBookingId = this.cargoBookingId;
+    awb.cargoBookingId = this.cargoBooking?.id;
     this.awbModel = awb;
     if (this.awbModel != null && this.awbModel?.isEditAWB) {
       this.awbService.update(this.awbModel).subscribe({

@@ -1,4 +1,20 @@
-<div style="display: grid; grid-template-columns: auto auto; align-items: start;">
+<div style="margin-left: 20px;">
+  <span style="font-family: 'Poppins'; font-style: normal; font-weight: 500; font-size: 18px; line-height: 27px; color: #464646;">Booking Details</span>
+  <div class="text-box-two">
+    <span class="text-item">AWB Number</span>
+    <span class="text-item" style="margin-right: 30px;">{{cargoBooking?.awbNumber || ''}}</span>
+  </div>
+  <div class="text-box-two">
+    <span class="text-item">Booking Date</span>
+    <span class="text-item" style="margin-right: 30px;">{{cargoBooking?.bookingDate || ''}}</span>
+  </div>
+  <div class="text-box-two">
+    <span class="text-item">Destination</span>
+    <span class="text-item" style="margin-right: 30px;">{{cargoBooking?.destinationAirportCode || ''}}</span>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: auto auto; align-items: start; margin-top: 30px">
   <div style="margin-left: 20px;">
     <span style="font-family: 'Poppins'; font-style: normal; font-weight: 500; font-size: 18px; line-height: 27px; color: #464646;">View</span>
     <div class="text-box">

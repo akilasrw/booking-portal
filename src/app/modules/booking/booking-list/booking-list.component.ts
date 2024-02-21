@@ -27,7 +27,7 @@ export class BookingListComponent implements OnInit {
   fromDate?: Date;
   toDate?: Date;
   cargoBookingList: CargoBooking[] = []
-  cargoBookingId?: string;
+  cargoBooking?: CargoBooking;
   bookingStatus = BookingStatus;
   currentUser?: User | null;
   subscription?: Subscription;
@@ -79,8 +79,8 @@ export class BookingListComponent implements OnInit {
 
   }
 
-  show(id: any) {
-    this.cargoBookingId = id;
+  show(booking:CargoBooking) {
+    this.cargoBooking = booking;
     this.modalVisible = true;
     setTimeout(() => (this.modalVisibleAnimate = true));
   }
@@ -98,7 +98,7 @@ export class BookingListComponent implements OnInit {
     this.router.navigate(['booking/search']);
   }
 
-  getBookingStatus(status: number): string {
+  getBookingStatus(status: BookingStatus): string {
     return CoreExtensions.GetBookingStatus(status)
   }
 
