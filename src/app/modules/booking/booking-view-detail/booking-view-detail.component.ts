@@ -184,4 +184,6 @@ export class BookingViewDetailComponent implements OnInit {
       this.cargoAgent = res;
     });
   }
+
+  public readonly BookingStatus = BookingStatus;
 }

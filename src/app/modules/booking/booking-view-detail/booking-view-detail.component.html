@@ -51,49 +51,64 @@
   <div style="margin-left: 20px">
     <span style="font-family: 'Poppins'; font-style: normal; font-weight: 500; font-size: 18px; line-height: 27px; color: #464646;">Discrepancy</span>
 
-    <div class="text-box-two" style="margin-top: 72px">
+    <div class="text-box-two" style="margin-top: 72px" *ngIf="!!wh_rec?.length">
 
 
       <span class="text-item">{{((pickedUpBoxes?.length || 0) - (wh_rec?.length || 0))}}</span>
       <i class="ca ca-icn-view" style="cursor: pointer"  title="View" (click)="setOpenList('wh')" ></i>
     </div>
+    <div style="margin-top: 84px" *ngIf="!wh_rec?.length">
+      <span class="text-item">N/A</span>
+    </div>
     <div  style="height: 300px; overflow-y: scroll" *ngIf="openList =='wh'">
       <p style="height: 20px" *ngFor="let x of dWh_rec">{{x.packageItem.packageRefNumber}}</p>
     </div>
-    <div class="text-box-two" style="margin-top: 20px">
+    <div class="text-box-two" style="margin-top: 20px" *ngIf="!!uld_packed?.length">
 
 
       <span class="text-item">{{((pickedUpBoxes?.length || 0) - (uld_packed?.length || 0))}}</span>
       <i class="ca ca-icn-view" style="cursor: pointer"    title="View" (click)="setOpenList('uldp')"></i>
     </div>
+    <div style="margin-top: 30px" *ngIf="!uld_packed?.length">
+      <span class="text-item">N/A</span>
+    </div>
     <div  style="height: 300px; overflow-y: scroll" *ngIf="openList == 'uldp'">
       <p style="height: 20px" *ngFor="let x of dUld_packed">{{x.packageItem.packageRefNumber}}</p>
     </div>
-    <div class="text-box-two" style="margin-top: 20px">
+    <div class="text-box-two" style="margin-top: 20px" *ngIf="!!offloaded?.length">
 
 
       <span class="text-item">{{((pickedUpBoxes?.length || 0) - (offloaded?.length || 0))}}</span>
       <i class="ca ca-icn-view" style="cursor: pointer"   title="View" (click)="setOpenList('ol')"></i>
 
     </div>
+    <div style="margin-top: 30px" *ngIf="!offloaded?.length">
+      <span class="text-item">N/A</span>
+    </div>
     <div  style="height: 300px; overflow-y: scroll" *ngIf="openList=='ol'">
       <p style="height: 20px" *ngFor="let x of dOffloaded">{{x.packageItem.packageRefNumber}}</p>
     </div>
 
-    <div class="text-box-two" style="margin-top: 20px">
+    <div class="text-box-two" style="margin-top: 20px" *ngIf="!!uld_unpacked?.length">
 
 
       <span class="text-item">{{((pickedUpBoxes?.length || 0) - (uld_unpacked?.length || 0))}}</span>
       <i class="ca ca-icn-view" style="cursor: pointer"    title="View" (click)="setOpenList('uldup')"></i>
     </div>
+    <div style="margin-top: 30px" *ngIf="!uld_unpacked?.length">
+      <span class="text-item">N/A</span>
+    </div>
     <div  style="height: 300px; overflow-y: scroll" *ngIf="openList == 'uldup'">
       <p style="height: 20px" *ngFor="let x of dUld_unpacked">{{x.packageItem.packageRefNumber}}</p>
     </div>
-    <div class="text-box-two" style="margin-top: 20px">
+    <div class="text-box-two" style="margin-top: 20px" *ngIf="!!delivered?.length">
 
 
       <span class="text-item">{{((pickedUpBoxes?.length || 0) - (delivered?.length || 0))}}</span>
       <i class="ca ca-icn-view" style="cursor: pointer"   title="View" (click)="setOpenList('d')"></i>
+    </div>
+    <div style="margin-top: 30px" *ngIf="!delivered?.length">
+      <span class="text-item">N/A</span>
     </div>
     <div  style="height: 300px; overflow-y: scroll" *ngIf="openList == 'd'">
       <p style="height: 20px" *ngFor="let x of dDelivered">{{x.packageItem.packageRefNumber}}</p>
