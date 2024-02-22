@@ -13,6 +13,7 @@ export interface CargoBooking{
   numberOfBoxes:number;
   totalWeight:number;
   bookingStatus: BookingStatus;
+  shipmentCount:number;
 }
 
 
