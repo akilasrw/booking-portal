@@ -7,21 +7,21 @@
     </div>
   </div>
   <div class="card-body without-footer">
-    <div class="row  second-box-tracking d-flex justify-content-between align-items-center" style="margin-left: 5px; margin-right: 5px">
+    <div class="row  second-box-tracking d-flex justify-content-between align-items-center" style="margin-left: 3px; margin-right: 3px">
       <div class="col-6">
       <form [formGroup]='searchForm' (ngSubmit)="getBookingDetail()">
         <div class="d-flex align-items-center ">
-          <div class="form-group col-8" *ngIf="isAWBChecked">
+          <div class="form-group col-3" *ngIf="isAWBChecked">
 
             <label class="form-label">Package ID</label>
-            <input [formControl]='searchForm.controls["referenceNumber"]' type="text" class="form-control">
+            <input [formControl]='searchForm.controls["referenceNumber"]' type="text" class="form-control" style="height: 30px" >
           </div>
-          <div class="form-group col-8" *ngIf="!isAWBChecked">
+          <div class="form-group col-3" *ngIf="!isAWBChecked">
             <label class="form-label">AWB Number</label>
-            <input [formControl]='searchForm.controls["referenceNumber"]' [(ngModel)]="awbnumber" type="text" class="form-control">
+            <input [formControl]='searchForm.controls["referenceNumber"]' [(ngModel)]="awbnumber" type="text" class="form-control" style="height: 30px">
           </div>
-          <div class=" col-4">
-            <button type="submit" class="btn btn-primary-outline ms-5 mb-2">Find</button>
+          <div class=" col-3">
+            <button type="submit" class="btn btn-primary-outline ms-2 mb-1" style="height: 30px">Find</button>
           </div>
         </div>
         <div class="row awb_checked">
