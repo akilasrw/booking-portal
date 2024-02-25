@@ -31,17 +31,16 @@ export class BookingViewDetailComponent implements OnInit {
   subscription?: Subscription;
   currentUser?: User | null
   cargoAgent?:CargoAgent;
-  pickedUpBoxes?:PackageModel[] = [];
-  wh_rec?:PackageModel[] = [];
-  dWh_rec?:PackageModel[] = [];
-  uld_packed?:PackageModel[] = [];
-  offloaded?:PackageModel[] = [];
-  uld_unpacked?:PackageModel[] = [];
-  delivered?:PackageModel[] = [];
-  dUld_packed?:PackageModel[] = [];
-  dOffloaded?:PackageModel[] = [];
-  dUld_unpacked?:PackageModel[] = [];
-  dDelivered?:PackageModel[] = [];
+  pickedUpBoxes:PackageModel[] = [];
+  wh_rec:PackageModel[] = [];
+  dWh_rec:PackageModel[] = [];
+  uld_packed:PackageModel[] = [];
+  offloaded:PackageModel[] = [];
+  uld_unpacked:PackageModel[] = [];
+  delivered:PackageModel[] = [];
+  dUld_packed:PackageModel[] = [];
+  dUld_unpacked:PackageModel[] = [];
+  dDelivered:PackageModel[] = [];
   openList?:string | null = null
 
 
@@ -75,15 +74,15 @@ export class BookingViewDetailComponent implements OnInit {
           this.cargoBookingDetail= res
           this.pickedUpBoxes = res.filter((x:any)=> x.packageItemStatus == PackageItemStatus.Booking_Made)
           this.wh_rec = res.filter((x:any)=> x.packageItemStatus == PackageItemStatus.Cargo_Received)
-          this.dWh_rec = (this?.pickedUpBoxes || []).filter((x)=>  !(this.wh_rec || []).includes(x))
-          this.dUld_packed = (this?.pickedUpBoxes || []).filter((x)=>  !(this.uld_packed || []).includes(x))
-          this.dUld_unpacked = (this?.pickedUpBoxes || []).filter((x)=>  !(this.uld_unpacked || []).includes(x))
-          this.dOffloaded = (this?.pickedUpBoxes || []).filter((x)=>  !(this.offloaded || []).includes(x))
-          this.dDelivered = (this?.pickedUpBoxes || []).filter((x)=>  !(this.delivered || []).includes(x))
           this.uld_packed = res.filter((x:PackageModel)=> x.packageItemStatus == PackageItemStatus.AcceptedForFlight)
           this.offloaded = res.filter((x:PackageModel)=> x.packageItemStatus == PackageItemStatus.Offloaded)
           this.uld_unpacked = res.filter((x:PackageModel)=> x.packageItemStatus == PackageItemStatus.InDestinationWarehouse)
           this.delivered = res.filter((x:PackageModel)=> x.packageItemStatus == PackageItemStatus.Delivered)
+          this.dWh_rec = this.wh_rec.length >0 ? this.pickedUpBoxes.filter((x)=>  this.wh_rec.filter((y)=> y.packageID == x.packageID).length==0):[]
+          this.dUld_packed = this.uld_packed.length >0 ? this.pickedUpBoxes.filter((x)=>  this.uld_packed.filter((y)=> y.packageID == x.packageID).length==0):[]
+          this.dUld_unpacked =this.uld_unpacked.length>0? this.pickedUpBoxes.filter((x)=>  this.uld_unpacked.filter((y)=> y.packageID == x.packageID).length==0):[]
+          this.dDelivered = this.delivered.length>0 ? (this?.pickedUpBoxes || []).filter((x)=>  this.delivered.filter((y)=> y.packageID == x.packageID).length==0):[]
+
         }
       );
     }
