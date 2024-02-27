@@ -1,16 +1,24 @@
 <div style="margin-left: 20px;">
   <span style="font-family: 'Poppins'; font-style: normal; font-weight: 500; font-size: 18px; line-height: 27px; color: #464646;">Booking Details</span>
-  <div class="text-box-two">
+  <div class="text-box-three">
     <span class="text-item">AWB Number</span>
     <span class="text-item" style="margin-right: 30px;">{{cargoBooking?.awbNumber || ''}}</span>
   </div>
-  <div class="text-box-two">
+  <div class="text-box-three">
     <span class="text-item">Booking Date</span>
     <span class="text-item" style="margin-right: 30px;">{{cargoBooking?.bookingDate | date:'yyyy-MM-dd' }}</span>
   </div>
-  <div class="text-box-two">
+  <div class="text-box-three">
     <span class="text-item">Destination</span>
     <span class="text-item" style="margin-right: 30px;">{{cargoBooking?.destinationAirportCode || ''}}</span>
+  </div>
+  <div class="text-box-three">
+    <span class="text-item">Flight Number</span>
+    <span class="text-item" style="margin-right: 30px;">{{cargoBooking?.flightNumber || ''}}</span>
+  </div>
+  <div class="text-box-three">
+    <span class="text-item">Departure Time</span>
+    <span class="text-item" style="margin-right: 30px;">{{cargoBooking?.flightDate | date:'short' || ''}}</span>
   </div>
 </div>
 
