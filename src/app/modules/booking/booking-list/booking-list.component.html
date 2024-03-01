@@ -68,12 +68,12 @@
                 <td style="width: auto; text-align: center"><span class="status-chip" [ngClass]="{
                   'none':booking?.bookingStatus == bookingStatus.None,
                   'pending': booking?.bookingStatus == bookingStatus.Booking_Made,
-                  'awb_added': booking?.bookingStatus == bookingStatus.AWB_Added,
-                  'dispatch':booking?.bookingStatus == bookingStatus.Flight_Dispatched,
-                  'invoiced':booking?.bookingStatus == bookingStatus.Flight_Arrived,
+                  'awb_added': booking?.bookingStatus == bookingStatus.InDestinationWarehouse,
+                  'dispatch':booking?.bookingStatus == bookingStatus.FlightDispatched,
+                  'invoiced':booking?.bookingStatus == bookingStatus.Arrived,
                   'accepted':booking?.bookingStatus == bookingStatus.Cargo_Received,
-                  'loading':booking?.bookingStatus == bookingStatus.Off_Loaded,
-                  'cancelled':booking?.bookingStatus == bookingStatus.Cancelled
+                  'loading':booking?.bookingStatus == bookingStatus.Delivered,
+                  'cancelled':booking?.bookingStatus == bookingStatus.Returned
               }">{{getBookingStatus(booking.bookingStatus)}}</span></td>
                 <td style="text-align: center">{{booking.numberOfBoxes}}</td>
                 <td style="text-align: center">{{booking.shipmentCount}}</td>

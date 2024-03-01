@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { CargoBookingFilterQuery } from 'src/app/_models/queries/cargo-booking/cargo-booking-filter-query.model';
 import { BookingService } from 'src/app/_services/booking.service';
 import { Router } from '@angular/router';
-import { BookingStatus } from 'src/app/core/enums/common-enums';
+import {BookingStatus, PackageItemStatus} from 'src/app/core/enums/common-enums';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 import { User } from 'src/app/_models/user.model';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -28,7 +28,7 @@ export class BookingListComponent implements OnInit {
   toDate?: Date;
   cargoBookingList: CargoBooking[] = []
   cargoBooking?: CargoBooking;
-  bookingStatus = BookingStatus;
+  bookingStatus = PackageItemStatus;
   currentUser?: User | null;
   subscription?: Subscription;
   isLoading :boolean= false;
@@ -98,8 +98,8 @@ export class BookingListComponent implements OnInit {
     this.router.navigate(['booking/search']);
   }
 
-  getBookingStatus(status: BookingStatus): string {
-    return CoreExtensions.GetBookingStatus(status)
+  getBookingStatus(status: PackageItemStatus): string {
+    return CoreExtensions.GetPackageStatus(status)
   }
 
   clearFilter() {

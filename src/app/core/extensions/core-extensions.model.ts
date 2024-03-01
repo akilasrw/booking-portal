@@ -88,6 +88,33 @@ export class CoreExtensions {
       case PackageItemStatus.Pending:
         statusString = "Pending";
         break;
+      case PackageItemStatus.Booking_Made:
+        statusString = "Booked with AWB";
+        break;
+      case PackageItemStatus.Cargo_Received:
+        statusString = "Received";
+        break;
+      case PackageItemStatus.InDestinationWarehouse:
+        statusString = "In destination Warehouse";
+        break;
+      case PackageItemStatus.FlightDispatched:
+        statusString = "Dispatched";
+        break;
+      case PackageItemStatus.Returned:
+        statusString = "Returned";
+        break;
+      case PackageItemStatus.Arrived:
+        statusString = "Arrived";
+        break;
+      case PackageItemStatus.Offloaded:
+        statusString = "Off Loaded";
+        break;
+      case PackageItemStatus.AcceptedForFlight:
+        statusString = "Accepted for Flight";
+        break;
+      case PackageItemStatus.Delivered | PackageItemStatus.TruckForDelivery:
+        statusString = "Delivered to Agent";
+        break;
       default:
         break;
     }
