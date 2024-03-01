@@ -18,7 +18,7 @@ export class SideNavComponent implements OnInit,OnDestroy {
   agentName: string = ''
   userName: string = ''
   agreement: string = ''
-  email: string = '' 
+  email: string = ''
   phoneNumber: number = 0
   agentForm: FormGroup | undefined;
   selectedMenu = MenuType.None
@@ -78,17 +78,17 @@ export class SideNavComponent implements OnInit,OnDestroy {
   onSubmit() {
     // Create a new FormData object
     const formData = new FormData();
-  
+
     // Append form control values to the FormData object if they exist
 
     if (this?.agentForm?.get('agentName')?.value != null) {
       formData.append('agentName', this.agentForm.get('agentName')!.value);
     }
-  
+
     if (this?.agentForm?.get('userName')?.value != null) {
       formData.append('userName', this.agentForm.get('userName')!.value);
     }
-  
+
     if (this?.agentForm?.get('phoneNumber')?.value != null) {
       formData.append('PrimaryTelephoneNumber', this.agentForm.get('phoneNumber')!.value);
     }
@@ -98,16 +98,16 @@ export class SideNavComponent implements OnInit,OnDestroy {
     }
 
     this.accountService.updateUser(formData).subscribe((x)=> window.location.reload())
-  
-   
-    
-   
+
+
+
+
   }
 
   openEditModal() {
 
     this.isEditModalVisible = true;
-  
+
     setTimeout(() => (this.isEditModalAnimateVisible = true));
   }
 
@@ -183,6 +183,8 @@ closeProfileModel(){
         break;
     }
   }
+
+  public readonly window = window;
 
   getSelectedMenuType(url: string): number {
     let selectedType = MenuType.None

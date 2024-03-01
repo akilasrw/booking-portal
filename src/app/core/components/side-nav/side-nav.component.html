@@ -17,14 +17,14 @@
                     </div>
                 </li>
                 <li>
-                    <div class="menu-item" (click)="menuClickEvent(2)" [ngClass]="{'selected': selectedMenu == 2}">
+                    <div class="menu-item" (click)="menuClickEvent(2)" [ngClass]="{'selected': selectedMenu == 2 && window.location.pathname.startsWith('/booking') && !window.location.pathname.startsWith('/booking-lookup')}">
                         <!-- <div class="icon"></div> -->
                         <span class="menu-icn ca ca-icn-booking tool-tip"><span class="tooltiptext">Manage Booking</span></span>
                         <span class="menu-title">Manage Booking</span>
                     </div>
                 </li>
                 <li>
-                    <div class="menu-item" (click)="menuClickEvent(3)" [ngClass]="{'selected': selectedMenu == 3}">
+                    <div class="menu-item" (click)="menuClickEvent(3)" [ngClass]="{'selected': selectedMenu == 3 || window.location.pathname.startsWith('/booking-lookup')}">
                         <!-- <div class="icon"></div> -->
                         <span class="menu-icn ca ca-icn-flight-schedule tool-tip"><span class="tooltiptext">Track Booking</span></span>
                         <span class="menu-title">Track Booking</span>
