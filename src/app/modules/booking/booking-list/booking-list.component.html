@@ -2,30 +2,30 @@
     <div class="card-header px-0 pt-0">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h1>Booking</h1>
+                <h1>Manage Booking</h1>
             </div>
             <div><button class="btn btn-primary" disabled (click)="goToCreateBooking()">Add New Booking</button></div>
         </div>
     </div>
     <div class="card-body without-footer">
-        <div class="d-flex justify-content-between align-items-center">
-          <div class="filter-wrapper">
-            <div class="filter-group">
-              <label class="form-label">Booking ID</label>
+        <div class="row">
+          <div class="filter-wrapper second-box-tracking">
+            <div class="col-2 filter-group">
+              <label class="form-label">AWB No.</label>
               <input [(ngModel)]="bookingId" type="text" class="form-control"
                      (change)="onChangeFilterFrm($event)">
             </div>
-            <div class="filter-group">
+            <div class="col-2 filter-group">
               <label class="form-label">Destination</label>
               <input [(ngModel)]="destination" type="text" class="form-control"
                      (change)="onChangeFilterFrm($event)">
             </div>
-            <div class="filter-group">
+            <div class="col-2 filter-group">
               <label class="form-label">From Date</label>
               <input type="text" [(ngModel)]="fromDate" class="form-control" bsDatepicker
                      (click)="onChangeFilterFrm($event)">
             </div>
-            <div class="filter-group">
+            <div class=" col-3 filter-group">
               <label class="form-label">To Date</label>
               <input type="text" [(ngModel)]="toDate" class="form-control" bsDatepicker
                      (click)="onChangeFilterFrm($event)">
@@ -48,40 +48,38 @@
         <div *ngIf="!isLoading"  class="table-content">
           <table class="table table-responsive">
             <thead>
-            <th style="text-align: center">Booking ID</th>
             <th style="text-align: center">AWB Number</th>
             <th style="text-align: center">Booking Date</th>
             <th style="text-align: center">Destination</th>
             <th style="text-align: center">Flight Number</th>
             <th style="text-align: center">Flight Date</th>
             <th style="text-align: center">Status</th>
-            <th style="text-align: center">Packages</th>
-            <th style="text-align: center">Total Weight (kg)</th>
+            <th style="text-align: center">No. Boxes</th>
+            <th style="text-align: center">Shipped</th>
             <th style="text-align: center">Actions </th>
             </thead>
             <tbody>
               <tr *ngFor="let booking of this.cargoBookingList">
-                <td style="text-align: center">{{booking.bookingNumber}}</td>
                 <td style="text-align: center">{{booking.awbNumber}}</td>
                 <td style="text-align: center">{{booking.bookingDate | date}}</td>
                 <td style="text-align: center">{{booking.destinationAirportCode}}</td>
                 <td style="text-align: center">{{booking.flightNumber}}</td>
                 <td style="text-align: center">{{booking.flightDate | date}}</td>
-                <td style="width: 150px; text-align: center"><span class="status-chip" [ngClass]="{
+                <td style="width: auto; text-align: center"><span class="status-chip" [ngClass]="{
                   'none':booking?.bookingStatus == bookingStatus.None,
                   'pending': booking?.bookingStatus == bookingStatus.Booking_Made,
-                  'awb_added': booking?.bookingStatus == bookingStatus.AWB_Added,
-                  'dispatch':booking?.bookingStatus == bookingStatus.Flight_Dispatched,
-                  'invoiced':booking?.bookingStatus == bookingStatus.Flight_Arrived,
+                  'awb_added': booking?.bookingStatus == bookingStatus.InDestinationWarehouse,
+                  'dispatch':booking?.bookingStatus == bookingStatus.FlightDispatched,
+                  'invoiced':booking?.bookingStatus == bookingStatus.Arrived,
                   'accepted':booking?.bookingStatus == bookingStatus.Cargo_Received,
-                  'loading':booking?.bookingStatus == bookingStatus.Off_Loaded,
-                  'cancelled':booking?.bookingStatus == bookingStatus.Cancelled
-              }">{{getBookingStatus(booking?.bookingStatus)}}</span></td>
+                  'loading':booking?.bookingStatus == bookingStatus.Delivered,
+                  'cancelled':booking?.bookingStatus == bookingStatus.Returned
+              }">{{getBookingStatus(booking.bookingStatus)}}</span></td>
                 <td style="text-align: center">{{booking.numberOfBoxes}}</td>
-                <td style="text-align: center">{{booking.totalWeight}}</td>
+                <td style="text-align: center">{{booking.shipmentCount}}</td>
                 <td style="text-align: center">
-                  <i class="ca ca-icn-view" (click)="show(booking.id)" title="View"></i>
-                  <i class="ca ca-icn-edit" (click)="showTrackBooking(booking.awbNumber)" title="Edit" ></i>
+                  <i class="ca ca-icn-view" (click)="show(booking)" title="View"></i>
+                  <i class="ca ca-icn-logout" (click)="showTrackBooking(booking.awbNumber)" title="Edit" ></i>
                   <i class="ca ca-icn-bin" title="Delete" style="cursor: not-allowed"></i>
                 </td>
               </tr>
@@ -115,7 +113,7 @@
                         class="ca ca-icn-close"></span></button>
             </div>
             <div class="modal-body">
-                <app-booking-view-detail [cargoBookingId]="cargoBookingId" *ngIf="modalVisible"></app-booking-view-detail>
+                <app-booking-view-detail [cargoBooking]="cargoBooking" *ngIf="modalVisible"></app-booking-view-detail>
             </div>
         </div>
     </div>

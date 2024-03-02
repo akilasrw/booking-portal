@@ -7,12 +7,14 @@ import { BookingService } from 'src/app/_services/booking.service';
 import { CoreExtensions } from 'src/app/core/extensions/core-extensions.model';
 import { AWBStatus, BookingStatus, PackageItemStatus } from 'src/app/core/enums/common-enums';
 import { AWBCreateRM } from 'src/app/_models/request-models/awb/awb-create-rm.model';
+import {PackageModel} from "../../../_models/view-models/package-container/package-model";
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/_models/user.model';
 import { ToastrService } from 'ngx-toastr';
 import { PackageItem } from 'src/app/_models/view-models/package-item.model';
 import { CargoAgentQuery } from 'src/app/_models/queries/cargo-agent/cargo-agent-query.model';
 import { CargoAgent } from 'src/app/_models/view-models/cargo-agent/cargo-agent.model';
+import {CargoBooking} from "../../../_models/view-models/cargo-booking/cargo-booking.model";
 
 @Component({
   selector: 'app-booking-view-detail',
@@ -21,7 +23,7 @@ import { CargoAgent } from 'src/app/_models/view-models/cargo-agent/cargo-agent.
 })
 export class BookingViewDetailComponent implements OnInit {
 
-  @Input() cargoBookingId?: string;
+  @Input() cargoBooking?: CargoBooking;
   cargoBookingDetail?: CargoBookingDetail
   modalVisible = false;
   modalVisibleAnimate = false;
@@ -29,6 +31,17 @@ export class BookingViewDetailComponent implements OnInit {
   subscription?: Subscription;
   currentUser?: User | null
   cargoAgent?:CargoAgent;
+  pickedUpBoxes:PackageModel[] = [];
+  wh_rec:PackageModel[] = [];
+  dWh_rec:PackageModel[] = [];
+  uld_packed:PackageModel[] = [];
+  offloaded:PackageModel[] = [];
+  uld_unpacked:PackageModel[] = [];
+  delivered:PackageModel[] = [];
+  dUld_packed:PackageModel[] = [];
+  dUld_unpacked:PackageModel[] = [];
+  dDelivered:PackageModel[] = [];
+  openList?:string | null = null
 
 
 
@@ -42,20 +55,37 @@ export class BookingViewDetailComponent implements OnInit {
     this.getBookingDetail();
   }
 
+  setOpenList(x:string){
+    if(x == this.openList){
+      this.openList = null
+    }else{
+      this.openList = x
+    }
+  }
 
   getBookingDetail() {
-    if (this.cargoBookingId != null) {
-      var query = new CargoBookingDetailQuery;
+    if (this.cargoBooking?.id != null) {
 
-      query.id = this.cargoBookingId;
-      query.isIncludeFlightDetail = true;
-      query.isIncludePackageDetail = true;
-      query.isIncludeAWBDetail=true;
-      query.userId = this.currentUser?.id;
 
-      this.bookingSerice.getBookingDetail(query).subscribe(
-        res => {
-          this.cargoBookingDetail = res;
+
+      this.bookingSerice.getPackageAuditStatus(this.cargoBooking.id).subscribe(
+        (res:any) => {
+          console.log(res)
+          this.cargoBookingDetail= res
+          this.pickedUpBoxes = res.filter((x:any)=> x.packageItemStatus == PackageItemStatus.Booking_Made)
+          this.wh_rec = res.filter((x:any)=> x.packageItemStatus == PackageItemStatus.Cargo_Received)
+          this.uld_packed = res.filter((x:PackageModel)=> x.packageItemStatus == PackageItemStatus.AcceptedForFlight)
+          this.offloaded = res.filter((x:PackageModel)=> x.packageItemStatus == PackageItemStatus.Offloaded)
+          this.uld_unpacked = res.filter((x:PackageModel)=> x.packageItemStatus == PackageItemStatus.InDestinationWarehouse)
+          this.delivered = res.filter((x:PackageModel)=> x.packageItemStatus == PackageItemStatus.Delivered)
+          this.dWh_rec = this.wh_rec.length >0 ? this.pickedUpBoxes.filter((x)=>  this.wh_rec.filter((y)=> y.packageID == x.packageID).length==0):[]
+          this.dUld_packed = this.uld_packed.length >0 ? this.wh_rec.filter((x)=>  this.uld_packed.filter((y)=> y.packageID == x.packageID).length==0):[]
+          this.dUld_unpacked =this.uld_unpacked.length>0? this.uld_packed.filter((x)=>  this.uld_unpacked.filter((y)=> y.packageID == x.packageID).length==0):[]
+          this.dDelivered = this.delivered.length>0 ? this.uld_unpacked.filter((x)=>  this.delivered.filter((y)=> y.packageID == x.packageID).length==0):[]
+
+
+
+
         }
       );
     }
@@ -100,7 +130,7 @@ export class BookingViewDetailComponent implements OnInit {
 
   submitAWBDetail(awb: AWBCreateRM) {
     awb.userId = this.currentUser?.id != null ? this.currentUser?.id : "";
-    awb.cargoBookingId = this.cargoBookingId;
+    awb.cargoBookingId = this.cargoBooking?.id;
     this.awbModel = awb;
     if (this.awbModel != null && this.awbModel?.isEditAWB) {
       this.awbService.update(this.awbModel).subscribe({
@@ -147,7 +177,7 @@ export class BookingViewDetailComponent implements OnInit {
       }
     });
   }
-  
+
   getCargoAgentDetails(userId:string){
     var query = new CargoAgentQuery();
     query.appUserId = userId;
@@ -156,4 +186,6 @@ export class BookingViewDetailComponent implements OnInit {
       this.cargoAgent = res;
     });
   }
+
+  public readonly BookingStatus = BookingStatus;
 }

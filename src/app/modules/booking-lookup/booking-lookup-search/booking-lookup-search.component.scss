@@ -1,5 +1,4 @@
 
-
   .timeline {
     padding: 3rem 2rem;
 
@@ -55,7 +54,7 @@
     border-left: 3px solid transparent;
   }
   .tl-content{
-    height: 60px;
+    height: 50px;
   }
 
   .tl-header {
@@ -79,13 +78,13 @@
     display:block;
     position: absolute;
 
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
     border-radius: 50% / 50%;
 
     background: gainsboro;
 
-    left: -1.1rem;
+    left: -0.9rem;
     top: 50%;
 
     transform: translate(50%,-50%);
@@ -94,10 +93,10 @@
   .tl-content-active .tl-marker {
     padding: 1.6px;
 
-    left: -1.25rem;
+    left: -1rem;
 
-    width: 18px;
-    height: 18px;
+    width: 14px;
+    height: 14px;
 
     border: 2px solid #338ce5;
 
