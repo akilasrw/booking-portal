@@ -72,6 +72,7 @@
                   'dispatch':booking?.bookingStatus == bookingStatus.FlightDispatched,
                   'invoiced':booking?.bookingStatus == bookingStatus.Arrived,
                   'accepted':booking?.bookingStatus == bookingStatus.Cargo_Received,
+                  'loading':booking?.bookingStatus == bookingStatus.TruckForDelivery,
                   'loading':booking?.bookingStatus == bookingStatus.Delivered,
                   'cancelled':booking?.bookingStatus == bookingStatus.Returned
               }">{{getBookingStatus(booking.bookingStatus)}}</span></td>
