@@ -112,7 +112,10 @@ export class CoreExtensions {
       case PackageItemStatus.AcceptedForFlight:
         statusString = "Accepted for Flight";
         break;
-      case PackageItemStatus.Delivered | PackageItemStatus.TruckForDelivery:
+      case PackageItemStatus.TruckForDelivery:
+        statusString = "Delivered to Agent";
+        break;
+      case PackageItemStatus.Delivered:
         statusString = "Delivered to Agent";
         break;
       default:

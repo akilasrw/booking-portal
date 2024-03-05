@@ -33,10 +33,12 @@ export class BookingService extends BaseService {
 
   getFilteredBookingList(query: CargoBookingFilterQuery){
     var params = new HttpParams();
+    // if (query.bookingId) {
+    //   params = params.append("bookingId", query.bookingId);
+    // }
     if (query.bookingId) {
-      params = params.append("bookingId", query.bookingId);
+      params = params.append("awbNumber", query.bookingId);
     }
-
     if (query.userId) {
       params = params.append("userId", query.userId);
     }
