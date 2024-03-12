@@ -49,41 +49,8 @@
   border-radius: 3.125rem;
   border: 0.063rem solid;
 }
-@mixin lable-color {
-  @include status-lable;
-  &.accepted { 
-    border-color: $green;
-    color: $green;
-  }
-  &.loading  {
-    border-color: $brand-primary;
-    color: $brand-primary;
-  }
-  &.dispatch {
-    border-color: $purple;
-    color: $purple;
-  }
-  &.awb_added {
-    border-color: $brand-primary;
-    color: $brand-primary;
-  }
-  &.exported  {
-    border-color: $orange;
-    color: $orange;
-  }
-  &.invoiced  {
-    border-color: $green;
-    color: $green;
-  }
-  &.pending  {
-    border-color: $brand-primary;
-    color: $brand-primary;
-  }
-  &.none  {
-    border-color: $gray;
-    color: $gray;
-  }
-}
+
+
 
 @mixin awb-lable-color {
   @include status-lable;
@@ -100,6 +67,66 @@
     color: $gray;
   }
 }
+
+@mixin lable-color {
+  @include status-lable;
+  &.accepted-for-flight { 
+    border-color: #32CD32; // AcceptedForFlight (Lime Green)
+    color: #32CD32;
+    border-width: 1px; // You can adjust this value as needed
+  }
+  &.offloaded  {
+    border-color: #1E90FF; // Offloaded (Dodger Blue)
+    color: #1E90FF;
+    border-width: 1px; // You can adjust this value as needed
+  }
+  &.flight-dispatched {
+    border-color: #BA55D3; // FlightDispatched (Medium Orchid)
+    color: #BA55D3;
+    border-width: 1px; // You can adjust this value as needed
+  }
+  &.in-destination-warehouse {
+    border-color: #FF8C00; // InDestinationWarehouse (Dark Orange)
+    color: #FF8C00;
+    border-width: 1px; // You can adjust this value as needed
+  }
+  &.arrived  {
+    border-color: #FFD700; // Arrived (Gold)
+    color: #FFD700;
+    border-width: 1px; // You can adjust this value as needed
+  }
+  &.cargo-received  {
+    border-color: #556B2F; // Cargo_Received (Olive Drab)
+    color: #556B2F;
+    border-width: 1px; // You can adjust this value as needed
+  }
+  &.pending  {
+    border-color: #4169E1; // Pending (Royal Blue)
+    color: #4169E1;
+    border-width: 1px; // You can adjust this value as needed
+  }
+  &.none  {
+    border-color: #696969; // None (Dim Gray)
+    color: #696969;
+    border-width: 1px; // You can adjust this value as needed
+  }
+  &.returned {
+    border-color: #DC143C; // Returned (Crimson)
+    color: #DC143C;
+    border-width: 1px; // You can adjust this value as needed
+  }
+  &.truck-for-delivery  {
+    border-color: #A0522D; // TruckForDelivery (Sienna)
+    color: #A0522D;
+    border-width: 1px; // You can adjust this value as needed
+  }
+  &.delivered  {
+    border-color: #228B22; // Delivered (Forest Green)
+    color: #228B22;
+    border-width: 1px; // You can adjust this value as needed
+  }
+}
+
 
 @mixin notification-icon {
   border-radius: 100%;

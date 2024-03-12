@@ -101,6 +101,10 @@ export class BookingLookupSearchComponent implements OnInit {
       this.bookingService.getBookingShipmentDetail(query).subscribe(
         {
           next: (res) => {
+            res.forEach((x)=>{
+              x.from = x.from.split(' ').map(word => word[0].toUpperCase()).join('');
+              x.to = x.to.split(' ').map(word => word[0].toUpperCase()).join('');
+            })
             this.cargoBookingShipmentList = res;
             if (null != this.cargoBookingShipmentList && this.cargoBookingShipmentList.length > 0) {
               if (this.cargoBookingShipmentList?.length > 1) {

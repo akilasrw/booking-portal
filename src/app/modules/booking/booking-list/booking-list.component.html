@@ -65,16 +65,18 @@
                 <td style="text-align: center">{{booking.destinationAirportCode}}</td>
                 <td style="text-align: center">{{booking.flightNumber}}</td>
                 <td style="text-align: center">{{booking.flightDate | date}}</td>
-                <td style="width: auto; text-align: center"><span class="status-chip" [ngClass]="{
-                  'none':booking?.bookingStatus == bookingStatus.None,
+                <td style="width: auto; text-align: center"> <span class="status-chip" [ngClass]="{
+                  'none': booking?.bookingStatus == bookingStatus.None,
                   'pending': booking?.bookingStatus == bookingStatus.Booking_Made,
                   'awb_added': booking?.bookingStatus == bookingStatus.InDestinationWarehouse,
-                  'dispatch':booking?.bookingStatus == bookingStatus.FlightDispatched,
-                  'invoiced':booking?.bookingStatus == bookingStatus.Arrived,
-                  'accepted':booking?.bookingStatus == bookingStatus.Cargo_Received,
-                  'loading':booking?.bookingStatus == bookingStatus.TruckForDelivery,
-                  'loading':booking?.bookingStatus == bookingStatus.Delivered,
-                  'cancelled':booking?.bookingStatus == bookingStatus.Returned
+                  'dispatch': booking?.bookingStatus == bookingStatus.FlightDispatched,
+                  'in-destination-warehouse': booking?.bookingStatus == bookingStatus.InDestinationWarehouse,
+                  'flight-dispatched': booking?.bookingStatus == bookingStatus.FlightDispatched,
+                  'arrived': booking?.bookingStatus == bookingStatus.Arrived,
+                  'cargo-received': booking?.bookingStatus == bookingStatus.Cargo_Received,
+                  'truck-for-delivery': booking?.bookingStatus == bookingStatus.TruckForDelivery,
+                  'delivered': booking?.bookingStatus == bookingStatus.Delivered,
+                  'returned': booking?.bookingStatus == bookingStatus.Returned
               }">{{getBookingStatus(booking.bookingStatus)}}</span></td>
                 <td style="text-align: center">{{booking.numberOfBoxes}}</td>
                 <td style="text-align: center">{{booking.shipmentCount}}</td>
