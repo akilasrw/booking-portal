@@ -102,8 +102,11 @@ export class BookingLookupSearchComponent implements OnInit {
         {
           next: (res) => {
             res.forEach((x)=>{
-              x.from = x.from.split(' ').map(word => word[0].toUpperCase()).join('');
-              x.to = x.to.split(' ').map(word => word[0].toUpperCase()).join('');
+              if(x.from && x.to){
+                x.from = x.from.split(' ').map(word => word[0].toUpperCase()).join('');
+                x.to = x.to.split(' ').map(word => word[0].toUpperCase()).join('');
+              }
+              
             })
             this.cargoBookingShipmentList = res;
             if (null != this.cargoBookingShipmentList && this.cargoBookingShipmentList.length > 0) {
