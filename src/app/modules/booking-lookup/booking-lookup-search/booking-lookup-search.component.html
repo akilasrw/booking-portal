@@ -10,22 +10,23 @@
     <div class="row  second-box-tracking d-flex justify-content-between align-items-center" style="margin-left: 3px; margin-right: 3px">
       <div class="col-12">
       <form [formGroup]='searchForm' (ngSubmit)="getBookingDetail()" style="display: flex; flex-direction: row; align-items: center;justify-content: space-between; width: fit-content">
-        <div class="d-flex align-items-center ">
-          <div class="form-group col-8" *ngIf="isAWBChecked">
-
-            <label class="form-label">Package ID</label>
-            <input [formControl]='searchForm.controls["referenceNumber"]' type="text" class="form-control" style="height: 30px" >
-          </div>
-          <div class="form-group col-8" *ngIf="!isAWBChecked">
+        <div class="d-flex align-items-center col-6 ">
+          <div class="form-group col-4">
             <label class="form-label">AWB Number</label>
-            <input [formControl]='searchForm.controls["referenceNumber"]' [(ngModel)]="awbnumber" type="text" class="form-control" style="height: 30px">
+            <input [formControl]='searchForm.controls["awb"]' [(ngModel)]="awbnumber" type="text" class="form-control" style="height: 30px">
           </div>
-          <div class=" col-3">
+          <div class="col-1"></div>
+
+          <div class="form-group col-4" *ngIf="isAWBChecked">
+            <label class="form-label">Package ID</label>
+            <input [formControl]='searchForm.controls["packageRef"]' [(ngModel)]="packageRefNo" type="text" class="form-control" style="height: 30px" >
+          </div>
+          <div class=" col-1">
             <button type="submit" class="btn btn-primary-outline ms-2 mb-1" style="height: 30px">Find</button>
           </div>
         </div>
         <div class="row awb_checked ms-auto">
-          <div class="col-md-11">
+          <div class="col-12">
             <div class="cu-check">
               <label class="cu-checkbox">Search With Package ID
                 <input type="checkbox" (change)="check()" value="isAWBChecked">
