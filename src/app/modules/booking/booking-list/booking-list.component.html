@@ -64,7 +64,7 @@
                 <td style="text-align: center">{{booking.bookingDate | date}}</td>
                 <td style="text-align: center">{{booking.destinationAirportCode}}</td>
                 <td style="text-align: center">{{booking.flightNumber}}</td>
-                <td style="text-align: center">{{booking.flightDate | date}}</td>
+                <td style="text-align: center">{{booking?.flightDate | date}}</td>
                 <td style="width: auto; text-align: center"> <span class="status-chip" [ngClass]="{
                   'none': booking?.bookingStatus == bookingStatus.None,
                   'pending': booking?.bookingStatus == bookingStatus.Booking_Made,

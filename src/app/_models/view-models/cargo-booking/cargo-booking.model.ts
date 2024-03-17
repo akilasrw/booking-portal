@@ -9,7 +9,7 @@ export interface CargoBooking{
   destinationAirportId: string;
   destinationAirportCode: string;
   flightNumber:string;
-  flightDate:Date;
+  flightDate:Date | null;
   numberOfBoxes:number;
   totalWeight:number;
   bookingStatus:PackageItemStatus;

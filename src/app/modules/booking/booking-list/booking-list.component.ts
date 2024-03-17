@@ -55,6 +55,11 @@ export class BookingListComponent implements OnInit {
     this.bookingService.getFilteredBookingList(this.bookingListfilterQuery).subscribe(
       {
         next: (res) => {
+          res.data.forEach((x)=>{
+            if(x.flightDate&&new Date(x.flightDate).getFullYear() == 1){
+              x.flightDate = null
+            }
+          })
           this.cargoBookingList = res.data;
           this.totalCount = res.count;
           this.isLoading=false;
