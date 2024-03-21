@@ -36,6 +36,7 @@ export class BookingLookupSearchComponent implements OnInit {
   isSplitBooking: boolean = false;
   packageItemShipment: number = 0;
   awbnumber: string = '';
+  packageRefNo: string = '';
 
 
   @ViewChild(BookingLookupPrintComponent) child !: any;
@@ -72,7 +73,8 @@ export class BookingLookupSearchComponent implements OnInit {
 
   initializeForm() {
     this.searchForm = this.fb.group({
-      referenceNumber: new FormControl(null)
+      awb: new FormControl(null),
+      packageRef: new FormControl(null)
     });
   }
 
@@ -88,14 +90,15 @@ export class BookingLookupSearchComponent implements OnInit {
   }
 
   getBookingDetail() {
-    if ( this.awbnumber != '') {
+    if ( this.awbnumber != '' || this.packageRefNo != '') {
       var query = new CargoBookingShipmentQuery();
-      if (this.isAWBChecked) {
-        query.packageID = this.searchForm.value.referenceNumber;
+      if (this.packageRefNo != '') {
+        query.packageID = this.searchForm.value.packageRef;
+        query.AWBNumber = this.searchForm.value.awb;
       } else if(this.awbnumber != ''){
         query.AWBNumber = this.awbnumber;
       } else {
-        query.AWBNumber = this.searchForm.value.referenceNumber;
+        query.AWBNumber = this.searchForm.value.awb;
       }
 
       this.bookingService.getBookingShipmentDetail(query).subscribe(
