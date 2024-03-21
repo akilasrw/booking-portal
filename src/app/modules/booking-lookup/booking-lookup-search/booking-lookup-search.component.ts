@@ -92,7 +92,7 @@ export class BookingLookupSearchComponent implements OnInit {
   getBookingDetail() {
     if ( this.awbnumber != '' || this.packageRefNo != '') {
       var query = new CargoBookingShipmentQuery();
-      if (this.isAWBChecked) {
+      if (this.packageRefNo != '') {
         query.packageID = this.searchForm.value.packageRef;
         query.AWBNumber = this.searchForm.value.awb;
       } else if(this.awbnumber != ''){
