@@ -15,9 +15,7 @@
             <label class="form-label">AWB Number</label>
             <input [formControl]='searchForm.controls["awb"]' [(ngModel)]="awbnumber" type="text" class="form-control" style="height: 30px">
           </div>
-          <div class="col-1"></div>
-
-          <div class="form-group col-6" >
+          <div class="form-group col-6 ms-2" >
             <label class="form-label">Package ID</label>
             <input [formControl]='searchForm.controls["packageRef"]' [(ngModel)]="packageRefNo" type="text" class="form-control" style="height: 30px" >
           </div>
@@ -38,10 +36,10 @@
       </form>
       </div>
 <!--      <div class="form-group" *ngIf="isSplitBooking && !isAWBChecked">-->
-      <div class="form-group col-6" *ngIf="isSplitBooking && !isAWBChecked">
+      <div class="form-group" *ngIf="isSplitBooking && !isAWBChecked" >
         <form [formGroup]='selectionForm'>
           <div >
-            <div class="form-group col-8">
+            <div class="form-group" style="width: 350px; height: 20px;">
               <label class="form-label">Select Shipment</label>
               <select name="shipment" formControlName="packageItemShipment" class="form-select">
                 <option *ngFor="let unit of cargoBookingShipmentList; let i = index" [ngValue]="unit">Shipment -
