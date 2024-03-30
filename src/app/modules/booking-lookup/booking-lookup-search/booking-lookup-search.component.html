@@ -7,42 +7,81 @@
     </div>
   </div>
   <div class="card-body without-footer">
-    <div class="row  second-box-tracking d-flex justify-content-between align-items-center" style="margin-left: 3px; margin-right: 3px">
+    <div
+      class="row second-box-tracking d-flex justify-content-between align-items-center"
+      style="margin-left: 3px; margin-right: 3px"
+    >
       <div class="col-12">
-      <form [formGroup]='searchForm' (ngSubmit)="getBookingDetail()" style="display: flex; flex-direction: row; align-items: center;justify-content: space-between; width: fit-content">
-        <div class="d-flex align-items-center col-6 ">
-          <div class="form-group col-6">
-            <label class="form-label">AWB Number</label>
-            <input [formControl]='searchForm.controls["awb"]' [(ngModel)]="awbnumber" type="text" class="form-control" style="height: 30px">
+        <form
+          [formGroup]="searchForm"
+          (ngSubmit)="getBookingDetail()"
+          style="
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: fit-content;
+          "
+        >
+          <div class="d-flex align-items-center col-6">
+            <div class="form-group col-6">
+              <label class="form-label">AWB Number</label>
+              <input
+                [formControl]="searchForm.controls['awb']"
+                [(ngModel)]="awbnumber"
+                type="text"
+                class="form-control"
+                style="height: 30px"
+              />
+            </div>
+            <div class="form-group col-6 ms-2">
+              <label class="form-label">Package ID</label>
+              <input
+                [formControl]="searchForm.controls['packageRef']"
+                [(ngModel)]="packageRefNo"
+                type="text"
+                class="form-control"
+                style="height: 30px"
+              />
+            </div>
+            <div class="col-2">
+              <button
+                type="submit"
+                class="btn btn-primary-outline ms-2 mb-1"
+                style="height: 30px"
+              >
+                Find
+              </button>
+            </div>
           </div>
-          <div class="form-group col-6 ms-2" >
-            <label class="form-label">Package ID</label>
-            <input [formControl]='searchForm.controls["packageRef"]' [(ngModel)]="packageRefNo" type="text" class="form-control" style="height: 30px" >
-          </div>
-          <div class=" col-2">
-            <button type="submit" class="btn btn-primary-outline ms-2 mb-1" style="height: 30px">Find</button>
-          </div>
-        </div>
-<!--        <div class="row awb_checked ms-auto">-->
-<!--          <div class="col-12">-->
-<!--            <div class="cu-check">-->
-<!--              <label class="cu-checkbox">Search With Package ID-->
-<!--                <input type="checkbox" (change)="check()" value="isAWBChecked">-->
-<!--                <span class="checkmark"></span>-->
-<!--              </label>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-      </form>
+          <!--        <div class="row awb_checked ms-auto">-->
+          <!--          <div class="col-12">-->
+          <!--            <div class="cu-check">-->
+          <!--              <label class="cu-checkbox">Search With Package ID-->
+          <!--                <input type="checkbox" (change)="check()" value="isAWBChecked">-->
+          <!--                <span class="checkmark"></span>-->
+          <!--              </label>-->
+          <!--            </div>-->
+          <!--          </div>-->
+          <!--        </div>-->
+        </form>
       </div>
-<!--      <div class="form-group" *ngIf="isSplitBooking && !isAWBChecked">-->
-      <div class="form-group" *ngIf="isSplitBooking && !isAWBChecked" >
-        <form [formGroup]='selectionForm'>
-          <div >
-            <div class="form-group" style="width: 350px; height: 20px;">
+      <!--      <div class="form-group" *ngIf="isSplitBooking && !isAWBChecked">-->
+      <div class="form-group" *ngIf="isSplitBooking && !isAWBChecked">
+        <form [formGroup]="selectionForm">
+          <div>
+            <div class="form-group" style="width: 350px; height: 20px">
               <label class="form-label">Select Shipment</label>
-              <select name="shipment" formControlName="packageItemShipment" class="form-select">
-                <option *ngFor="let unit of cargoBookingShipmentList; let i = index" [ngValue]="unit">Shipment -
+              <select
+                name="shipment"
+                formControlName="packageItemShipment"
+                class="form-select"
+              >
+                <option
+                  *ngFor="let unit of cargoBookingShipmentList; let i = index"
+                  [ngValue]="unit"
+                >
+                  Shipment -
                   {{ i + 1 }}
                 </option>
               </select>
@@ -56,52 +95,88 @@
       <h3 style="margin-top: 15px; font-weight: 600">Booking Information</h3>
       <div class="booking-info row">
         <div class="timeline col-md-4">
-          <div class="tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 0 }">
+          <div
+            class="tl-content"
+            [ngClass]="{
+              'tl-content-active': cargoBookingLookup.shipmentStatus >= 0
+            }"
+          >
             <div class="tl-header">
               <span class="tl-marker"></span>
-              <p class="tl-title">
-                Booked with AWB
-              <p>
+              <p class="tl-title">Booked with AWB</p>
+
+              <p></p>
             </div>
           </div>
-          <div class="tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 0 }">
+          <div
+            class="tl-content"
+            [ngClass]="{
+              'tl-content-active': cargoBookingLookup.shipmentStatus >= 0
+            }"
+          >
             <div class="tl-header">
               <span class="tl-marker"></span>
-              <p class="tl-title">
-                Enroute to Warehouse
-              <p>
+              <p class="tl-title">Enroute to Warehouse</p>
+
+              <p></p>
             </div>
           </div>
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 1 }">
+          <div
+            class="tl-content tl-content"
+            [ngClass]="{
+              'tl-content-active': cargoBookingLookup.shipmentStatus >= 1
+            }"
+          >
             <div class="tl-header">
               <span class="tl-marker"></span>
-              <p class="tl-title">
-                In Origin Warehouse
-              <p>
+              <p class="tl-title">In Origin Warehouse</p>
+
+              <p></p>
             </div>
           </div>
-          <div class="tl-content tl-content" *ngIf="cargoBookingLookup.shipmentStatus != 3 && cargoBookingLookup.shipmentStatus != 4" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 2}">
+          <div
+            class="tl-content tl-content"
+            *ngIf="
+              cargoBookingLookup.shipmentStatus != 3 &&
+              cargoBookingLookup.shipmentStatus != 4
+            "
+            [ngClass]="{
+              'tl-content-active': cargoBookingLookup.shipmentStatus >= 2
+            }"
+          >
             <div class="tl-header">
               <span class="tl-marker"></span>
-              <p class="tl-title">
-                Accepted for flight
-              <p>
+              <p class="tl-title">Accepted for flight</p>
+
+              <p></p>
             </div>
           </div>
-          <div class="tl-content tl-content" *ngIf="cargoBookingLookup.shipmentStatus == 3" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus == 3}">
+          <div
+            class="tl-content tl-content"
+            *ngIf="cargoBookingLookup.shipmentStatus == 3"
+            [ngClass]="{
+              'tl-content-active': cargoBookingLookup.shipmentStatus == 3
+            }"
+          >
             <div class="tl-header">
               <span class="tl-marker"></span>
-              <p class="tl-title">
-                Returned
-              <p>
+              <p class="tl-title">Returned</p>
+
+              <p></p>
             </div>
           </div>
-          <div class="tl-content tl-content" *ngIf="cargoBookingLookup.shipmentStatus == 4" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus == 4 }">
+          <div
+            class="tl-content tl-content"
+            *ngIf="cargoBookingLookup.shipmentStatus == 4"
+            [ngClass]="{
+              'tl-content-active': cargoBookingLookup.shipmentStatus == 4
+            }"
+          >
             <div class="tl-header">
               <span class="tl-marker"></span>
-              <p class="tl-title">
-                Offloaded
-              <p>
+              <p class="tl-title">Offloaded</p>
+
+              <p></p>
             </div>
           </div>
           <!--                      <div class="tl-content tl-content" *ngIf="cargoBookingShipment?.bookingStatus == 75" [ngClass]="{'tl-content-active': packageStatus >= 3 }">-->
@@ -112,129 +187,198 @@
           <!--                          <p>-->
           <!--                        </div>-->
           <!--                      </div>-->
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 5 }">
+          <div
+            class="tl-content tl-content"
+            [ngClass]="{
+              'tl-content-active': cargoBookingLookup.shipmentStatus >= 5
+            }"
+          >
             <div class="tl-header">
               <span class="tl-marker"></span>
-              <p class="tl-title">
-                Flight Departed
-              <p>
-            </div>
-          </div>
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 6 }">
-            <div class="tl-header">
-              <span class="tl-marker"></span>
-              <p class="tl-title">
-                Flight Arrived
-              <p>
-            </div>
-          </div>
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 7 }">
-            <div class="tl-header">
-              <span class="tl-marker"></span>
-              <p class="tl-title">
-                In Destination Warehouse
-              <p>
-            </div>
-          </div>
-<!--          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 8 }">-->
-<!--            <div class="tl-header">-->
-<!--              <span class="tl-marker"></span>-->
-<!--              <p class="tl-title">-->
-<!--                On Truck for delivery-->
-<!--              <p>-->
-<!--            </div>-->
-<!--          </div>-->
-          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 9 }">
-            <div class="tl-header">
-              <span class="tl-marker"></span>
-              <p class="tl-title">
-                Delivered to Agent
-              <p>
-            </div>
-          </div>
+              <p class="tl-title">Flight Departed</p>
 
+              <p></p>
+            </div>
+          </div>
+          <div
+            class="tl-content tl-content"
+            [ngClass]="{
+              'tl-content-active': cargoBookingLookup.shipmentStatus >= 6
+            }"
+          >
+            <div class="tl-header">
+              <span class="tl-marker"></span>
+              <p class="tl-title">Flight Arrived</p>
+
+              <p></p>
+            </div>
+          </div>
+          <div
+            class="tl-content tl-content"
+            [ngClass]="{
+              'tl-content-active': cargoBookingLookup.shipmentStatus >= 7
+            }"
+          >
+            <div class="tl-header">
+              <span class="tl-marker"></span>
+              <p class="tl-title">In Destination Warehouse</p>
+
+              <p></p>
+            </div>
+          </div>
+          <!--          <div class="tl-content tl-content" [ngClass]="{'tl-content-active': cargoBookingLookup.shipmentStatus >= 8 }">-->
+          <!--            <div class="tl-header">-->
+          <!--              <span class="tl-marker"></span>-->
+          <!--              <p class="tl-title">-->
+          <!--                On Truck for delivery-->
+          <!--              <p>-->
+          <!--            </div>-->
+          <!--          </div>-->
+          <div
+            class="tl-content tl-content"
+            [ngClass]="{
+              'tl-content-active': cargoBookingLookup.shipmentStatus >= 9
+            }"
+          >
+            <div class="tl-header">
+              <span class="tl-marker"></span>
+              <p class="tl-title">Delivered to Agent</p>
+
+              <p></p>
+            </div>
+          </div>
         </div>
         <div class="col-md-8">
-
           <div class="col-md-12">
             <div class="second-box-tracking h-80">
               <div class="details-group header-text">
                 <div class="tracking-heder-lable col-4">AWB Number</div>
-                <div class="tracking-heder-lable col-8">{{ (cargoBookingLookup?.awbNumber != null && cargoBookingLookup?.awbNumber != 0) ? cargoBookingLookup?.awbNumber : '-' }}</div>
+                <div class="tracking-heder-lable col-8">
+                  {{
+                    cargoBookingLookup?.awbNumber != null &&
+                    cargoBookingLookup?.awbNumber != 0
+                      ? cargoBookingLookup?.awbNumber
+                      : "-"
+                  }}
+                </div>
               </div>
 
               <div class="details-group">
                 <div class="tracking-lable col-4">Packages</div>
-                <div class=" tracking-lable col-8">{{ (!isAWBChecked)? cargoBookingLookup?.packageCount: 1 }}</div>
-              </div>
-              <div class="divider"></div>
-              <div class="details-group">
-                <div class="tracking-lable col-4 " >Booked Date</div>
-                <div class="tracking-lable col-8">{{ cargoBookingLookup?.bookedDate | date : 'M/d/yyyy, h:mm a' }}</div>
+                <div class="tracking-lable col-8">
+                  {{ !isAWBChecked ? cargoBookingLookup?.packageCount : 1 }}
+                </div>
               </div>
               <div class="divider"></div>
               <div class="details-group">
                 <div class="tracking-lable col-4">Flight Number</div>
-                <div class="tracking-lable col-8">{{ cargoBookingLookup?.flightNumber }}</div>
+                <div class="tracking-lable col-8">
+                  {{ cargoBookingLookup?.flightNumber }}
+                </div>
               </div>
               <div class="divider"></div>
               <div class="details-group">
                 <div class="tracking-lable col-4">Flight Date</div>
-                <div class="tracking-lable col-8">{{
-                    cargoBookingLookup?.flightDate | date :
-                      'M/d/yyyy, h:mm a'
+                <div class="tracking-lable col-8">
+                  {{
+                    cargoBookingLookup?.flightDate | date : "M/d/yyyy, h:mm a"
                   }}
                 </div>
               </div>
               <div class="divider"></div>
               <div class="details-group">
                 <div class="tracking-lable col-4">Sector</div>
-                <div class="tracking-lable col-8"><span
-                  class="status-chip cargo-received" *ngIf="cargoBookingLookup?.from != null && cargoBookingLookup?.to != null">{{
-                    cargoBookingLookup?.from
-                    + " - " + cargoBookingLookup?.to
-                  }}</span>
+                <div class="tracking-lable col-8">
+                  <span
+                    class="status-chip cargo-received"
+                    *ngIf="
+                      cargoBookingLookup?.from != null &&
+                      cargoBookingLookup?.to != null
+                    "
+                    >{{
+                      cargoBookingLookup?.from + " - " + cargoBookingLookup?.to
+                    }}</span
+                  >
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="details-group">
+                <div class="tracking-lable col-4">Booked Date</div>
+                <div class="tracking-lable col-8">
+                  {{
+                    cargoBookingLookup?.bookedDate | date : "M/d/yyyy, h:mm a"
+                  }}
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="details-group">
+                <div class="tracking-lable col-4">Enroute to Warehouse</div>
+                <div class="tracking-lable col-8">
+                  {{
+                    cargoBookingLookup?.enrouteToWahouse
+                      | date : "M/d/yyyy, h:mm a"
+                  }}
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="details-group">
+                <div class="tracking-lable col-4">In Origin Warehouse</div>
+                <div class="tracking-lable col-8">
+                  {{
+                    cargoBookingLookup?.inOriginWahouse
+                      | date : "M/d/yyyy, h:mm a"
+                  }}
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="details-group">
+                <div class="tracking-lable col-4">Accepted for flight</div>
+                <div class="tracking-lable col-8">
+                  {{
+                    cargoBookingLookup?.acceptedForFLight
+                      | date : "M/d/yyyy, h:mm a"
+                  }}
                 </div>
               </div>
               <div class="divider"></div>
               <div class="details-group">
                 <div class="tracking-lable col-4">Flight Dep</div>
-                <div class="tracking-lable col-8">{{ cargoBookingLookup?.flightDep | date : 'M/d/yyyy, h:mm a' }}</div>
+                <div class="tracking-lable col-8">
+                  {{
+                    cargoBookingLookup?.flightDep | date : "M/d/yyyy, h:mm a"
+                  }}
+                </div>
               </div>
               <div class="divider"></div>
               <div class="details-group">
                 <div class="tracking-lable col-4">Flight Arrv</div>
-                <div class="tracking-lable col-8">{{ cargoBookingLookup?.flightArr | date : 'M/d/yyyy, h:mm a' }}</div>
+                <div class="tracking-lable col-8">
+                  {{
+                    cargoBookingLookup?.flightArr | date : "M/d/yyyy, h:mm a"
+                  }}
+                </div>
               </div>
               <div class="divider"></div>
-              <div class="details-group">
-                <div class="tracking-lable col-4">Booked Date</div>
-                <div class="tracking-lable col-8">{{ cargoBookingLookup?.bookedDate | date : 'M/d/yyyy, h:mm a' }}</div>
-              </div>
-              <div class="divider"></div>
-              <div class="details-group">
-                <div class="tracking-lable col-4">Enroute to Warehouse</div>
-                <div class="tracking-lable col-8" >{{ cargoBookingLookup?.enrouteToWahouse | date : 'M/d/yyyy, h:mm a' }}</div>
-              </div>
-              <div class="divider"></div>
-              <div class="details-group">
-                <div class="tracking-lable col-4">In Origin Warehouse</div>
-                <div class="tracking-lable col-8">{{ cargoBookingLookup?.inOriginWahouse | date : 'M/d/yyyy, h:mm a' }}</div>
-              </div>
-              <div class="divider"></div>
-              <div class="details-group">
-                <div class="tracking-lable col-4">Accepted for flight</div>
-                <div class="tracking-lable col-8">{{ cargoBookingLookup?.acceptedForFLight | date : 'M/d/yyyy, h:mm a' }}</div>
-              </div>
-              <div class="divider"></div>
+
+             
               <div class="details-group">
                 <div class="tracking-lable col-4">In Destination Warehouse</div>
-                <div class="tracking-lable col-8">{{ cargoBookingLookup?.inDestinationWahouse | date : 'M/d/yyyy, h:mm a' }}</div>
+                <div class="tracking-lable col-8">
+                  {{
+                    cargoBookingLookup?.inDestinationWahouse
+                      | date : "M/d/yyyy, h:mm a"
+                  }}
+                </div>
               </div>
               <div class="divider"></div>
               <div class="details-group">
                 <div class="tracking-lable col-4">Delivered to Agent</div>
-                <div class="tracking-lable col-8">{{ cargoBookingLookup?.deliverdToAgent | date : 'M/d/yyyy, h:mm a' }}</div>
+                <div class="tracking-lable col-8">
+                  {{
+                    cargoBookingLookup?.deliverdToAgent
+                      | date : "M/d/yyyy, h:mm a"
+                  }}
+                </div>
               </div>
             </div>
           </div>
