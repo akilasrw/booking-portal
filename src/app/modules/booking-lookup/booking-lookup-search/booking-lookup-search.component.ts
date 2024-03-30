@@ -104,6 +104,7 @@ export class BookingLookupSearchComponent implements OnInit {
       this.bookingService.getBookingShipmentDetail(query).subscribe(
         {
           next: (res) => {
+            this.isSplitBooking = false;
             res.forEach((x)=>{
               if(x.from && x.to){
                 x.from = x.from.split(' ').map(word => word[0].toUpperCase()).join('');
@@ -113,11 +114,11 @@ export class BookingLookupSearchComponent implements OnInit {
             })
             this.cargoBookingShipmentList = res;
             if (null != this.cargoBookingShipmentList && this.cargoBookingShipmentList.length > 0) {
+              this.cargoBookingLookup = this.cargoBookingShipmentList[0];
+              this.selectionForm.get('packageItemShipment')?.setValue(this.cargoBookingShipmentList[0])
               if (this.cargoBookingShipmentList?.length > 1) {
                 this.isSplitBooking = true;
-              } else {
-                this.cargoBookingLookup = this.cargoBookingShipmentList[0];
-              }
+              } 
             }
           },
           error: (error) => {
