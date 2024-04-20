@@ -87,7 +87,7 @@
       <p style="height: 20px" *ngFor="let x of dUld_packed">{{x.packageItem.packageRefNumber}}</p>
     </div>
 
-    <div class="text-box-two" style="margin-top: 50px" *ngIf="dUld_unpacked.length>0">
+    <div class="text-box-two" style="margin-top: 53px" *ngIf="dUld_unpacked.length>0">
 
 
       <span class="text-item">{{dUld_unpacked.length}}</span>
@@ -99,7 +99,7 @@
     <div  style="max-height: 300px; overflow-y: scroll" *ngIf="openList == 'uldup'">
       <p style="height: 20px" *ngFor="let x of dUld_unpacked">{{x.packageItem.packageRefNumber}}</p>
     </div>
-    <div class="text-box-two" style="margin-top: 27px" *ngIf="dDelivered.length>0">
+    <div class="text-box-two" style="margin-top: 30px" *ngIf="dDelivered.length>0">
       <span class="text-item">{{dDelivered.length}}</span>
       <i class="ca ca-icn-view" style="cursor: pointer"   title="View" (click)="setOpenList('d')"></i>
     </div>
