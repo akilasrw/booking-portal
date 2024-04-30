@@ -83,13 +83,9 @@ export class BookingViewDetailComponent implements OnInit {
           this.delivered = res.filter((x:PackageModel)=> x.packageItemStatus == PackageItemStatus.Delivered)
           this.dWh_rec = this.wh_rec.length >0 ? this.pickedUpBoxes.filter((x)=>  this.wh_rec.filter((y)=> y.packageID == x.packageID).length==0):[]
           this.dUld_packed = this.uld_packed.length >0 ? (this.wh_rec.filter((x)=>  this.uld_packed.filter((y)=> y.packageID == x.packageID).length==0)).filter((i)=> this.offloaded.filter((o)=> o.packageID == i.packageID).length == 0):[]
-          this.dDispached = this.delivered.length>0 ? this.uld_packed.filter((x)=>  this.dispached.filter((y)=> y.packageID == x.packageID).length==0):[]
+          this.dDispached = this.delivered.length>0 ? this.uld_packed.filter((x)=>  this.dispached.filter((y)=> y.packageID == x.packageID).length==0).filter((i)=> this.offloaded.filter((o)=> o.packageID == i.packageID).length == 0):[]
           this.dUld_unpacked =this.uld_unpacked.length>0? this.uld_packed.filter((x)=>  this.uld_unpacked.filter((y)=> y.packageID == x.packageID).length==0):[]
           this.dDelivered = this.delivered.length>0 ? this.uld_unpacked.filter((x)=>  this.delivered.filter((y)=> y.packageID == x.packageID).length==0):[]
-
-
-
-
         }
       );
     }
