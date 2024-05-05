@@ -51,7 +51,7 @@
       <i class="ca ca-icn-view"   title="View" (click)="setOpenList('olt')" *ngIf="offloaded.length>0"></i>
     </div>
     <div  style="max-height: 300px; overflow-y: scroll" *ngIf="openList=='olt'">
-      <p style="height: 20px" *ngFor="let x of offloaded">{{x.packageItem.packageRefNumber}}</p>
+      <p style="height: 20px" *ngFor="let x of offloaded">{{x.packageNumber}}</p>
     </div>
     <div class="text-box">
       <span class="text-item">ULD Unpacked</span>
@@ -67,59 +67,75 @@
   <div style="margin-left: 20px">
     <span style="font-family: 'Poppins'; font-style: normal; font-weight: 500; font-size: 18px; line-height: 27px; color: #464646;">Discrepancy</span>
 
-    <div class="text-box-two" style="margin-top: 48px" *ngIf="dWh_rec.length>0">
+    <div class="text-box-two" style="margin-top: 42px" *ngIf="dWh_rec.length>0">
 
 
       <span class="text-item">{{dWh_rec.length}}</span>
+      <button style="border:none; background: #fff;" (click)="generatePDF(dWh_rec)">
+        <i class="fas fa-download"></i> 
+      </button>
       <i class="ca ca-icn-view" style="cursor: pointer"  title="View" (click)="setOpenList('wh')" ></i>
     </div>
     <div style="margin-top: 55px" *ngIf="dWh_rec.length<=0">
       <span class="text-item">N/A</span>
     </div>
     <div  style="max-height: 300px; overflow-y: scroll" *ngIf="openList =='wh'">
-      <p style="height: 20px" *ngFor="let x of dWh_rec">{{x.packageItem.packageRefNumber}}</p>
+     
+      <p style="height: 20px" *ngFor="let x of dWh_rec">{{x.packageNumber}}</p>
     </div>
-    <div class="text-box-two" style="margin-top: 10px" *ngIf="dUld_packed.length>0">
+    <div class="text-box-two" style="margin-top: 5px" *ngIf="dUld_packed.length>0">
 
 
       <span class="text-item">{{dUld_packed.length}}</span>
+      <button style="border:none; background: #fff;" (click)="generatePDF(dUld_packed)">
+        <i class="fas fa-download"></i> 
+      </button>
       <i class="ca ca-icn-view" style="cursor: pointer"    title="View" (click)="setOpenList('uldp')"></i>
     </div>
     <div style="margin-top: 17px" *ngIf="dUld_packed.length<=0">
       <span class="text-item">N/A</span>
     </div>
     <div  style="max-height: 300px; overflow-y: scroll" *ngIf="openList == 'uldp'">
-      <p style="height: 20px" *ngFor="let x of dUld_packed">{{x.packageItem.packageRefNumber}}</p>
+      <p style="height: 20px" *ngFor="let x of dUld_packed">{{x.packageNumber}}</p>
     </div>
-    <div class="text-box-two" style="margin-top: 10px" *ngIf="dDispached.length>0">
+    <div class="text-box-two" style="margin-top: 5px" *ngIf="dDispached.length>0">
       <span class="text-item">{{dDispached.length}}</span>
+      <button style="border:none; background: #fff;" (click)="generatePDF(dDispached)">
+        <i class="fas fa-download"></i> 
+      </button>
       <i class="ca ca-icn-view" style="cursor: pointer"    title="View" (click)="setOpenList('dispatchp')"></i>
     </div>
     <div style="margin-top: 17px" *ngIf="dDispached.length<=0">
       <span class="text-item">N/A</span>
     </div>
     <div  style="max-height: 300px; overflow-y: scroll" *ngIf="openList == 'dispatchp'">
-      <p style="height: 20px" *ngFor="let x of dDispached">{{x.packageItem.packageRefNumber}}</p>
+      <p style="height: 20px" *ngFor="let x of dDispached">{{x.packageNumber}}</p>
     </div>
-    <div class="text-box-two" style="margin-top: 53px" *ngIf="dUld_unpacked.length>0">
+    <div class="text-box-two" style="margin-top: 48px" *ngIf="dUld_unpacked.length>0">
       <span class="text-item">{{dUld_unpacked.length}}</span>
+      <button style="border:none; background: #fff;" (click)="generatePDF(dUld_unpacked)">
+        <i class="fas fa-download"></i> 
+      </button>
       <i class="ca ca-icn-view" style="cursor: pointer"    title="View" (click)="setOpenList('uldup')"></i>
     </div>
     <div style="margin-top: 63px" *ngIf="dUld_unpacked.length<=0">
       <span class="text-item">N/A</span>
     </div>
     <div  style="max-height: 300px; overflow-y: scroll" *ngIf="openList == 'uldup'">
-      <p style="height: 20px" *ngFor="let x of dUld_unpacked">{{x.packageItem.packageRefNumber}}</p>
+      <p style="height: 20px" *ngFor="let x of dUld_unpacked">{{x.packageNumber}}</p>
     </div>
-    <div class="text-box-two" style="margin-top: 25px" *ngIf="dDelivered.length>0">
+    <div class="text-box-two" style="margin-top: 18px" *ngIf="dDelivered.length>0">
       <span class="text-item">{{dDelivered.length}}</span>
+      <button style="border:none; background: #fff;" (click)="generatePDF(dDelivered)">
+        <i class="fas fa-download"></i> 
+      </button>
       <i class="ca ca-icn-view" style="cursor: pointer"   title="View" (click)="setOpenList('d')"></i>
     </div>
     <div style="margin-top: 30px" *ngIf="dDelivered.length<=0">
       <span class="text-item">N/A</span>
     </div>
     <div  style="max-height: 300px; overflow-y: scroll" *ngIf="openList == 'd'">
-      <p style="height: 20px" *ngFor="let x of dDelivered">{{x.packageItem.packageRefNumber}}</p>
+      <p style="height: 20px" *ngFor="let x of dDelivered">{{x.packageNumber}}</p>
     </div>
   </div>
 </div>

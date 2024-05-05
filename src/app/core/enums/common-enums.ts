@@ -51,6 +51,16 @@ export enum PackageItemStatus {
   Pending = 10,
   None = 11,
 }
+
+export interface PackageAudit {
+  packageId: string;
+  packageNumber: string;
+  collectedDate: string;
+  packageStatus: number;
+  awb: number;
+  flightNumber: string;
+}
+
 export enum PackageContainerType {
   None = 0,
   OnFloor = 1,

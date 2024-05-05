@@ -1,3 +1,5 @@
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
 .text-item {
   color: #8D8D8D;
   font-size: 14px;
@@ -20,7 +22,7 @@
 
 .text-box-two {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto auto;
   align-items: center;
   justify-content: space-between; /* Center the columns horizontally */
   margin-top: 5%;
