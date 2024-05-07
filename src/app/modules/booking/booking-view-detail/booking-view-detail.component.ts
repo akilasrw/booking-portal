@@ -87,6 +87,11 @@ export class BookingViewDetailComponent implements OnInit {
       this.bookingSerice
         .getPackageAuditStatus(this.cargoBooking.id)
         .subscribe((res: any) => {
+          res.forEach((x:PackageAudit)=>{
+            if(x.flightDate&&new Date(x.flightDate).getFullYear() == 1){
+              x.flightDate = null
+            }
+          })
           console.log(res);
           this.cargoBookingDetail = res;
           this.pickedUpBoxes = res.filter(
@@ -173,11 +178,10 @@ export class BookingViewDetailComponent implements OnInit {
 
   generatePDF(x:PackageAudit[]) {
 
-    console.log(x, 'audit')
 
-    let body = [['Package ID', 'Collected Date', 'Flight Number', "AwbNumber"]]
+    let body = [['Package ID', 'Collected Date', 'Flight Number','Flight Date',"AwbNumber"]]
     x.forEach((y:PackageAudit) => {
-        body.push([y.packageNumber, y.collectedDate, y.flightNumber,y.awb.toString()])     
+        body.push([y.packageNumber, y.collectedDate, y.flightNumber || "N/A",y.flightDate?.toString() || "N/A",  y.awb.toString()])     
     });
     const documentDefinition = {
 
@@ -190,7 +194,7 @@ export class BookingViewDetailComponent implements OnInit {
         },
         {
           table: {
-            widths: [100, '*', '*', 100],
+            widths: [100, 100, 100, 100, 100],
             body: body,
           },
         },
