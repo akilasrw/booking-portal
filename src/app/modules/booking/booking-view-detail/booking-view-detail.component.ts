@@ -92,7 +92,6 @@ export class BookingViewDetailComponent implements OnInit {
               x.flightDate = null
             }
           })
-          console.log(res);
           this.cargoBookingDetail = res;
           this.pickedUpBoxes = res.filter(
             (x: PackageAudit) => x.packageStatus == PackageItemStatus.Booking_Made
@@ -121,7 +120,7 @@ export class BookingViewDetailComponent implements OnInit {
               x.packageStatus == PackageItemStatus.Delivered
           );
           this.dWh_rec =
-            1 > 0
+            this.wh_rec.length > 0
               ? this.pickedUpBoxes.filter(
                   (x) =>
                     this.wh_rec.filter((y) => y.packageId == x.packageId)
@@ -129,7 +128,7 @@ export class BookingViewDetailComponent implements OnInit {
                 )
               : [];
           this.dUld_packed =
-            1 > 0
+            this.uld_packed.length > 0
               ? this.wh_rec
                   .filter(
                     (x) =>
@@ -143,7 +142,7 @@ export class BookingViewDetailComponent implements OnInit {
                   )
               : [];
           this.dDispached =
-            1 > 0
+            this.dispached.length > 0
               ? this.uld_packed
                   .filter(
                     (x) =>
@@ -157,7 +156,7 @@ export class BookingViewDetailComponent implements OnInit {
                   )
               : [];
           this.dUld_unpacked =
-            1 > 0
+            this.uld_unpacked.length > 0
               ? this.dispached.filter(
                   (x) =>
                     this.uld_unpacked.filter((y) => y.packageId == x.packageId)
@@ -165,7 +164,7 @@ export class BookingViewDetailComponent implements OnInit {
                 )
               : [];
           this.dDelivered =
-            1 > 0
+            this.delivered.length > 0
               ? this.uld_unpacked.filter(
                   (x) =>
                     this.delivered.filter((y) => y.packageId == x.packageId)
