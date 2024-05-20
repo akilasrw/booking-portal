@@ -39,9 +39,9 @@ export enum AWBStatus {
 // }
 export enum PackageItemStatus {
   Booking_Made = 0,
-  Cargo_Received = 1,
-  AcceptedForFlight = 2,
-  Returned = 3,
+  Returned = 1,
+  Cargo_Received = 2,
+  AcceptedForFlight = 3,
   Offloaded = 4,
   FlightDispatched = 5,
   Arrived = 6,

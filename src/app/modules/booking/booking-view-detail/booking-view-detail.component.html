@@ -69,6 +69,17 @@
       <span class="text-item">{{delivered?.length || 0}}</span>
       <div></div>
     </div>
+    <div class="text-box">
+      <span class="text-item">Returned</span>
+      <span class="text-item">{{returned?.length || 0}}</span>
+      <div style="display: flex; flex-direction: row; align-items: center; gap: 20px; margin-right: 10px;">
+        <button style="border:none; background: #fff;" (click)="generatePDF(returned)">
+          <i class="fas fa-download"></i> 
+        </button>
+        <i class="ca ca-icn-view"   title="View" (click)="setOpenList('olt')" *ngIf="offloaded.length>0" ></i>
+      </div>
+      
+    </div>
   </div>
   <div style="margin-left: 20px">
     <span style="font-family: 'Poppins'; font-style: normal; font-weight: 500; font-size: 18px; line-height: 27px; color: #464646;">Discrepancy</span>
