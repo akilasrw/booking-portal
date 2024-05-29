@@ -76,9 +76,12 @@
         <button style="border:none; background: #fff;" (click)="generatePDF(returned)">
           <i class="fas fa-download"></i> 
         </button>
-        <i class="ca ca-icn-view"   title="View" (click)="setOpenList('olt')" *ngIf="offloaded.length>0" ></i>
+        <i class="ca ca-icn-view"   title="View" (click)="setOpenList('rtn')" *ngIf="returned.length>0" ></i>
       </div>
       
+    </div>
+    <div  style="max-height: 300px; overflow-y: scroll" *ngIf="openList=='rtn'">
+      <p style="height: 20px" *ngFor="let x of returned">{{x.packageNumber}}</p>
     </div>
   </div>
   <div style="margin-left: 20px">
@@ -154,5 +157,7 @@
     <div  style="max-height: 300px; overflow-y: scroll" *ngIf="openList == 'd'">
       <p style="height: 20px" *ngFor="let x of dDelivered">{{x.packageNumber}}</p>
     </div>
+   
   </div>
+  
 </div>
