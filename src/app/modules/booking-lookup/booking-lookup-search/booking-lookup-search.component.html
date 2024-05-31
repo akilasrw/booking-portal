@@ -135,13 +135,27 @@
             </div>
           </div>
           <div
+          class="tl-content tl-content"
+          *ngIf="cargoBookingLookup.shipmentStatus == 1"
+          [ngClass]="{
+            'tl-content-active': cargoBookingLookup.shipmentStatus == 1
+          }"
+        >
+          <div class="tl-header">
+            <span class="tl-marker"></span>
+            <p class="tl-title">Returned</p>
+
+            <p></p>
+          </div>
+        </div>
+          <div
             class="tl-content tl-content"
             *ngIf="
-              cargoBookingLookup.shipmentStatus != 3 &&
+              cargoBookingLookup.shipmentStatus != 1 &&
               cargoBookingLookup.shipmentStatus != 4
             "
             [ngClass]="{
-              'tl-content-active': cargoBookingLookup.shipmentStatus >= 2
+              'tl-content-active': cargoBookingLookup.shipmentStatus >= 3
             }"
           >
             <div class="tl-header">
@@ -151,20 +165,7 @@
               <p></p>
             </div>
           </div>
-          <div
-            class="tl-content tl-content"
-            *ngIf="cargoBookingLookup.shipmentStatus == 3"
-            [ngClass]="{
-              'tl-content-active': cargoBookingLookup.shipmentStatus == 3
-            }"
-          >
-            <div class="tl-header">
-              <span class="tl-marker"></span>
-              <p class="tl-title">Returned</p>
-
-              <p></p>
-            </div>
-          </div>
+         
           <div
             class="tl-content tl-content"
             *ngIf="cargoBookingLookup.shipmentStatus == 4"
