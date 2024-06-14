@@ -159,6 +159,7 @@ export class BookingSearchComponent implements OnInit {
         this.totalCount = res.count;
         this.flightSchedules = [];
       } else {
+        res.data.sort((a: any, b: any) => new Date(a.scheduledDepartureDateTime).getTime() - new Date(b.scheduledDepartureDateTime).getTime());
         this.flightSchedules = res.data;
         this.totalCount = res.count;
       }
