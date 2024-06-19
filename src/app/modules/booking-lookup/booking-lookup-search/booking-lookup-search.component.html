@@ -1,8 +1,9 @@
 <div class="main-card" xmlns="http://www.w3.org/1999/html">
   <div class="card-header px-0 pt-0">
     <div class="d-flex justify-content-between align-items-center">
-      <div>
+      <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;width: 100%;">
         <h1>Track Booking</h1>
+        <i class="ca ca-icn-print" (click)="generatePDF()" style="cursor: pointer;"></i>
       </div>
     </div>
   </div>
@@ -389,4 +390,4 @@
   </div>
 </div>
 
-<!--<app-booking-lookup-print></app-booking-lookup-print>-->
+<app-booking-lookup-print></app-booking-lookup-print>
