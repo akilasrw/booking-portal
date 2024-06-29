@@ -28,14 +28,14 @@
                         <div class="col-md-2">
                           <div class="form-group">
                             <label class="form-label">From Date</label>
-                            <input type="text" formControlName="scheduledDepartureFromDate" placeholder="Date"
+                            <input type="text" formControlName="scheduledDepartureFromDate" placeholder="Date" [minDate]="startMinDate"
                                    class="form-control" bsDatepicker>
                           </div>
                         </div>
                         <div class="col-md-2">
                           <div class="form-group">
                             <label class="form-label">To Date</label>
-                            <input type="text" formControlName="scheduledDepartureToDate" placeholder="Date"
+                            <input type="text" formControlName="scheduledDepartureToDate" placeholder="Date" [minDate]="startMinDate"
                                    class="form-control" bsDatepicker>
                           </div>
                         </div>

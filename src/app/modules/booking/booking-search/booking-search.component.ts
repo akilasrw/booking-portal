@@ -20,6 +20,7 @@ export class BookingSearchComponent implements OnInit {
   public bookingForm!: FormGroup;
   keyword = 'value';
   originAirpots: SelectList[] = [];
+  startMinDate:Date = new Date();
   destinationAirpots: SelectList[] = [];
   bookingFilterQuery: BookingFilterListQuery = new BookingFilterListQuery();
   flightSchedules: FlightSchedule[] = []

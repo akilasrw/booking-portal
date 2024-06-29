@@ -19,6 +19,8 @@ export class BookingListComponent implements OnInit {
 
   modalVisible = false;
   modalVisibleAnimate = false;
+  modalInfoVisible = false;
+  modalInfoVisibleAnimate = false;
   filterFormHasValue = false
   totalCount: number = 0;
   bookingListfilterQuery: CargoBookingFilterQuery = new CargoBookingFilterQuery();
@@ -28,6 +30,7 @@ export class BookingListComponent implements OnInit {
   toDate?: Date;
   cargoBookingList: CargoBooking[] = []
   cargoBooking?: CargoBooking;
+  cargoBookingId?: string;
   bookingStatus = PackageItemStatus;
   currentUser?: User | null;
   subscription?: Subscription;
@@ -90,6 +93,12 @@ export class BookingListComponent implements OnInit {
     setTimeout(() => (this.modalVisibleAnimate = true));
   }
 
+  showInfo(booking:CargoBooking) {
+    this.cargoBookingId = booking.id;
+    this.modalInfoVisible = true;
+    setTimeout(() => (this.modalInfoVisibleAnimate = true));
+  }
+
   hide() {
     this.modalVisibleAnimate = false;
     setTimeout(() => (this.modalVisible = false), 300);
@@ -105,6 +114,11 @@ export class BookingListComponent implements OnInit {
 
   getBookingStatus(status: PackageItemStatus): string {
     return CoreExtensions.GetPackageStatus(status)
+  }
+
+  closeModel(){
+    this.modalInfoVisible = false;
+    this.modalInfoVisibleAnimate = false;
   }
 
   clearFilter() {

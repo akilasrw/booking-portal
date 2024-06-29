@@ -1,123 +1,140 @@
 <div class="main-card">
-    <div class="card-header px-0 pt-0">
-        <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <h1>Manage Booking</h1>
-            </div>
-            <div><button class="btn btn-primary" (click)="goToCreateBooking()">Add New Booking</button></div>
-        </div>
-    </div>
-    <div class="card-body without-footer">
-        <div class="row">
-          <div class="filter-wrapper second-box-tracking">
-            <div class="col-2 filter-group">
-              <label class="form-label">AWB No.</label>
-              <input [(ngModel)]="bookingId" type="text" class="form-control"
-                     (change)="onChangeFilterFrm($event)">
-            </div>
-            <div class="col-2 filter-group">
-              <label class="form-label">Destination</label>
-              <input [(ngModel)]="destination" type="text" class="form-control"
-                     (change)="onChangeFilterFrm($event)">
-            </div>
-            <div class="col-2 filter-group">
-              <label class="form-label">From Date</label>
-              <input type="text" [(ngModel)]="fromDate" class="form-control" bsDatepicker
-                     (click)="onChangeFilterFrm($event)">
-            </div>
-            <div class=" col-3 filter-group">
-              <label class="form-label">To Date</label>
-              <input type="text" [(ngModel)]="toDate" class="form-control" bsDatepicker
-                     (click)="onChangeFilterFrm($event)">
-            </div>
-            <div class="button">
-              <button (click)="getFilteredList()" class="btn sm btn-primary-outline">
-                Add
-                Filter
-              </button>
-            </div>
-            <div class="filter-clear" title="Filter Clear" [hidden]="!filterFormHasValue">
-              <i class="ca ca-icn-close"
-                 (click)="clearFilter()"></i>
-            </div>
+  <div class="card-header px-0 pt-0">
+      <div class="d-flex justify-content-between align-items-center">
+          <div>
+              <h1>Manage Booking</h1>
           </div>
+          <div><button class="btn btn-primary" (click)="goToCreateBooking()">Add New Booking</button></div>
+      </div>
+  </div>
+  <div class="card-body without-footer">
+      <div class="row">
+        <div class="filter-wrapper second-box-tracking">
+          <div class="col-2 filter-group">
+            <label class="form-label">AWB No.</label>
+            <input [(ngModel)]="bookingId" type="text" class="form-control"
+                   (change)="onChangeFilterFrm($event)">
+          </div>
+          <div class="col-2 filter-group">
+            <label class="form-label">Destination</label>
+            <input [(ngModel)]="destination" type="text" class="form-control"
+                   (change)="onChangeFilterFrm($event)">
+          </div>
+          <div class="col-2 filter-group">
+            <label class="form-label">From Date</label>
+            <input type="text" [(ngModel)]="fromDate" class="form-control" bsDatepicker
+                   (click)="onChangeFilterFrm($event)">
+          </div>
+          <div class=" col-3 filter-group">
+            <label class="form-label">To Date</label>
+            <input type="text" [(ngModel)]="toDate" class="form-control" bsDatepicker
+                   (click)="onChangeFilterFrm($event)">
+          </div>
+          <div class="button">
+            <button (click)="getFilteredList()" class="btn sm btn-primary-outline">
+              Add
+              Filter
+            </button>
+          </div>
+          <div class="filter-clear" title="Filter Clear" [hidden]="!filterFormHasValue">
+            <i class="ca ca-icn-close"
+               (click)="clearFilter()"></i>
+          </div>
+        </div>
 <!--            <div class="mt-4">-->
 <!--                <button class="btn sm btn-primary-outline">Advanced Filter</button>-->
 <!--            </div>-->
-        </div>
-        <div *ngIf="!isLoading"  class="table-content">
-          <table class="table table-responsive">
-            <thead>
-            <th style="text-align: center">AWB Number</th>
-            <th style="text-align: center">Booking Date</th>
-            <th style="text-align: center">Destination</th>
-            <th style="text-align: center">Flight Number</th>
-            <th style="text-align: center">Flight Date</th>
-            <th style="text-align: center">Status</th>
-            <th style="text-align: center">No. Boxes</th>
-            <th style="text-align: center">Shipped</th>
-            <th style="text-align: center">Actions </th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let booking of this.cargoBookingList">
-                <td style="text-align: center">{{booking.awbNumber}}</td>
-                <td style="text-align: center">{{booking.bookingDate | date}}</td>
-                <td style="text-align: center">{{booking.destinationAirportCode}}</td>
-                <td style="text-align: center">{{booking.flightNumber}}</td>
-                <td style="text-align: center">{{booking?.flightDate | date}}</td>
-                <td style="width: auto; text-align: center"> <span class="status-chip" [ngClass]="{
-                  'none': booking?.bookingStatus == bookingStatus.None,
-                  'pending': booking?.bookingStatus == bookingStatus.Booking_Made,
-                  'awb_added': booking?.bookingStatus == bookingStatus.InDestinationWarehouse,
-                  'dispatch': booking?.bookingStatus == bookingStatus.FlightDispatched,
-                  'in-destination-warehouse': booking?.bookingStatus == bookingStatus.InDestinationWarehouse,
-                  'flight-dispatched': booking?.bookingStatus == bookingStatus.FlightDispatched,
-                  'arrived': booking?.bookingStatus == bookingStatus.Arrived,
-                  'cargo-received': booking?.bookingStatus == bookingStatus.Cargo_Received,
-                  'truck-for-delivery': booking?.bookingStatus == bookingStatus.TruckForDelivery,
-                  'delivered': booking?.bookingStatus == bookingStatus.Delivered,
-                  'returned': booking?.bookingStatus == bookingStatus.Returned
-              }">{{getBookingStatus(booking.bookingStatus)}}</span></td>
-                <td style="text-align: center">{{booking.numberOfBoxes}}</td>
-                <td style="text-align: center">{{booking.shipmentCount}}</td>
-                <td style="text-align: center">
-                  <i class="ca ca-icn-view" (click)="show(booking)" title="View"></i>
-                  <i class="ca ca-icn-logout" (click)="showTrackBooking(booking.awbNumber)" title="Edit" ></i>
-                  <i class="ca ca-icn-bin" title="Delete" style="cursor: not-allowed"></i>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-            <div class="not-available" *ngIf="totalCount == 0">
-                <img src="./assets/images/no-data.png" alt="No Content Data">
-                <div>Bookings not available.</div>
-            </div>
-            <div class="d-flex align-items-center justify-content-center" *ngIf="totalCount > 0">
-                <app-pager [pageSize]="bookingListfilterQuery?.pageSize"
-                    [pageNumber]="bookingListfilterQuery?.pageIndex" [totalCount]="totalCount"
-                    (pageChanged)="onPageChanged($event)"></app-pager>
-                <app-paging-header [totalCount]="totalCount" [pageSize]="bookingListfilterQuery?.pageSize"
-                    [pageNumber]="bookingListfilterQuery?.pageIndex"></app-paging-header>
-            </div>
-        </div>
-        <app-table-loader [columnCount]="9" [rowCount]="bookingListfilterQuery.pageSize" *ngIf="isLoading">
-        </app-table-loader>
-    </div>
+      </div>
+      <div *ngIf="!isLoading"  class="table-content">
+        <table class="table table-responsive">
+          <thead>
+          <th style="text-align: center">AWB Number</th>
+          <th style="text-align: center">Booking Date</th>
+          <th style="text-align: center">Destination</th>
+          <th style="text-align: center">Flight Number</th>
+          <th style="text-align: center">Flight Date</th>
+          <th style="text-align: center">Status</th>
+          <th style="text-align: center">No. Boxes</th>
+          <th style="text-align: center">Shipped</th>
+          <th style="text-align: center">Actions </th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let booking of this.cargoBookingList">
+              <td style="text-align: center">{{booking.awbNumber}}</td>
+              <td style="text-align: center">{{booking.bookingDate | date}}</td>
+              <td style="text-align: center">{{booking.destinationAirportCode}}</td>
+              <td style="text-align: center">{{booking.flightNumber}}</td>
+              <td style="text-align: center">{{booking?.flightDate | date}}</td>
+              <td style="width: auto; text-align: center"> <span class="status-chip" [ngClass]="{
+                'none': booking?.bookingStatus == bookingStatus.None,
+                'pending': booking?.bookingStatus == bookingStatus.Booking_Made,
+                'awb_added': booking?.bookingStatus == bookingStatus.InDestinationWarehouse,
+                'dispatch': booking?.bookingStatus == bookingStatus.FlightDispatched,
+                'in-destination-warehouse': booking?.bookingStatus == bookingStatus.InDestinationWarehouse,
+                'flight-dispatched': booking?.bookingStatus == bookingStatus.FlightDispatched,
+                'arrived': booking?.bookingStatus == bookingStatus.Arrived,
+                'cargo-received': booking?.bookingStatus == bookingStatus.Cargo_Received,
+                'truck-for-delivery': booking?.bookingStatus == bookingStatus.TruckForDelivery,
+                'delivered': booking?.bookingStatus == bookingStatus.Delivered,
+                'returned': booking?.bookingStatus == bookingStatus.Returned
+            }">{{getBookingStatus(booking.bookingStatus)}}</span></td>
+              <td style="text-align: center">{{booking.numberOfBoxes}}</td>
+              <td style="text-align: center">{{booking.shipmentCount}}</td>
+              <td style="text-align: center">
+                <i class="ca ca-icn-view" (click)="show(booking)" title="View"></i>
+                <i class="ca ca-icn-view" (click)="showInfo(booking)" title="View"></i>
+                <i class="ca ca-icn-logout" (click)="showTrackBooking(booking.awbNumber)" title="Edit" ></i>
+                <i class="ca ca-icn-bin" title="Delete" style="cursor: not-allowed"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+          <div class="not-available" *ngIf="totalCount == 0">
+              <img src="./assets/images/no-data.png" alt="No Content Data">
+              <div>Bookings not available.</div>
+          </div>
+          <div class="d-flex align-items-center justify-content-center" *ngIf="totalCount > 0">
+              <app-pager [pageSize]="bookingListfilterQuery?.pageSize"
+                  [pageNumber]="bookingListfilterQuery?.pageIndex" [totalCount]="totalCount"
+                  (pageChanged)="onPageChanged($event)"></app-pager>
+              <app-paging-header [totalCount]="totalCount" [pageSize]="bookingListfilterQuery?.pageSize"
+                  [pageNumber]="bookingListfilterQuery?.pageIndex"></app-paging-header>
+          </div>
+      </div>
+      <app-table-loader [columnCount]="9" [rowCount]="bookingListfilterQuery.pageSize" *ngIf="isLoading">
+      </app-table-loader>
+  </div>
 </div>
 
 
 <div class="modal fade right" tabindex="-1" [ngClass]="{'in': modalVisibleAnimate}"
-    [ngStyle]="{'display': modalVisible ? 'block' : 'none', 'opacity': modalVisibleAnimate ? 1 : 0}">
-    <div class="modal-dialog modal-lg modal-dialog-m modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">View Booking</h2>
-                <button type="button" class="close btn" data-dismiss="modal" (click)="cancel()" aria-label="Close"><span
-                        class="ca ca-icn-close"></span></button>
-            </div>
-            <div class="modal-body">
-                <app-booking-view-detail [cargoBooking]="cargoBooking" *ngIf="modalVisible"></app-booking-view-detail>
-            </div>
-        </div>
-    </div>
+  [ngStyle]="{'display': modalVisible ? 'block' : 'none', 'opacity': modalVisibleAnimate ? 1 : 0}">
+  <div class="modal-dialog modal-lg modal-dialog-m modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h2 class="modal-title">View Booking</h2>
+              <button type="button" class="close btn" data-dismiss="modal" (click)="cancel()" aria-label="Close"><span
+                      class="ca ca-icn-close"></span></button>
+          </div>
+          <div class="modal-body">
+              <app-booking-view-detail [cargoBooking]="cargoBooking" *ngIf="modalVisible"></app-booking-view-detail>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade right" tabindex="-1" [ngClass]="{'in': modalInfoVisibleAnimate}"
+  [ngStyle]="{'display': modalInfoVisible ? 'block' : 'none', 'opacity': modalInfoVisibleAnimate ? 1 : 0}">
+  <div class="modal-dialog modal-lg modal-dialog-m modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h2 class="modal-title">Booking Info</h2>
+              <button type="button" class="close btn" data-dismiss="modal" (click)="closeModel()" aria-label="Close"><span
+                      class="ca ca-icn-close"></span></button>
+          </div>
+          <div class="modal-body">
+              <app-booking-info [cargoBookingId]="cargoBookingId" (closePopup)="closeModel()" *ngIf="modalInfoVisible"></app-booking-info>
+          </div>
+      </div>
+  </div>
 </div>

@@ -1,0 +1,52 @@
+
+.second-box-tracking {
+    background-color: #F8F8F8;
+    border-radius: 0.5rem;
+    margin-top: 1.25rem;
+    padding: 1rem;
+  }
+  
+  .row {
+    margin: 0;
+    padding: 0;
+}
+
+.section-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.details.sub-collapse {
+    margin: 0;
+    padding: 0;
+}
+
+
+details summary {
+    font-weight: normal;
+    cursor: pointer;
+    margin-bottom: 2px;
+    background-color: transparent;
+}
+
+.card-details {
+    padding: 5px;
+}
+
+.details-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0px;
+}
+
+
+
+.details-group div {
+    flex: 1;
+    min-width: 0;
+    padding: 2px;
+}
+
+.details-group div:not(:last-child) {
+    margin-right: 5px;
+}
