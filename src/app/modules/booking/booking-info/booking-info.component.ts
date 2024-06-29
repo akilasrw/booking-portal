@@ -52,8 +52,24 @@ export class BookingInfoComponent implements OnInit {
       width: ['', Validators.required],
       height: ['', Validators.required],
       weight: ['', Validators.required],
-      length: ['', Validators.required]
+      length: ['', Validators.required],
+      packageNum: ['', Validators.required]
     });
+  }
+
+  onPackageChange(e:SelectList){
+    let selectedPackage = this.cargoBookingDetail?.packageItems.find(x=> x.id == e.id)
+    let packageData = {
+      width:selectedPackage?.width || 0,
+      height:selectedPackage?.height || 0,
+      weight:selectedPackage?.weight || 0,
+      length: selectedPackage?.length || 0,
+      packageNum: selectedPackage?.packageRefNumber
+    }
+
+    this.packageForm?.patchValue(packageData);
+
+
   }
 
 

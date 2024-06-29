@@ -264,9 +264,15 @@
                 </details>
             </div> -->
 
-            <app-auto-complete-dropdown [data]="packageList" [keyword]="keyword" [selectedIndex]="selectedPackage">
+            <app-auto-complete-dropdown [data]="packageList" [keyword]="keyword" [selectedIndex]="selectedPackage" (selectFileOutput)="onPackageChange($event)">
                     </app-auto-complete-dropdown>
                     <div class="row" [formGroup]="packageForm" style="margin-top: 20px;">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                              <label class="form-label">Package Number<span class="compulsory">*</span></label>
+                              <app-text-input formControlName="packageNum" type="text" [label]='"packageNum"'></app-text-input>
+                            </div>
+                          </div>
                         <div class="col-md-6">
                           <div class="form-group">
                             <label class="form-label">Width<span class="compulsory">*</span></label>
