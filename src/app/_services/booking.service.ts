@@ -10,7 +10,7 @@ import { IPagination } from '../shared/models/pagination.model';
 import { CargoBookingFilterQuery } from '../_models/queries/cargo-booking/cargo-booking-filter-query.model';
 import { CargoBookingDetailQuery } from '../_models/queries/cargo-booking/cargo-booking-detail-query.model';
 import { CargoBookingDetail } from '../_models/view-models/cargo-booking/cargo-booking-detail/cargo-booking-detail.model';
-import { CargoBookingRequest } from '../_models/view-models/cargo-booking/cargo-booking-request.model';
+import { CargoBookingRequest, PackageDetailsUpdateRM } from '../_models/view-models/cargo-booking/cargo-booking-request.model';
 import {CargoBookingShipmentQuery} from "../_models/queries/booking-shipment/cargo-booking-shipment-query.model";
 import {CargoBookingLookupQuery} from "../_models/queries/cargo-booking-lookup/cargo-booking-lookup-query.model";
 import {CargoBookingLookup} from "../_models/view-models/cargo-booking-lookup/cargo-booking-lookup.model";
@@ -93,6 +93,9 @@ export class BookingService extends BaseService {
 
   create(cargoBookingRequest: CargoBookingRequest){
     return this.post<any>(this.endpointEntityName, cargoBookingRequest);
+  }
+  updatePackage(packageDetails: PackageDetailsUpdateRM, id:string){
+    return this.put<any>(`Package/UpdateDetails/${id}`, packageDetails);
   }
 
   getBookingShipmentDetail(query: CargoBookingShipmentQuery) {

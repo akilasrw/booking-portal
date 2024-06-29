@@ -53,18 +53,19 @@ export class BookingInfoComponent implements OnInit {
       height: ['', Validators.required],
       weight: ['', Validators.required],
       length: ['', Validators.required],
-      packageNum: ['', Validators.required]
+      refNo: ['', Validators.required]
     });
   }
 
   onPackageChange(e:SelectList){
     let selectedPackage = this.cargoBookingDetail?.packageItems.find(x=> x.id == e.id)
+    this.selectedPackage = e;
     let packageData = {
       width:selectedPackage?.width || 0,
       height:selectedPackage?.height || 0,
       weight:selectedPackage?.weight || 0,
       length: selectedPackage?.length || 0,
-      packageNum: selectedPackage?.packageRefNumber
+      refNo: selectedPackage?.packageRefNumber
     }
 
     this.packageForm?.patchValue(packageData);
@@ -76,6 +77,10 @@ export class BookingInfoComponent implements OnInit {
   onSubmit(): void {
     if (this.packageForm && this.packageForm.valid) {
       console.log('Form Submitted', this.packageForm.value);
+      this.bookingSerice.updatePackage(this.packageForm.value, this.selectedPackage?.id || '').subscribe((x)=> {
+        this.toastr.success("Package Update Succesfully")
+        this.getBookingDetail();
+      })
     } else {
       console.log('Form is invalid');
     }
