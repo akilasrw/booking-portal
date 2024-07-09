@@ -39,17 +39,18 @@ export enum AWBStatus {
 // }
 export enum PackageItemStatus {
   Booking_Made = 0,
-  Returned = 1,
-  Cargo_Received = 2,
-  AcceptedForFlight = 3,
-  Offloaded = 4,
-  FlightDispatched = 5,
-  Arrived = 6,
-  InDestinationWarehouse = 7,
-  TruckForDelivery = 8,
-  Delivered = 9,
-  Pending = 10,
-  None = 11,
+  Picked_Up = 1,
+  Returned = 2,
+  Cargo_Received = 3,
+  AcceptedForFlight = 4,
+  Offloaded = 5,
+  FlightDispatched = 6,
+  Arrived = 7,
+  InDestinationWarehouse = 8,
+  TruckForDelivery = 9,
+  Delivered = 10,
+  Pending = 11,
+  None = 12,
 }
 
 export interface PackageAudit {

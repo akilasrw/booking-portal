@@ -112,7 +112,7 @@
           <div
             class="tl-content"
             [ngClass]="{
-              'tl-content-active': cargoBookingLookup.shipmentStatus >= 0
+              'tl-content-active': cargoBookingLookup.shipmentStatus >= 1
             }"
           >
             <div class="tl-header">
@@ -125,7 +125,7 @@
           <div
             class="tl-content tl-content"
             [ngClass]="{
-              'tl-content-active': cargoBookingLookup.shipmentStatus >= 1
+              'tl-content-active': cargoBookingLookup.shipmentStatus >= 2
             }"
           >
             <div class="tl-header">
@@ -139,7 +139,7 @@
           class="tl-content tl-content"
           *ngIf="cargoBookingLookup.shipmentStatus == 1"
           [ngClass]="{
-            'tl-content-active': cargoBookingLookup.shipmentStatus == 1
+            'tl-content-active': cargoBookingLookup.shipmentStatus == 2
           }"
         >
           <div class="tl-header">
@@ -156,7 +156,7 @@
               cargoBookingLookup.shipmentStatus != 4
             "
             [ngClass]="{
-              'tl-content-active': cargoBookingLookup.shipmentStatus >= 3
+              'tl-content-active': cargoBookingLookup.shipmentStatus >= 4
             }"
           >
             <div class="tl-header">
@@ -171,7 +171,7 @@
             class="tl-content tl-content"
             *ngIf="cargoBookingLookup.shipmentStatus == 4"
             [ngClass]="{
-              'tl-content-active': cargoBookingLookup.shipmentStatus == 4
+              'tl-content-active': cargoBookingLookup.shipmentStatus == 5
             }"
           >
             <div class="tl-header">
@@ -192,7 +192,7 @@
           <div
             class="tl-content tl-content"
             [ngClass]="{
-              'tl-content-active': cargoBookingLookup.shipmentStatus >= 5
+              'tl-content-active': cargoBookingLookup.shipmentStatus >= 6
             }"
           >
             <div class="tl-header">
@@ -205,7 +205,7 @@
           <div
             class="tl-content tl-content"
             [ngClass]="{
-              'tl-content-active': cargoBookingLookup.shipmentStatus >= 6
+              'tl-content-active': cargoBookingLookup.shipmentStatus >= 7
             }"
           >
             <div class="tl-header">
@@ -218,7 +218,7 @@
           <div
             class="tl-content tl-content"
             [ngClass]="{
-              'tl-content-active': cargoBookingLookup.shipmentStatus >= 7
+              'tl-content-active': cargoBookingLookup.shipmentStatus >= 8
             }"
           >
             <div class="tl-header">
@@ -239,7 +239,7 @@
           <div
             class="tl-content tl-content"
             [ngClass]="{
-              'tl-content-active': cargoBookingLookup.shipmentStatus >= 9
+              'tl-content-active': cargoBookingLookup.shipmentStatus >= 10
             }"
           >
             <div class="tl-header">

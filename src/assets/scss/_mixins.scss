@@ -80,6 +80,10 @@
     color: #1E90FF;
     border-width: 1px; // You can adjust this value as needed
   }
+  &.picked_up  {
+    border-color: $brand-primary;
+    color: $brand-primary;
+  }
   &.flight-dispatched {
     border-color: #BA55D3; // FlightDispatched (Medium Orchid)
     color: #BA55D3;

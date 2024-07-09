@@ -68,6 +68,7 @@
               <td style="width: auto; text-align: center"> <span class="status-chip" [ngClass]="{
                 'none': booking?.bookingStatus == bookingStatus.None,
                 'pending': booking?.bookingStatus == bookingStatus.Booking_Made,
+                'picked_up': booking?.bookingStatus == bookingStatus.picked_up,
                 'awb_added': booking?.bookingStatus == bookingStatus.InDestinationWarehouse,
                 'dispatch': booking?.bookingStatus == bookingStatus.FlightDispatched,
                 'in-destination-warehouse': booking?.bookingStatus == bookingStatus.InDestinationWarehouse,
