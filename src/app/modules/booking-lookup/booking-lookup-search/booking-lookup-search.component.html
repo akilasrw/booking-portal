@@ -137,7 +137,7 @@
           </div>
           <div
           class="tl-content tl-content"
-          *ngIf="cargoBookingLookup.shipmentStatus == 1"
+          *ngIf="cargoBookingLookup.shipmentStatus == 2"
           [ngClass]="{
             'tl-content-active': cargoBookingLookup.shipmentStatus == 2
           }"
@@ -152,8 +152,8 @@
           <div
             class="tl-content tl-content"
             *ngIf="
-              cargoBookingLookup.shipmentStatus != 1 &&
-              cargoBookingLookup.shipmentStatus != 4
+              cargoBookingLookup.shipmentStatus != 2 &&
+              cargoBookingLookup.shipmentStatus != 5
             "
             [ngClass]="{
               'tl-content-active': cargoBookingLookup.shipmentStatus >= 4
@@ -169,7 +169,7 @@
          
           <div
             class="tl-content tl-content"
-            *ngIf="cargoBookingLookup.shipmentStatus == 4"
+            *ngIf="cargoBookingLookup.shipmentStatus == 5"
             [ngClass]="{
               'tl-content-active': cargoBookingLookup.shipmentStatus == 5
             }"
