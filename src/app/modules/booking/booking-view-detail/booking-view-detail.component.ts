@@ -36,6 +36,7 @@ export class BookingViewDetailComponent implements OnInit {
   subscription?: Subscription;
   currentUser?: User | null;
   cargoAgent?: CargoAgent;
+  bookingMadeBoxes: PackageAudit[] = [];
   pickedUpBoxes: PackageAudit[] = [];
   wh_rec: PackageAudit[] = [];
   returned: PackageAudit[] = [];
@@ -97,6 +98,10 @@ export class BookingViewDetailComponent implements OnInit {
           this.cargoBookingDetail = res;
           this.returned = res.filter(
             (x: PackageAudit) => x.packageStatus == PackageItemStatus.Returned
+          );
+          this.bookingMadeBoxes = res.filter(
+            (x: PackageAudit) =>
+              x.packageStatus == PackageItemStatus.Booking_Made
           );
           this.pickedUpBoxes = res.filter(
             (x: PackageAudit) =>
