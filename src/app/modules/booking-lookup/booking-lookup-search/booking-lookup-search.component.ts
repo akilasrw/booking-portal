@@ -15,6 +15,8 @@ import {BookingService} from "../../../_services/booking.service";
 import {CargoBookingShipmentQuery} from "../../../_models/queries/booking-shipment/cargo-booking-shipment-query.model";
 import {BookingShipment} from "../../../_models/view-models/booking-shipment/booking-shipment.model";
 import {ActivatedRoute} from "@angular/router";
+import { BookingLookupService } from 'src/app/_services/booking-lookup.service';
+import { CargoBookingLookupQuery } from 'src/app/_models/queries/cargo-booking-lookup/cargo-booking-lookup-query.model';
 
 
 @Component({
@@ -43,6 +45,7 @@ export class BookingLookupSearchComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private bookingService: BookingService,
+              private bookingLookupService: BookingLookupService,
               private accountService: AccountService,
               private toastr: ToastrService,
               private spinner: NgxSpinnerService,
@@ -54,6 +57,20 @@ export class BookingLookupSearchComponent implements OnInit {
         this.getBookingDetail();
       }
     });
+  }
+
+
+  generatePDF(){
+    let query:CargoBookingLookupQuery = {
+      AWBNumber:this.cargoBookingLookup?.awbNumber,
+      isIncludeFlightDetail:true,
+      isIncludePackageDetail:true,
+      isIncludeAWBDetail:true
+    }
+    this.bookingLookupService.getBookingLookupDetail(query).subscribe((x)=>{
+      this.child.printData(x.awbInformation);
+    })
+    
   }
 
   ngOnInit(): void {
@@ -129,6 +146,8 @@ export class BookingLookupSearchComponent implements OnInit {
       this.toastr.error('Please enter booking number or package number.');
     }
   }
+
+  
 
   getStatus(e: number): string {
     return BookingStatusEnum[e]

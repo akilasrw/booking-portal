@@ -14,3 +14,11 @@ export class CargoBookingRequest {
 }
 
 
+export interface PackageDetailsUpdateRM {
+  width: number;
+  height: number;
+  weight: number;
+  length: number;
+  refNo: string;
+}
+

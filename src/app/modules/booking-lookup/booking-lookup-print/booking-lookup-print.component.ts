@@ -19,7 +19,7 @@ export class BookingLookupPrintComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  printData(value: any){
+  public printData(value: any){
     this.awbPrintData = value;
     setTimeout(() => {
       this.generatePDF();

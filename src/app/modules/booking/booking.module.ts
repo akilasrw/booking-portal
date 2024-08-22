@@ -12,10 +12,12 @@ import { FreighterBookingSearchItemComponent } from './booking-search-item/freig
 import { P2cBookingCreateComponent } from './booking-create/p2c-booking-create/p2c-booking-create.component';
 import { FreighterBookingCreateComponent } from './booking-create/freighter-booking-create/freighter-booking-create.component';
 import {BookingLookupModule} from "../booking-lookup/booking-lookup.module";
+import { BookingInfoComponent } from './booking-info/booking-info.component';
 
 @NgModule({
   declarations: [
     BookingListComponent,
+    BookingInfoComponent,
     BookingSearchComponent,
     BookingViewDetailComponent,
     AwbCreateComponent,

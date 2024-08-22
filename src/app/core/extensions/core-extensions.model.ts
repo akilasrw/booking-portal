@@ -91,6 +91,9 @@ export class CoreExtensions {
       case PackageItemStatus.Booking_Made:
         statusString = "Booked with AWB";
         break;
+      case PackageItemStatus.Picked_Up:
+        statusString = "Picked Up";
+        break;
       case PackageItemStatus.Cargo_Received:
         statusString = "Received";
         break;
