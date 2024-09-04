@@ -297,9 +297,15 @@
                             <app-text-input formControlName="length" type="text" [label]='"Length"'></app-text-input>
                           </div>
                         </div>
-                        <!-- Optional: Submit button to submit the form -->
-                        <div class="col-md-12">
-                          <button type="button" class="btn-primary" style="border-radius: 8px;" (click)="onSubmit()">Submit</button>
+                        <div class="row">
+                          <!-- Optional: Submit button to submit the form -->
+                          <div class="col-md-2">
+                            <button type="button" class="btn btn-primary  p-1" (click)="onSubmit()">Submit</button>
+                          </div>
+                          <!-- Optional: Delete package button -->
+                          <div class="col-md-3">
+                            <button type="button" class="btn btn-danger p-1" (click)="onDeletePackage()">Delete Package</button>
+                          </div>
                         </div>
                       </div>
                       

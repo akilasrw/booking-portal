@@ -209,4 +209,18 @@ export class BookingInfoComponent implements OnInit {
       this.cargoAgent = res;
     });
   }
+
+  onDeletePackage(): void {
+    if (confirm('Are you sure you want to delete this package?')) {
+      this.bookingSerice.deletePackage(this.selectedPackage?.id || '').subscribe({
+        next: (res) => {
+          this.toastr.success('Package successfully deleted.');
+          this.getBookingDetail();
+        },
+        error: (err) => {
+          this.toastr.error('Failed to delete package.');
+        }
+      });
+    }
+  }
 }

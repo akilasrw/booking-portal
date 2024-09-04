@@ -94,6 +94,10 @@ export class BookingService extends BaseService {
   create(cargoBookingRequest: CargoBookingRequest){
     return this.post<any>(this.endpointEntityName, cargoBookingRequest);
   }
+  deletePackage(id:string){
+    return this.post<any>(`Package/DeletePackage?PackageId=${id}`, null);
+  }
+
   updatePackage(packageDetails: PackageDetailsUpdateRM, id:string){
     return this.put<any>(`Package/UpdateDetails/${id}`, packageDetails);
   }
