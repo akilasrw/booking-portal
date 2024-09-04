@@ -211,16 +211,21 @@ export class BookingInfoComponent implements OnInit {
   }
 
   onDeletePackage(): void {
-    if (confirm('Are you sure you want to delete this package?')) {
-      this.bookingSerice.deletePackage(this.selectedPackage?.id || '').subscribe({
-        next: (res) => {
-          this.toastr.success('Package successfully deleted.');
-          this.getBookingDetail();
-        },
-        error: (err) => {
-          this.toastr.error('Failed to delete package.');
-        }
-      });
+    // Check if the package status is AWB Added before deletion
+    if (this.selectedPackage && this.cargoBookingDetail?.packageItems.find((x)=> x.id == this.selectedPackage?.id)?.packageItemStatus === PackageItemStatus.Booking_Made) {
+      if (confirm('Are you sure you want to delete this package?')) {
+        this.bookingSerice.deletePackage(this.selectedPackage?.id || '').subscribe({
+          next: (res) => {
+            this.toastr.success('Package successfully deleted.');
+            this.getBookingDetail();
+          },
+          error: (err) => {
+            this.toastr.error('Failed to delete package.');
+          }
+        });
+      }
+    } else {
+      this.toastr.error('Package cannot be deleted unless AWB is added.');
     }
   }
 }
