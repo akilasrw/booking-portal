@@ -88,10 +88,11 @@
         <div style="width: 50%;">
             <div style="height: 130px; padding: 0 5px;">
                 <label>Accounting Information</label>
+                <div>
+                    <label>{{awbPrintData?.agentAccountInformation}}</label>
+                </div>
             </div>
-            <div>
-                <label>{{awbPrintData?.agentAccountInformation}}</label>
-            </div>
+            
             <div style="border-top: 1px solid black;">
 
             </div>
@@ -132,7 +133,7 @@
         <div style="width: 50%; display: flex;">
             <div style="width: 15%; border-right: 1px solid black; padding: 0 5px;">
                 <label>Currency</label>
-                <label>{{awbPrintData?.Currency}}</label>
+                <label>{{awbPrintData?.currency}}</label>
             </div>
             <div style="width: 10%; border-right: 1px solid black; padding: 0 5px; background-color: #e4e4e4;">
                 <label>CHGS Code</label>
@@ -176,6 +177,7 @@
             <div style="display: flex;">
                 <div style="width: 38%; border-right: 1px solid black; padding: 0 5px; height: 79px;">
                     <label>Airport of Destination</label>
+                    <div><label>{{awbPrintData.routingAndDestinationTo}}</label></div>
                 </div>
                 <div style="display: flex; width: 80%;">
                     <div style="width: 33%; padding: 0 5px;">
@@ -195,9 +197,9 @@
             <div style="display: flex;">
                 <div style="width: 50%; padding: 0 5px; border-right: 1px solid black;">
                     <label>Amount of Insurance</label>
-                    <label>{{awbPrintData?.amountOfInsurance}}</label>
+                   <div><label>{{awbPrintData?.amountOfInsurance}}</label></div> 
                 </div>
-                <div style="width: 50%; padding: 0 5px 5px 5px;">
+                <div style="width: 70%; padding: 0 5px 5px 5px;">
                     <label>INSURANCE: If carrier offers insurance and such insurance is requested in accordance with the conditions thereof,
                         indicate amount to be insured in figures in box marked "Amount of Insurance". </label>
                 </div>
@@ -227,7 +229,7 @@
                     <label>Gross Weight</label>
                 </div>
                 <div style="text-align: left; padding: 0 5px;">
-                    <div><label>{{awbPrintData?.grossWeight}}</label></div>
+                    <div><label>{{awbPrintData?.weight}}</label></div>
                 </div>
             </div>
             <div style="width: 10%; border-right: 1px solid black; border-bottom: 1px solid black; text-align: center;">
@@ -261,7 +263,7 @@
                     <label>Chargeable Weight</label>
                 </div>
                 <div style="text-align: left; padding: 0 5px;">
-                    <div><label>{{awbPrintData?.chargeableWeight}}</label></div>
+                    <div><label>{{awbPrintData?.weight}}</label></div>
                 </div>
             </div>
             <div style="width: 10%; border-right: 1px solid black; border-bottom: 1px solid black; text-align: center;">
@@ -277,7 +279,7 @@
                     <label>Total</label>
                 </div>
                 <div style="text-align: left; padding: 0 5px;">
-                    <div><label>{{awbPrintData?.totalCharge}}</label></div>
+                    <div><label>{{awbPrintData?.total}}</label></div>
                 </div>
             </div>
             <div style="width: 30%; border-bottom: 1px solid black; text-align: center;">
