@@ -21,6 +21,7 @@ export class BookingLookupPrintComponent implements OnInit {
 
   public printData(value: any){
     this.awbPrintData = value;
+    console.log(value)
     setTimeout(() => {
       this.generatePDF();
     }, 1000);
