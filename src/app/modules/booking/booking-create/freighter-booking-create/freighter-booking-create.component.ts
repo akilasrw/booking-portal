@@ -185,12 +185,29 @@ export class FreighterBookingCreateComponent implements OnInit {
     this.awbDetail = undefined;
   }
 
+  convertToMeters(value: number, fromUnitId: string): number {
+    switch(fromUnitId.toLowerCase()) {
+      case Constants.CM_VOLUME_UNIT_ID.toLowerCase(): // cm
+        return Number((value / 100).toFixed(2));
+      case Constants.INCH_VOLUME_UNIT_ID.toLowerCase(): // inch  
+        return Number((value * 0.0254).toFixed(2));
+      case Constants.METER_VOLUME_UNIT_ID.toLowerCase(): // m
+        return Number(value.toFixed(2));
+      default:
+        return Number(value.toFixed(2));
+    }
+  }
+
   mapPackageItems(packageItem: any) {
+    const width = this.convertToMeters(Number(packageItem.width), packageItem.volumeUnitId);
+    const length = this.convertToMeters(Number(packageItem.length), packageItem.volumeUnitId);
+    const height = this.convertToMeters(Number(packageItem.height), packageItem.volumeUnitId);
+
     return {
-      height: Number(packageItem.height),
-      length: Number(packageItem.length),
+      height: height,
+      length: length,
       weight: CoreExtensions.RoundToTwoDecimalPlaces(Number(packageItem.weight)),
-      width: Number(packageItem.width),
+      width: width,
       packagePriorityType: PackagePriorityType.None,
       packageItemCategory: Number(packageItem.packageItemCategory),
       weightUnitId: packageItem.weightUnitId,
@@ -203,56 +220,45 @@ export class FreighterBookingCreateComponent implements OnInit {
       aWBDetail: this.awbDetail,
       chargeableWeight: this.getChargeableWeight(
         { weight: CoreExtensions.RoundToTwoDecimalPlaces(Number(packageItem.weight)),
-          length: Number(packageItem.length),width: Number(packageItem.width),
-          height:Number(packageItem.height),volumeUnitId: packageItem.volumeUnitId,
+          length: length,
+          width: width,
+          height: height,
+          volumeUnitId: packageItem.volumeUnitId,
           weightUnitId: packageItem.weightUnitId}),
     };
   }
 
   isVolumeNotExceed(){
     var selectedVolumeUnitId = this.bookingForm.get('packageItems')?.get('volumeUnitId')?.value;
-    var selectedLength = this.bookingForm.get('packageItems')?.get('length')?.value;
-    var selectedWidth = this.bookingForm.get('packageItems')?.get('width')?.value;
-    var selectedHeight = this.bookingForm.get('packageItems')?.get('height')?.value;
-    if(selectedVolumeUnitId === Constants.CM_VOLUME_UNIT_ID.toLowerCase()){
-      if(selectedLength> 318){
-        this.toastr.warning('Max length volume (318cm) exceed.');
-        return false;
-      }
-      if(selectedWidth> 224){
-        this.toastr.warning('Max width volume (224cm) exceed.');
-        return false;
-      }
-      if(selectedHeight> 163){
-        this.toastr.warning('Max height volume (163cm) exceed.');
-        return false;
-      }
-    }else if(selectedVolumeUnitId === Constants.METER_VOLUME_UNIT_ID.toLowerCase()){
-      if(selectedLength> 3.18){
-        this.toastr.warning('Max length volume (3.18m) exceed.');
-        return false;
-      }
-      if(selectedWidth> 2.24){
-        this.toastr.warning('Max width volume (2.24m) exceed.');
-        return false;
-      }
-      if(selectedHeight> 1.63){
-        this.toastr.warning('Max height volume (1.63m) exceed.');
-        return false;
-      }
-    }else if(selectedVolumeUnitId === Constants.INCH_VOLUME_UNIT_ID.toLowerCase()){
-      if(selectedLength> 125){
-        this.toastr.warning('Max length volume (125inch) exceed.');
-        return false;
-      }
-      if(selectedWidth> 88){
-        this.toastr.warning('Max width volume (88inch) exceed.');
-        return false;
-      }
-      if(selectedHeight> 64){
-        this.toastr.warning('Max height volume (64inch) exceed.');
-        return false;
-      }
+    var selectedLength = this.convertToMeters(
+      this.bookingForm.get('packageItems')?.get('length')?.value,
+      selectedVolumeUnitId
+    );
+    var selectedWidth = this.convertToMeters(
+      this.bookingForm.get('packageItems')?.get('width')?.value,
+      selectedVolumeUnitId
+    );
+    var selectedHeight = this.convertToMeters(
+      this.bookingForm.get('packageItems')?.get('height')?.value,
+      selectedVolumeUnitId
+    );
+
+    // Convert limits to meters for comparison
+    const maxLength = 3.18; // 318cm in meters
+    const maxWidth = 2.24;  // 224cm in meters  
+    const maxHeight = 1.63; // 163cm in meters
+
+    if(selectedLength > maxLength){
+      this.toastr.warning('Max length volume (3.18m) exceed.');
+      return false;
+    }
+    if(selectedWidth > maxWidth){
+      this.toastr.warning('Max width volume (2.24m) exceed.');
+      return false;
+    }
+    if(selectedHeight > maxHeight){
+      this.toastr.warning('Max height volume (1.63m) exceed.');
+      return false;
     }
     return true;
   }
@@ -304,21 +310,14 @@ export class FreighterBookingCreateComponent implements OnInit {
       packageItem.weight = weight
     }
 
-    if(Constants.CM_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
-      chargeableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)/1000000)*167;
-      actualChargeableWeight = packageItem.weight!>chargeableWeight? packageItem.weight!: chargeableWeight;
-    }else if(Constants.INCH_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
-      chargeableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)/61023.7)*167;
-      actualChargeableWeight = packageItem.weight!>chargeableWeight? packageItem.weight! : chargeableWeight;
-    }else if(Constants.METER_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
-      chargeableWeight = (packageItem.width! * packageItem.length! * packageItem.height!)*167;
-      actualChargeableWeight = packageItem.weight!>chargeableWeight? packageItem.weight! : chargeableWeight;
-    }
+    // All dimensions are already in meters from mapPackageItems
+    chargeableWeight = (packageItem.width! * packageItem.length! * packageItem.height!)*167;
+    actualChargeableWeight = packageItem.weight!>chargeableWeight? packageItem.weight! : chargeableWeight;
+    
     return CoreExtensions.RoundToTwoDecimalPlaces(Number(actualChargeableWeight))
   }
 
   getChargeableWeightTotal(packageItem:PackageItem){
-
     var chargeableWeight = 0;
     var chargeableWeightTotal= 0;
 
@@ -327,16 +326,10 @@ export class FreighterBookingCreateComponent implements OnInit {
       packageItem.weight = weight
     }
 
-    if(Constants.CM_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
-      chargeableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)/1000000)*167;
-      chargeableWeightTotal = packageItem.weight!>chargeableWeight? packageItem.weight!* packageItem.pieces! : chargeableWeight * packageItem.pieces!;
-    }else if(Constants.INCH_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
-      chargeableWeight = ((packageItem.width! * packageItem.length! * packageItem.height!)/61023.7)*167;
-      chargeableWeightTotal = packageItem.weight!>chargeableWeight? packageItem.weight!* packageItem.pieces! : chargeableWeight * packageItem.pieces!;
-    }else if(Constants.METER_VOLUME_UNIT_ID.toLowerCase()== packageItem.volumeUnitId){
-      chargeableWeight = (packageItem.width! * packageItem.length! * packageItem.height!)*167;
-      chargeableWeightTotal = packageItem.weight!>chargeableWeight? packageItem.weight!* packageItem.pieces! : chargeableWeight * packageItem.pieces!;
-    }
+    // All dimensions are already in meters
+    chargeableWeight = (packageItem.width! * packageItem.length! * packageItem.height!)*167;
+    chargeableWeightTotal = packageItem.weight!>chargeableWeight? packageItem.weight!* packageItem.pieces! : chargeableWeight * packageItem.pieces!;
+
     return CoreExtensions.RoundToTwoDecimalPlaces(Number(chargeableWeightTotal))
   }
 
@@ -387,8 +380,6 @@ export class FreighterBookingCreateComponent implements OnInit {
     return valid;
   }
 
-
-
   backToSearch() {
     this.router.navigate(['booking/search', this.flightSchedule?.id]);
   }
@@ -424,7 +415,6 @@ export class FreighterBookingCreateComponent implements OnInit {
 
     }
   }
-
 
   closeAWBForm() {
     this.modalVisibleAnimate = false;

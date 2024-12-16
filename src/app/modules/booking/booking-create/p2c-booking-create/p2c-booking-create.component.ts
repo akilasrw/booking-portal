@@ -209,12 +209,29 @@ export class P2cBookingCreateComponent implements OnInit {
     this.awbDetail = undefined;
   }
 
+  convertToMeters(value: number, fromUnitId: string): number {
+    switch(fromUnitId.toLowerCase()) {
+      case Constants.CM_VOLUME_UNIT_ID.toLowerCase(): // cm
+        return Number((value / 100).toFixed(2));
+      case Constants.INCH_VOLUME_UNIT_ID.toLowerCase(): // inch  
+        return Number((value * 0.0254).toFixed(2));
+      case Constants.METER_VOLUME_UNIT_ID.toLowerCase(): // m
+        return Number(value.toFixed(2));
+      default:
+        return Number(value.toFixed(2));
+    }
+  }
+
   mapPackageItems(packageItem: any) {
+    const width = this.convertToMeters(Number(packageItem.width), packageItem.volumeUnitId);
+    const length = this.convertToMeters(Number(packageItem.length), packageItem.volumeUnitId);
+    const height = this.convertToMeters(Number(packageItem.height), packageItem.volumeUnitId);
+
     return {
-      height: Number(packageItem.height),
-      length: Number(packageItem.length),
+      height: height,
+      length: length,
       weight: CoreExtensions.RoundToTwoDecimalPlaces(Number(packageItem.weight)),
-      width: Number(packageItem.width),
+      width: width,
       packagePriorityType: PackagePriorityType.None,
       packageItemCategory: Number(packageItem.packageItemCategory),
       weightUnitId: packageItem.weightUnitId,
